@@ -1,0 +1,6 @@
+{
+  "extends": "ecommerce-hktvmall-style-Backend/tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  }
+}
