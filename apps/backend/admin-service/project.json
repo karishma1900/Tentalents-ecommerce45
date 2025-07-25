@@ -1,0 +1,21 @@
+{
+  "name": "admin-service",
+  "projectType": "application",
+  "sourceRoot": "apps/backend/admin-service/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p apps/backend/admin-service/tsconfig.app.json"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node dist/out-tsc/admin-service/main.js"
+      },
+      "dependsOn": ["build"]
+    }
+  },
+  "tags": []
+}

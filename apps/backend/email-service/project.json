@@ -1,0 +1,28 @@
+{
+  "name": "email-service",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/apps/backend/email-service",
+        "tsConfig": "apps/backend/email-service/tsconfig.app.json",
+        "main": "apps/backend/email-service/src/main.ts",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "nx:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/backend/email-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:jest",
+      "options": {
+        "jestConfig": "apps/backend/email-service/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:service"]
+}

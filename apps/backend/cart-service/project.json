@@ -1,0 +1,28 @@
+{
+  "name": "cart-service",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/apps/backend/cart-service",
+        "tsConfig": "apps/backend/cart-service/tsconfig.app.json",
+        "main": "apps/backend/cart-service/src/main.ts",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "nx:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/backend/cart-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:jest",
+      "options": {
+        "jestConfig": "apps/backend/cart-service/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:service"]
+}
