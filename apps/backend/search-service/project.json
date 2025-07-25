@@ -1,0 +1,28 @@
+{
+  "name": "search-service",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/apps/backend/search-service",
+        "tsConfig": "apps/backend/search-service/tsconfig.app.json",
+        "main": "apps/backend/search-service/src/main.ts",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "nx:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/backend/search-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:jest",
+      "options": {
+        "jestConfig": "apps/backend/search-service/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:service"]
+}
