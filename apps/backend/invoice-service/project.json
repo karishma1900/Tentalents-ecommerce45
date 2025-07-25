@@ -1,0 +1,28 @@
+{
+  "name": "invoice-service",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/apps/backend/invoice-service",
+        "tsConfig": "apps/backend/invoice-service/tsconfig.app.json",
+        "main": "apps/backend/invoice-service/src/main.ts",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "nx:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/backend/invoice-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:jest",
+      "options": {
+        "jestConfig": "apps/backend/invoice-service/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:service"]
+}

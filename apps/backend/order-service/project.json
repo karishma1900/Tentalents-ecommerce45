@@ -1,0 +1,28 @@
+{
+  "name": "order-service",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/apps/backend/order-service",
+        "tsConfig": "apps/backend/order-service/tsconfig.app.json",
+        "main": "apps/backend/order-service/src/main.ts",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "nx:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/backend/order-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:jest",
+      "options": {
+        "jestConfig": "apps/backend/order-service/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:service"]
+}

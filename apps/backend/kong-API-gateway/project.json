@@ -1,0 +1,30 @@
+{
+  "name": "kong-gateway",
+  "targets": {
+    "docker-build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t kong-gateway:latest apps/kong-gateway"
+      }
+    },
+    "docker-run": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker run -d -p 8000:8000 -p 8001:8001 --name kong-gateway kong-gateway:latest"
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "tsConfig": "apps/backend/kong-API-gateway/tsconfig.app.json",
+        "main": "src/main.ts",
+        "outputPath": "dist/apps/backend/kong-API-gateway"
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node"
+    }
+  },
+  "tags": [],
+  "sourceRoot": "apps/backend/kong-API-gateway/src"
+}
