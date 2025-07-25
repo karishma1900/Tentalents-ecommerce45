@@ -1,9 +1,9 @@
 // Productslist.tsx
 
-import { products } from 'apps/user-ui/src/configs/constants';
+import { products } from '../../../configs/constants';
 import React from 'react';
 import ProductListItem from '../../components/productitemlist/Productitemlist';
-import { ProductItem } from '../../components/ProductListItem';
+import { ProductItem } from '../../components/productitemlist/Productitemlist';
 import './productlist.css';
 
 type ProductsProps = {

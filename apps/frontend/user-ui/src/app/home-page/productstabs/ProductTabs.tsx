@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import './producttab.css';
-import { categories } from 'apps/user-ui/src/configs/constants';
+import { categories } from '../../../configs/constants';
 import Products from '../products-grid/productsgrid'; // ✅ Update this path as needed
 
 const ProductTabs = () => {
