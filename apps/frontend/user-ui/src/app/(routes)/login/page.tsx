@@ -53,7 +53,7 @@ const Login = () => {
               })}
               type="email"
               placeholder="Email"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
             />
             {errors.email && (
               <p className="text-red-500 text-sm mt-1">
@@ -74,7 +74,7 @@ const Login = () => {
               })}
               type={passwordVisible ? 'text' : 'password'}
               placeholder="Password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:border-transparent"
             />
             <button
               type="button"
@@ -97,7 +97,7 @@ const Login = () => {
           {/* Submit Button */}
             <div className="flex justify-between items-center my-2">
                 <label className='flex items-center text-gray-600'>
-                    <input type="checkbox" className='mr-2' checked={rememberMe} onClick={() => setRememberMe(!rememberMe)} />
+                    <input type="checkbox" className='mr-2' checked={rememberMe} onChange={() => setRememberMe(!rememberMe)} />
                   Remember Me
                 </label>
                 <Link href={'/ForgotPassword'} className='text-blue-500 text-sm' >Forgot Password?</Link>
@@ -105,7 +105,7 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+            className="w-full py-2 rounded-lg bg-[var(--primary)] text-white hover:opacity-90 transition"
           >
             Login
           </button>
