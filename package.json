@@ -1,20 +1,20 @@
 {
-  "name": "ecommerce-platform",
+  "name": "hktvmall-style-backend",
   "version": "1.0.0",
-  "license": "MIT",
   "private": true,
+  "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
     "nx": "npx nx",
-    "dev": "nx run-many --target=serve --all",
-    "auth-docs": "node apps/auth-service/src/swagger.js",
-    "user-ui": "nx serve user-ui",
-    "seller-ui": "nx serve seller-ui",
     "lint": "npx nx lint",
     "test": "npx nx test",
     "format": "nx format:write",
+    "dev": "nx run-many --target=serve --all",
+    "auth-docs": "node apps/auth-service/src/swagger.js",
+    "user-ui": "npx nx run-many --target=dev --all --projects=user-ui",
+    "seller-ui": "npx nx run-many --target=dev --all --projects=seller-ui",
     "serve:user-service": "npx nx serve user-service",
     "build:user-service": "npx nx build user-service",
     "serve:product-service": "npx nx serve product-service",
@@ -90,7 +90,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@eslint/js": "^8.56.0",
+    "@eslint/js": "^9.8.0",
     "@nx/eslint": "21.3.5",
     "@nx/eslint-plugin": "21.3.5",
     "@nx/express": "20.5.0",
@@ -113,7 +113,7 @@
     "@types/express": "^4.17.21",
     "@types/express-http-proxy": "^1.6.6",
     "@types/ioredis": "^4.28.10",
-    "@types/jest": "^29.5.12",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.0.0",
@@ -124,7 +124,7 @@
     "@types/react-dom": "19.0.0",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/winston": "^2.4.4",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
+     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
     "autoprefixer": "10.4.13",
     "eslint": "^8.56.0",
@@ -138,8 +138,10 @@
     "react-refresh": "^0.10.0",
     "tailwindcss": "3.4.3",
     "ts-jest": "^29.1.0",
-    "ts-node": "^10.9.1",
+    "ts-node": "10.9.1",
     "tslib": "^2.3.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.19.0",
+    "webpack-cli": "^5.1.4"
   }
 }
