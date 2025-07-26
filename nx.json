@@ -1,6 +1,15 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "defaultBase": "master",
+  "npmScope": "ecommerce",
+  "defaultBase": "main",
+  "affected": {
+    "defaultBase": "main"
+  },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
+  },
+  "defaultProject": "vendor-service",
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
@@ -38,7 +47,10 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/auth-service-e2e/**/*", "apps/api-gateway-e2e/**/*"]
+      "exclude": [
+        "apps/auth-service-e2e/**/*",
+        "apps/api-gateway-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/next/plugin",
@@ -61,8 +73,82 @@
     }
   },
   "projects": {
+    "shared-auth": {
+      "tags": []
+    },
+    "shared-config": {
+      "tags": []
+    },
+    "shared-constants": {
+      "tags": []
+    },
+    "shared-email": {
+      "tags": []
+    },
+    "shared-error": {
+      "tags": []
+    },
+    "shared-kafka": {
+      "tags": []
+    },
+    "shared-logger": {
+      "tags": []
+    },
+    "shared-middlewares": {
+      "tags": []
+    },
+    "shared-minio": {
+      "tags": []
+    },
+    "shared-redis": {
+      "tags": []
+    },
+    "shared-swagger": {
+      "tags": []
+    },
+    "shared-types": {
+      "tags": []
+    },
+    "shared-utils": {
+      "tags": []
+    },
+    "user-service": {
+      "tags": ["scope:user"]
+    },
+    "product-service": {
+      "tags": ["scope:product"]
+    },
+    "order-service": {
+      "tags": ["scope:order"]
+    },
+    "rating-service": {
+      "tags": ["scope:rating"]
+    },
+    "email-service": {
+      "tags": ["scope:email"]
+    },
+    "payment-service": {
+      "tags": ["scope:payment"]
+    },
+    "search-service": {
+      "tags": ["scope:search"]
+    },
+    "cart-service": {
+      "tags": ["scope:cart"]
+    },
+    "admin-service": {
+      "tags": ["scope:admin"]
+    },
+    "invoice-service": {
+      "tags": ["scope:invoice"]
+    },
+    "analytics-service": {
+      "tags": ["scope:analytics"]
+    },
+    "vendor-service": {
+      "tags": ["scope:vendor"]
+    },
     "user-ui": "apps/frontend/user-ui",
     "seller-ui": "apps/frontend/seller-ui"
   }
-
 }
