@@ -1,0 +1,16 @@
+{
+  "name": "shared-email",
+  "sourceRoot": "libs/shared/email/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/libs/shared/email",
+        "main": "libs/shared/email/src/index.ts",
+        "tsConfig": "libs/shared/email/tsconfig.lib.json"
+      }
+    }
+  },
+  "tags": ["scope:shared", "type:lib"]
+}
