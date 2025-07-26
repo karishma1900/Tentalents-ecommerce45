@@ -1,0 +1,12 @@
+{
+  "name": "shared-minio",
+  "root": "libs/shared/minio",
+  "sourceRoot": "libs/shared/minio/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:noop"
+    }
+  },
+  "tags": ["scope:shared", "type:lib"]
+}

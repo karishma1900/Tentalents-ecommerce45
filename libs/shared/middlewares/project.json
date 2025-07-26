@@ -1,0 +1,17 @@
+{
+  "name": "shared-middleware",
+  "root": "libs/shared/middlewares",
+  "sourceRoot": "libs/shared/middlewares/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/libs/shared/middlewares",
+        "main": "libs/shared/middlewares/src/index.ts",
+        "tsConfig": "libs/shared/middlewares/tsconfig.lib.json"
+      }
+    }
+  },
+  "tags": ["scope:shared", "type:lib"]
+}
