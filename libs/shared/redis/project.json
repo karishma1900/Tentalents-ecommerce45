@@ -1,0 +1,31 @@
+{
+  "name": "shared-redis",
+  "root": "libs/shared/redis",
+  "sourceRoot": "libs/shared/redis/src",
+  "projectType": "library",
+  "tags": ["scope:shared", "type:redis"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "dist/libs/shared/redis",
+        "main": "libs/shared/redis/src/index.ts",
+        "tsConfig": "libs/shared/redis/tsconfig.lib.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["libs/shared/redis/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/libs/shared/redis"],
+      "options": {
+        "jestConfig": "libs/shared/redis/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
