@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../dist/out-tsc/libs/shared/kafka",
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@shared/types": [
+        "../../types/src/index"
+      ]
+    },
+    "declaration": true,
+    "declarationMap": true
+  }
+}
