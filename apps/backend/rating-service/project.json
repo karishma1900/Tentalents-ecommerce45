@@ -1,27 +1,47 @@
 {
   "name": "rating-service",
+  "sourceRoot": "apps/backend/rating-service/src",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "platform": "node",
         "outputPath": "dist/apps/backend/rating-service",
-        "tsConfig": "apps/backend/rating-service/tsconfig.app.json",
         "main": "apps/backend/rating-service/src/main.ts",
-        "assets": []
+        "tsConfig": "apps/backend/rating-service/tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
-    
     "serve": {
       "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "rating-service:build",
-        "watch": true
+        "buildTarget": "rating-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "rating-service:build:development"
+        },
+        "production": {
+          "buildTarget": "rating-service:build:production"
+        }
       }
     },
+
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/backend/rating-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
       }
     },
     "test": {
@@ -30,7 +50,14 @@
         "jestConfig": "apps/backend/rating-service/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t rating-service -f apps/backend/rating-service/Dockerfile ."
+      }
     }
-  },
-  "tags": ["type:service"]
-}
+    },
+    "tags": ["type:service"]
+  }
+  

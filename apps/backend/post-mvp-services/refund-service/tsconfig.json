@@ -1,6 +1,13 @@
 {
-  "extends": "ecommerce-hktvmall-style-Backend/tsconfig.base.json",
-  "compilerOptions": {
-    "baseUrl": "."
-  }
+  "extends": "../../../tsconfig.base.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

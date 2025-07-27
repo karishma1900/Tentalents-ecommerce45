@@ -1,7 +1,7 @@
 import { PrismaClient, UserRole } from '@prisma/client';
 import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { publishEvent } from '@shared/kafka';
-import { KAFKA_TOPICS } from '@shared/kafka-topics';
+import { KAFKA_TOPICS } from '@shared/kafka';
 
 const prisma = new PrismaClient();
 

@@ -1,19 +1,47 @@
 {
   "name": "invoice-service",
+  "sourceRoot": "apps/backend/invoice-service/src",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "platform": "node",
         "outputPath": "dist/apps/backend/invoice-service",
-        "tsConfig": "apps/backend/invoice-service/tsconfig.app.json",
         "main": "apps/backend/invoice-service/src/main.ts",
-        "assets": []
+        "tsConfig": "apps/backend/invoice-service/tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "invoice-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "invoice-service:build:development"
+        },
+        "production": {
+          "buildTarget": "invoice-service:build:production"
+        }
+      }
+    },
+
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/backend/invoice-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
       }
     },
     "test": {
@@ -22,7 +50,13 @@
         "jestConfig": "apps/backend/invoice-service/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t invoice-service -f apps/backend/invoice-service/Dockerfile ."
+      }
     }
-  },
-  "tags": ["type:service"]
-}
+    },
+    "tags": ["type:service"]
+  }

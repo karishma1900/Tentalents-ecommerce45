@@ -1,19 +1,47 @@
 {
   "name": "cart-service",
+  "sourceRoot": "apps/backend/cart-service/src",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "platform": "node",
         "outputPath": "dist/apps/backend/cart-service",
-        "tsConfig": "apps/backend/cart-service/tsconfig.app.json",
         "main": "apps/backend/cart-service/src/main.ts",
-        "assets": []
+        "tsConfig": "apps/backend/cart-service/tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "cart-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "cart-service:build:development"
+        },
+        "production": {
+          "buildTarget": "cart-service:build:production"
+        }
+      }
+    },
+
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/backend/cart-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
       }
     },
     "test": {
@@ -22,7 +50,13 @@
         "jestConfig": "apps/backend/cart-service/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t cart-service -f apps/backend/cart-service/Dockerfile ."
+      }
     }
-  },
-  "tags": ["type:service"]
-}
+    },
+    "tags": ["type:service"]
+  }

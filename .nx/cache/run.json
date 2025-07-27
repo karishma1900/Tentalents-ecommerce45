@@ -1,18 +1,18 @@
 {
   "run": {
-    "command": "nx serve admin-service",
-    "startTime": "2025-07-27T15:57:06.247Z",
-    "endTime": "2025-07-27T15:57:09.166Z",
+    "command": "nx build admin-service",
+    "startTime": "2025-07-27T18:49:01.470Z",
+    "endTime": "2025-07-27T18:49:02.894Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "admin-service:build",
+      "taskId": "admin-service:build:production",
       "target": "build",
       "projectName": "admin-service",
-      "hash": "16720402973348442148",
-      "startTime": "2025-07-27T15:57:06.379Z",
-      "endTime": "2025-07-27T15:57:09.161Z",
+      "hash": "1947772590311834469",
+      "startTime": "2025-07-27T18:49:01.621Z",
+      "endTime": "2025-07-27T18:49:02.876Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 1

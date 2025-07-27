@@ -1,0 +1,200 @@
+[1m[33mPackage type is set to "commonjs" but "esm" format is included. Going to use "cjs" format instead. You can change the package type to "module" or remove type in the package.json file.[39m[22m
+[4m[34mapps\backend\payment-service\src\app\controllers\payment.controller.ts:6:29[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/utils/lib/response' or its corresponding type declarations.
+
+[0m [90m 4 | [39m[36mimport[39m { paymentService } from [32m'../services/payment.service'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[36mimport[39m { produceKafkaEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m[36mimport[39m { sendSuccess } from [32m'@shared/utils/lib/response'[39m[33m;[39m[0m
+[0m [90m   | [39m                            [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m[36mimport[39m { logger } from [32m'@shared/logger'[39m[33m;[39m[0m
+[0m [90m 8 | [39m[0m
+[0m [90m 9 | [39m[36mexport[39m [36mconst[39m initiatePayment [33m=[39m async ([0m
+
+[4m[34mapps\backend\payment-service\src\app\controllers\payment.controller.ts:47:36[39m[24m - [31m[1merror[22m[39m [90mTS2554[39m: Expected 1 arguments, but got 2.
+
+[0m [90m 45 | [39m[0m
+[0m [90m 46 | [39m    [36mconst[39m topic [33m=[39m status [33m===[39m [32m'SUCCESS'[39m [33m?[39m [32m'payment.success'[39m [33m:[39m [32m'payment.failed'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 47 | [39m    await produceKafkaEvent(topic[33m,[39m updated)[33m;[39m[0m
+[0m [90m    | [39m                                   [31m[1m^[22m[39m[0m
+[0m [90m 48 | [39m[0m
+[0m [90m 49 | [39m    logger[33m.[39minfo([0m
+[0m [90m 50 | [39m      [32m`[paymentController] 🔁 Payment ${paymentId} verified as ${status}`[39m[0m
+
+[4m[34mapps\backend\payment-service\src\app\routes\payment.routes.ts:2:48[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module './payment.controller' or its corresponding type declarations.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mRouter[39m } from [32m'express'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mimport[39m { initiatePayment[33m,[39m verifyPayment } from [32m'./payment.controller'[39m[33m;[39m[0m
+[0m [90m   | [39m                                               [31m[1m^[22m[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { authenticateJWT[33m,[39m requireRole } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[0m
+[0m [90m 5 | [39m[36mconst[39m router [33m=[39m [33mRouter[39m()[33m;[39m[0m
+
+[4m[34mapps\backend\payment-service\src\app\routes\payment.routes.ts:3:10[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@shared/auth"' has no exported member 'authenticateJWT'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mRouter[39m } from [32m'express'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[36mimport[39m { initiatePayment[33m,[39m verifyPayment } from [32m'./payment.controller'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39m[36mimport[39m { authenticateJWT[33m,[39m requireRole } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m   | [39m         [31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m[0m
+[0m [90m 5 | [39m[36mconst[39m router [33m=[39m [33mRouter[39m()[33m;[39m[0m
+[0m [90m 6 | [39m[0m
+
+[4m[34mapps\backend\payment-service\src\app\routes\payment.routes.ts:11:15[39m[24m - [31m[1merror[22m[39m [90mTS2345[39m: Argument of type 'string[]' is not assignable to parameter of type 'UserRole'.
+
+[0m [90m  9 | [39m  [32m'/'[39m[33m,[39m[0m
+[0m [90m 10 | [39m  authenticateJWT[33m,[39m[0m
+[0m[31m[1m>[22m[39m[90m 11 | [39m  requireRole([[32m'buyer'[39m[33m,[39m [32m'buyer_seller'[39m])[33m,[39m[0m
+[0m [90m    | [39m              [31m[1m^[22m[39m[0m
+[0m [90m 12 | [39m  initiatePayment[0m
+[0m [90m 13 | [39m)[33m;[39m[0m
+[0m [90m 14 | [39m[0m
+
+[4m[34mapps\backend\payment-service\src\app\routes\payment.routes.ts:19:15[39m[24m - [31m[1merror[22m[39m [90mTS2345[39m: Argument of type 'string[]' is not assignable to parameter of type 'UserRole'.
+
+[0m [90m 17 | [39m  [32m'/:id/verify'[39m[33m,[39m[0m
+[0m [90m 18 | [39m  authenticateJWT[33m,[39m[0m
+[0m[31m[1m>[22m[39m[90m 19 | [39m  requireRole([[32m'buyer'[39m[33m,[39m [32m'buyer_seller'[39m])[33m,[39m[0m
+[0m [90m    | [39m              [31m[1m^[22m[39m[0m
+[0m [90m 20 | [39m  verifyPayment[0m
+[0m [90m 21 | [39m)[33m;[39m[0m
+[0m [90m 22 | [39m[0m
+
+[4m[34mapps\backend\payment-service\src\app\services\payment.service.ts:3:24[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/prisma' or its corresponding type declarations.
+
+[0m [90m 1 | [39m[90m// apps/payment-service/src/services/payment.service.ts[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39m[36mimport[39m { prisma } from [32m'@shared/prisma'[39m[33m;[39m[0m
+[0m [90m   | [39m                       [31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { v4 as uuidv4 } from [32m'uuid'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[36mimport[39m { logger } from [32m'@shared/logger'[39m[33m;[39m[0m
+[0m [90m 6 | [39m[0m
+
+[4m[34mapps\backend\payment-service\src\main.ts:92:9[39m[24m - [31m[1merror[22m[39m [90mTS2367[39m: This comparison appears to be unintentional because the types '{ [x: string]: CommandSignature<Command, RespVersions, TypeMapping>; } & { [x: string]: CommandSignature<RedisFunction, RespVersions, TypeMapping>; } & CommandSignature<...>' and 'string' have no overlap.
+
+[0m [90m 90 | [39m    await prisma[33m.[39m$disconnect()[33m;[39m[0m
+[0m [90m 91 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 92 | [39m    [36mif[39m (redisClient[33m.[39mstatus [33m===[39m [32m'ready'[39m) {[0m
+[0m [90m    | [39m        [31m[1m^[22m[39m[0m
+[0m [90m 93 | [39m      await redisClient[33m.[39mquit()[33m;[39m[0m
+[0m [90m 94 | [39m      logger[33m.[39minfo([32m'✅ Redis disconnected'[39m)[33m;[39m[0m
+[0m [90m 95 | [39m    }[0m
+
+[4m[34mlibs\shared\kafka\src\lib\kafka-consumer.ts:2:10[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"./kafka-client"' has no exported member 'getKafkaConsumer'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mConsumer[39m[33m,[39m [33mEachMessagePayload[39m } from [32m'kafkajs'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mimport[39m { getKafkaConsumer } from [32m'./kafka-client'[39m[33m;[39m [90m// ✅ Corrected import[39m[0m
+[0m [90m   | [39m         [31m[1m^[22m[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { logger } from [32m'@shared/logger'[39m[33m;[39m [90m// Replace with console if needed[39m[0m
+[0m [90m 4 | [39m[0m
+[0m [90m 5 | [39m[36mexport[39m interface [33mKafkaConsumerConfig[39m {[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-filename.util.spec.ts:3:1[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 1 | [39m[36mimport[39m { generateFilename } from [32m'../lib/generate-filename.util'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39mdescribe([32m'generateFilename'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m[31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m  it([32m'should generate filename with prefix and extension'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m filename [33m=[39m generateFilename([32m'avatar'[39m[33m,[39m [32m'.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(filename)[33m.[39mtoMatch([35m/^avatar-[a-f0-9\-]{36}\.jpg$/[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-filename.util.spec.ts:4:3[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 2 | [39m[0m
+[0m [90m 3 | [39mdescribe([32m'generateFilename'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m  it([32m'should generate filename with prefix and extension'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m  [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m    [36mconst[39m filename [33m=[39m generateFilename([32m'avatar'[39m[33m,[39m [32m'.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(filename)[33m.[39mtoMatch([35m/^avatar-[a-f0-9\-]{36}\.jpg$/[39m)[33m;[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-filename.util.spec.ts:6:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 4 | [39m  it([32m'should generate filename with prefix and extension'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m filename [33m=[39m generateFilename([32m'avatar'[39m[33m,[39m [32m'.jpg'[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m    expect(filename)[33m.[39mtoMatch([35m/^avatar-[a-f0-9\-]{36}\.jpg$/[39m)[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+[0m [90m 8 | [39m})[33m;[39m[0m
+[0m [90m 9 | [39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-path.util.spec.ts:3:1[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 1 | [39m[36mimport[39m { generateObjectPath } from [32m'../lib/generate-path.util'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39mdescribe([32m'generateObjectPath'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m[31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m  it([32m'should return a combined object path'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m path [33m=[39m generateObjectPath([32m'users/avatars/'[39m[33m,[39m [32m'avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(path)[33m.[39mtoBe([32m'users/avatars/avatar-uuid.jpg'[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-path.util.spec.ts:4:3[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 2 | [39m[0m
+[0m [90m 3 | [39mdescribe([32m'generateObjectPath'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m  it([32m'should return a combined object path'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m  [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m    [36mconst[39m path [33m=[39m generateObjectPath([32m'users/avatars/'[39m[33m,[39m [32m'avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(path)[33m.[39mtoBe([32m'users/avatars/avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-path.util.spec.ts:6:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 4 | [39m  it([32m'should return a combined object path'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m path [33m=[39m generateObjectPath([32m'users/avatars/'[39m[33m,[39m [32m'avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m    expect(path)[33m.[39mtoBe([32m'users/avatars/avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+[0m [90m 8 | [39m})[33m;[39m[0m
+[0m [90m 9 | [39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:3:1[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 1 | [39m[36mimport[39m { minioClient } from [32m'../lib/minio-client'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39mdescribe([32m'minioClient'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m[31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:4:3[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 2 | [39m[0m
+[0m [90m 3 | [39mdescribe([32m'minioClient'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m  [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m [90m 7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:5:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 3 | [39mdescribe([32m'minioClient'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m [90m 7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+[0m [90m 8 | [39m  })[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:6:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+[0m [90m 8 | [39m  })[33m;[39m[0m
+[0m [90m 9 | [39m})[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:7:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m  5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m  6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+[0m [90m    | [39m    [31m[1m^[22m[39m[0m
+[0m [90m  8 | [39m  })[33m;[39m[0m
+[0m [90m  9 | [39m})[33m;[39m[0m
+[0m [90m 10 | [39m[0m
+
+Found 20 errors.

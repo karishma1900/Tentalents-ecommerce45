@@ -1,0 +1,216 @@
+[1m[33mPackage type is set to "commonjs" but "esm" format is included. Going to use "cjs" format instead. You can change the package type to "module" or remove type in the package.json file.[39m[22m
+[4m[34mapps\backend\user-service\src\app\controllers\user.controller.ts:4:29[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/utils/lib/response' or its corresponding type declarations.
+
+[0m [90m 2 | [39m[36mimport[39m { userService } from [32m'../services/user.service'[39m[33m;[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { produceKafkaEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m[36mimport[39m { sendSuccess } from [32m'@shared/utils/lib/response'[39m[33m;[39m[0m
+[0m [90m   | [39m                            [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka/lib/kafka-topics'[39m[33m;[39m[0m
+[0m [90m 6 | [39m[36mimport[39m { [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m [90m 7 | [39m[0m
+
+[4m[34mapps\backend\user-service\src\app\controllers\user.controller.ts:5:30[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/kafka/lib/kafka-topics' or its corresponding type declarations.
+
+[0m [90m 3 | [39m[36mimport[39m { produceKafkaEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { sendSuccess } from [32m'@shared/utils/lib/response'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 5 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka/lib/kafka-topics'[39m[33m;[39m[0m
+[0m [90m   | [39m                             [31m[1m^[22m[39m[0m
+[0m [90m 6 | [39m[36mimport[39m { [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m [90m 7 | [39m[0m
+[0m [90m 8 | [39m[90m// 📝 POST /api/users/register[39m[0m
+
+[4m[34mapps\backend\user-service\src\app\controllers\user.controller.ts:6:10[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@prisma/client"' has no exported member 'UserRole'.
+
+[0m [90m 4 | [39m[36mimport[39m { sendSuccess } from [32m'@shared/utils/lib/response'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka/lib/kafka-topics'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m[36mimport[39m { [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m [90m   | [39m         [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m[0m
+[0m [90m 8 | [39m[90m// 📝 POST /api/users/register[39m[0m
+[0m [90m 9 | [39m[36mexport[39m [36mconst[39m registerUser [33m=[39m async ([0m
+
+[4m[34mapps\backend\user-service\src\app\services\user.service.ts:1:24[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@prisma/client"' has no exported member 'UserRole'.
+
+[0m[31m[1m>[22m[39m[90m 1 | [39m[36mimport[39m { [33mPrismaClient[39m[33m,[39m [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m [90m   | [39m                       [31m[1m^[22m[39m[0m
+[0m [90m 2 | [39m[36mimport[39m { hashPassword[33m,[39m comparePassword[33m,[39m generateJWT } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { publishEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka-topics'[39m[33m;[39m[0m
+
+[4m[34mapps\backend\user-service\src\app\services\user.service.ts:2:10[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@shared/auth"' has no exported member 'hashPassword'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mPrismaClient[39m[33m,[39m [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mimport[39m { hashPassword[33m,[39m comparePassword[33m,[39m generateJWT } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m   | [39m         [31m[1m^[22m[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { publishEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka-topics'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[0m
+
+[4m[34mapps\backend\user-service\src\app\services\user.service.ts:2:24[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@shared/auth"' has no exported member 'comparePassword'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mPrismaClient[39m[33m,[39m [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mimport[39m { hashPassword[33m,[39m comparePassword[33m,[39m generateJWT } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m   | [39m                       [31m[1m^[22m[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { publishEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka-topics'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[0m
+
+[4m[34mapps\backend\user-service\src\app\services\user.service.ts:2:41[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@shared/auth"' has no exported member 'generateJWT'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mPrismaClient[39m[33m,[39m [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mimport[39m { hashPassword[33m,[39m comparePassword[33m,[39m generateJWT } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m   | [39m                                        [31m[1m^[22m[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { publishEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka-topics'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[0m
+
+[4m[34mapps\backend\user-service\src\app\services\user.service.ts:3:10[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"@shared/kafka"' has no exported member 'publishEvent'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mPrismaClient[39m[33m,[39m [33mUserRole[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[36mimport[39m { hashPassword[33m,[39m comparePassword[33m,[39m generateJWT } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39m[36mimport[39m { publishEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m   | [39m         [31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka-topics'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[0m
+[0m [90m 6 | [39m[36mconst[39m prisma [33m=[39m [36mnew[39m [33mPrismaClient[39m()[33m;[39m[0m
+
+[4m[34mapps\backend\user-service\src\app\services\user.service.ts:4:30[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/kafka-topics' or its corresponding type declarations.
+
+[0m [90m 2 | [39m[36mimport[39m { hashPassword[33m,[39m comparePassword[33m,[39m generateJWT } from [32m'@shared/auth'[39m[33m;[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { publishEvent } from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m[36mimport[39m { [33mKAFKA_TOPICS[39m } from [32m'@shared/kafka-topics'[39m[33m;[39m[0m
+[0m [90m   | [39m                             [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m[0m
+[0m [90m 6 | [39m[36mconst[39m prisma [33m=[39m [36mnew[39m [33mPrismaClient[39m()[33m;[39m[0m
+[0m [90m 7 | [39m[0m
+
+[4m[34mapps\backend\user-service\src\main.ts:82:9[39m[24m - [31m[1merror[22m[39m [90mTS2367[39m: This comparison appears to be unintentional because the types '{ [x: string]: CommandSignature<Command, RespVersions, TypeMapping>; } & { [x: string]: CommandSignature<RedisFunction, RespVersions, TypeMapping>; } & CommandSignature<...>' and 'string' have no overlap.
+
+[0m [90m 80 | [39m    logger[33m.[39minfo([32m'✅ PostgreSQL disconnected'[39m)[33m;[39m[0m
+[0m [90m 81 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 82 | [39m    [36mif[39m (redisClient[33m.[39mstatus [33m===[39m [32m'ready'[39m) {[0m
+[0m [90m    | [39m        [31m[1m^[22m[39m[0m
+[0m [90m 83 | [39m      await redisClient[33m.[39mquit()[33m;[39m[0m
+[0m [90m 84 | [39m      logger[33m.[39minfo([32m'✅ Redis disconnected'[39m)[33m;[39m[0m
+[0m [90m 85 | [39m    }[0m
+
+[4m[34mlibs\shared\kafka\src\lib\kafka-consumer.ts:2:10[39m[24m - [31m[1merror[22m[39m [90mTS2305[39m: Module '"./kafka-client"' has no exported member 'getKafkaConsumer'.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mConsumer[39m[33m,[39m [33mEachMessagePayload[39m } from [32m'kafkajs'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 2 | [39m[36mimport[39m { getKafkaConsumer } from [32m'./kafka-client'[39m[33m;[39m [90m// ✅ Corrected import[39m[0m
+[0m [90m   | [39m         [31m[1m^[22m[39m[0m
+[0m [90m 3 | [39m[36mimport[39m { logger } from [32m'@shared/logger'[39m[33m;[39m [90m// Replace with console if needed[39m[0m
+[0m [90m 4 | [39m[0m
+[0m [90m 5 | [39m[36mexport[39m interface [33mKafkaConsumerConfig[39m {[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-filename.util.spec.ts:3:1[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 1 | [39m[36mimport[39m { generateFilename } from [32m'../lib/generate-filename.util'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39mdescribe([32m'generateFilename'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m[31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m  it([32m'should generate filename with prefix and extension'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m filename [33m=[39m generateFilename([32m'avatar'[39m[33m,[39m [32m'.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(filename)[33m.[39mtoMatch([35m/^avatar-[a-f0-9\-]{36}\.jpg$/[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-filename.util.spec.ts:4:3[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 2 | [39m[0m
+[0m [90m 3 | [39mdescribe([32m'generateFilename'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m  it([32m'should generate filename with prefix and extension'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m  [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m    [36mconst[39m filename [33m=[39m generateFilename([32m'avatar'[39m[33m,[39m [32m'.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(filename)[33m.[39mtoMatch([35m/^avatar-[a-f0-9\-]{36}\.jpg$/[39m)[33m;[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-filename.util.spec.ts:6:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 4 | [39m  it([32m'should generate filename with prefix and extension'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m filename [33m=[39m generateFilename([32m'avatar'[39m[33m,[39m [32m'.jpg'[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m    expect(filename)[33m.[39mtoMatch([35m/^avatar-[a-f0-9\-]{36}\.jpg$/[39m)[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+[0m [90m 8 | [39m})[33m;[39m[0m
+[0m [90m 9 | [39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-path.util.spec.ts:3:1[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 1 | [39m[36mimport[39m { generateObjectPath } from [32m'../lib/generate-path.util'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39mdescribe([32m'generateObjectPath'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m[31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m  it([32m'should return a combined object path'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m path [33m=[39m generateObjectPath([32m'users/avatars/'[39m[33m,[39m [32m'avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(path)[33m.[39mtoBe([32m'users/avatars/avatar-uuid.jpg'[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-path.util.spec.ts:4:3[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 2 | [39m[0m
+[0m [90m 3 | [39mdescribe([32m'generateObjectPath'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m  it([32m'should return a combined object path'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m  [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m    [36mconst[39m path [33m=[39m generateObjectPath([32m'users/avatars/'[39m[33m,[39m [32m'avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m 6 | [39m    expect(path)[33m.[39mtoBe([32m'users/avatars/avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\generate-path.util.spec.ts:6:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 4 | [39m  it([32m'should return a combined object path'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    [36mconst[39m path [33m=[39m generateObjectPath([32m'users/avatars/'[39m[33m,[39m [32m'avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m    expect(path)[33m.[39mtoBe([32m'users/avatars/avatar-uuid.jpg'[39m)[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m  })[33m;[39m[0m
+[0m [90m 8 | [39m})[33m;[39m[0m
+[0m [90m 9 | [39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:3:1[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 1 | [39m[36mimport[39m { minioClient } from [32m'../lib/minio-client'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39mdescribe([32m'minioClient'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m[31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:4:3[39m[24m - [31m[1merror[22m[39m [90mTS2593[39m: Cannot find name 'it'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+
+[0m [90m 2 | [39m[0m
+[0m [90m 3 | [39mdescribe([32m'minioClient'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m   | [39m  [31m[1m^[22m[39m[0m
+[0m [90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m [90m 7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:5:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 3 | [39mdescribe([32m'minioClient'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m[31m[1m>[22m[39m[90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m [90m 7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+[0m [90m 8 | [39m  })[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:6:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m 4 | [39m  it([32m'should be defined and have basic methods'[39m[33m,[39m () [33m=>[39m {[0m
+[0m [90m 5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m [90m   | [39m    [31m[1m^[22m[39m[0m
+[0m [90m 7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+[0m [90m 8 | [39m  })[33m;[39m[0m
+[0m [90m 9 | [39m})[33m;[39m[0m
+
+[4m[34mlibs\shared\minio\src\__tests__\minio-client.spec.ts:7:5[39m[24m - [31m[1merror[22m[39m [90mTS2304[39m: Cannot find name 'expect'.
+
+[0m [90m  5 | [39m    expect(minioClient)[33m.[39mtoBeDefined()[33m;[39m[0m
+[0m [90m  6 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'makeBucket'[39m)[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m  7 | [39m    expect(minioClient)[33m.[39mtoHaveProperty([32m'putObject'[39m)[33m;[39m[0m
+[0m [90m    | [39m    [31m[1m^[22m[39m[0m
+[0m [90m  8 | [39m  })[33m;[39m[0m
+[0m [90m  9 | [39m})[33m;[39m[0m
+[0m [90m 10 | [39m[0m
+
+Found 22 errors.

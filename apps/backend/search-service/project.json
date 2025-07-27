@@ -1,15 +1,43 @@
 {
   "name": "search-service",
+  "sourceRoot": "apps/backend/search-service/src",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "platform": "node",
         "outputPath": "dist/apps/backend/search-service",
-        "tsConfig": "apps/backend/search-service/tsconfig.app.json",
         "main": "apps/backend/search-service/src/main.ts",
-        "assets": []
+        "tsConfig": "apps/backend/search-service/tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "search-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "search-service:build:development"
+        },
+        "production": {
+          "buildTarget": "search-service:build:production"
+        }
+      }
+    },
+
     "lint": {
       "executor": "nx:eslint",
       "options": {
@@ -22,7 +50,14 @@
         "jestConfig": "apps/backend/search-service/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t search-service -f apps/backend/search-service/Dockerfile ."
+      }
     }
-  },
-  "tags": ["type:service"]
-}
+    },
+    "tags": ["type:service"]
+  }
+  

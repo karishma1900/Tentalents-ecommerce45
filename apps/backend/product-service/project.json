@@ -1,19 +1,48 @@
+
 {
   "name": "product-service",
+  "sourceRoot": "apps/backend/product-service/src",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "platform": "node",
         "outputPath": "dist/apps/backend/product-service",
-        "tsConfig": "apps/backend/product-service/tsconfig.app.json",
         "main": "apps/backend/product-service/src/main.ts",
-        "assets": []
+        "tsConfig": "apps/backend/product-service/tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "product-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "product-service:build:development"
+        },
+        "production": {
+          "buildTarget": "product-service:build:production"
+        }
+      }
+    },
+
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/backend/product-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
       }
     },
     "test": {
@@ -22,7 +51,14 @@
         "jestConfig": "apps/backend/product-service/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t product-service -f apps/backend/product-service/Dockerfile ."
+      }
     }
-  },
-  "tags": ["type:service"]
-}
+    },
+    "tags": ["type:service"]
+  }
+  

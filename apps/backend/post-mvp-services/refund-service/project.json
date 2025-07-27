@@ -38,7 +38,7 @@
     },
     "serve": {
       "continuous": true,
-      "executor": "@nx/js:node",
+      "executor": "@nx/esbuild:esbuild",
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
@@ -57,6 +57,12 @@
     "test": {
       "options": {
         "passWithNoTests": true
+      }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t refund-service -f apps/backend/refund-service/Dockerfile ."
       }
     }
   }

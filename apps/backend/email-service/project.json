@@ -1,19 +1,47 @@
 {
   "name": "email-service",
+  "sourceRoot": "apps/backend/email-service/src",
+  "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/js:tsc",
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
+        "platform": "node",
         "outputPath": "dist/apps/backend/email-service",
-        "tsConfig": "apps/backend/email-service/tsconfig.app.json",
         "main": "apps/backend/email-service/src/main.ts",
-        "assets": []
+        "tsConfig": "apps/backend/email-service/tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": true,
+        "bundle": true,
+        "thirdParty": false
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
       }
     },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "email-service:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "email-service:build:development"
+        },
+        "production": {
+          "buildTarget": "email-service:build:production"
+        }
+      }
+    },
+
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/backend/email-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
       }
     },
     "test": {
@@ -22,7 +50,13 @@
         "jestConfig": "apps/backend/email-service/jest.config.ts",
         "passWithNoTests": true
       }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t email-service -f apps/backend/email-service/Dockerfile ."
+      }
     }
-  },
-  "tags": ["type:service"]
-}
+    },
+    "tags": ["type:service"]
+  }

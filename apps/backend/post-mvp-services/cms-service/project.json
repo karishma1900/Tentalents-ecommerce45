@@ -38,7 +38,7 @@
     },
     "serve": {
       "continuous": true,
-      "executor": "@nx/js:node",
+      "executor": "@nx/esbuild:esbuild",
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
