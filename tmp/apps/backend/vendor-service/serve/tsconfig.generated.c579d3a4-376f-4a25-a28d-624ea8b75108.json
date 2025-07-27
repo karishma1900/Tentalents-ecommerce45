@@ -1,0 +1,94 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@shared/auth": [
+        "libs/shared/auth/src/index"
+      ],
+      "@shared/config": [
+        "libs/shared/config/src/index"
+      ],
+      "@shared/constants": [
+        "libs/shared/constants/src/index"
+      ],
+      "@shared/error": [
+        "libs/shared/error/src/index"
+      ],
+      "@shared/kafka": [
+        "libs/shared/kafka/src/index"
+      ],
+      "@shared/logger": [
+        "libs/shared/logger/src/index"
+      ],
+      "@shared/middlewares": [
+        "dist/libs/shared"
+      ],
+      "@shared/redis": [
+        "libs/shared/redis/src/index"
+      ],
+      "@shared/minio": [
+        "libs/shared/minio/src/index"
+      ],
+      "@shared/email": [
+        "libs/shared/email/src/index"
+      ],
+      "@shared/swagger": [
+        "libs/shared/swagger/src/index"
+      ],
+      "@shared/types": [
+        "libs/shared/types/src/index"
+      ],
+      "@shared/utils": [
+        "libs/shared/utils/src/index"
+      ],
+      "shared-auth": [
+        "dist/libs/shared/auth"
+      ],
+      "shared-config": [
+        "dist/libs/shared/config",
+        "libs/shared/config/dist",
+        "libs/shared/config/build",
+        "libs/shared/config/public"
+      ],
+      "shared-constants": [
+        "dist/libs/shared/constants",
+        "libs/shared/constants/dist",
+        "libs/shared/constants/build",
+        "libs/shared/constants/public"
+      ],
+      "shared-error": [
+        "dist/libs/shared/error",
+        "libs/shared/error/dist",
+        "libs/shared/error/build",
+        "libs/shared/error/public"
+      ],
+      "shared-kafka": [
+        "dist/libs/shared/kafka",
+        "libs/shared/kafka/dist",
+        "libs/shared/kafka/build",
+        "libs/shared/kafka/public"
+      ],
+      "shared-logger": [
+        "dist/libs/shared/logger",
+        "libs/shared/logger/dist",
+        "libs/shared/logger/build",
+        "libs/shared/logger/public"
+      ],
+      "shared-minio": [
+        "dist/libs/shared/minio",
+        "libs/shared/minio/dist",
+        "libs/shared/minio/build",
+        "libs/shared/minio/public"
+      ],
+      "shared-redis": [
+        "dist/libs/shared/redis"
+      ],
+      "shared-types": [
+        "dist/libs/shared/types",
+        "libs/shared/types/dist",
+        "libs/shared/types/build",
+        "libs/shared/types/public"
+      ]
+    }
+  },
+  "extends": "..\\..\\..\\..\\..\\apps\\backend\\vendor-service\\tsconfig.app.json"
+}

@@ -1,4 +1,4 @@
-import { VendorStatus } from '@shared/types/enums/vendor-status.enum';
+import { VendorStatus } from '../../../../types/src/lib/enums/vendor-status.enum';
 
 export interface VendorCreatedEvent {
   id: string;

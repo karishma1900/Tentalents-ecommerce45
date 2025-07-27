@@ -2925,6 +2925,51 @@
         "hash": "sha512-clqOhLHvGXelJDq0blfrPMvJ88TTMhlxKvbuj+mxpfXCcHIYlhuHeH63u99eO4wEbVtSopOG4szpABSjRXJESw=="
       }
     },
+    "npm:@nx/esbuild": {
+      "type": "npm",
+      "name": "npm:@nx/esbuild",
+      "data": {
+        "version": "21.3.7",
+        "packageName": "@nx/esbuild",
+        "hash": "sha512-RhVwDJJDKhtVArjkvJqk9/iOdQIhkYhN7Sen3fHogJjj8KBnKx7fNBdjHm7Ox7Amc0JfRjgBPx5CDeDKvQHDcQ=="
+      }
+    },
+    "npm:strip-bom@3.0.0": {
+      "type": "npm",
+      "name": "npm:strip-bom@3.0.0",
+      "data": {
+        "version": "3.0.0",
+        "packageName": "strip-bom",
+        "hash": "sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA=="
+      }
+    },
+    "npm:strip-bom": {
+      "type": "npm",
+      "name": "npm:strip-bom",
+      "data": {
+        "version": "4.0.0",
+        "packageName": "strip-bom",
+        "hash": "sha512-3xurFv5tEgii33Zi8Jtp55wEIILR9eh34FAW00PZf+JnSsTmV/ioewSgQl97JHvgjoRGwPShsWm+IdrxB35d0w=="
+      }
+    },
+    "npm:tsconfig-paths@4.2.0": {
+      "type": "npm",
+      "name": "npm:tsconfig-paths@4.2.0",
+      "data": {
+        "version": "4.2.0",
+        "packageName": "tsconfig-paths",
+        "hash": "sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg=="
+      }
+    },
+    "npm:tsconfig-paths": {
+      "type": "npm",
+      "name": "npm:tsconfig-paths",
+      "data": {
+        "version": "3.15.0",
+        "packageName": "tsconfig-paths",
+        "hash": "sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg=="
+      }
+    },
     "npm:@nx/eslint": {
       "type": "npm",
       "name": "npm:@nx/eslint",
@@ -4660,6 +4705,15 @@
         "version": "4.2.5",
         "packageName": "@types/stylis",
         "hash": "sha512-1Xve+NMN7FWjY14vLoY5tL3BVEQ/n42YLwaqJIPYhotZ9uBHt87VceMwWQpzmdEt2TNXIorIFG+YeCUUW7RInw=="
+      }
+    },
+    "npm:@types/swagger-jsdoc": {
+      "type": "npm",
+      "name": "npm:@types/swagger-jsdoc",
+      "data": {
+        "version": "6.0.4",
+        "packageName": "@types/swagger-jsdoc",
+        "hash": "sha512-W+Xw5epcOZrF/AooUM/PccNMSAFOKWZA5dasNyMujTwsBkU74njSJBpvCCJhHAJ95XRMzQrrW844Btu0uoetwQ=="
       }
     },
     "npm:@types/swagger-ui-express": {
@@ -11349,24 +11403,6 @@
         "hash": "sha512-/PwRGg6wH10V8pJHe3RJnizbxjNL0owLARCegup39sk0+m/G/qOfot5KqReWQR4YrtDpreSE7+tRWGCCovyE1A=="
       }
     },
-    "npm:strip-bom@3.0.0": {
-      "type": "npm",
-      "name": "npm:strip-bom@3.0.0",
-      "data": {
-        "version": "3.0.0",
-        "packageName": "strip-bom",
-        "hash": "sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA=="
-      }
-    },
-    "npm:strip-bom": {
-      "type": "npm",
-      "name": "npm:strip-bom",
-      "data": {
-        "version": "4.0.0",
-        "packageName": "strip-bom",
-        "hash": "sha512-3xurFv5tEgii33Zi8Jtp55wEIILR9eh34FAW00PZf+JnSsTmV/ioewSgQl97JHvgjoRGwPShsWm+IdrxB35d0w=="
-      }
-    },
     "npm:tar-stream@2.2.0": {
       "type": "npm",
       "name": "npm:tar-stream@2.2.0",
@@ -11383,24 +11419,6 @@
         "version": "3.1.7",
         "packageName": "tar-stream",
         "hash": "sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ=="
-      }
-    },
-    "npm:tsconfig-paths@4.2.0": {
-      "type": "npm",
-      "name": "npm:tsconfig-paths@4.2.0",
-      "data": {
-        "version": "4.2.0",
-        "packageName": "tsconfig-paths",
-        "hash": "sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg=="
-      }
-    },
-    "npm:tsconfig-paths": {
-      "type": "npm",
-      "name": "npm:tsconfig-paths",
-      "data": {
-        "version": "3.15.0",
-        "packageName": "tsconfig-paths",
-        "hash": "sha512-2Ac2RgzDe/cn48GvOe3M+o82pEFewD3UPbyoUHHdKasHwJKjds4fLXWf/Ux5kATBKN20oaFGu+jbElp1pos0mg=="
       }
     },
     "npm:yaml@2.8.0": {
@@ -18511,6 +18529,56 @@
     {
       "source": "npm:@nx/devkit",
       "target": "npm:yargs-parser",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:esbuild",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:@nx/devkit",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:@nx/js",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:picocolors",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:tinyglobby",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:tsconfig-paths@4.2.0",
+      "type": "static"
+    },
+    {
+      "source": "npm:@nx/esbuild",
+      "target": "npm:tslib",
+      "type": "static"
+    },
+    {
+      "source": "npm:tsconfig-paths@4.2.0",
+      "target": "npm:json5",
+      "type": "static"
+    },
+    {
+      "source": "npm:tsconfig-paths@4.2.0",
+      "target": "npm:minimist",
+      "type": "static"
+    },
+    {
+      "source": "npm:tsconfig-paths@4.2.0",
+      "target": "npm:strip-bom@3.0.0",
       "type": "static"
     },
     {
