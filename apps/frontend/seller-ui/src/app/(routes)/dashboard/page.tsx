@@ -1,5 +1,5 @@
-import HeaderBanner from 'apps/seller-ui/src/shared/components/header/headerbanner'
-import ProductAccept from 'apps/seller-ui/src/shared/components/productaccept/ProductAccept'
+import HeaderBanner from '../../../shared/components/header/headerbanner'
+import ProductAccept from '../../../shared/components/productaccept/ProductAccept'
 
 import React from 'react'
 

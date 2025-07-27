@@ -37120,3 +37120,7 @@ Time for 'build typescript dependencies' 0.025400000158697367
 [NX v21.3.7 Daemon Server] - 2025-07-27T14:21:05.198Z - [SYNC]: project graph hash is the same, not collecting task sync generators
 [NX v21.3.7 Daemon Server] - 2025-07-27T14:21:05.198Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
 [NX v21.3.7 Daemon Server] - 2025-07-27T14:21:05.198Z - Time taken for 'total execution time for createProjectGraph()' 45.326100000180304ms
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.896Z - Closed a connection. Number of open connections: 6
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.897Z - Closed a connection. Number of open connections: 5
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.897Z - Closed a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.902Z - Closed a connection. Number of open connections: 3

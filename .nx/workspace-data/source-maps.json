@@ -2981,6 +2981,10 @@
     "targets.build.options.outputPath": [
       "apps/frontend/user-ui/project.json",
       "nx/core/project-json"
+    ],
+    "targets.build.options.postcssConfig": [
+      "apps/frontend/user-ui/project.json",
+      "nx/core/project-json"
     ]
   },
   "apps/backend/kong-API-gateway": {

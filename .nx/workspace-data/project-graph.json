@@ -1306,7 +1306,8 @@
               "{options.outputPath}"
             ],
             "options": {
-              "outputPath": "dist/apps/frontend/user-ui"
+              "outputPath": "dist/apps/frontend/user-ui",
+              "postcssConfig": "apps/frontend/user-ui/postcss.config.js"
             },
             "configurations": {},
             "parallelism": true
@@ -37123,5 +37124,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1753626065165
+  "computedAt": 1753626427619
 }
