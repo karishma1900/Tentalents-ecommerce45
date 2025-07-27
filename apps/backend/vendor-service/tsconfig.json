@@ -1,9 +1,39 @@
-{
-  "extends": "../../../tsconfig.json",
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
-}
+// {
+//   "extends": "/tsconfig.json",
+//   "references": [
+//     {
+//       "path": "./tsconfig.app.json"
+//     }
+//   ]
+// }
+// {
+//   "extends": "/tsconfig.base.json",
+//   "references": [
+//     { "path": "/libs/shared/types" },
+//     { "path": "libs/shared/logger" },
+//     { "path": "libs/shared/config" },
+//     { "path": "libs/shared/redis" },
+//     { "path": "libs/shared/kafka" },
+//     { "path": "libs/shared/minio" },
+//     { "path": "./tsconfig.app.json" }
+//   ]
+// }
 
+// {
+//   "extends": "../../../tsconfig.base.json",
+//   "references": [
+//     {
+//       "path": "./tsconfig.app.json"
+//     },
+//     {
+//       "path": "./tsconfig.spec.json"
+//     }
+//   ]
+// }
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc/vendor-service"
+  },
+  "include": ["src/**/*.ts"]
+}

@@ -12,7 +12,7 @@ export const setCache = async (
   ttlInSeconds = 3600
 ): Promise<void> => {
   const data = JSON.stringify(value);
-  await redisClient.setEx(key, ttlInSeconds, data);
+  await redisClient.setex(key, ttlInSeconds, data);
 };
 
 /**

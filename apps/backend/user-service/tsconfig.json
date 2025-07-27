@@ -1,6 +1,7 @@
 {
   "extends": "../../../tsconfig.json",
   "references": [
+    { "path": "../../../libs/shared/redis" },
     {
       "path": "./tsconfig.app.json"
     }

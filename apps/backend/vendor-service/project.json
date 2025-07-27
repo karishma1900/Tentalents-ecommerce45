@@ -10,6 +10,13 @@
         "assets": []
       }
     },
+    "serve": {
+      "executor": "@nx/js:node",
+      "options": {
+        "buildTarget": "vendor-service:build",
+        "watch": true
+      }
+    },
     "lint": {
       "executor": "nx:eslint",
       "options": {

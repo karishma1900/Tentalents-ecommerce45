@@ -2,9 +2,12 @@
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
-    "rootDir": "../../../",
+    "rootDir": ".",
     "types": ["node"],
-    "incremental": true
+    "incremental": true,
+    "declaration": true,             // ✅ Required with "composite"
+    "declarationMap": true ,
+    "composite": true,
   },
   "include": [
     "src/**/*.ts",

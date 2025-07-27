@@ -1,8 +1,9 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src/lib",
-    "outDir": "../../dist/out-tsc/libs/shared/auth",
+    "outDir": "../../../dist/out-tsc/libs/shared/auth",
     "composite": true,
     "declaration": true,
     "declarationMap": true

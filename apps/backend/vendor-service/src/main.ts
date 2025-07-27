@@ -3,7 +3,7 @@ import path from 'path';
 import { Server } from 'http';
 import app from './app';
 
-import { logger } from '@shared/logger';
+import {logger}  from '@shared/logger';
 import { config } from '@shared/config';
 import { connectRedis, disconnectRedis } from '@shared/redis';
 import { connectKafkaProducer, disconnectKafkaProducer } from '@shared/kafka';

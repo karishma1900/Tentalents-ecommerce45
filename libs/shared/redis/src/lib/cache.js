@@ -10,7 +10,7 @@ const redis_1 = require("./redis");
  */
 const setCache = async (key, value, ttlInSeconds = 3600) => {
     const data = JSON.stringify(value);
-    await redis_1.redisClient.setEx(key, ttlInSeconds, data);
+    await redis_1.redisClient.setex(key, ttlInSeconds, data);
 };
 exports.setCache = setCache;
 /**

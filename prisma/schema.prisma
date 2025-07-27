@@ -33,17 +33,32 @@ model users {
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
 }
-model sellers{
-  id String  @id @default(auto()) @map("_id") @db.ObjectId 
+// model sellers{
+//   id String  @id @default(auto()) @map("_id") @db.ObjectId 
+//   name String
+//   email String   @unique
+//   phone_number String
+//   country String
+//   password String
+//   stripeId String?
+//   shop Shops?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   shopId String? @db.ObjectId
+//   shopsId String? @db.ObjectId
+// }
+
+model Vendor{
+  id String  @id @default(auto()) @map("_id") @db.Uuid
   name String
   email String   @unique
   phone_number String
   country String
   password String
   stripeId String?
-  shop Shops?
+  // shop Shops?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  shopId String? @db.ObjectId
-  shopsId String? @db.ObjectId
+  shopId String? @db.Uuid
+  shopsId String? @db.Uuid
 }

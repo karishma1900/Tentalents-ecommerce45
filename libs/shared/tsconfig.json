@@ -1,6 +1,13 @@
 {
-  "extends": "ecommerce-hktvmall-style-Backend/tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "."
-  }
+    "outDir": "../../../dist/out-tsc",
+    "types": ["node"],
+    "rootDir": ".",                        // 👈 important to include shared files
+    "baseUrl": ".", 
+    "moduleResolution": "Node"
+  },
+  "include": [
+    "**/*.ts",
+    "../../../libs/shared/types/src/**/*.ts"   // 👈 force include shared files
+  ]
 }

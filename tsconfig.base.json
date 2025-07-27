@@ -1,30 +1,81 @@
+// {
+//   "compileOnSave": false,
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "module": "commonjs",
+//     "lib": ["ES2020", "DOM"],
+//     "rootDir": ".",
+//     "baseUrl": ".",
+//     "paths": {
+//       "@shared/auth": ["libs/shared/auth/src/index.ts"],
+//       "@shared/config": ["libs/shared/config/src/index.ts"],
+//       "@shared/constants": ["libs/shared/constants/src/index.ts"],
+//       "@shared/error": ["libs/shared/error/src/index.ts"],
+//       "@shared/kafka": ["libs/shared/kafka/src/index.ts"],
+//       "@shared/logger": ["libs/shared/logger/src/index.ts"],
+//       "@shared/middlewares": ["libs/shared/middlewares/src/index.ts"],
+//       "@shared/redis": ["libs/shared/redis/src/index.ts"],
+//       "@shared/minio": ["libs/shared/minio/src/index.ts"],
+//       "@shared/email": ["libs/shared/email/src/index.ts"],
+//       "@shared/swagger": ["libs/shared/swagger/src/index.ts"],
+//       "@shared/types": ["libs/shared/types/src/index.ts"],
+//       "@shared/utils": ["libs/shared/utils/src/index.ts"]
+//     },
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "composite": true,            // Required for project references
+//     "declaration": true,
+//     "declarationMap": true,
+//     "sourceMap": true
+//   },
+//   "include": ["apps/**/*", "libs/**/*"],
+//   "exclude": ["node_modules", "dist"]
+// }
+
+// {
+//   "compileOnSave": false,
+//   "compilerOptions": {
+//     "target": "ES2020",
+//     "module": "commonjs",
+//     "lib": ["ES2020", "DOM"],
+//     "rootDir": ".",
+//     "baseUrl": ".",
+//     "paths": {
+//       "@shared/auth": ["libs/shared/auth/src/index.ts"],
+//       "@shared/config": ["libs/shared/config/src/index.ts"],
+//       "@shared/constants": ["libs/shared/constants/src/index.ts"],
+//       "@shared/error": ["libs/shared/error/src/index.ts"],
+//       "@shared/kafka": ["libs/shared/kafka/src/index.ts"],
+//       "@shared/logger": ["libs/shared/logger/src/index.ts"],
+//       "@shared/middlewares": ["libs/shared/middlewares/src/index.ts"],
+//       "@shared/redis": ["libs/shared/redis/src/index.ts"],
+//       "@shared/minio": ["libs/shared/minio/src/index.ts"],
+//       "@shared/email": ["libs/shared/email/src/index.ts"],
+//       "@shared/swagger": ["libs/shared/swagger/src/index.ts"],
+//       "@shared/types": ["libs/shared/types/src/index.ts"],
+//       "@shared/utils": ["libs/shared/utils/src/index.ts"]
+//     },
+//     "strict": true,
+//     "esModuleInterop": true,
+//     "skipLibCheck": true,
+//     "forceConsistentCasingInFileNames": true,
+//     "composite": true,
+//     "declaration": true,
+//     "declarationMap": true,
+//     "sourceMap": true
+//   },
+//   "exclude": ["node_modules", "dist"]
+// }
+
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",                           // Set root directory
-    "sourceMap": true,                        // Include source maps
-    "declaration": false,                     // No .d.ts output
-    "moduleResolution": "node",              // Node-style resolution
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    
-    "target": "ES2020",                      // Unified target
-    "module": "commonjs",                    // Use CommonJS (for Node apps)
-    "lib": ["ES2020", "DOM"],                // Include DOM and ES libs
-
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-
-    "strict": true,                          // Enable strict mode
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020", "DOM"],
+    "rootDir": ".",
     "baseUrl": ".",
     "paths": {
       "@shared/auth": ["libs/shared/auth/src/index.ts"],
@@ -40,8 +91,15 @@
       "@shared/swagger": ["libs/shared/swagger/src/index.ts"],
       "@shared/types": ["libs/shared/types/src/index.ts"],
       "@shared/utils": ["libs/shared/utils/src/index.ts"]
-    }
+    },
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
   },
-  "include": ["apps/**/*", "libs/**/*"],
-  "exclude": ["node_modules", "dist", "tmp"]
+  "exclude": ["node_modules", "tmp"]
 }

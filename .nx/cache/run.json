@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx build vendor-service --verbose",
+    "startTime": "2025-07-27T10:34:03.114Z",
+    "endTime": "2025-07-27T10:34:05.146Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "vendor-service:build",
+      "target": "build",
+      "projectName": "vendor-service",
+      "hash": "3001548890044502348",
+      "startTime": "2025-07-27T10:34:03.216Z",
+      "endTime": "2025-07-27T10:34:05.136Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    }
+  ]
+}

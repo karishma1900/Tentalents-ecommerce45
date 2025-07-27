@@ -1,7 +1,11 @@
 {
   "extends": "../../../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "composite": true, 
+     "declaration": true,
+    "declarationMap": true,
+   
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

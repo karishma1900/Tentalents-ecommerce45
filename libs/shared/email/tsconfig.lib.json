@@ -1,8 +1,9 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src/lib",
-    "outDir": "../../dist/out-tsc/libs/shared/email",
+    "outDir": "../../../dist/out-tsc/libs/shared/email",
     "composite": true,
     "declaration": true,
     "declarationMap": true
