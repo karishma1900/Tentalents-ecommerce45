@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import useSidebar from 'apps/seller-ui/src/hooks/useSidebar';
+import useSidebar from '../../../hooks/useSidebar';
 import { usePathname } from 'next/navigation';
-import useSeller from 'apps/seller-ui/src/hooks/useSeller';
+import useSeller from '../../../hooks/useSeller';
 import Box from '../box/index';
 import Link from 'next/link';
 import { Header } from './sidebar.styles';
