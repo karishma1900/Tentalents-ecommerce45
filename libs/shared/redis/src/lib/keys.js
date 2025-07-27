@@ -10,3 +10,4 @@ var RedisKey;
     RedisKey["RATING_SUMMARY"] = "rating:summary:";
 })(RedisKey || (exports.RedisKey = RedisKey = {}));
 exports.DEFAULT_TTL = 60 * 60; // 1 hour
+//# sourceMappingURL=keys.js.map

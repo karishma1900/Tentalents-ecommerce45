@@ -20,3 +20,4 @@ const isAdmin = (user) => user?.role === exports.ROLES.ADMIN;
 exports.isAdmin = isAdmin;
 const isSuperAdmin = (user) => user?.role === exports.ROLES.SUPER_ADMIN;
 exports.isSuperAdmin = isSuperAdmin;
+//# sourceMappingURL=types.js.map

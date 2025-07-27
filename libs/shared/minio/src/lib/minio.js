@@ -16,3 +16,4 @@ async function uploadFileToMinIO({ bucketName, objectName, content, contentType,
     // ✅ Return a public URL based on env variable (you must set it)
     return `${process.env.MINIO_PUBLIC_URL}/${bucketName}/${objectName}`;
 }
+//# sourceMappingURL=minio.js.map

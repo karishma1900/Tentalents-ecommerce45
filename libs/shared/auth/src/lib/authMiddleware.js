@@ -1,4 +1,7 @@
 "use strict";
+// import { Request, Response, NextFunction } from 'express';
+// import { verifyToken } from './jwt';
+// import { AuthPayload, UserRole } from './types'; // ✅ No @shared/types import
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.requireAuth = void 0;
 exports.authMiddleware = authMiddleware;
@@ -14,7 +17,8 @@ function authMiddleware(allowedRoles, secret = process.env['JWT_SECRET']) {
         }
         const token = authHeader.split(' ')[1];
         if (!token) {
-            return res.status(401).json({ message: 'Token not provided' });
+            // ✅ CORRECTED
+            res.status(401).json({ message: 'Token not provided' });
             return;
         }
         try {
@@ -37,8 +41,11 @@ function authMiddleware(allowedRoles, secret = process.env['JWT_SECRET']) {
         }
         catch (err) {
             console.error('❌ [authMiddleware] Token verification failed:', err);
-            return res.status(403).json({ message: 'Invalid or expired token' });
+            // ✅ CORRECTED
+            res.status(403).json({ message: 'Invalid or expired token' });
+            return;
         }
     };
 }
 exports.requireAuth = authMiddleware;
+//# sourceMappingURL=authMiddleware.js.map

@@ -220,3 +220,4 @@ exports.tags = [
         description: 'Endpoints related to product',
     },
 ];
+//# sourceMappingURL=product.tags.js.map

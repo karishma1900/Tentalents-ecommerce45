@@ -54,3 +54,4 @@ exports.ProductEvents = __importStar(require("./lib/events/ProductEvents"));
 exports.RatingEvents = __importStar(require("./lib/events/RatingEvent"));
 exports.SearchEvents = __importStar(require("./lib/events/SearchEvents"));
 exports.UserEvents = __importStar(require("./lib/events/UserEvents"));
+//# sourceMappingURL=index.js.map

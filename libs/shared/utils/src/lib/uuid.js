@@ -11,3 +11,4 @@ const generateUUID = () => (0, crypto_1.randomUUID)();
 exports.generateUUID = generateUUID;
 // ✅ Benefits: Ensures consistent, standard-compliant UUIDs across all services.
 // Used for correlation IDs, event IDs, resource IDs, etc.
+//# sourceMappingURL=uuid.js.map

@@ -28,3 +28,4 @@ function sendError(res, message, statusCode = 500) {
         message,
     });
 }
+//# sourceMappingURL=response.js.map

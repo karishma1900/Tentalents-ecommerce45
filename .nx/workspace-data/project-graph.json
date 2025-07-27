@@ -709,42 +709,11 @@
         "root": "apps/backend/vendor-service",
         "targets": {
           "test": {
+            "executor": "nx:jest",
             "options": {
-              "cwd": "apps/backend/vendor-service",
-              "env": {
-                "TS_NODE_COMPILER_OPTIONS": "{\"moduleResolution\":\"node10\",\"module\":\"commonjs\",\"customConditions\":null}"
-              },
-              "command": "jest"
+              "jestConfig": "apps/backend/vendor-service/jest.config.ts",
+              "passWithNoTests": true
             },
-            "metadata": {
-              "technologies": [
-                "jest"
-              ],
-              "description": "Run Jest Tests",
-              "help": {
-                "command": "npx jest --help",
-                "example": {
-                  "options": {
-                    "coverage": true
-                  }
-                }
-              }
-            },
-            "cache": true,
-            "inputs": [
-              "default",
-              "^production",
-              "{workspaceRoot}\\apps\\jest.preset.js",
-              {
-                "externalDependencies": [
-                  "jest"
-                ]
-              }
-            ],
-            "outputs": [
-              "{workspaceRoot}\\apps\\coverage\\apps\\vendor-service"
-            ],
-            "executor": "nx:run-commands",
             "configurations": {},
             "parallelism": true
           },
@@ -784,6 +753,24 @@
                 "buildTarget": "vendor-service:build:production"
               }
             },
+            "parallelism": true
+          },
+          "lint": {
+            "executor": "nx:eslint",
+            "options": {
+              "lintFilePatterns": [
+                "apps/backend/vendor-service/src/**/*.ts"
+              ]
+            },
+            "configurations": {},
+            "parallelism": true
+          },
+          "docker": {
+            "executor": "nx:run-commands",
+            "options": {
+              "command": "docker build -t vendor-service -f apps/backend/vendor-service/Dockerfile ."
+            },
+            "configurations": {},
             "parallelism": true
           }
         },
@@ -17665,17 +17652,17 @@
     "shared-swagger": [
       {
         "source": "shared-swagger",
+        "target": "npm:express",
+        "type": "static"
+      },
+      {
+        "source": "shared-swagger",
         "target": "npm:swagger-ui-express",
         "type": "static"
       },
       {
         "source": "shared-swagger",
         "target": "npm:swagger-jsdoc",
-        "type": "static"
-      },
-      {
-        "source": "shared-swagger",
-        "target": "npm:express",
         "type": "static"
       }
     ],
@@ -17763,8 +17750,58 @@
       },
       {
         "source": "shared-redis",
+        "target": "npm:@redis/client",
+        "type": "static"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/client",
+        "type": "dynamic"
+      },
+      {
+        "source": "shared-redis",
         "target": "npm:redis",
         "type": "static"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:redis",
+        "type": "dynamic"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/json",
+        "type": "static"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/search",
+        "type": "static"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/search",
+        "type": "dynamic"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/time-series",
+        "type": "static"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/time-series",
+        "type": "dynamic"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/bloom",
+        "type": "static"
+      },
+      {
+        "source": "shared-redis",
+        "target": "npm:@redis/bloom",
+        "type": "dynamic"
       }
     ],
     "shared-types": [],
@@ -37124,5 +37161,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1753626427619
+  "computedAt": 1753633467157
 }

@@ -43,3 +43,4 @@ exports.MimeTypes = {
     DOCX: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
     ZIP: 'application/zip',
 };
+//# sourceMappingURL=minio-constants.js.map

@@ -19,3 +19,4 @@ __exportStar(require("./ProductDeletedEvent"), exports);
 __exportStar(require("./ProductUpdatedEvent"), exports);
 __exportStar(require("./ProductCreatedEvent"), exports);
 __exportStar(require("./ProductRatedEvent"), exports);
+//# sourceMappingURL=index.js.map

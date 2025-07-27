@@ -102,3 +102,4 @@ exports.tags = [
         description: 'Endpoints related to order',
     },
 ];
+//# sourceMappingURL=order.tags.js.map

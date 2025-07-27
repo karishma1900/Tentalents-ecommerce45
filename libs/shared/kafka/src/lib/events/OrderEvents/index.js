@@ -18,3 +18,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./OrderCreatedEvent"), exports);
 __exportStar(require("./OrderCancelledEvent"), exports);
 __exportStar(require("./OrderStatusUpdatedEvent"), exports);
+//# sourceMappingURL=index.js.map

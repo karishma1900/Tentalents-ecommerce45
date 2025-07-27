@@ -59,3 +59,4 @@ exports.tags = [
         description: 'Endpoints related to user',
     },
 ];
+//# sourceMappingURL=user.tags.js.map

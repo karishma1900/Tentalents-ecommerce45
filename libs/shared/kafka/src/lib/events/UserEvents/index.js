@@ -19,3 +19,4 @@ __exportStar(require("./UserUpdatedEvent"), exports);
 __exportStar(require("./UserRegisteredEvent"), exports);
 __exportStar(require("./UserCreatedEvent"), exports);
 __exportStar(require("./UserDeletedEvent"), exports);
+//# sourceMappingURL=index.js.map

@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./lib/logger"), exports);
 __exportStar(require("./lib/loggerMiddleware"), exports);
 // npm install winston
+//# sourceMappingURL=index.js.map

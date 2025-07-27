@@ -59,3 +59,4 @@ exports.tags = [
         description: 'Endpoints related to  email',
     },
 ];
+//# sourceMappingURL=email.tags.js.map

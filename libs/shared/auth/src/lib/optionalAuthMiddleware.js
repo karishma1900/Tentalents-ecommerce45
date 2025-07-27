@@ -23,3 +23,4 @@ function optionalAuthMiddleware(secret = process.env.JWT_SECRET) {
         next();
     };
 }
+//# sourceMappingURL=optionalAuthMiddleware.js.map

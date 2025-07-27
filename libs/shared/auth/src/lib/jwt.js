@@ -25,3 +25,4 @@ function verifyToken(token, secret) {
     }
     throw new Error('Invalid token payload structure');
 }
+//# sourceMappingURL=jwt.js.map

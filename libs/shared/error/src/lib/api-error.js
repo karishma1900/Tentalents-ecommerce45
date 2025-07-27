@@ -39,3 +39,4 @@ class ForbiddenError extends ApiError {
     }
 }
 exports.ForbiddenError = ForbiddenError;
+//# sourceMappingURL=api-error.js.map

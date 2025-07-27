@@ -153,3 +153,4 @@ exports.tags = [
         description: 'Endpoints related to vendor-swagger',
     },
 ];
+//# sourceMappingURL=vendor.tags.js.map

@@ -25,3 +25,4 @@ __exportStar(require("./lib/minio-utils"), exports);
 __exportStar(require("./lib/bucket"), exports);
 __exportStar(require("./lib/minio"), exports); // contains uploadFileToMinIO etc.
 __exportStar(require("./lib/minio-connection"), exports);
+//# sourceMappingURL=index.js.map

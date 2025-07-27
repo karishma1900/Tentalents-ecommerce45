@@ -48,3 +48,4 @@ exports.tags = [
         description: 'Endpoints related to search',
     },
 ];
+//# sourceMappingURL=search.tags.js.map

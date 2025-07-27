@@ -53,3 +53,4 @@ exports.tags = [
         description: 'Endpoints related to analytics',
     },
 ];
+//# sourceMappingURL=analytics.tags.js.map

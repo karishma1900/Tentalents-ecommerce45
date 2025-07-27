@@ -18,3 +18,4 @@ const loggerMiddleware = (req, res, next) => {
     next();
 };
 exports.loggerMiddleware = loggerMiddleware;
+//# sourceMappingURL=loggerMiddleware.js.map

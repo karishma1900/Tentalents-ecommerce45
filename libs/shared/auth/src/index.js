@@ -21,3 +21,4 @@ __exportStar(require("./lib/generateToken"), exports);
 __exportStar(require("./lib/jwt"), exports);
 __exportStar(require("./lib/oauth"), exports);
 __exportStar(require("./lib/types"), exports);
+//# sourceMappingURL=index.js.map

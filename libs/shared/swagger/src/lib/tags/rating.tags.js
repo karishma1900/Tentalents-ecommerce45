@@ -142,3 +142,4 @@ exports.tags = [
         description: 'Endpoints related to rating',
     },
 ];
+//# sourceMappingURL=rating.tags.js.map

@@ -23,3 +23,4 @@ console.log('\n🔐 Generated JWT Token:\n');
 console.log(token);
 console.log('\n👉 Use in Authorization header:\n');
 console.log(`Authorization: Bearer ${token}`);
+//# sourceMappingURL=generateToken.js.map

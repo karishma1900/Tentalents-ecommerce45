@@ -64,3 +64,4 @@ exports.tags = [
         description: 'Endpoints related to invoice',
     },
 ];
+//# sourceMappingURL=invoice.tags.js.map

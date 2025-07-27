@@ -9,3 +9,4 @@ var UserRole;
     UserRole["SUPER_ADMIN"] = "super_admin";
     UserRole["BUYER_SELLER"] = "buyer_seller";
 })(UserRole || (exports.UserRole = UserRole = {}));
+//# sourceMappingURL=user-role.enum.js.map

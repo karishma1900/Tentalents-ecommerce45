@@ -28,3 +28,4 @@ function requireRole(...allowedRoles) {
         next();
     };
 }
+//# sourceMappingURL=requireRole.js.map

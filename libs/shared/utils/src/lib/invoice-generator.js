@@ -43,3 +43,4 @@ async function generateInvoiceAndUpload(orderId) {
         });
     });
 }
+//# sourceMappingURL=invoice-generator.js.map

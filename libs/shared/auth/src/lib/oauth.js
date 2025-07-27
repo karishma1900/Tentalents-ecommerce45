@@ -18,3 +18,4 @@ function oauthMiddleware(req, res, next) {
         return res.status(401).json({ message: 'Invalid OAuth token' });
     }
 }
+//# sourceMappingURL=oauth.js.map

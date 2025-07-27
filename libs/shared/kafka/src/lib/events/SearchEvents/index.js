@@ -16,3 +16,4 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 // Auto-generated index.ts
 __exportStar(require("./SyncProductIndexEvent"), exports);
+//# sourceMappingURL=index.js.map

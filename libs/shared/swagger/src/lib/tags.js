@@ -31,3 +31,4 @@ exports.tagMap = {
 function getTagsByService(service) {
     return exports.tagMap[service] || [];
 }
+//# sourceMappingURL=tags.js.map

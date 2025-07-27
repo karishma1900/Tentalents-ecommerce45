@@ -17,3 +17,4 @@ exports.logger = (0, winston_1.createLogger)({
     defaultMeta: { service: serviceName },
     transports: [new winston_1.transports.Console()],
 });
+//# sourceMappingURL=logger.js.map

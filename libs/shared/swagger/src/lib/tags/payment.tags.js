@@ -98,3 +98,4 @@ exports.tags = [
         description: 'Endpoints related to payment',
     },
 ];
+//# sourceMappingURL=payment.tags.js.map

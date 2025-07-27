@@ -37124,3 +37124,47 @@ Time for 'build typescript dependencies' 0.025400000158697367
 [NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.897Z - Closed a connection. Number of open connections: 5
 [NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.897Z - Closed a connection. Number of open connections: 4
 [NX v21.3.7 Daemon Server] - 2025-07-27T14:22:02.902Z - Closed a connection. Number of open connections: 3
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:03.561Z - [WATCHER]: Processing file changes in outputs
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:03.567Z - [WATCHER]: 0 file(s) created or restored, 23 file(s) modified, 0 file(s) deleted
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.782Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.782Z - [REQUEST]: apps/frontend/seller-ui/src/shared/components/shared/components/sidebar/sidebar.item.tsx,apps/frontend/seller-ui/src/shared/components/productaccept/ProductAccept.tsx,apps/frontend/seller-ui/src/shared/components/productaccept/productaccept.css,apps/frontend/seller-ui/src/shared/components/shared/components/header/headerbanner.tsx,apps/frontend/seller-ui/src/shared/components/sidebar/sidebar.tsx,apps/frontend/seller-ui/src/shared/components/shared/components/orderapprove/orderapprove.css,apps/frontend/seller-ui/src/shared/components/shared/components/sidebar/sidebar.css,apps/frontend/seller-ui/src/shared/components/inventory/inventory.css,apps/frontend/seller-ui/src/shared/components/shared/components/sidebar/sidebar.menu.tsx,apps/frontend/user-ui/postcss.config.js,apps/frontend/seller-ui/postcss.config.js,apps/frontend/seller-ui/src/shared/components/shared/components/header/headerbanner.css,apps/frontend/seller-ui/src/shared/components/shared/components/box/index.tsx,apps/frontend/seller-ui/src/shared/components/shared/components/productaccept/productaccept.css,apps/frontend/seller-ui/src/shared/components/shared/components/sidebar/sidebar.styles.tsx,apps/frontend/seller-ui/src/shared/components/shared/components/productaccept/ProductAccept.tsx,apps/frontend/seller-ui/src/shared/components/shared/components/sidebar/sidebar.tsx,apps/frontend/user-ui/project.json,apps/frontend/seller-ui/src/configs/constants.tsx,apps/frontend/seller-ui/src/configs/global.d.ts,apps/frontend/seller-ui/src/shared/components/shared/components/orderapprove/OrderApprove.tsx,apps/frontend/seller-ui/src/shared/components/inventory/Inventory.tsx,apps/frontend/seller-ui/src/app/(routes)/dashboard/page.tsx
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.782Z - [REQUEST]: 
+Time for '@nx/webpack/plugin:createNodes' 3.6276000002399087
+Time for 'nx/core/project-json:createNodes' 5.918899999931455
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.827Z - [REQUEST]: Responding to the client. handleGlob
+Time for 'nx/core/package-json:createNodes' 10.31400000024587
+Time for 'nx/js/dependencies-and-lockfile:createNodes' 10.12099999981001
+Time for 'total for sendMessageToDaemon()' 13.110100000165403
+Time for 'deserialize daemon response' 0.22360000014305115
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.833Z - [REQUEST]: Responding to the client. handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.834Z - Time taken for 'hash changed files from watcher' 6.579399999696761ms
+Time for 'total for sendMessageToDaemon()' 14.948400000110269
+Time for 'deserialize daemon response' 0.02259999979287386
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.857Z - [REQUEST]: Responding to the client. handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.858Z - Done responding to the client handleGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.859Z - Handled GLOB. Handling time: 4. Response time: 32.
+Time for '@nx/jest/plugin:createNodes' 48.647200000006706
+Time for 'total for sendMessageToDaemon()' 33.3672000002116
+Time for 'deserialize daemon response' 0.036700000055134296
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.915Z - [REQUEST]: Responding to the client. handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.915Z - Done responding to the client handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.916Z - Handled HASH_GLOB. Handling time: 3. Response time: 83.
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.921Z - [REQUEST]: Responding to the client. handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.921Z - Done responding to the client handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.922Z - Handled HASH_GLOB. Handling time: 21. Response time: 65.
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.923Z - Done responding to the client handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.923Z - Handled HASH_GLOB. Handling time: 47. Response time: 8.
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.923Z - Done responding to the client handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:06.923Z - Handled HASH_GLOB. Handling time: 3. Response time: 2.
+Time for '@nx/next/plugin:createNodes' 111.49899999983609
+Time for 'total for sendMessageToDaemon()' 86.71169999986887
+Time for 'deserialize daemon response' 0.09439999982714653
+Time for '@nx/eslint/plugin:createNodes' 641.7237999998033
+Time for 'total for sendMessageToDaemon()' 83.73920000018552
+Time for 'deserialize daemon response' 0.041000000201165676
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:07.518Z - Time taken for 'build-project-configs' 693.2713999999687ms
+Time for 'build typescript dependencies' 54.00460000010207
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:07.662Z - Wrote project graph cache to C:\Users\Karishma khatri\Desktop\Tentalents-ecommerce\.nx\workspace-data\project-graph.json
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:07.662Z - [SYNC]: collect registered sync generators
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:07.664Z - [SYNC]: nx.json hash is the same, not collecting global sync generators
+[NX v21.3.7 Daemon Server] - 2025-07-27T14:27:07.664Z - Time taken for 'total execution time for createProjectGraph()' 112.15540000004694ms

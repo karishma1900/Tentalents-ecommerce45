@@ -12,3 +12,4 @@ exports.minioClient = new minio_1.Client({
 exports.default = exports.minioClient;
 // npm install minio
 // npm install --save-dev @types/minio
+//# sourceMappingURL=minio-client.js.map

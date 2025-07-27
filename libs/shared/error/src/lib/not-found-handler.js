@@ -7,3 +7,4 @@ const notFoundHandler = (req, _res, next) => {
     next(new api_error_1.ApiError(404, message));
 };
 exports.notFoundHandler = notFoundHandler;
+//# sourceMappingURL=not-found-handler.js.map

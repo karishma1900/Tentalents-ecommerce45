@@ -36,6 +36,26 @@
           "buildTarget": "vendor-service:build:production"
         }
       }
+    },
+
+    "lint": {
+      "executor": "nx:eslint",
+      "options": {
+        "lintFilePatterns": ["apps/backend/vendor-service/src/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "nx:jest",
+      "options": {
+        "jestConfig": "apps/backend/vendor-service/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "docker": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker build -t vendor-service -f apps/backend/vendor-service/Dockerfile ."
+      }
     }
   },
   "tags": ["type:service"]

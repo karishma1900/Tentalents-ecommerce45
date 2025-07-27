@@ -31,3 +31,4 @@ function setupSwagger(app, config) {
 }
 // npm install swagger-ui-express swagger-jsdoc
 // npm install -D @types/swagger-ui-express
+//# sourceMappingURL=setupSwagger.js.map

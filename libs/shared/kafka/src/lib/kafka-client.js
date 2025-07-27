@@ -14,3 +14,4 @@ const getKafkaInstance = () => {
     return kafka;
 };
 exports.getKafkaInstance = getKafkaInstance;
+//# sourceMappingURL=kafka-client.js.map

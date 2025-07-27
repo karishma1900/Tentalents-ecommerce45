@@ -30,3 +30,4 @@ const sendSuccess = (res, message, data) => {
 };
 exports.sendSuccess = sendSuccess;
 // ✅ Benefits: Clean and organized imports like:
+//# sourceMappingURL=index.js.map

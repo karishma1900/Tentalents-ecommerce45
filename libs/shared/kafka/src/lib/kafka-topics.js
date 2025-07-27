@@ -55,3 +55,4 @@ exports.KAFKA_TOPICS = {
 };
 // ✅ Flatten all nested topic strings into one array
 exports.ALL_KAFKA_TOPICS = Object.values(exports.KAFKA_TOPICS).flatMap((group) => Object.values(group));
+//# sourceMappingURL=kafka-topics.js.map

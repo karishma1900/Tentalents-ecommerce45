@@ -7,3 +7,4 @@ var MinioBucket;
     MinioBucket["PRODUCT_IMAGES"] = "product-images";
     MinioBucket["EMAIL_ATTACHMENTS"] = "email-attachments";
 })(MinioBucket || (exports.MinioBucket = MinioBucket = {}));
+//# sourceMappingURL=bucket.js.map

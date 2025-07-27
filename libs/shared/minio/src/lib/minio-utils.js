@@ -20,3 +20,4 @@ async function uploadFile(bucket, objectName, filePath, metaData = {}) {
 async function getFile(bucket, objectName) {
     return minio_client_1.default.getObject(bucket, objectName);
 }
+//# sourceMappingURL=minio-utils.js.map

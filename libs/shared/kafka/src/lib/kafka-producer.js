@@ -64,3 +64,4 @@ async function disconnectKafkaProducer() {
         producer = null;
     }
 }
+//# sourceMappingURL=kafka-producer.js.map

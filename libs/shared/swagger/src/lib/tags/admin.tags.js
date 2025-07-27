@@ -98,3 +98,4 @@ exports.tags = [
         description: 'Endpoints related to admin',
     },
 ];
+//# sourceMappingURL=admin.tags.js.map

@@ -23,3 +23,4 @@ exports.kafkaConfig = {
 // KAFKA_SASL_MECHANISM=plain
 // KAFKA_USERNAME=myuser
 // KAFKA_PASSWORD=mypassword
+//# sourceMappingURL=kafka-config.js.map

@@ -17,4 +17,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Auto-generated index.ts
 __exportStar(require("./InvoiceFailedEvent"), exports);
 __exportStar(require("./InvoiceGenerateEvent"), exports);
-__exportStar(require("./InvoiceGeneratedEvent"), exports);
+// export * from './InvoiceGeneratedEvent';
+//# sourceMappingURL=index.js.map
