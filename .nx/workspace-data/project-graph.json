@@ -17973,12 +17973,12 @@
       },
       {
         "source": "seller-ui",
-        "target": "npm:styled-components",
+        "target": "npm:react-icons",
         "type": "static"
       },
       {
         "source": "seller-ui",
-        "target": "npm:react-icons",
+        "target": "npm:styled-components",
         "type": "static"
       }
     ],
@@ -18347,5 +18347,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1753642294377
+  "computedAt": 1753642538050
 }

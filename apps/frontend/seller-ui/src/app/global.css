@@ -84,7 +84,7 @@
   justify-content: space-between;
   padding:10px 20px;
   border-radius: 10px;
- 
+  cursor: pointer;
   gap:20px;
 }
 .background-buttonver{
@@ -97,7 +97,7 @@
   justify-content:center;
   padding:10px 20px;
   border-radius: 10px;
- 
+  cursor: pointer;
   gap:20px;
   width:100%;
 
@@ -145,6 +145,7 @@ input[type="checkbox"]:checked::after {
   font-size: 14px;
   border-radius: 10px;
   margin:10px 0px;
+   cursor: pointer;
 }
 .center-borderedbutton{
   font-family: 'Radhika Trial', sans-serif;
@@ -160,7 +161,7 @@ input[type="checkbox"]:checked::after {
   padding:10px;
   font-size: 14px;
   border-radius: 10px;
-  margin:10px 0px;
+  margin:10px 0px; cursor: pointer;
 }
 
 
@@ -175,6 +176,7 @@ gap:20px;
   justify-content: space-between;
   padding:10px;
     border-radius: 10px;;
+     cursor: pointer;
      margin:10px 0px;
 }
 input, textarea{
@@ -204,6 +206,7 @@ textarea::placeholder {
     border-radius: 10px;;
   padding:10px;
    margin:10px 0px;
+   cursor: pointer;
 }
 
 

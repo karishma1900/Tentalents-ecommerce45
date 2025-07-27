@@ -1581,6 +1581,192 @@
       "nx/core/project-json"
     ]
   },
+  "apps/backend/admin-service": {
+    "root": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets": [
+      "apps/backend/admin-service/jest.config.ts",
+      "@nx/jest/plugin"
+    ],
+    "name": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "sourceRoot": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "projectType": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "tags": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "tags.type:service": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.executor": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.outputs": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.defaultConfiguration": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.platform": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.outputPath": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.main": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.tsConfig": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.assets": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.generatePackageJson": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.bundle": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.options.thirdParty": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.development": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.configurations.production": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.executor": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.defaultConfiguration": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.options": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.options.buildTarget": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.development": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.development.buildTarget": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.production": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.serve.configurations.production.buildTarget": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint.executor": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint.options": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.lint.options.lintFilePatterns": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.executor": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.jestConfig": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.test.options.passWithNoTests": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.docker": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.docker.executor": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.docker.options": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.docker.options.command": [
+      "apps/backend/admin-service/project.json",
+      "nx/core/project-json"
+    ]
+  },
   "apps/backend/analytics-service": {
     "root": [
       "apps/backend/analytics-service/project.json",
@@ -3462,192 +3648,6 @@
     ],
     "targets.build.options.tsConfig": [
       "libs/shared/middlewares/project.json",
-      "nx/core/project-json"
-    ]
-  },
-  "apps/backend/admin-service": {
-    "root": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets": [
-      "apps/backend/admin-service/jest.config.ts",
-      "@nx/jest/plugin"
-    ],
-    "name": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "sourceRoot": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "projectType": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "tags": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "tags.type:service": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.executor": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.outputs": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.defaultConfiguration": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.configurations": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.platform": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.outputPath": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.main": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.tsConfig": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.assets": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.generatePackageJson": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.bundle": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.thirdParty": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.configurations.development": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.configurations.production": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.executor": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.defaultConfiguration": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.options": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.configurations": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.options.buildTarget": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.configurations.development": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.configurations.development.buildTarget": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.configurations.production": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.serve.configurations.production.buildTarget": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.lint": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.lint.executor": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.lint.options": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.lint.options.lintFilePatterns": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.test": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.test.executor": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.test.options": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.test.options.jestConfig": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.test.options.passWithNoTests": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.docker": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.docker.executor": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.docker.options": [
-      "apps/backend/admin-service/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.docker.options.command": [
-      "apps/backend/admin-service/project.json",
       "nx/core/project-json"
     ]
   },
