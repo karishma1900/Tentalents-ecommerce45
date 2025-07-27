@@ -28,27 +28,45 @@
 }
 
 .produtdetails {
-  display: flex;
+  display: grid;
+  grid-template-columns: 80px 100px 160px 30px auto; /* Quantity, Price, City, Status tags */
   align-items: center;
-    justify-content: space-between;
-  gap: 24px;
-  flex: 3;                      /* ⬅ Shares space properly */
-  /* font-size: 14px; */
-  min-width: 300px;
- width: 100%;
-
+  gap: 10px;
+  flex: 3;
+  width: 100%;
+  min-width: 50px;
+  font-size: 14px;
 }
 
+/* Optional: Make price and quantity right-aligned for better look */
+.produtdetails p:nth-child(1) {
+  font-weight: bold;
+}
 
+.produtdetails p {
+  margin: 0;
+  white-space: nowrap;
+}
 
+/* Status tags remain flexible */
 .status-tags {
+  
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  flex: 1;
+  justify-content:flex-start;
+gap:10px;
+  /* flex-wrap: wrap; */
 }
 
+
+
+
+
+.status-tags span{
+font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+    font:15px;
+}
 /* .status-tags span {
   font-size: 12px;
   padding: 4px 10px;
@@ -73,3 +91,8 @@
 }
 
 /* Buttons */
+.orderprice{
+  font-weight: 400;
+  font-size: 14px;
+  
+}
