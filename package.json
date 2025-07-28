@@ -10,6 +10,7 @@
     "nx": "npx nx",
     "lint": "npx nx lint",
     "test": "npx nx test",
+    "build": "nx build",
     "format": "nx format:write",
     "dev": "nx run-many --target=serve --all",
     "auth-docs": "node apps/auth-service/src/swagger.js",
