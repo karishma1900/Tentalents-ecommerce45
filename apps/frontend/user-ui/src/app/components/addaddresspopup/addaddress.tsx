@@ -4,7 +4,10 @@ import { MapPinPlus } from 'lucide-react';
 import './addaddress.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
-
+type AddAddressProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
 const AddAddress = ({ isOpen, onClose }) => {
   // Always call hooks first
   const formRef = useRef(null);
