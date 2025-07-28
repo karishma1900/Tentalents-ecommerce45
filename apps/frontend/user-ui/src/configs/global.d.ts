@@ -21,6 +21,7 @@ export type productItems = {
     rating: number;
     category: string[];
     seller?: Seller;
+    reviewCount: number; 
 };
 
 export type footerPages ={
