@@ -3,7 +3,7 @@
 import React from 'react';
 import './productaccept.css';
 import Image from 'next/image';
-import type { ProductOrder } from '@shared/types'; // Adjust path as needed
+import type { ProductOrder } from '../../../configs/global'; // Adjust path as needed
 
 interface ProductAcceptProps {
   orders?: ProductOrder[];
