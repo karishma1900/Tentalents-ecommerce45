@@ -1,18 +1,19 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPinPlus } from 'lucide-react';
 import './addaddress.css';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+
 type AddAddressProps = {
   isOpen: boolean;
   onClose: () => void;
 };
-const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
-  // Always call hooks first
-  const formRef = useRef(null);
 
-  // Controlled form fields
+const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
+  const formRef = useRef<HTMLDivElement>(null);
+
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [country, setCountry] = useState('');
@@ -20,11 +21,11 @@ const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
   const [address, setAddress] = useState('');
   const [landmark, setLandmark] = useState('');
 
-  // Only add the event listener if the popup is open
   useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (formRef.current && !formRef.current.contains(e.target)) {
-        onClose(); // Close the popup if click is outside
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (formRef.current && !formRef.current.contains(target)) {
+        onClose();
       }
     };
 
@@ -37,15 +38,13 @@ const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen) return null; // Return null immediately if not open
+  if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newAddress = { name, phone, country, state, address, landmark };
     console.log('New Address:', newAddress);
-
-    // TODO: Send to server or update parent component
-    onClose(); // Close popup after submit
+    onClose();
   };
 
   return (
@@ -89,6 +88,7 @@ const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
                 onChange={(e) => setState(e.target.value)}
               />
             </div>
+
             <div className="firstcolumn">
               <input
                 type="text"
@@ -115,14 +115,14 @@ const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
                 Locate Me <MapPinPlus />
               </button>
             </div>
-             <input
+
+            <input
               type="text"
-              placeholder="Area, Street,Sector,Village"
+              placeholder="Area, Street, Sector, Village"
               value={landmark}
-              className='input-field'
+              className="input-field"
               onChange={(e) => setLandmark(e.target.value)}
             />
-
             <input
               type="text"
               placeholder="Nearby Landmark"
@@ -136,18 +136,10 @@ const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
               <h2>Address Type</h2>
             </div>
             <div className="selectone">
-              <button className="bordered-button">
-                Home
-              </button>
-              <button className="bordered-button">
-                Business
-              </button>
-              <button className="bordered-button">
-                Relative
-              </button>
-              <button className="bordered-button">
-                Others
-              </button>
+              <button type="button" className="bordered-button">Home</button>
+              <button type="button" className="bordered-button">Business</button>
+              <button type="button" className="bordered-button">Relative</button>
+              <button type="button" className="bordered-button">Others</button>
             </div>
           </div>
 
@@ -158,7 +150,9 @@ const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
               <input type="checkbox" value="check" />
               Use this as default address
             </label>
-            <button className="background-button">Use This Address</button>
+            <button type="submit" className="background-button">
+              Use This Address
+            </button>
           </div>
         </form>
       </div>
