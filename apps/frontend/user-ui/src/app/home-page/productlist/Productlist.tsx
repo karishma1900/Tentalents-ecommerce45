@@ -3,7 +3,7 @@
 import { products } from '../../../configs/constants';
 import React from 'react';
 import ProductListItem from '../../components/productitemlist/Productitemlist';
-import { ProductItem } from '../../components/productitemlist/Productitemlist';
+import { productItems as ProductItem } from '../../../configs/global';
 import './productlist.css';
 
 type ProductsProps = {
