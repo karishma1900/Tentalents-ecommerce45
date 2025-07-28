@@ -2,18 +2,18 @@
 import type { StaticImageData } from 'next/image';
 
 declare global {
-  type NavItemsTypes = {
+  export type NavItemsTypes = {
     title: string;
     href: string;
   };
 
-  type CategoryItemsTypes = {
+  export type CategoryItemsTypes = {
     image: string | StaticImageData;
     title: string;
     href: string;
   };
 
-  type productItems = {
+  export type productItems = {
     id: string;
     image: (string | StaticImageData)[];
     title: string;
@@ -22,20 +22,21 @@ declare global {
     offerPrice?: number;
     rating: number;
     category: string[];
+    reviewCount:number;
     seller?: Seller;
   };
 
-  type footerPages = {
+  export type footerPages = {
     title: string;
     href: string;
   };
 
-  type Seller = {
+ export  type Seller = {
     name: string;
     image: string | StaticImageData;
   };
 
-  type Address = {
+  export type Address = {
     id: number;
     pinCode: number;
     city: string;
