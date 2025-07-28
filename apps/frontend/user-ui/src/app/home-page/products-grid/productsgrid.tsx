@@ -8,7 +8,7 @@ import './productgrid.css';
 
 type ProductsProps = {
   columns?: number;
-  columns?: number;
+  
   category?: string;
   showHeader?: boolean;
   products?: ProductItem[];

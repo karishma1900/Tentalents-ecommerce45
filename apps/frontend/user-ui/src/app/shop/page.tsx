@@ -44,8 +44,12 @@ const Page = () => {
   const filteredProducts = defaultProducts.filter((product) => {
     const matchCategory = selectedCategory
       ? Array.isArray(product.category)
-        ? product.category.includes(selectedCategory)
-        : product.category === selectedCategory
+        ? product.category.some((cat) =>
+            typeof cat === 'string' ? cat === selectedCategory : cat.name === selectedCategory
+          )
+        : typeof product.category === 'string'
+        ? product.category === selectedCategory
+        : product.category.name === selectedCategory
       : true;
 
     const matchSeller = selectedSeller ? product.seller === selectedSeller : true;
@@ -72,7 +76,8 @@ const Page = () => {
           <div className="shop-left">
             <h3>Filter</h3>
             <div className="filter-component">
-              <h3 className="clear-all"
+              <h3
+                className="clear-all"
                 style={{ cursor: 'pointer' }}
                 onClick={() => {
                   setSelectedCategory(null);
@@ -91,7 +96,7 @@ const Page = () => {
                   className="bordered-button filtercategory"
                   onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
                 >
-                  <h3>Categories</h3>
+                  Categories
                   <ChevronDown />
                 </div>
                 {showCategoryDropdown && (
@@ -119,25 +124,27 @@ const Page = () => {
                   className="bordered-button"
                   onClick={() => setShowSellerDropdown(!showSellerDropdown)}
                 >
-                  <h3>By Seller</h3>
+                  By Seller
                   <ChevronDown />
                 </div>
                 {showSellerDropdown && (
-                  <div className="dropdown-menu">
-                    {sellers.map((seller, index) => (
-                      <div
-                        key={index}
-                        className="dropdown-item"
-                        onClick={() => {
-                          setSelectedSeller(seller!);
-                          setShowSellerDropdown(false);
-                        }}
-                      >
-                        <span>{seller}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+  <div className="dropdown-menu">
+    {sellers.map((seller, index) => (
+      <div
+        key={index}
+        className="dropdown-item"
+        onClick={() => {
+          setSelectedSeller(seller.name);
+          setShowSellerDropdown(false);
+        }}
+      >
+        <Image src={seller.image} alt={seller.name} width={20} height={20} />
+        <span>{seller.name}</span>
+      </div>
+    ))}
+  </div>
+)}
+
               </div>
             </div>
           </div>
@@ -155,97 +162,92 @@ const Page = () => {
 
       <div className="filter-items">
         <div className="filter-itemsleft">
-
           {/* --- Discount Filter --- */}
-         {/* --- Discount Filter --- */}
-<div className="discountoffer">
-  <h3 className="productheading">Discount Offer</h3>
-  <ul>
-    {discountRanges.map((range, index) => {
-      const isSelected =
-        selectedDiscountRange?.min === range.min &&
-        selectedDiscountRange?.max === range.max;
-      return (
-        <li key={index} onClick={() => setSelectedDiscountRange(range)}>
-          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-            <input
-              type="checkbox"
-              checked={isSelected}
-              readOnly
-              style={{ marginRight: '8px' }}
-            />
-            {range.label}
-          </label>
-        </li>
-      );
-    })}
-  </ul>
-</div>
-
+          <div className="discountoffer">
+            <h3 className="productheading">Discount Offer</h3>
+            <ul>
+              {discountRanges.map((range, index) => {
+                const isSelected =
+                  selectedDiscountRange?.min === range.min &&
+                  selectedDiscountRange?.max === range.max;
+                return (
+                  <li key={index} onClick={() => setSelectedDiscountRange(range)}>
+                    <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        readOnly
+                        style={{ marginRight: '8px' }}
+                      />
+                      {range.label}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
 
           {/* --- Rating Filter --- */}
-         <div className="rating-filter">
-  <h3 className="productheading">Rating Item</h3>
-  <ul className="product-rating1">
-    {availableRatings.map((rating, index) => {
-      const isSelected = selectedRating === rating;
-      return (
-        <li
-          key={index}
-          onClick={() => setSelectedRating(rating)}
-          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-        >
-          <input
-            type="checkbox"
-            checked={isSelected}
-            readOnly
-            style={{ marginRight: '8px' }}
-          />
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            {[...Array(5)].map((_, i) => (
-              <StarIcon
-                key={i}
-                fill={i < rating ? '#FFD700' : 'none'}
-                stroke="#FFD700"
-                size={16}
-              />
-            ))}
-            <span style={{ marginLeft: '4px' }}>({rating}+)</span>
+          <div className="rating-filter">
+            <h3 className="productheading">Rating Item</h3>
+            <ul className="product-rating1">
+              {availableRatings.map((rating, index) => {
+                const isSelected = selectedRating === rating;
+                return (
+                  <li
+                    key={index}
+                    onClick={() => setSelectedRating(rating)}
+                    style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      readOnly
+                      style={{ marginRight: '8px' }}
+                    />
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      {[...Array(5)].map((_, i) => (
+                        <StarIcon
+                          key={i}
+                          fill={i < rating ? '#FFD700' : 'none'}
+                          stroke="#FFD700"
+                          size={16}
+                        />
+                      ))}
+                      <span style={{ marginLeft: '4px' }}>({rating}+)</span>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </li>
-      );
-    })}
-  </ul>
-</div>
-
 
           {/* --- Price Filter --- */}
-        <div className="product-filter">
-  <h3 className="productheading">Price Filter</h3>
-  <ul>
-    {priceRanges.map((range, index) => {
-      const isSelected =
-        selectedPriceRange?.min === range.min &&
-        selectedPriceRange?.max === range.max;
-      return (
-        <li
-          key={index}
-          onClick={() => setSelectedPriceRange(range)}
-          style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-        >
-          <input
-            type="checkbox"
-            checked={isSelected}
-            readOnly
-            style={{ marginRight: '8px' }}
-          />
-          {range.label}
-        </li>
-      );
-    })}
-  </ul>
-</div>
-
+          <div className="product-filter">
+            <h3 className="productheading">Price Filter</h3>
+            <ul>
+              {priceRanges.map((range, index) => {
+                const isSelected =
+                  selectedPriceRange?.min === range.min &&
+                  selectedPriceRange?.max === range.max;
+                return (
+                  <li
+                    key={index}
+                    onClick={() => setSelectedPriceRange(range)}
+                    style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isSelected}
+                      readOnly
+                      style={{ marginRight: '8px' }}
+                    />
+                    {range.label}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         </div>
 
         <div className="filter-itemsright">
