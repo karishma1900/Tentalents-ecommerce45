@@ -8,7 +8,7 @@ type AddAddressProps = {
   isOpen: boolean;
   onClose: () => void;
 };
-const AddAddress = ({ isOpen, onClose }) => {
+const AddAddress = ({ isOpen, onClose }: AddAddressProps) => {
   // Always call hooks first
   const formRef = useRef(null);
 
