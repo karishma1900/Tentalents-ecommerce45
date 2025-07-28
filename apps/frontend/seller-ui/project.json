@@ -12,14 +12,14 @@
         "dev": true
       }
     },
-   "build": {
-  "executor": "@nx/next:build",
-  "outputs": ["{options.outputPath}"],
-  "options": {
-    "outputPath": "dist/apps/frontend/seller-ui",
-    "assets": ["public"]
-  }
-}
+    "build": {
+      "executor": "@nx/next:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/frontend/seller-ui",
+        "assets": ["apps/frontend/seller-ui/public"]
+      }
+    }
   },
   "tags": []
 }
