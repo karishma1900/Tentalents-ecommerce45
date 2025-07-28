@@ -1,17 +1,19 @@
+// global.d.ts
 import type { StaticImageData } from 'next/image';
 
+declare global {
+  type NavItemsTypes = {
+    title: string;
+    href: string;
+  };
 
-export type NavItemsTypes = {
-    title:string;
-    href:string;
-}
-export type CategoryItemsTypes = {
-    image:string;
-    title:string;
-    href:string;
-  
-}
-export type productItems = {
+  type CategoryItemsTypes = {
+    image: string | StaticImageData;
+    title: string;
+    href: string;
+  };
+
+  type productItems = {
     id: string;
     image: (string | StaticImageData)[];
     title: string;
@@ -21,43 +23,30 @@ export type productItems = {
     rating: number;
     category: string[];
     seller?: Seller;
-    reviewCount: number; 
-};
+  };
 
-export type footerPages ={
-    title:string;
-    href:string;
-}
-export type Seller ={
-    name:string;
-    image:string;
-}
-// type CartItem ={
-//     id:string;
-//     title:string;
-//     image:string;
-//     price:number;
-//     offerPrice?:number;
-//     quantity:number;
-// }
-    
-// type CartContextType ={
-//     cart:CartItem[];
-//     addToCart:(item:CartItem) => void;
-//     removeFromCart:(id:string) => void;
-//     clearCart:() =>void;
-// }
+  type footerPages = {
+    title: string;
+    href: string;
+  };
 
-export type Address ={
-    id:number;
-    pinCode:number;
-    city:string;
-    state:string;
-    country:string;
-     name:string;
-    address:string;
-    phone:number;
-    gmail:string;
-   
+  type Seller = {
+    name: string;
+    image: string | StaticImageData;
+  };
 
+  type Address = {
+    id: number;
+    pinCode: number;
+    city: string;
+    state: string;
+    country: string;
+    name: string;
+    address: string;
+    phone: number;
+    gmail: string;
+  };
 }
+
+// This makes the file a module and avoids errors like 'Global augmentations can only be directly nested in external modules.'
+export {};
