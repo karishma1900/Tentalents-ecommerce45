@@ -2,19 +2,11 @@
 
 import React from 'react';
 import './productaccept.css';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
+import type { ProductOrder } from '@shared/types'; // Adjust path as needed
 
 interface ProductAcceptProps {
-  orders?: {
-    id: number;
-    status: string;
-    city: string;
-    price: number;
-    product: {
-      name: string;
-      image: string | StaticImageData;
-    };
-  }[];
+  orders?: ProductOrder[];
 }
 
 const ProductAccept = ({ orders }: ProductAcceptProps) => {
@@ -29,7 +21,13 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
     if (lowerStatus.includes('failed') || lowerStatus.includes('unfulfilled')) return 'failed';
     if (lowerStatus.includes('unpaid')) return 'unpaid';
     if (lowerStatus.includes('in process')) return 'process';
-    if (lowerStatus.includes('paid') || lowerStatus.includes('fulfilled') || lowerStatus.includes('refunded')) return 'paid';
+    if (
+      lowerStatus.includes('paid') ||
+      lowerStatus.includes('fulfilled') ||
+      lowerStatus.includes('refunded')
+    ) {
+      return 'paid';
+    }
     return '';
   };
 
@@ -40,21 +38,26 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
   return (
     <div>
       {orders.map((order) => {
-        const normalizedStatuses = order.status.toLowerCase().split(',').map(s => s.trim());
+        const normalizedStatuses = order.status.toLowerCase().split(',').map((s) => s.trim());
 
         const isPaidOnly = normalizedStatuses.length === 1 && normalizedStatuses.includes('paid');
-        const isUnpaidOnly = normalizedStatuses.length === 1 && normalizedStatuses.includes('unpaid');
-        const isPaidInProcess = normalizedStatuses.includes('paid') && normalizedStatuses.includes('in process');
-        const isUnpaidInProcess = normalizedStatuses.includes('unpaid') && normalizedStatuses.includes('in process');
-        const isPaidFulfilled = normalizedStatuses.includes('paid') && normalizedStatuses.includes('fulfilled');
+        const isUnpaidOnly =
+          normalizedStatuses.length === 1 && normalizedStatuses.includes('unpaid');
+        const isPaidInProcess =
+          normalizedStatuses.includes('paid') && normalizedStatuses.includes('in process');
+        const isUnpaidInProcess =
+          normalizedStatuses.includes('unpaid') && normalizedStatuses.includes('in process');
+        const isPaidFulfilled =
+          normalizedStatuses.includes('paid') && normalizedStatuses.includes('fulfilled');
         const isRefunded = normalizedStatuses.includes('refunded');
-        const isFailedOrUnfulfilled = normalizedStatuses.includes('failed') || normalizedStatuses.includes('unfulfilled');
+        const isFailedOrUnfulfilled =
+          normalizedStatuses.includes('failed') || normalizedStatuses.includes('unfulfilled');
 
         return (
           <div key={order.id} className="product-item">
             <div className="product-section">
               <Image
-                src={typeof order.product.image === 'string' ? order.product.image : order.product.image.src}
+                src={order.product.image}
                 alt={order.product.name}
                 width={100}
                 height={100}
@@ -63,7 +66,7 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
             </div>
 
             <div className="produtdetails">
-              <p className='orderprice'>₹{order.price}</p>
+              <p className="orderprice">₹{order.price}</p>
               <p>{order.city}</p>
               <div className="status-tags">
                 {normalizedStatuses.map((status) => (
@@ -77,20 +80,45 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
             <div className="productstatus">
               {isPaidInProcess || isUnpaidInProcess ? (
                 <div className="product-buttons">
-                  <button className="center-borderedbutton bg-var(--lightblue2)" onClick={() => handleTrackOrder(order.id)}>Track Order</button>
+                  <button
+                    className="center-borderedbutton bg-var(--lightblue2)"
+                    onClick={() => handleTrackOrder(order.id)}
+                  >
+                    Track Order
+                  </button>
                 </div>
               ) : isPaidFulfilled || isRefunded ? (
                 <div className="product-buttons">
-                  <button className="center-borderedbutton" onClick={() => handleViewOrder(order.id)}>View Order</button>
+                  <button
+                    className="center-borderedbutton"
+                    onClick={() => handleViewOrder(order.id)}
+                  >
+                    View Order
+                  </button>
                 </div>
               ) : isPaidOnly || isUnpaidOnly ? (
                 <div className="product-buttons">
-                  <button className="center-borderedbutton" onClick={() => handleDeny(order.id)}>Deny</button>
-                  <button className="background-buttonver" onClick={() => handleConfirm(order.id)}>Confirm</button>
+                  <button
+                    className="center-borderedbutton"
+                    onClick={() => handleDeny(order.id)}
+                  >
+                    Deny
+                  </button>
+                  <button
+                    className="background-buttonver"
+                    onClick={() => handleConfirm(order.id)}
+                  >
+                    Confirm
+                  </button>
                 </div>
               ) : isFailedOrUnfulfilled ? (
                 <div className="product-buttons">
-                  <button className="center-borderedbutton" onClick={() => handleViewStatus(order.id)}>View Status</button>
+                  <button
+                    className="center-borderedbutton"
+                    onClick={() => handleViewStatus(order.id)}
+                  >
+                    View Status
+                  </button>
                 </div>
               ) : null}
             </div>
