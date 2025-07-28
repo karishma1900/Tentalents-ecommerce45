@@ -66,6 +66,7 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
             </div>
 
             <div className="produtdetails">
+                <p className="orderprice">{order.quantity}</p>
               <p className="orderprice">₹{order.price}</p>
               <p>{order.city}</p>
               <div className="status-tags">

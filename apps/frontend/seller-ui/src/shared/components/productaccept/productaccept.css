@@ -29,7 +29,7 @@
 
 .produtdetails {
   display: grid;
-  grid-template-columns: 80px 100px 160px 30px auto; /* Quantity, Price, City, Status tags */
+  grid-template-columns: 80px 80px 80px 190px auto; /* Quantity, Price, City, Status tags */
   align-items: center;
   gap: 10px;
   flex: 3;
