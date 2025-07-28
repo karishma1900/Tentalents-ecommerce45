@@ -434,11 +434,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         <div className='featuredproducts'>
         <div className='heavydiscount'>
         <h2 className='heading discountheading'>Heavy Discount</h2>
-        <Products  showHeader={false} className="productslisting" />
+        <Products  showHeader={false} />
         </div>
         <div className='popularproducts'>
         <h2 className='heading discountheading' >Popular Products</h2>
-         <Products columns={3} showHeader={false} className="productslisting" />
+         <Products columns={3} showHeader={false} />
         </div>
         </div>
     </div>
