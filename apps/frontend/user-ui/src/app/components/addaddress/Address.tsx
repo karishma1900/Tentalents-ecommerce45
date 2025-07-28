@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { MapPinPlus, PlusIcon, Trash, Pencil } from 'lucide-react';
-import { address } from 'apps/user-ui/src/configs/constants';
+import { address } from '../../../configs/constants';
 import AddAddress from '../addaddresspopup/addaddress';
 import './address.css';
 

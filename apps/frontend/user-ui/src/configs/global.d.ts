@@ -1,3 +1,5 @@
+import type { StaticImageData } from 'next/image';
+
 
 type NavItemsTypes = {
     title:string;
@@ -10,15 +12,17 @@ type CategoryItemsTypes = {
   
 }
 type productItems = {
-    id:string;
-    image:string[];
-    title:string;
-    price:number;
-    offerPrice?:number;
-    rating:number;
-    category:string[];
-    seller?:Seller;
-}
+    id: string;
+    image: (string | StaticImageData)[];
+    title: string;
+    href: string;
+    price: number;
+    offerPrice?: number;
+    rating: number;
+    category: string[];
+    seller?: Seller;
+};
+
 type footerPages ={
     title:string;
     href:string;

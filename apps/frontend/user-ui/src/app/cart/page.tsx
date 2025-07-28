@@ -45,7 +45,7 @@ const Cart = () => {
                   <div className="detailcart">
                     <div className="cartcontentarea">
                       <Link href={product.href}>
-                        <cartproduct-imageh3 className="product-title">{product.title}</cartproduct-imageh3>
+                        <h3 className="product-title">{product.title}</h3>
                       </Link>
 
                       <div className="price-main">
