@@ -99,21 +99,22 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
             </div>
 
             <div className="thumbnail-gallery">
-              {images.map((img, index) => (
-                <div
-                  key={index}
-                  className={`thumbnail-image ${img === featuredImage ? 'active' : ''}`}
-                  onClick={() => setFeaturedImage(img)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <Image
-                    src={img}
-                    alt={`${product.title} thumbnail ${index + 1}`}
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              ))}
+              {images.map((img: string, index: number) => (
+  <div
+    key={index}
+    className={`thumbnail-image ${img === featuredImage ? 'active' : ''}`}
+    onClick={() => setFeaturedImage(img)}
+    style={{ cursor: 'pointer' }}
+  >
+    <Image
+      src={img}
+      alt={`${product.title} thumbnail ${index + 1}`}
+      width={100}
+      height={100}
+    />
+  </div>
+))}
+
             </div>
           </div>
 
