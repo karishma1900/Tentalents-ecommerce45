@@ -105,6 +105,7 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
+    reviewCount: 155,
     category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
     seller:getSellerByName("Ramesh Store")
   },
@@ -115,7 +116,7 @@ export const products:productItems[]=[
     title: 'Ambrane Unbreakable 60W Fast Charging',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
-    
+      reviewCount: 155,
     rating:4.5,
     category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
     seller:getSellerByName("Ramesh Store")
@@ -128,6 +129,7 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
+      reviewCount: 155,
       category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
      seller:getSellerByName("Ramesh Store")
   },
@@ -139,6 +141,7 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
+      reviewCount: 155,
       category:'Medical Equips',
        seller:getSellerByName("Ramesh Store")
   },
@@ -150,6 +153,7 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
+      reviewCount: 155,
       category:'Medical Equips',
        seller:getSellerByName("Ramesh Store")
   },
@@ -159,7 +163,7 @@ export const products:productItems[]=[
     title: 'Ambrane Unbreakable 60W Fast Charging',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
-   
+     reviewCount: 155,
     rating:4.5,
       category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
      seller:getSellerByName("Ramesh Store")
@@ -170,12 +174,14 @@ export const products:productItems[]=[
     title: 'Ambrane Unbreakable 60W Fast Charging',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
+      reviewCount: 155,
    
     rating:4.5,
       category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
       seller:getSellerByName("Ramesh Store")
   }
 ];
+
 
 export const pages:footerPages[]=[
   {
