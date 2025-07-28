@@ -1363,5 +1363,135 @@
       ],
       "command": "npx nx watch --projects seller-ui --includeDependentProjects -- npx nx build-deps seller-ui"
     }
+  },
+  "17771821896512430049": {
+    "build": {
+      "command": "next build",
+      "options": {
+        "cwd": "apps/frontend/seller-ui",
+        "tty": false
+      },
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        {
+          "externalDependencies": [
+            "next"
+          ]
+        }
+      ],
+      "outputs": [
+        "{workspaceRoot}/apps/frontend/seller-ui/.next/!(cache)/**/*",
+        "{workspaceRoot}/apps/frontend/seller-ui/.next/!(cache)"
+      ]
+    },
+    "dev": {
+      "continuous": true,
+      "command": "next dev",
+      "options": {
+        "cwd": "apps/frontend/seller-ui"
+      }
+    },
+    "start": {
+      "continuous": true,
+      "command": "next start",
+      "options": {
+        "cwd": "apps/frontend/seller-ui"
+      },
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "serve-static": {
+      "continuous": true,
+      "command": "next start",
+      "options": {
+        "cwd": "apps/frontend/seller-ui"
+      },
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "build-deps": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "watch-deps": {
+      "continuous": true,
+      "dependsOn": [
+        "build-deps"
+      ],
+      "command": "npx nx watch --projects seller-ui --includeDependentProjects -- npx nx build-deps seller-ui"
+    }
+  },
+  "6000860771136003975": {
+    "build": {
+      "command": "next build",
+      "options": {
+        "cwd": "apps/frontend/user-ui",
+        "tty": false
+      },
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": true,
+      "inputs": [
+        "default",
+        "^production",
+        {
+          "externalDependencies": [
+            "next"
+          ]
+        }
+      ],
+      "outputs": [
+        "{workspaceRoot}/apps/frontend/user-ui/.next/!(cache)/**/*",
+        "{workspaceRoot}/apps/frontend/user-ui/.next/!(cache)"
+      ]
+    },
+    "dev": {
+      "continuous": true,
+      "command": "next dev",
+      "options": {
+        "cwd": "apps/frontend/user-ui"
+      }
+    },
+    "start": {
+      "continuous": true,
+      "command": "next start",
+      "options": {
+        "cwd": "apps/frontend/user-ui"
+      },
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "serve-static": {
+      "continuous": true,
+      "command": "next start",
+      "options": {
+        "cwd": "apps/frontend/user-ui"
+      },
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "build-deps": {
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "watch-deps": {
+      "continuous": true,
+      "dependsOn": [
+        "build-deps"
+      ],
+      "command": "npx nx watch --projects user-ui --includeDependentProjects -- npx nx build-deps user-ui"
+    }
   }
 }
