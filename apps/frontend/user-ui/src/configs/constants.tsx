@@ -1,3 +1,4 @@
+
 import auto from "../assets/auto.png";
 import fashion from "../assets/clothes.png";
 import service from "../assets/service.png";

@@ -1,17 +1,17 @@
 import type { StaticImageData } from 'next/image';
 
 
-type NavItemsTypes = {
+export type NavItemsTypes = {
     title:string;
     href:string;
 }
-type CategoryItemsTypes = {
+export type CategoryItemsTypes = {
     image:string;
     title:string;
     href:string;
   
 }
-type productItems = {
+export type productItems = {
     id: string;
     image: (string | StaticImageData)[];
     title: string;
@@ -23,11 +23,11 @@ type productItems = {
     seller?: Seller;
 };
 
-type footerPages ={
+export type footerPages ={
     title:string;
     href:string;
 }
-type Seller ={
+export type Seller ={
     name:string;
     image:string;
 }
@@ -47,7 +47,7 @@ type Seller ={
 //     clearCart:() =>void;
 // }
 
-type Address ={
+export type Address ={
     id:number;
     pinCode:number;
     city:string;
