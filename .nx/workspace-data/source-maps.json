@@ -2422,6 +2422,10 @@
       "apps/backend/post-mvp-services/cms-service/project.json",
       "nx/core/project-json"
     ],
+    "targets.build.executor": [
+      "apps/backend/post-mvp-services/cms-service/project.json",
+      "nx/core/project-json"
+    ],
     "targets.build.outputs": [
       "apps/backend/post-mvp-services/cms-service/project.json",
       "nx/core/project-json"
@@ -2637,6 +2641,10 @@
       "nx/core/project-json"
     ],
     "targets.build": [
+      "apps/backend/post-mvp-services/coupon-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.executor": [
       "apps/backend/post-mvp-services/coupon-service/project.json",
       "nx/core/project-json"
     ],
@@ -2858,6 +2866,10 @@
       "apps/backend/post-mvp-services/recommendation-service/project.json",
       "nx/core/project-json"
     ],
+    "targets.build.executor": [
+      "apps/backend/post-mvp-services/recommendation-service/project.json",
+      "nx/core/project-json"
+    ],
     "targets.build.outputs": [
       "apps/backend/post-mvp-services/recommendation-service/project.json",
       "nx/core/project-json"
@@ -3073,6 +3085,10 @@
       "nx/core/project-json"
     ],
     "targets.build": [
+      "apps/backend/post-mvp-services/refund-service/project.json",
+      "nx/core/project-json"
+    ],
+    "targets.build.executor": [
       "apps/backend/post-mvp-services/refund-service/project.json",
       "nx/core/project-json"
     ],
@@ -3995,10 +4011,6 @@
       "nx/core/project-json"
     ],
     "targets.build.options.outputPath": [
-      "apps/frontend/user-ui/project.json",
-      "nx/core/project-json"
-    ],
-    "targets.build.options.postcssConfig": [
       "apps/frontend/user-ui/project.json",
       "nx/core/project-json"
     ]

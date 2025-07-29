@@ -47,6 +47,45 @@
             "configurations": {},
             "parallelism": true
           },
+          "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+              "platform": "node",
+              "outputPath": "dist/apps/backend/post-mvp-services/recommendation-service",
+              "format": [
+                "cjs"
+              ],
+              "bundle": false,
+              "main": "apps/backend/post-mvp-services/recommendation-service/src/main.ts",
+              "tsConfig": "apps/backend/post-mvp-services/recommendation-service/tsconfig.app.json",
+              "assets": [
+                "apps/backend/post-mvp-services/recommendation-service/src/assets"
+              ],
+              "generatePackageJson": true,
+              "esbuildOptions": {
+                "sourcemap": true,
+                "outExtension": {
+                  ".js": ".js"
+                }
+              }
+            },
+            "configurations": {
+              "development": {},
+              "production": {
+                "esbuildOptions": {
+                  "sourcemap": false,
+                  "outExtension": {
+                    ".js": ".js"
+                  }
+                }
+              }
+            },
+            "parallelism": true
+          },
           "serve": {
             "continuous": true,
             "executor": "@nx/esbuild:esbuild",
@@ -70,8 +109,8 @@
           }
         },
         "name": "recommendation-service",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "apps/post-mvp-services/recommendation-service/src",
+        "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/backend/post-mvp-services/recommendation-service/src",
         "projectType": "application",
         "tags": [],
         "implicitDependencies": []
@@ -124,6 +163,45 @@
             "configurations": {},
             "parallelism": true
           },
+          "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+              "platform": "node",
+              "outputPath": "dist/apps/backend/post-mvp-services/coupon-service",
+              "format": [
+                "cjs"
+              ],
+              "bundle": false,
+              "main": "apps/backend/post-mvp-services/coupon-service/src/main.ts",
+              "tsConfig": "apps/backend/post-mvp-services/coupon-service/tsconfig.app.json",
+              "assets": [
+                "apps/backend/post-mvp-services/coupon-service/src/assets"
+              ],
+              "generatePackageJson": true,
+              "esbuildOptions": {
+                "sourcemap": true,
+                "outExtension": {
+                  ".js": ".js"
+                }
+              }
+            },
+            "configurations": {
+              "development": {},
+              "production": {
+                "esbuildOptions": {
+                  "sourcemap": false,
+                  "outExtension": {
+                    ".js": ".js"
+                  }
+                }
+              }
+            },
+            "parallelism": true
+          },
           "serve": {
             "continuous": true,
             "executor": "@nx/esbuild:esbuild",
@@ -147,8 +225,8 @@
           }
         },
         "name": "coupon-service",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "apps/post-mvp-services/coupon-service/src",
+        "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/backend/post-mvp-services/coupon-service/src",
         "projectType": "application",
         "tags": [],
         "implicitDependencies": []
@@ -201,6 +279,45 @@
             "configurations": {},
             "parallelism": true
           },
+          "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+              "platform": "node",
+              "outputPath": "dist/apps/backend/post-mvp-services/refund-service",
+              "format": [
+                "cjs"
+              ],
+              "bundle": false,
+              "main": "apps/backend/post-mvp-services/refund-service/src/main.ts",
+              "tsConfig": "apps/backend/post-mvp-services/refund-service/tsconfig.app.json",
+              "assets": [
+                "apps/backend/post-mvp-services/refund-service/src/assets"
+              ],
+              "generatePackageJson": true,
+              "esbuildOptions": {
+                "sourcemap": true,
+                "outExtension": {
+                  ".js": ".js"
+                }
+              }
+            },
+            "configurations": {
+              "development": {},
+              "production": {
+                "esbuildOptions": {
+                  "sourcemap": false,
+                  "outExtension": {
+                    ".js": ".js"
+                  }
+                }
+              }
+            },
+            "parallelism": true
+          },
           "serve": {
             "continuous": true,
             "executor": "@nx/esbuild:esbuild",
@@ -232,8 +349,8 @@
           }
         },
         "name": "refund-service",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "apps/post-mvp-services/refund-service/src",
+        "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/backend/post-mvp-services/refund-service/src",
         "projectType": "application",
         "tags": [],
         "implicitDependencies": []
@@ -286,9 +403,48 @@
             "configurations": {},
             "parallelism": true
           },
+          "build": {
+            "executor": "@nx/esbuild:esbuild",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+              "platform": "node",
+              "outputPath": "dist/apps/backend/post-mvp-services/cms-service",
+              "format": [
+                "cjs"
+              ],
+              "bundle": false,
+              "main": "apps/backend/post-mvp-services/cms-service/src/main.ts",
+              "tsConfig": "apps/backend/post-mvp-services/cms-service/tsconfig.app.json",
+              "assets": [
+                "apps/backend/post-mvp-services/cms-service/src/assets"
+              ],
+              "generatePackageJson": true,
+              "esbuildOptions": {
+                "sourcemap": true,
+                "outExtension": {
+                  ".js": ".js"
+                }
+              }
+            },
+            "configurations": {
+              "development": {},
+              "production": {
+                "esbuildOptions": {
+                  "sourcemap": false,
+                  "outExtension": {
+                    ".js": ".js"
+                  }
+                }
+              }
+            },
+            "parallelism": true
+          },
           "serve": {
             "continuous": true,
-            "executor": "@nx/esbuild:esbuild",
+            "executor": "@nx/js:node",
             "defaultConfiguration": "development",
             "dependsOn": [
               "build"
@@ -309,8 +465,8 @@
           }
         },
         "name": "cms-service",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "apps/post-mvp-services/cms-service/src",
+        "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "apps/backend/post-mvp-services/cms-service/src",
         "projectType": "application",
         "tags": [],
         "implicitDependencies": []
@@ -373,7 +529,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/analytics-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -448,7 +604,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "apps/backend/kong-API-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -539,7 +695,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/invoice-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -573,7 +729,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/payment-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -672,7 +828,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/product-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -771,7 +927,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/rating-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -1097,7 +1253,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "apps/backend/admin-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -1131,7 +1287,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/email-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -1230,7 +1386,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "apps/backend/order-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -1376,7 +1532,7 @@
             "executor": "nx:eslint",
             "options": {
               "lintFilePatterns": [
-                "apps/bacrating-service/src/**/*.ts"
+                "pps/backend/cart-service/src/**/*.ts"
               ]
             },
             "configurations": {},
@@ -1703,8 +1859,7 @@
               "{options.outputPath}"
             ],
             "options": {
-              "outputPath": "dist/apps/frontend/user-ui",
-              "postcssConfig": "apps/frontend/user-ui/postcss.config.js"
+              "outputPath": "dist/apps/frontend/user-ui"
             },
             "configurations": {},
             "parallelism": true
@@ -18465,6 +18620,11 @@
       }
     ],
     "shared-minio": [
+      {
+        "source": "shared-minio",
+        "target": "npm:jest",
+        "type": "static"
+      },
       {
         "source": "shared-minio",
         "target": "npm:minio",
@@ -38159,5 +38319,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1753696709458
+  "computedAt": 1753775287704
 }

@@ -7,9 +7,13 @@
     "node": ">=18.0.0"
   },
   "scripts": {
+     "build:user-ui": "nx build user-ui",
     "nx": "npx nx",
     "lint": "npx nx lint",
     "test": "npx nx test",
+    "seller-ui": "nx serve seller-ui",
+    "dev:user-ui": "nx serve user-ui",
+  "build:seller-ui": "nx build seller-ui --prod",
     "format": "nx format:write",
     "dev": "nx run-many --target=serve --all",
     "auth-docs": "node apps/auth-service/src/swagger.js",

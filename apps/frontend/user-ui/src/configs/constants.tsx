@@ -9,7 +9,7 @@ import product from "../assets/productimage.png";
 import appliances from "../assets/appliances.png"
 import Ramesh from "../assets/ramesh.png";
 
-export const navItems: NavItemsTypes = [
+export const navItems: NavItemsTypes[] = [
   {
     title: 'My Account',
     href: '/account',
@@ -102,6 +102,7 @@ export const products:productItems[]=[
     title: 'Meksum Steel Cutting Board for Kitchen Large – 41x31 cm | Stainless Steel Chopping Board for Kitchen Large | Rust-Proof, Non-Slip, Hygienic, Durable | Easy to Clean | for Home Chefs',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
+      reviewCount:144,
     offerPrice:30,
     rating:4.5,
     category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
@@ -114,7 +115,7 @@ export const products:productItems[]=[
     title: 'Ambrane Unbreakable 60W Fast Charging',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
-    
+    reviewCount:144,
     rating:4.5,
     category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
     seller:getSellerByName("Ramesh Store")
@@ -127,6 +128,7 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
+      reviewCount:144,
       category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
      seller:getSellerByName("Ramesh Store")
   },
@@ -138,7 +140,8 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
-      category:'Medical Equips',
+    reviewCount:144,
+      category:['Medical Equips'],
        seller:getSellerByName("Ramesh Store")
   },
    {
@@ -149,7 +152,8 @@ export const products:productItems[]=[
     price:50,
     offerPrice:30,
     rating:4.5,
-      category:'Medical Equips',
+      reviewCount:144,
+      category:['Medical Equips'],
        seller:getSellerByName("Ramesh Store")
   },
    {
@@ -158,7 +162,7 @@ export const products:productItems[]=[
     title: 'Ambrane Unbreakable 60W Fast Charging',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
-   
+    reviewCount:144,
     rating:4.5,
       category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
      seller:getSellerByName("Ramesh Store")
@@ -169,7 +173,7 @@ export const products:productItems[]=[
     title: 'Ambrane Unbreakable 60W Fast Charging',
     href:'/shop/ambrane-unbreakable-60W-fast-charging',
     price:50,
-   
+    reviewCount:144,
     rating:4.5,
       category:['Fashion', 'Medical Equips','Auto Parts','Beauty','Tools','Appliances','Hardware'],
       seller:getSellerByName("Ramesh Store")

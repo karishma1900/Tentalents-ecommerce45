@@ -150,5 +150,11 @@
     },
     "user-ui": "apps/frontend/user-ui",
     "seller-ui": "apps/frontend/seller-ui"
+  },
+  "tasksRunnerOptions": {
+    "no-cloud": {
+    "runner": "@nrwl/workspace/src/tasks-runner/default-tasks-runner",
+    "options": {}
   }
+}
 }

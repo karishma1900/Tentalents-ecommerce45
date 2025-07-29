@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Search, MapPin, ShoppingCart, Menu, ChevronDown, ChevronRight } from 'lucide-react';
 import Image from 'next/image';
 import Tenanlents from "../../assets/tenanlenst-menu.png";
-import { HeaderBottom } from './headerbottom';
+// import  HeaderBottom  from './headerbottom';
 import Link from 'next/link';
 // import './header.css'; 
 import './footer&header.css'

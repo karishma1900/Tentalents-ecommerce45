@@ -1,5 +1,5 @@
 export declare const env: {
-    NODE_ENV: "development" | "production" | "test";
+    NODE_ENV: "production" | "development" | "test";
     PORT: number;
     POSTGRES_HOST: string;
     POSTGRES_PORT: number;

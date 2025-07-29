@@ -1,0 +1,51 @@
+[4m[34mapps\backend\post-mvp-services\cms-service\src\app\controllers\cms.controller.ts:3:29[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/utils/lib/response' or its corresponding type declarations.
+
+[0m [90m 1 | [39m[36mimport[39m { [33mRequest[39m[33m,[39m [33mResponse[39m[33m,[39m [33mNextFunction[39m } from [32m'express'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[36mimport[39m { cmsService } from [32m'../services/cms.service'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39m[36mimport[39m { sendSuccess } from [32m'@shared/utils/lib/response'[39m[33m;[39m[0m
+[0m [90m   | [39m                            [31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m[0m
+[0m [90m 5 | [39m[36mexport[39m [36mconst[39m createPage [33m=[39m async ([0m
+[0m [90m 6 | [39m  req[33m:[39m [33mRequest[39m[33m,[39m[0m
+
+[4m[34mapps\backend\post-mvp-services\cms-service\src\main.ts:3:17[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module './app' or its corresponding type declarations.
+
+[0m [90m 1 | [39m[36mimport[39m dotenv from [32m'dotenv'[39m[33m;[39m[0m
+[0m [90m 2 | [39m[36mimport[39m path from [32m'path'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 3 | [39m[36mimport[39m app from [32m'./app'[39m[33m;[39m[0m
+[0m [90m   | [39m                [31m[1m^[22m[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mPrismaClient[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m [90m 5 | [39m[36mimport[39m { connectRedis[33m,[39m disconnectRedis[33m,[39m redisClient } from [32m'@shared/redis'[39m[33m;[39m[0m
+[0m [90m 6 | [39m[36mimport[39m {[0m
+
+[4m[34mapps\backend\post-mvp-services\cms-service\src\main.ts:5:60[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/redis' or its corresponding type declarations.
+
+[0m [90m 3 | [39m[36mimport[39m app from [32m'./app'[39m[33m;[39m[0m
+[0m [90m 4 | [39m[36mimport[39m { [33mPrismaClient[39m } from [32m'@prisma/client'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 5 | [39m[36mimport[39m { connectRedis[33m,[39m disconnectRedis[33m,[39m redisClient } from [32m'@shared/redis'[39m[33m;[39m[0m
+[0m [90m   | [39m                                                           [31m[1m^[22m[39m[0m
+[0m [90m 6 | [39m[36mimport[39m {[0m
+[0m [90m 7 | [39m  connectKafkaProducer[33m,[39m[0m
+[0m [90m 8 | [39m  disconnectKafkaProducer[33m,[39m[0m
+
+[4m[34mapps\backend\post-mvp-services\cms-service\src\main.ts:12:8[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/kafka' or its corresponding type declarations.
+
+[0m [90m 10 | [39m  disconnectKafkaConsumer[33m,[39m[0m
+[0m [90m 11 | [39m  [33mKafkaConsumerConfig[39m[33m,[39m[0m
+[0m[31m[1m>[22m[39m[90m 12 | [39m} from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m [90m    | [39m       [31m[1m^[22m[39m[0m
+[0m [90m 13 | [39m[36mimport[39m { logger } from [32m'@shared/logger'[39m[33m;[39m[0m
+[0m [90m 14 | [39m[0m
+[0m [90m 15 | [39m[90m// Load environment variables[39m[0m
+
+[4m[34mapps\backend\post-mvp-services\cms-service\src\main.ts:13:24[39m[24m - [31m[1merror[22m[39m [90mTS2307[39m: Cannot find module '@shared/logger' or its corresponding type declarations.
+
+[0m [90m 11 | [39m  [33mKafkaConsumerConfig[39m[33m,[39m[0m
+[0m [90m 12 | [39m} from [32m'@shared/kafka'[39m[33m;[39m[0m
+[0m[31m[1m>[22m[39m[90m 13 | [39m[36mimport[39m { logger } from [32m'@shared/logger'[39m[33m;[39m[0m
+[0m [90m    | [39m                       [31m[1m^[22m[39m[0m
+[0m [90m 14 | [39m[0m
+[0m [90m 15 | [39m[90m// Load environment variables[39m[0m
+[0m [90m 16 | [39mdotenv[33m.[39mconfig({ path[33m:[39m path[33m.[39mresolve(__dirname[33m,[39m [32m'../../.env'[39m) })[33m;[39m[0m
+
+Found 5 errors.

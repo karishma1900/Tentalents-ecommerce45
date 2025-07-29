@@ -41,7 +41,7 @@
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/backend/order-service/src/**/*.ts"]
       }
     },
     "test": {

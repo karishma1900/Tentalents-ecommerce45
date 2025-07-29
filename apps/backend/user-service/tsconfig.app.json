@@ -11,7 +11,7 @@
     "composite": true,
     "declaration": true,
     "sourceMap": true,
-    "types": ["node"],
+    "types": ["node", "jest"],
 
     // --- Critical path and output settings ---
     "outDir": "../../../dist/out-tsc",

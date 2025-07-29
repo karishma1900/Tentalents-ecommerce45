@@ -16,7 +16,7 @@ import Seller from '../../../assets/seller.png';
 const SideBarWrapper = () => {
   const { activeSidebar, setActiveSidebar } = useSidebar();
   const pathName = usePathname();
-  const { seller } = useSeller();
+  // const { seller } = useSeller();
 
   useEffect(() => {
     setActiveSidebar(pathName);
@@ -80,8 +80,8 @@ const SideBarWrapper = () => {
           <Image src={Seller} alt="sellerimage" width={40} height={40} />
         </div>
         <div className="seller-info">
-          <h1 className="sellerheading">{seller?.name || 'Ramesh Singh'}</h1>
-          <p className="selleremail">{seller?.email || 'ramesh@gmail.com'}</p>
+          <h1 className="sellerheading">Ramesh Singh</h1>
+          <p className="selleremail">ramesh@gmail.com</p>
         </div>
       </div>
     </Box>

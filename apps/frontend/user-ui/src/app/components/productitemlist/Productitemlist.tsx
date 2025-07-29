@@ -4,7 +4,9 @@ import Image from 'next/image';
 import star from '../../../assets/icons/kid_star.png';
 import '../../home-page/productlist/productlist.css';
 import '../../home-page/products-grid/productgrid.css';
-import { productItems } from '../../../configs/global';
+
+import productItems from '../../../configs/global';
+
 
 const ProductListItem: React.FC<{ product: productItems }> = ({ product }) => {
   const { image, title, price, offerPrice, rating, href } = product;

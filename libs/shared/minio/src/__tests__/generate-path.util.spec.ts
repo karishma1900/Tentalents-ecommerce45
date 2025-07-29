@@ -1,3 +1,4 @@
+import 'jest';
 import { generateObjectPath } from '../lib/generate-path.util';
 
 describe('generateObjectPath', () => {

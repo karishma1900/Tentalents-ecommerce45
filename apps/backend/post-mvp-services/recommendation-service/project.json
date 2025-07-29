@@ -1,21 +1,22 @@
 {
   "name": "recommendation-service",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/post-mvp-services/recommendation-service/src",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/post-mvp-services/recommendation-service/src",
   "projectType": "application",
   "tags": [],
   "targets": {
     "build": {
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/post-mvp-services/recommendation-service",
+        "outputPath": "dist/apps/backend/post-mvp-services/recommendation-service",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/post-mvp-services/recommendation-service/src/main.ts",
-        "tsConfig": "apps/post-mvp-services/recommendation-service/tsconfig.app.json",
-        "assets": ["apps/post-mvp-services/recommendation-service/src/assets"],
+        "main": "apps/backend/post-mvp-services/recommendation-service/src/main.ts",
+        "tsConfig": "apps/backend/post-mvp-services/recommendation-service/tsconfig.app.json",
+        "assets": ["apps/backend/post-mvp-services/recommendation-service/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,

@@ -42,7 +42,7 @@
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["apps/bacrating-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/backend/kong-API-service/src/**/*.ts"]
       }
     },
     "test": {

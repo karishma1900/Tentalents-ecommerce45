@@ -3,17 +3,8 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import star from '../../../assets/icons/kid_star.png';
-
-export type ProductItem = {
-  image: string;
-  title: string;
-  price: number;
-  offerPrice?: number;
-  rating: number;
-  category: string[] | string;
-  href: string;
-  seller?: string;
-};
+import type { StaticImageData } from 'next/image';
+export type ProductItem = productItems;
 
 type ProductCardProps = {
   product: ProductItem;

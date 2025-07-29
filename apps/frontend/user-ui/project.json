@@ -16,7 +16,7 @@
       "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/frontend/user-ui"
+       "outputPath": "dist/apps/frontend/user-ui"
       }
     }
   },

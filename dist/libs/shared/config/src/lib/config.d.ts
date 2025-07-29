@@ -1,5 +1,5 @@
 export declare const config: {
-    env: "development" | "production" | "test";
+    env: "production" | "development" | "test";
     port: number;
     serviceName: string;
     postgres: {

@@ -3,7 +3,7 @@ import HeaderBanner from './home-page/headerbanner';
 import Products from './home-page/products-grid/productsgrid';
 import Closet from './home-page/closet-section/closet';
 import Productslist from './home-page/productlist/Productlist';
-import '../app/home-page/homepage.css';
+import './home-page/homepage.css';
 import BannerSection from './home-page/bannersection/BannerSection';
 import ProductTabs from './home-page/productstabs/ProductTabs';
 import SignUpBanner from './home-page/signupbanner/SignUpBanner';
@@ -24,7 +24,7 @@ const Page = () => {
           <Productslist listCount={3} />
         </div>
         <div className="product-grid-tem">
-        <Products columns={3} className="product-gris" />
+        <Products columns={3} />
       </div>
 
       </div>
@@ -36,4 +36,3 @@ const Page = () => {
   );
 };
 
-export default Page;

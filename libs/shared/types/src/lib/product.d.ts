@@ -10,4 +10,5 @@ export interface Product {
     createdAt: Date;
     updatedAt: Date;
 }
+
 //# sourceMappingURL=product.d.ts.map

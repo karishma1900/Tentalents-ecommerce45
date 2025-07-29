@@ -100,20 +100,22 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
 
             <div className="thumbnail-gallery">
               {images.map((img, index) => (
-                <div
-                  key={index}
-                  className={`thumbnail-image ${img === featuredImage ? 'active' : ''}`}
-                  onClick={() => setFeaturedImage(img)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <Image
-                    src={img}
-                    alt={`${product.title} thumbnail ${index + 1}`}
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              ))}
+  <div
+    key={index}
+    className={`thumbnail-image ${img === featuredImage ? 'active' : ''}`}
+    onClick={() => setFeaturedImage(img)}
+    style={{ cursor: 'pointer' }}
+  >
+    <Image
+      src={img}
+      alt={`${product.title} thumbnail ${index + 1}`}
+      width={100}
+      height={100}
+    />
+  </div>
+))}
+
+
             </div>
           </div>
 
@@ -336,7 +338,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
                 <div className='storereviewbutton'>
                 <button onClick={() => setIsReviewOpen(true)} className='background-button'><PlusIcon /> Add Review</button>
                  <ReviewModal isOpen={isReviewOpen} onClose={() =>setIsReviewOpen(false)}
-                 product={{title:product.title,image:images[0]}} />
+                 product={{
+  title: product.title,
+  image: typeof images[0] === 'string' ? images[0] : images[0].src
+}} />
                 </div>
 
                 </div>
@@ -433,11 +438,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ slug: 
         <div className='featuredproducts'>
         <div className='heavydiscount'>
         <h2 className='heading discountheading'>Heavy Discount</h2>
-        <Products  showHeader={false} className="productslisting" />
+        <Products  showHeader={false} />
         </div>
         <div className='popularproducts'>
         <h2 className='heading discountheading' >Popular Products</h2>
-         <Products columns={3} showHeader={false} className="productslisting" />
+         <Products columns={3} showHeader={false} />
         </div>
         </div>
     </div>

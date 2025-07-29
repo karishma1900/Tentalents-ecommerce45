@@ -93,7 +93,7 @@
     "composite": true,
     "declaration": true,
     "sourceMap": true,
-    "types": ["node"],
+    "types": ["node","jest"],
 
     // --- Critical path and output settings ---
     "outDir": "../../../dist/out-tsc",
@@ -130,4 +130,13 @@
     "../../../dist",      // Explicitly exclude the dist folder
     "**/__tests__",
   ]
+  //   "references": [
+  //   // THIS IS THE FIX. ADD THIS BLOCK.
+  //   // It tells this service about its dependency on the library.
+  //   {
+  //     "path": "../../../libs/shared/minio"
+  //   }
+  //   // If vendor-service uses other local libs, add them here too.
+  //   // { "path": "../../../libs/shared/logger" },
+  // ]
 }

@@ -3,7 +3,7 @@
 import { products } from '../../../configs/constants';
 import React from 'react';
 import ProductListItem from '../../components/productitemlist/Productitemlist';
-import { ProductItem } from '../../components/productitemlist/Productitemlist';
+import productItems from '../../../configs/global'
 import './productlist.css';
 
 type ProductsProps = {
@@ -11,7 +11,7 @@ type ProductsProps = {
 };
 
 const Productslist = ({ listCount = 2 }: ProductsProps) => {
-  const items: ProductItem[] = products
+  const items: productItems[] = products
     .filter((item) => item.offerPrice !== undefined && item.offerPrice < item.price)
     .slice(0, listCount);
 

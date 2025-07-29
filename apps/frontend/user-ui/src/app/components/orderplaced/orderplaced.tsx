@@ -1,5 +1,7 @@
 import React from 'react';
-import { productItems } from '../../../configs/global';
+
+import  productItems  from '../../../configs/global';
+
 import Link from 'next/link';
 import Image from 'next/image';
 

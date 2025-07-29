@@ -1,10 +1,10 @@
 import { atom } from "jotai";
-// import type { ProductOrder } from "@shared/types"; 
-import dummyImage from "../assets/productimage.png"; // replace with actual StaticImageData import
+import type { ProductOrder } from "../configs/global"; // Adjust path if needed
+import dummyImage from "../assets/productimage.png";
 
 export const activeSideBarItem = atom<string>("/dashboard");
 
-export const orderListAtom = atom([
+export const orderListAtom = atom<ProductOrder[]>([  // 👈 ✅ EXPLICIT TYPING HERE
   {
     id: 1,
     product: {
@@ -17,7 +17,7 @@ export const orderListAtom = atom([
       inventory: {
         id: 1,
         quantity: 120,
-        status: "in stock",
+        status: "in stock", // 👈 Literal matches InventoryStatus
       },
     },
     quantity: 2,
@@ -42,7 +42,7 @@ export const orderListAtom = atom([
     quantity: 1,
     price: 2999,
     city: "Mumbai",
-    status: "paid, in process",
+    status: "paid, in process", // 👈 Part of `OrderStatus`
   },
   {
     id: 3,
@@ -55,7 +55,7 @@ export const orderListAtom = atom([
       inventory: {
         id: 3,
         quantity: 20,
-        status: "restock",
+        status: "restock", // 👈 Valid
       },
     },
     quantity: 1,
@@ -113,7 +113,7 @@ export const orderListAtom = atom([
       inventory: {
         id: 6,
         quantity: 0,
-        status: "empty",
+        status: "empty", // ✅ Defined in InventoryStatus
       },
     },
     quantity: 1,

@@ -1,3 +1,4 @@
+import 'jest';
 import { minioClient } from '../lib/minio-client';
 
 describe('minioClient', () => {

@@ -1,21 +1,22 @@
 {
   "name": "coupon-service",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/post-mvp-services/coupon-service/src",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/post-mvp-services/coupon-service/src",
   "projectType": "application",
   "tags": [],
   "targets": {
     "build": {
+      "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
-        "outputPath": "dist/apps/post-mvp-services/coupon-service",
+        "outputPath": "dist/apps/backend/post-mvp-services/coupon-service",
         "format": ["cjs"],
         "bundle": false,
-        "main": "apps/post-mvp-services/coupon-service/src/main.ts",
-        "tsConfig": "apps/post-mvp-services/coupon-service/tsconfig.app.json",
-        "assets": ["apps/post-mvp-services/coupon-service/src/assets"],
+        "main": "apps/backend/post-mvp-services/coupon-service/src/main.ts",
+        "tsConfig": "apps/backend/post-mvp-services/coupon-service/tsconfig.app.json",
+        "assets": ["apps/backend/post-mvp-services/coupon-service/src/assets"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
