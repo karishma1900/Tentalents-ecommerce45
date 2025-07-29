@@ -29,17 +29,30 @@
 //       "path": "./tsconfig.spec.json"
 //     }
 //   ]
+// // }
+// {
+//   "extends": "../../../tsconfig.base.json",
+//   "files": [],
+//   "include": [],
+//   "references": [
+//     {
+//       "path": "./tsconfig.app.json"
+//     },
+//     {
+//       "path": "./tsconfig.spec.json"
+//     }
+//   ]
 // }
+
 {
   "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
   "files": [],
-  "include": [],
+  "include": ["src/**/*.ts"], 
   "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    }
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.spec.json" }
   ]
 }

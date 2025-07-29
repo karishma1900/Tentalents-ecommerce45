@@ -4,6 +4,7 @@ generator client {
 }
 
 // PostgreSQL connection for isolated service DB
+// === DATABASE SOURCE ===
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

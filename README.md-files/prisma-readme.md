@@ -188,3 +188,80 @@ Open Studio	pnpm --filter=<service> prisma studio
 
     🧠 Prisma brings type-safety, DX, and clear boundaries across your event-driven microservices.
 ````
+✅ PostgreSQL Commands for Local Dev
+🔍 View Databases
+bash
+Copy
+Edit
+psql -U mvp_ecom_user -h localhost -p 5432 -l
+🔑 Connect to a Database
+Replace ${SERVICE_DB_NAME} with actual DB name like user_db, vendor_db, etc.
+
+bash
+Copy
+Edit
+psql -U mvp_ecom_user -h localhost -p 5432 -d ${SERVICE_DB_NAME}
+Examples:
+
+bash
+Copy
+Edit
+psql -U mvp_ecom_user -h localhost -p 5432 -d user_db
+psql -U mvp_ecom_user -h localhost -p 5432 -d vendor_db
+📦 Create All Service Databases (Manual)
+bash
+Copy
+Edit
+createdb -U mvp_ecom_user -h localhost -p 5432 user_db
+createdb -U mvp_ecom_user -h localhost -p 5432 vendor_db
+createdb -U mvp_ecom_user -h localhost -p 5432 product_db
+createdb -U mvp_ecom_user -h localhost -p 5432 order_db
+createdb -U mvp_ecom_user -h localhost -p 5432 payment_db
+createdb -U mvp_ecom_user -h localhost -p 5432 cart_db
+createdb -U mvp_ecom_user -h localhost -p 5432 rating_db
+createdb -U mvp_ecom_user -h localhost -p 5432 admin_db
+createdb -U mvp_ecom_user -h localhost -p 5432 invoice_db
+createdb -U mvp_ecom_user -h localhost -p 5432 analytics_db
+createdb -U mvp_ecom_user -h localhost -p 5432 email_db
+createdb -U mvp_ecom_user -h localhost -p 5432 search_db
+🔥 Drop a Service Database
+bash
+Copy
+Edit
+dropdb -U mvp_ecom_user -h localhost -p 5432 user_db
+🧬 Prisma Migrations
+✨ Migrate One Service
+bash
+Copy
+Edit
+cd apps/backend/user-service
+npx prisma migrate dev --name init --schema=prisma/schema.prisma
+🔄 Migrate All Services (Makefile-style)
+Make sure .env has values for ${SERVICE_DB_NAME} before running.
+
+bash
+Copy
+Edit
+for service in user-service product-service order-service rating-service email-service payment-service search-service cart-service admin-service invoice-service analytics-service vendor-service; do
+  echo "🔄 Migrating $service..."
+  cd apps/backend/$service
+  npx prisma migrate dev --name init --schema=prisma/schema.prisma || true
+  cd - > /dev/null
+done
+📋 Sample .env Usage
+If you’re using variables like ${VENDOR_DB_NAME}, ensure they're defined before usage:
+
+env
+Copy
+Edit
+VENDOR_DB_NAME=vendor_db
+Otherwise, interpolation won’t work and you'll get:
+
+perl
+Copy
+Edit
+ERROR: zero-length delimited identifier at or near """"
+🧪 Test via Prisma CLI
+
+npx prisma db pull --schema=apps/backend/user-service/prisma/schema.prisma
+npx prisma studio --schema=apps/backend/user-service/prisma/schema.prisma

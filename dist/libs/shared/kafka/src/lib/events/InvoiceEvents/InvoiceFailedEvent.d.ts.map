@@ -1,1 +1,0 @@
-{"version":3,"file":"InvoiceFailedEvent.d.ts","sourceRoot":"","sources":["../../../../../../../../libs/shared/kafka/src/lib/events/InvoiceEvents/InvoiceFailedEvent.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,kBAAkB;IACjC,OAAO,EAAE,MAAM,CAAC;IAChB,MAAM,EAAE,MAAM,CAAC;IACf,KAAK,EAAE,MAAM,CAAC;IACd,QAAQ,EAAE,MAAM,CAAC;CAClB"}
