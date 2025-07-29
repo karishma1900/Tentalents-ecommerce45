@@ -11,7 +11,7 @@
     "nx": "npx nx",
     "lint": "npx nx lint",
     "test": "npx nx test",
-    "seller-ui": "nx serve seller-ui",
+    "dev:seller-ui": "nx serve seller-ui",
     "dev:user-ui": "nx serve user-ui",
   "build:seller-ui": "nx build seller-ui --prod",
     "format": "nx format:write",
