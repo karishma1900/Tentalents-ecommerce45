@@ -1,418 +1,439 @@
-# ===== VARIABLES =====
-SERVICES = user-service product-service order-service payment-service rating-service email-service cart-service search-service invoice-service analytics-service
-PRISMA_SERVICES = user-service product-service order-service rating-service cart-service search-service invoice-service analytics-service
-REGISTRY = ghcr.io/your-org/mvp-ecom
-TAG ?= latest
-
-# ===== PHONY =====
-.PHONY: \
-  help dev start-service-% test lint build nx-graph \
-  prisma-migrate prisma-generate prisma-seed seed prisma-studio \
-  docker-build docker-push docker-clean \
-  infra-up infra-down infra-restart postgres-init \
-  kind-start kind-delete load-images \
-  helm-init helm-deploy helm-destroy helmfile-sync \
-  monitor-start monitor-stop jaeger-ui grafana-ui \
-  logs-% scan-images falco-install falco-uninstall \
-  affected affected-build affected-lint affected-test affected-deploy \
-  ci deploy reset
-
-# ===== HELP =====
+# ====================== 🧭 GENERAL ======================
 help: ## Show all available commands
-	@echo "📦 All Available Commands:"
-	@grep -E '^[a-zA-Z0-9_-]+:.*?##' Makefile | awk 'BEGIN {FS = ":.*?##"}; {printf "  \033[36m%-38s\033[0m %s\n", $$1, $$2}'
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-25s\033[0m %s\n", $$1, $$2}'
 
-# ===== DEV & NX =====
-dev: ## 🚀 Run all microservices in dev mode
-	nx run-many --target=serve --all
+dev: ## Run all core + post-MVP services
+	make all-services
 
-start-service-%: ## 🧩 Start single service (e.g., make start-service-user-service)
-	cd apps/$* && npm run start:dev
+start-service-%: ## Start a specific service by name (e.g. make start-service-user-service)
+	npx nx serve $*
 
-test: ## 🧪 Run all unit tests (Jest)
-	nx run-many --target=test --all
+nx-graph: ## Show Nx project dependency graph
+	npx nx graph
 
-lint: ## 🧹 Run ESLint across all services
-	nx run-many --target=lint --all
 
-build: ## 🏗️ Build all services
-	nx run-many --target=build --all
+# ==================== ✅ CODE QUALITY ====================
+lint: ## Run ESLint across all services
+	npx nx run-many --target=lint --all
 
-nx-graph: ## 🧠 Show Nx dependency graph
-	nx graph
+test: ## migrateRun all unit tests with Jest
+	npx nx run-many --target=test --all
 
-# ===== PRISMA & DB =====
-prisma-migrate: ## 🔄 Apply Prisma migrations
+build: ## Build all services
+	npx nx run-many --target=build --all
+
+
+# ==================== 🧠 PRISMA & DB ====================
+PRISMA_SERVICES := user-service vendor-service product-service order-service payment-service invoice-service cart-service rating-service search-service analytics-service admin-service email-service
+
+prisma-: ## Apply Prisma migrations for all Prisma services
 	@for service in $(PRISMA_SERVICES); do \
+		SCHEMA_PATH=apps/backend/$$service/prisma/schema.prisma; \
+		if [ -f $$SCHEMA_PATH ]; then \
+			echo "🚀 Migrating $$service..."; \
+			cd apps/backend/$$service && \
+			npx prisma migrate dev --name init --schema=prisma/schema.prisma || echo "⚠️  Migration failed for $$service"; \
+			cd - >/dev/null; \
+		else \
+			echo "❌ Skipping $$service: No schema.prisma found."; \
+		fi \
+	done
+
+# Apply Prisma migrations for all services with a Prisma schema
+prisma-migrate: ## 🔄 Apply Prisma migrations
+	@PRISMA_SERVICES="user-service product-service order-service payment-service vendor-service invoice-service admin-service" && \
+	for service in $$PRISMA_SERVICES; do \
 		echo "🚀 Migrating $$service..."; \
-		cd apps/$$service && \
+		cd apps/backend/$$service && \
+		if [ -f .env ]; then \
+			echo "📦 Loading environment for $$service"; \
+			set -a; source .env; set +a; \
+		fi && \
 		npx prisma migrate dev --name init --schema=prisma/schema.prisma || true; \
 		cd - >/dev/null; \
 	done
 
-
-prisma-generate: ## 🔧 Generate Prisma Client
+prisma-generate: ## Generate Prisma clients for all Prisma services
 	@for service in $(PRISMA_SERVICES); do \
-		echo "🔧 Generating Prisma Client for $$service..."; \
-		npx prisma generate --schema=apps/$$service/prisma/schema.prisma || exit 1; \
+		if [ -f apps/backend/$$service/prisma/schema.prisma ]; then \
+			echo "🔧 Generating client for $$service..."; \
+			cd apps/backend/$$service && \
+			npx prisma generate --schema=prisma/schema.prisma; \
+			cd - >/dev/null; \
+		fi \
 	done
 
-prisma-seed: ## 🌱 Seed data via seed.ts
+prisma-seed seed: ## Seed all services with seed.ts (if exists)
 	@for service in $(PRISMA_SERVICES); do \
-		if [ -f apps/$$service/prisma/seed.ts ]; then \
+		SEED_FILE=apps/backend/$$service/prisma/seed.ts; \
+		if [ -f $$SEED_FILE ]; then \
 			echo "🌱 Seeding $$service..."; \
-			npx tsx apps/$$service/prisma/seed.ts; \
+			cd apps/backend/$$service && \
+			npx tsx prisma/seed.ts; \
+			cd - >/dev/null; \
 		else \
-			echo "⚠️  No seed.ts found for $$service. Skipping..."; \
-		fi; \
+			echo "❌ No seed.ts for $$service"; \
+		fi \
 	done
 
-seed: prisma-seed ## 🌱 Shortcut for seeding all Prisma-enabled services
+prisma-studio: ## Open Prisma Studio for user-service
+	cd apps/backend/user-service && npx prisma studio
 
-prisma-studio: ## 🧪 Open Prisma Studio for user-service
-	npx prisma studio --schema=apps/user-service/prisma/schema.prisma
-
-
-check-readiness:
-	@echo "🔍 Running Backend Readiness Audit..."
-	npx tsx tools/scripts/check-readiness.ts
+check-readiness: ## Check if all backend services are ready
+	@curl -s http://localhost:3000/health || echo "🛑 Service not ready"
 
 
+# ==================== 🐳 DOCKER ====================
+docker-build: ## Build Docker images for all services
+	docker compose build
 
-# ===== DOCKER =====
-docker-build: ## 🛠️ Build Docker images
-	@for service in $(SERVICES); do \
-		docker build -t $(REGISTRY)/$$service:$(TAG) apps/$$service; \
-	done
+docker-push: ## Push Docker images to registry
+	docker compose push
 
-docker-push: ## 🚀 Push Docker images to registry
-	@for service in $(SERVICES); do \
-		docker push $(REGISTRY)/$$service:$(TAG); \
-	done
+docker-clean: ## Remove local Docker images for all services
+	docker image prune -af
 
-docker-clean: ## 🧼 Remove local Docker images
-	@for service in $(SERVICES); do \
-		docker rmi -f $(REGISTRY)/$$service:$(TAG) || true; \
-	done
 
-# ===== DOCKER COMPOSE INFRASTRUCTURE =====
-infra-up: ## 🟩 Start Redis, PostgreSQL, Kafka, MinIO
-	docker-compose -f infra/docker-compose.yml up -d
+# ========== 🏗️ INFRASTRUCTURE (Docker Compose) ==========
+infra-up: ## Start infrastructure stack (Postgres, Redis, Kafka, MinIO, etc.)
+	docker compose up -d postgres redis kafka minio zookeeper
 
-infra-down: ## 🔻 Stop infrastructure containers
-	docker-compose -f infra/docker-compose.yml down
+infra-down: ## Stop infrastructure containers
+	docker compose down
 
-infra-restart: ## 🔁 Restart infra stack
+infra-restart: ## Restart infra containers
 	make infra-down && make infra-up
 
-postgres-init: ## ♻️ Reinitialize Postgres with volume cleanup
-	cd infra/docker && \
-	docker-compose -f docker-compose-tools.yaml --env-file .env_main down -v && \
-	docker volume rm docker_postgres_data && \
-	docker-compose -f docker-compose-tools.yaml --env-file .env_main up -d postgres
+postgres-init: ## Reinitialize Postgres volumes
+	docker volume rm tentalents_postgres_data || true
+	make infra-up
 
-# ===== KUBERNETES / KIND =====
-kind-start: ## 🚀 Create kind cluster
-	kind create cluster --name mvp-ecom --config infra/kind/kind-config.yaml
 
-kind-delete: ## 🔥 Delete kind cluster
-	kind delete cluster --name mvp-ecom
+# ========== ☸️ KUBERNETES (kind + Helm) ==========
+kind-start: ## Start local kind cluster
+	kind create cluster --name tentalents --config=infra/kind/kind-config.yaml
 
-load-images: ## 📦 Load Docker images into kind
-	@for service in $(SERVICES); do \
-		kind load docker-image $(REGISTRY)/$$service:$(TAG) --name mvp-ecom; \
+kind-delete: ## Delete kind cluster
+	kind delete cluster --name tentalents
+
+load-images: ## Load built Docker images into kind
+	@for service in $(PRISMA_SERVICES); do \
+		kind load docker-image tentalents/$$service; \
 	done
 
-# ===== HELM & HELMFILE =====
-helm-init: ## 📦 Initialize Helm repositories
+
+helm-init: ## Add/update Helm repositories
 	helm repo add bitnami https://charts.bitnami.com/bitnami
-	helm repo add falcosecurity https://falcosecurity.github.io/charts
 	helm repo update
 
-helm-deploy: ## 🚀 Deploy all services using Helm
-	@for service in $(SERVICES); do \
-		helm upgrade --install $$service infra/helm/microservices/$$service \
-		-f infra/helm/microservices/$$service/values.yaml; \
-	done
+helm-deploy: ## Deploy all services via Helm
+	helm upgrade --install tentalents ./infra/helm
 
-helm-destroy: ## 🧨 Uninstall all Helm services
-	@for service in $(SERVICES); do \
-		helm uninstall $$service || true; \
-	done
+helm-destroy: ## Uninstall Helm releases
+	helm uninstall tentalents
 
-helmfile-sync: ## 🔁 Sync with Helmfile (infra/helmfile/helmfile.yaml)
-	cd infra/helmfile && helmfile sync
+helmfile-sync: ## Sync Helm deployments using helmfile.yaml
+	helmfile -f infra/helm/helmfile.yaml sync
 
-# ===== OBSERVABILITY =====
-monitor-start: ## 📊 Start Prometheus, Grafana, Loki, Jaeger
-	helm upgrade --install monitoring infra/helm/monitoring \
-		-f infra/helm/monitoring/values.yaml
 
-monitor-stop: ## ❌ Uninstall monitoring stack
-	helm uninstall monitoring || true
+# ========== 📊 OBSERVABILITY ==========
+monitor-start: ## Start observability stack (Prometheus, Grafana, Loki, Jaeger)
+	docker compose up -d prometheus grafana loki jaeger
 
-jaeger-ui: ## 🔍 Port forward Jaeger UI
-	kubectl port-forward svc/jaeger-query 16686:16686 -n observability
+monitor-stop: ## Stop observability services
+	docker compose stop prometheus grafana loki jaeger
 
-grafana-ui: ## 📈 Port forward Grafana
+jaeger-ui: ## Port forward Jaeger UI (localhost:16686)
+	kubectl port-forward svc/jaeger 16686:16686 -n observability
+
+grafana-ui: ## Port forward Grafana UI (localhost:3000)
 	kubectl port-forward svc/grafana 3000:3000 -n observability
 
-# ===== LOGGING & METRICS =====
-logs-%: ## 📄 Tail logs of service pod (e.g., make logs-user-service)
-	kubectl logs -l app=$* -f
 
-# ===== SECURITY & SCANNING =====
-scan-images: ## 🔒 Trivy scan of Docker images
-	@for service in $(SERVICES); do \
-		trivy image $(REGISTRY)/$$service:$(TAG); \
+# ========== 📄 LOGGING ==========
+logs-%: ## Tail logs from a service pod
+	kubectl logs -f deployment/$*
+
+
+# ========== 🔐 SECURITY ==========
+scan-images: ## Scan Docker images with Trivy
+	@for service in $(PRISMA_SERVICES); do \
+		trivy image tentalents/$$service; \
 	done
 
-falco-install: ## 🛡️ Install Falco runtime security
-	helm upgrade --install falco falcosecurity/falco -n falco --create-namespace
+falco-install: ## Install Falco for runtime security
+	helm repo add falcosecurity https://falcosecurity.github.io/charts
+	helm repo update
+	helm install falco falcosecurity/falco
 
-falco-uninstall: ## ❌ Uninstall Falco
-	helm uninstall falco -n falco || true
+falco-uninstall: ## Uninstall Falco
+	helm uninstall falco
 
-# ===== NX AFFECTED =====
-affected: ## 🧠 Show affected projects
-	nx show projects --affected
 
-affected-build: ## 🔨 Build only affected services
-	nx affected:build --base=origin/main --head=HEAD
+# ========== 🎯 NX AFFECTED COMMANDS ==========
+affected: ## Show affected Nx projects
+	npx nx show projects --affected
 
-affected-lint: ## 🧹 Lint only affected services
-	nx affected:lint --base=origin/main --head=HEAD
+affected-build: ## Build only affected projects
+	npx nx affected --target=build
 
-affected-test: ## 🧪 Test only affected services
-	nx affected:test --base=origin/main --head=HEAD
+affected-lint: ## Lint only affected projects
+	npx nx affected --target=lint
 
-affected-deploy: affected-build docker-build docker-push helm-deploy ## 🚀 Deploy only affected services
+affected-test: ## Test only affected projects
+	npx nx affected --target=test
 
-# ===== CI/CD SHORTCUTS =====
-ci: lint test build ## ⚙️ CI Shortcut: lint, test, build
+affected-deploy: ## Build + push + deploy affected
+	make affected-build && make docker-push && make helm-deploy
 
-deploy: docker-build docker-push helm-deploy ## 🚀 Build + Push + Deploy all services
 
-reset: docker-clean kind-delete kind-start load-images helm-deploy ## ♻️ Full reset: clean, recreate, deploy
+# ========== 🚀 CI/CD SHORTCUTS ==========
+ci: ## Run lint + test + build
+	make lint && make test && make build
 
-# === INDIVIDUAL CORE SERVICES ===
+deploy: ## Build, push and deploy all
+	make docker-build && make docker-push && make helm-deploy
 
-user-service:
-	npm run user-service
+reset: ## Full clean, rebuild and redeploy
+	make docker-clean && make kind-delete && make kind-start && make deploy
+
+
+# ========== 👟 SERVICE STARTERS ==========
+user-service: ## Start user-service
+	npx nx serve user-service
 
 product-service:
-	npm run product-service
+	npx nx serve product-service
 
 order-service:
-	npm run order-service
-
-rating-service:
-	npm run rating-service
-
-email-service:
-	npm run email-service
+	npx nx serve order-service
 
 payment-service:
-	npm run payment-service
-
-search-service:
-	npm run search-service
-
-cart-service:
-	npm run cart-service
-
-admin-service:
-	npm run admin-service
+	npx nx serve payment-service
 
 invoice-service:
-	npm run invoice-service
-
-analytics-service:
-	npm run analytics-service
+	npx nx serve invoice-service
 
 vendor-service:
-	npm run vendor-service
+	npx nx serve vendor-service
 
+analytics-service:
+	npx nx serve analytics-service
 
-# === INDIVIDUAL POST-MVP SERVICES ===
+admin-service:
+	npx nx serve admin-service
 
-coupon-service:
-	npm run coupon-service
+search-service:
+	npx nx serve search-service
 
-cms-service:
-	npm run cms-service
+cart-service:
+	npx nx serve cart-service
 
-refund-service:
-	npm run refund-service
+rating-service:
+	npx nx serve rating-service
 
-recommendation-service:
-	npm run recommendation-service
+email-service:
+	npx nx serve email-service
 
-
-# === GROUPED RUNNERS ===
-
-core-services:
+core-services: ## Start all core services concurrently
 	npx concurrently \
-		"npm run user:service" \
-		"npm run product:service" \
-		"npm run order:service" \
-		"npm run rating:service" \
-		"npm run email:service" \
-		"npm run payment:service" \
-		"npm run search:service" \
-		"npm run cart:service" \
-		"npm run admin:service" \
-		"npm run invoice:service" \
-		"npm run analytics:service" \
-		"npm run vendor:service"
+		"npx nx serve user-service" \
+		"npx nx serve product-service" \
+		"npx nx serve order-service" \
+		"npx nx serve rating-service" \
+		"npx nx serve email-service" \
+		"npx nx serve payment-service" \
+		"npx nx serve search-service" \
+		"npx nx serve cart-service" \
+		"npx nx serve admin-service" \
+		"npx nx serve invoice-service" \
+		"npx nx serve analytics-service" \
+		"npx nx serve vendor-service"
 
-post-mvp-services:
+post-mvp-services: ## Start additional post-MVP services
 	npx concurrently \
-		"npm run coupon:service" \
-		"npm run cms:service" \
-		"npm run refund:service" \
-		"npm run recommendation:service"
+		"npx nx serve coupon-service" \
+		"npx nx serve refund-service" \
+		"npx nx serve cms-service" \
+		"npx nx serve recommendation-service"
 
-all-services:
-	make core-services &
-	make post-mvp-services
-
+all-services: ## Start all services
+	make core-services & make post-mvp-services
 
 
-# Docker
+# === 🔁 Run Prisma Migrations For All Services ===
 
-# Makefile for managing microservices and infrastructure
+# USER
+migrate-user:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/user_service_db npx prisma migrate dev --schema=apps/backend/user-service/prisma/schema.prisma
 
-# Default target
-.PHONY: help
-help:
-	@echo "Usage:"
-	@echo "  make up           - Build and start all containers"
-	@echo "  make down         - Stop and remove all containers"
-	@echo "  make restart      - Restart all containers"
-	@echo "  make logs         - View logs of all services"
-	@echo "  make logs SERVICE=name - View logs of a specific service"
-	@echo "  make ps           - List running containers"
-	@echo "  make build        - Rebuild all Docker images"
-	@echo "  make clean        - Remove all volumes and containers"
-	@echo "  make prune        - Prune all stopped containers, networks, volumes, and images"
+# PRODUCT
+migrate-product:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/product_service_db npx prisma migrate dev --schema=apps/backend/product-service/prisma/schema.prisma
 
-# Start all containers and rebuild images
-up:
-	docker-compose up --build
+# ORDER
+migrate-order:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/order_service_db npx prisma migrate dev --schema=apps/backend/order-service/prisma/schema.prisma
 
-# Stop and remove all containers, networks, volumes
-down:
-	docker-compose down
+# RATING
+migrate-rating:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/rating_service_db npx prisma migrate dev --schema=apps/backend/rating-service/prisma/schema.prisma
 
-# Restart all services
-restart: down up
+# EMAIL
+migrate-email:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/email_service_db npx prisma migrate dev --schema=apps/backend/email-service/prisma/schema.prisma
 
-# View logs for all services
-logs:
-	docker-compose logs -f --tail=100
+# PAYMENT
+migrate-payment:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/payment_service_db npx prisma migrate dev --schema=apps/backend/payment-service/prisma/schema.prisma
 
-# View logs for a specific service
-# Example: make logs SERVICE=user-service
-logs-service:
-	docker-compose logs -f --tail=100 $(SERVICE)
+# SEARCH
+migrate-search:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/search_service_db npx prisma migrate dev --schema=apps/backend/search-service/prisma/schema.prisma
 
-# List running containers
-ps:
-	docker-compose ps
+# CART
+migrate-cart:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/cart_service_db npx prisma migrate dev --schema=apps/backend/cart-service/prisma/schema.prisma
 
-# Rebuild Docker images
-build:
-	docker-compose build
+# ADMIN
+migrate-admin:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/admin_service_db npx prisma migrate dev --schema=apps/backend/admin-service/prisma/schema.prisma
 
-# Remove all volumes and containers
-clean:
-	docker-compose down -v
+# INVOICE
+migrate-invoice:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/invoice_service_db npx prisma migrate dev --schema=apps/backend/invoice-service/prisma/schema.prisma
 
-# Prune stopped containers, unused volumes, images, etc.
-prune:
-	docker system prune -af --volumes
+# ANALYTICS
+migrate-analytics:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/analytics_service_db npx prisma migrate dev --schema=apps/backend/analytics-service/prisma/schema.prisma
 
+# VENDOR
+migrate-vendor:
+	DATABASE_URL=postgresql://mvp_ecom_user:mvp_ecom_pass@localhost:5432/vendor_service_db npx prisma migrate dev --schema=apps/backend/vendor-service/prisma/schema.prisma
 
+# 🔁 All Migrations
+migrate-all: migrate-user migrate-product migrate-order migrate-rating migrate-email migrate-payment migrate-search migrate-cart migrate-admin migrate-invoice migrate-analytics migrate-vendor
 
+# === Prisma Migration Reset for All Services ===
 
+reset-user:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/user-service/prisma/schema.prisma
 
-# # ====================== 🧭 GENERAL ======================
-# make help                  # Show all available commands
-# make dev                   # Run all microservices in dev mode
-# make start-service-<name>  # Start single service (e.g., user-service)
-# make nx-graph              # Show Nx dependency graph
+reset-product:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/product-service/prisma/schema.prisma
 
-# # ==================== ✅ CODE QUALITY ====================
-# make lint                  # Run ESLint across all services
-# make test                  # Run all Jest unit tests
-# make build                 # Build all services
+reset-order:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/order-service/prisma/schema.prisma
 
-# # ==================== 🧠 PRISMA & DB ====================
-# make prisma-migrate        # Apply Prisma migrations for all Prisma services
-# make prisma-generate       # Generate Prisma clients
-# make prisma-seed           # Seed all services with seed.ts (if exists)
-# make seed                  # Alias for `prisma-seed`
-# make prisma-studio         # Open Prisma Studio (user-service default)
+reset-rating:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/rating-service/prisma/schema.prisma
 
-# make check-readiness
+reset-email:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/email-service/prisma/schema.prisma
 
-# # ==================== 🐳 DOCKER ====================
-# make docker-build          # Build Docker images for all services
-# make docker-push           # Push Docker images to registry
-# make docker-clean          # Remove local Docker images
+reset-payment:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/payment-service/prisma/schema.prisma
 
-# # ========== 🏗️ INFRASTRUCTURE (Docker Compose) ==========
-# make infra-up              # Start PostgreSQL, Redis, Kafka, MinIO
-# make infra-down            # Stop infra stack
-# make infra-restart         # Restart infra
-# make postgres-init         # Reinitialize PostgreSQL volumes
+reset-search:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/search-service/prisma/schema.prisma
 
-# # ========== ☸️ KUBERNETES (kind + Helm) ==========
-# make kind-start            # Start kind cluster
-# make kind-delete           # Delete kind cluster
-# make load-images           # Load images into kind
+reset-cart:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/cart-service/prisma/schema.prisma
 
-# make helm-init             # Add/update Helm repos
-# make helm-deploy           # Deploy all services via Helm
-# make helm-destroy          # Uninstall all Helm releases
-# make helmfile-sync         # Sync Helm deployments via helmfile.yaml
+reset-admin:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/admin-service/prisma/schema.prisma
 
-# # ========== 📊 OBSERVABILITY ==========
-# make monitor-start         # Deploy Prometheus, Grafana, Loki, Jaeger
-# make monitor-stop          # Uninstall observability stack
-# make jaeger-ui             # Port-forward Jaeger UI (localhost:16686)
-# make grafana-ui            # Port-forward Grafana UI (localhost:3000)
+reset-invoice:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/invoice-service/prisma/schema.prisma
 
-# # ========== 📄 LOGGING ==========
-# make logs-<service>        # Tail logs from a service pod (e.g., logs-user-service)
+reset-analytics:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/analytics-service/prisma/schema.prisma
 
-# # ========== 🔐 SECURITY ==========
-# make scan-images           # Scan all Docker images with Trivy
-# make falco-install         # Install Falco (runtime threat detection)
-# make falco-uninstall       # Uninstall Falco
+reset-vendor:
+	npx prisma migrate reset --force --skip-seed --schema=apps/backend/vendor-service/prisma/schema.prisma
 
-# # ========== 🎯 NX AFFECTED COMMANDS ==========
-# make affected              # Show affected projects
-# make affected-build        # Build only affected services
-# make affected-lint         # Lint only affected services
-# make affected-test         # Test only affected services
-# make affected-deploy       # Build + Push + Deploy only affected services
-
-# # ========== 🚀 CI/CD SHORTCUTS ==========
-# make ci                    # Lint + Test + Build (CI shortcut)
-# make deploy                # Docker build + push + deploy via Helm
-# make reset                 # Clean Docker + kind + redeploy all
+# Run all resets in sequence
+reset-all: reset-user reset-product reset-order reset-rating reset-email reset-payment reset-search reset-cart reset-admin reset-invoice reset-analytics reset-vendor
 
 
-# Start one service
-# make user-service
+# ====================== 🧭 GENERAL ======================
+# make help                     # Show all available commands
+# make dev                      # Run all microservices in dev mode
+# make start-service-<name>     # Start a single service using `npx nx serve`
+# make build-service-<name>     # Build a single service using `npx nx build`
+# make nx-graph                 # Show Nx dependency graph
 
-# Start all core services
-# # make core-services
+# ==================== ✅ CODE QUALITY ====================
+# make lint                     # Run ESLint across all services
+# make test                     # Run all Jest unit tests
+# make build                    # Build all services
 
-# # Start all post-MVP services
-# make post-mvp-services
+# ==================== 🧠 PRISMA & DB ====================
+# make prisma-migrate           # Apply Prisma migrations for all Prisma services
+# make prisma-generate          # Generate Prisma clients
+# make prisma-seed              # Seed all services with seed.ts (if exists)
+# make seed                     # Alias for `prisma-seed`
+# make prisma-studio            # Open Prisma Studio (user-service default)
+# make check-readiness          # Check if DB services are ready (used before migrations)
 
-# # Start everything
-# make all-services
+# ==================== 🐳 DOCKER ====================
+# make docker-build             # Build Docker images for all services
+# make docker-push              # Push Docker images to registry
+# make docker-clean             # Remove local Docker images
+
+# ========== 🏗️ INFRASTRUCTURE (Docker Compose) ==========
+# make infra-up                 # Start PostgreSQL, Redis, Kafka, MinIO, etc.
+# make infra-down               # Stop infra stack
+# make infra-restart            # Restart infra
+# make postgres-init            # Reinitialize PostgreSQL volumes
+
+# ========== ☸️ KUBERNETES (kind + Helm) ==========
+# make kind-start               # Start kind cluster
+# make kind-delete              # Delete kind cluster
+# make load-images              # Load images into kind
+
+# make helm-init                # Add/update Helm repos
+# make helm-deploy              # Deploy all services via Helm
+# make helm-destroy             # Uninstall all Helm releases
+# make helmfile-sync            # Sync Helm deployments via helmfile.yaml
+
+# ========== 📊 OBSERVABILITY ==========
+# make monitor-start            # Deploy Prometheus, Grafana, Loki, Jaeger
+# make monitor-stop             # Uninstall observability stack
+# make jaeger-ui                # Port-forward Jaeger UI (localhost:16686)
+# make grafana-ui               # Port-forward Grafana UI (localhost:3000)
+
+# ========== 📄 LOGGING ==========
+# make logs-<service>           # Tail logs from a service pod (e.g., logs-user-service)
+
+# ========== 🔐 SECURITY ==========
+# make scan-images              # Scan all Docker images with Trivy
+# make falco-install            # Install Falco (runtime threat detection)
+# make falco-uninstall          # Uninstall Falco
+
+# ========== 🎯 NX AFFECTED COMMANDS ==========
+# make affected                 # Show affected projects
+# make affected-build           # Build only affected services
+# make affected-lint            # Lint only affected services
+# make affected-test            # Test only affected services
+# make affected-deploy          # Build + Push + Deploy only affected services
+
+# ========== 🚀 CI/CD SHORTCUTS ==========
+# make ci                       # Lint + Test + Build (CI shortcut)
+# make deploy                   # Docker build + push + deploy via Helm
+# make reset                    # Clean Docker + kind + redeploy all
+
+# ========== 🎯 SERVICE SHORTCUTS ==========
+# make user-service             # Start user-service (uses `npx nx serve`)
+# make product-service          # Start product-service
+# make order-service            # Start order-service
+# make vendor-service           # Start vendor-service
+# make build-user-service       # Build user-service (uses `npx nx build`)
+# make build-order-service      # Build order-service
+# make build-payment-service    # Build payment-service
+
+# ========== 🔁 GROUPED SERVICE STARTS ==========
+# make core-services            # Start user, product, order, cart, payment
+# make post-mvp-services        # Start vendor, rating, analytics, search, email, invoice
+# make all-services             # Start all services
+

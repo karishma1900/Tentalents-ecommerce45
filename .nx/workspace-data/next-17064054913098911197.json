@@ -1,5 +1,5 @@
 {
-  "15179017276116938414": {
+  "9676020728170252810": {
     "build": {
       "command": "next build",
       "options": {
@@ -64,6 +64,7 @@
       "command": "npx nx watch --projects seller-ui --includeDependentProjects -- npx nx build-deps seller-ui"
     }
   },
+<<<<<<< Updated upstream
   "10566484756698208366": {
     "build": {
       "command": "next build",
@@ -1430,6 +1431,9 @@
     }
   },
   "6000860771136003975": {
+=======
+  "10851705580340324260": {
+>>>>>>> Stashed changes
     "build": {
       "command": "next build",
       "options": {

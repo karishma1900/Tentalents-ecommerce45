@@ -4,6 +4,7 @@ generator client {
 }
 
 // PostgreSQL datasource for isolated email-service DB
+// === DATABASE SOURCE ===
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")

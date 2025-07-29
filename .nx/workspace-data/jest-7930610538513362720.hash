@@ -1,5 +1,5 @@
 {
-  "17114433236433110600": {
+  "12265784647694512885": {
     "targets": {
       "test": {
         "command": "jest",
@@ -27,7 +27,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -35,12 +35,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\admin-service"
+          "{workspaceRoot}/apps/coverage/apps/admin-service"
         ]
       }
     }
   },
-  "14548239537231957522": {
+  "11171228882671169727": {
     "targets": {
       "test": {
         "command": "jest",
@@ -68,7 +68,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -76,12 +76,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\analytics-service"
+          "{workspaceRoot}/apps/coverage/apps/analytics-service"
         ]
       }
     }
   },
-  "13915125584576124346": {
+  "14573773870190739402": {
     "targets": {
       "test": {
         "command": "jest",
@@ -109,7 +109,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -117,12 +117,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\cart-service"
+          "{workspaceRoot}/apps/coverage/apps/cart-service"
         ]
       }
     }
   },
-  "11432793852205877948": {
+  "1141777042053072116": {
     "targets": {
       "test": {
         "command": "jest",
@@ -150,7 +150,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -158,12 +158,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\invoice-service"
+          "{workspaceRoot}/apps/coverage/apps/invoice-service"
         ]
       }
     }
   },
-  "15343129024086157398": {
+  "6855062631829867544": {
     "targets": {
       "test": {
         "command": "jest",
@@ -191,7 +191,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -199,12 +199,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\order-service"
+          "{workspaceRoot}/apps/coverage/apps/order-service"
         ]
       }
     }
   },
-  "18007725944540948107": {
+  "6679749068773916280": {
     "targets": {
       "test": {
         "command": "jest",
@@ -232,7 +232,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -240,12 +240,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\payment-service"
+          "{workspaceRoot}/apps/coverage/apps/payment-service"
         ]
       }
     }
   },
-  "2058086857205524402": {
+  "4004954313124142706": {
     "targets": {
       "test": {
         "command": "jest",
@@ -273,7 +273,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -281,12 +281,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\post-mvp-services\\cms-service"
+          "{workspaceRoot}/apps/coverage/apps/post-mvp-services/cms-service"
         ]
       }
     }
   },
-  "15094003377523900865": {
+  "15226984781494600191": {
     "targets": {
       "test": {
         "command": "jest",
@@ -314,7 +314,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -322,12 +322,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\post-mvp-services\\coupon-service"
+          "{workspaceRoot}/apps/coverage/apps/post-mvp-services/coupon-service"
         ]
       }
     }
   },
-  "12290181577890825729": {
+  "14735877339547079102": {
     "targets": {
       "test": {
         "command": "jest",
@@ -355,7 +355,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -363,12 +363,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\post-mvp-services\\recommendation-service"
+          "{workspaceRoot}/apps/coverage/apps/post-mvp-services/recommendation-service"
         ]
       }
     }
   },
-  "9437768914669875031": {
+  "3009605303043483856": {
     "targets": {
       "test": {
         "command": "jest",
@@ -396,7 +396,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -404,12 +404,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\post-mvp-services\\refund-service"
+          "{workspaceRoot}/apps/coverage/apps/post-mvp-services/refund-service"
         ]
       }
     }
   },
-  "9977883280768865887": {
+  "12564094428027221198": {
     "targets": {
       "test": {
         "command": "jest",
@@ -437,7 +437,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -445,12 +445,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\product-service"
+          "{workspaceRoot}/apps/coverage/apps/product-service"
         ]
       }
     }
   },
-  "16298876703831890117": {
+  "10981645546334564867": {
     "targets": {
       "test": {
         "command": "jest",
@@ -478,7 +478,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -486,12 +486,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\rating-service"
+          "{workspaceRoot}/apps/coverage/apps/rating-service"
         ]
       }
     }
   },
-  "16189588885338924471": {
+  "3724095412003815127": {
     "targets": {
       "test": {
         "command": "jest",
@@ -519,7 +519,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -527,12 +527,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\search-service"
+          "{workspaceRoot}/apps/coverage/apps/search-service"
         ]
       }
     }
   },
-  "3033942016719935013": {
+  "3633174656541384309": {
     "targets": {
       "test": {
         "command": "jest",
@@ -560,7 +560,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -568,12 +568,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\user-service"
+          "{workspaceRoot}/apps/coverage/apps/user-service"
         ]
       }
     }
   },
-  "2108973005949041040": {
+  "12043658740088958389": {
     "targets": {
       "test": {
         "command": "jest",
@@ -601,7 +601,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\apps\\jest.preset.js",
+          "{workspaceRoot}/apps/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -609,12 +609,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\apps\\coverage\\apps\\vendor-service"
+          "{workspaceRoot}/apps/coverage/apps/vendor-service"
         ]
       }
     }
   },
-  "4269150213369144857": {
+  "5883376475650691628": {
     "targets": {
       "test": {
         "command": "jest",
@@ -642,7 +642,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\jest.preset.js",
+          "{workspaceRoot}/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -650,12 +650,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\coverage\\libs\\shared"
+          "{workspaceRoot}/coverage/libs/shared"
         ]
       }
     }
   },
-  "8221596773784443655": {
+  "2127599262053653337": {
     "targets": {
       "test": {
         "command": "jest",
@@ -683,7 +683,7 @@
         "inputs": [
           "default",
           "^production",
-          "{workspaceRoot}\\libs\\shared\\jest.preset.js",
+          "{workspaceRoot}/libs/shared/jest.preset.js",
           {
             "externalDependencies": [
               "jest"
@@ -691,11 +691,12 @@
           }
         ],
         "outputs": [
-          "{workspaceRoot}\\libs\\shared\\coverage\\middlewares"
+          "{workspaceRoot}/libs/shared/coverage/middlewares"
         ]
       }
     }
   },
+<<<<<<< Updated upstream
   "2288689553908900071": {
     "targets": {
       "test": {
@@ -18942,6 +18943,9 @@
     }
   },
   "2605631295398719699": {
+=======
+  "11382256065653608074": {
+>>>>>>> Stashed changes
     "targets": {
       "test": {
         "command": "jest",
@@ -18978,6 +18982,7 @@
         ],
         "outputs": [
           "{workspaceRoot}/coverage/libs/shared"
+<<<<<<< Updated upstream
         ]
       }
     }
@@ -19019,6 +19024,8 @@
         ],
         "outputs": [
           "{workspaceRoot}/libs/shared/coverage/middlewares"
+=======
+>>>>>>> Stashed changes
         ]
       }
     }

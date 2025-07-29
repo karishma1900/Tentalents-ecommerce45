@@ -1,8 +1,13 @@
 {
   "run": {
     "command": "nx serve vendor-service",
+<<<<<<< Updated upstream
     "startTime": "2025-07-28T08:16:01.957Z",
     "endTime": "2025-07-28T08:16:59.680Z",
+=======
+    "startTime": "2025-07-29T01:48:58.227Z",
+    "endTime": "2025-07-29T02:10:45.907Z",
+>>>>>>> Stashed changes
     "inner": false
   },
   "tasks": [
@@ -10,9 +15,15 @@
       "taskId": "vendor-service:serve:development",
       "target": "serve",
       "projectName": "vendor-service",
+<<<<<<< Updated upstream
       "hash": "3579603050038463583",
       "startTime": "2025-07-28T08:16:02.121Z",
       "endTime": "2025-07-28T08:16:59.642Z",
+=======
+      "hash": "1020248593372062695",
+      "startTime": "2025-07-29T01:48:58.411Z",
+      "endTime": "2025-07-29T02:10:45.893Z",
+>>>>>>> Stashed changes
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 1

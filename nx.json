@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "ecommerce",
-  "defaultBase": "main",
-  "affected": {
+  "cli": {
     "defaultBase": "main"
   },
   "workspaceLayout": {
