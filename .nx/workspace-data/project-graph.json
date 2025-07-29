@@ -1667,7 +1667,10 @@
               "{options.outputPath}"
             ],
             "options": {
-              "outputPath": "dist/apps/frontend/seller-ui"
+              "outputPath": "dist/apps/frontend/seller-ui",
+              "assets": [
+                "apps/frontend/seller-ui/public"
+              ]
             },
             "configurations": {},
             "parallelism": true
@@ -38319,5 +38322,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1753775287704
+  "computedAt": 1753775947944
 }

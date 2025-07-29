@@ -16,7 +16,8 @@
       "executor": "@nx/next:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/frontend/seller-ui"
+        "outputPath": "dist/apps/frontend/seller-ui",
+        "assets": ["apps/frontend/seller-ui/public"]
       }
     }
   },

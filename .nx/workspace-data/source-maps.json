@@ -3839,6 +3839,10 @@
     "targets.build.options.outputPath": [
       "apps/frontend/seller-ui/project.json",
       "nx/core/project-json"
+    ],
+    "targets.build.options.assets": [
+      "apps/frontend/seller-ui/project.json",
+      "nx/core/project-json"
     ]
   },
   "apps/frontend/user-ui": {
