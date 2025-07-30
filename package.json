@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+<<<<<<< HEAD
      "build:user-ui": "nx build user-ui",
     "nx": "npx nx",
     "lint": "npx nx lint",
@@ -48,6 +49,12 @@
     "serve:recommendation-service": "npx nx serve recommendation-service",
     "build:recommendation-service": "npx nx build recommendation-service",
     "build": "nx build",
+=======
+    "dev": "nx serve",
+    "build": "nx build",
+    "lint": "nx lint",
+    "test": "nx test",
+>>>>>>> feature/new-backend
     "prisma:generate": "prisma generate --schema=apps/backend/vendor-service/prisma/schema.prisma",
     "prisma:migrate": "prisma migrate dev --name init --schema=apps/backend/vendor-service/prisma/schema.prisma"
   },
