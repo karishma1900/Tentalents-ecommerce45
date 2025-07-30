@@ -126,3 +126,82 @@ Time for 'build typescript dependencies' 3103.6514800000004
 [NX v21.3.8 Daemon Server] - 2025-07-29T02:38:15.831Z - [WATCHER]: Stopping the watcher for /home/swapna/Tentalents-ecommerce (sources)
 [NX v21.3.8 Daemon Server] - 2025-07-29T02:38:15.836Z - [WATCHER]: Stopping the watcher for /home/swapna/Tentalents-ecommerce (outputs)
 [NX v21.3.8 Daemon Server] - 2025-07-29T02:38:15.840Z - Server stopped because: "LOCK_FILES_CHANGED"
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.411Z - Started listening on: \\.\pipe\nx\C:\Users\KARISH~1\AppData\Local\Temp\92983c5981a030903a5d\d.sock
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.416Z - [WATCHER]: Subscribed to changes within: c:\Users\Karishma khatri\Desktop\Tentalents-ecommerce (native)
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.424Z - Established a connection. Number of open connections: 1
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.428Z - Closed a connection. Number of open connections: 0
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.486Z - Established a connection. Number of open connections: 1
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.487Z - Closed a connection. Number of open connections: 0
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.488Z - Established a connection. Number of open connections: 1
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:28.491Z - [REQUEST]: Client Request for Project Graph Received
+Time for 'plugin worker 27852 code loading' 12.244500000000002
+Time for 'plugin worker 6344 code loading' 9.195599999999999
+Time for 'plugin worker 26452 code loading' 9.950599999999998
+Time for 'plugin worker 21068 code loading' 10.025300000000001
+Time for 'plugin worker 17936 code loading' 15.707800000000006
+Time for 'plugin worker 18660 code loading' 13.088299999999997
+Time for 'plugin worker 11924 code loading' 12.136899999999997
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.096Z - Time taken for 'Load Nx Plugin: c:\Users\Karishma khatri\Desktop\Tentalents-ecommerce\node_modules\nx\src\plugins\package-json' 594.194ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.109Z - Time taken for 'Load Nx Plugin: c:\Users\Karishma khatri\Desktop\Tentalents-ecommerce\node_modules\nx\src\plugins\project-json\build-nodes\project-json' 607.0325ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.135Z - Time taken for 'loadDefaultNxPlugins' 635.6349000000001ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.220Z - Time taken for 'Load Nx Plugin: @nx/jest/plugin' 722.7735ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.250Z - Time taken for 'Load Nx Plugin: @nx/eslint/plugin' 754.0616ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.310Z - Time taken for 'Load Nx Plugin: @nx/next/plugin' 811.0598ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.351Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.351Z - [REQUEST]: 
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.351Z - [REQUEST]: 
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.357Z - No files changed, but no in-memory cached project graph found. Recomputing it...
+Time for '@nx/webpack/plugin:createNodes' 4.230899999999906
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.391Z - Time taken for 'loadSpecifiedNxPlugins' 854.5969ms
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.393Z - Established a connection. Number of open connections: 2
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.393Z - Established a connection. Number of open connections: 3
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.394Z - Established a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.394Z - Established a connection. Number of open connections: 5
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.395Z - Closed a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.395Z - Closed a connection. Number of open connections: 3
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.401Z - [REQUEST]: Responding to the client. handleGlob
+Time for 'nx/core/project-json:createNodes' 9.592499999999973
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.405Z - [REQUEST]: Responding to the client. handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.405Z - Established a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.405Z - Established a connection. Number of open connections: 5
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.406Z - Closed a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.406Z - Done responding to the client handleGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.406Z - Handled GLOB. Handling time: 3. Response time: 5.
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.407Z - Done responding to the client handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.407Z - Handled HASH_GLOB. Handling time: 2. Response time: 2.
+Time for 'nx/js/dependencies-and-lockfile:createNodes' 24.19240000000002
+Time for 'total for sendMessageToDaemon()' 21.29740000000004
+Time for 'deserialize daemon response' 0.22509999999999764
+Time for 'nx/core/package-json:createNodes' 27.154600000000073
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.424Z - [REQUEST]: Responding to the client. handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.456Z - [REQUEST]: Responding to the client. handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.456Z - Done responding to the client handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.457Z - Handled HASH_GLOB. Handling time: 16. Response time: 32.
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.457Z - Done responding to the client handleHashMultiGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.457Z - Handled HASH_GLOB. Handling time: 27. Response time: 1.
+Time for 'total for sendMessageToDaemon()' 14.371700000000033
+Time for 'deserialize daemon response' 0.06430000000000291
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.938Z - [REQUEST]: Responding to the client. handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.939Z - Done responding to the client handleHashGlob
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:29.939Z - Handled HASH_GLOB. Handling time: 1. Response time: 1.
+Time for '@nx/next/plugin:createNodes' 560.8248000000001
+Time for 'total for sendMessageToDaemon()' 532.4509999999999
+Time for 'deserialize daemon response' 0.03569999999990614
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.078Z - Established a connection. Number of open connections: 5
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.079Z - Closed a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.080Z - Established a connection. Number of open connections: 5
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.085Z - [REQUEST]: Responding to the client. Shutdown initiated
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Done responding to the client Shutdown initiated
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Handled FORCE_SHUTDOWN. Handling time: 0. Response time: 1.
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Closed a connection. Number of open connections: 4
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Closed a connection. Number of open connections: 3
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Closed a connection. Number of open connections: 2
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Closed a connection. Number of open connections: 1
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - Closed a connection. Number of open connections: 0
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.086Z - [WATCHER]: Stopping the watcher for c:\Users\Karishma khatri\Desktop\Tentalents-ecommerce (sources)
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.087Z - [WATCHER]: Stopping the watcher for c:\Users\Karishma khatri\Desktop\Tentalents-ecommerce (outputs)
+[NX v21.3.7 Daemon Server] - 2025-07-30T08:26:30.088Z - Server stopped because: "Request to shutdown"
+[33mConvert compiler options from json failed, Cannot read file 'c:/Users/Karishma khatri/Desktop/Tentalents-ecommerce/apps/tsconfig.base.json'.[39m
+[33mConvert compiler options from json failed, Cannot read file 'c:/Users/Karishma khatri/Desktop/Tentalents-ecommerce/apps/tsconfig.base.json'.[39m
+[33mConvert compiler options from json failed, Cannot read file 'c:/Users/Karishma khatri/Desktop/Tentalents-ecommerce/apps/tsconfig.base.json'.[39m
+[33mConvert compiler options from json failed, Cannot read file 'c:/Users/Karishma khatri/Desktop/Tentalents-ecommerce/apps/tsconfig.base.json'.[39m
