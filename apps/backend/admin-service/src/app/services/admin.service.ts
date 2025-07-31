@@ -4,7 +4,7 @@ import {
   Seller,
   UserRole,
   SellerStatus,
-} from '@prisma/client'; // ✅ FIXED
+} from '@prisma/client'; // ✅ Make sure this is the correct path
 
 const prisma = new PrismaClient();
 
@@ -53,7 +53,7 @@ export const adminService = {
 
   getPendingSellers: async (): Promise<
     (Seller & {
-      user: Pick<User, 'id' | 'email' | 'role'>;
+      user: Pick<User, 'id' | 'email' | 'role'> | null;
     })[]
   > => {
     return prisma.seller.findMany({
@@ -104,5 +104,3 @@ export const adminService = {
     return { userCount, sellerCount };
   },
 };
-
-// npm install @prisma/client

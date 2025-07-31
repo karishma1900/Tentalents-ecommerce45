@@ -133,10 +133,10 @@ async function shutdown() {
     await prisma.$disconnect();
     logger.info('✅ Prisma disconnected');
 
-    if (redisClient?.status !== 'end') {
-      await redisClient.quit();
-      logger.info('✅ Redis disconnected');
-    }
+    if (typeof redisClient?.status === 'string' && redisClient.status !== 'end') {
+  await redisClient.quit();
+  logger.info('✅ Redis disconnected');
+}
 
     await disconnectKafkaProducer();
     await disconnectKafkaConsumer();

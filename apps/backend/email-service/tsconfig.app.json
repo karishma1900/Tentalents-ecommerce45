@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
     // --- Base compiler settings ---
-    "target": "ES2020",
+    
     "lib": ["ES2020", "DOM"],
     "module": "commonjs",
+    "target": "es2019",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -24,7 +25,7 @@
       "@shared/error": ["libs/shared/error/src/index.ts"],
       "@shared/kafka": ["libs/shared/kafka/src/index.ts"],
       "@shared/logger": ["libs/shared/logger/src/index.ts"],
-      "@shared/middlewares": ["libs/shared/middlewares/src/index.ts"],
+      "@shared/middleware": ["libs/shared/middleware/src/index.ts"],
       "@shared/redis": ["libs/shared/redis/src/index.ts"],
       "@shared/minio": ["libs/shared/minio/src/index.ts"],
       "@shared/email": ["libs/shared/email/src/index.ts"],

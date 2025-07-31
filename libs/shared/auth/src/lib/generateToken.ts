@@ -3,14 +3,10 @@ import { AuthPayload } from './types';
 import dotenv from 'dotenv';
 import path from 'path';
 
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+// __filename and __dirname are available automatically in CommonJS,
+// no need to recreate them using import.meta.url
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-
-// Load .env from root
+// Load .env from root relative to current file
 dotenv.config({ path: path.resolve(__dirname, '../../../../..', '.env') });
 
 const JWT_SECRET = process.env.JWT_SECRET || 'super_secret';

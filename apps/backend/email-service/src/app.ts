@@ -1,13 +1,13 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { setupSwagger } from '@shared/swagger';
 import { errorHandler, notFoundHandler } from '@shared/error';
 import { logger } from '@shared/logger';
 import {
   corsMiddleware,
   helmetMiddleware,
-  rateLimiter,
-  requestLogger,
-} from '@shared/middlewares';
+  rateLimiterMiddleware,
+  requestLoggerMiddleware,
+} from '@shared/middlewares/middlewares';
 
 import emailRoutes from './app/routes/email.routes';
 
@@ -20,8 +20,8 @@ logger.info('📨 Initializing Email Service');
 app.use(express.json());
 app.use(corsMiddleware);
 app.use(helmetMiddleware);
-app.use(rateLimiter);
-app.use(requestLogger);
+app.use(rateLimiterMiddleware);
+app.use(requestLoggerMiddleware);
 
 // 📬 Routes
 app.use('/api/email', emailRoutes);
@@ -35,7 +35,7 @@ setupSwagger(app, {
 });
 
 // 🩺 Health Check
-app.get('/healthz', (_req, res) => {
+app.get('/healthz', (_req: Request, res: Response) => {
   return res.status(200).send('✅ Email Service healthy');
 });
 

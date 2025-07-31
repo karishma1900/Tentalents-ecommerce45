@@ -23,6 +23,7 @@ model users {
   password  String?
   following String[] @default([]) @db.Text
   avatar    images? 
+  role      UserRole
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
 }
@@ -48,4 +49,9 @@ enum VendorStatus {
   PENDING
   APPROVED
   REJECTED
+}
+enum UserRole {
+  USER
+  VENDOR
+  ADMIN
 }

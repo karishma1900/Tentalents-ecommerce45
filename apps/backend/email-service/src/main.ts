@@ -16,7 +16,8 @@ import { config } from '@shared/config'; // Optional: for centralized config
 import { SERVICE_NAMES, SERVICE_PORTS } from '@shared/constants';
 
 // 🛠️ Load environment variables early
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+dotenv.config({ path: path.resolve(__dirname, '../../../../.env') });
 
 // 🎯 Service ID
 const SERVICE_NAME = SERVICE_NAMES.EMAIL;
@@ -84,9 +85,10 @@ async function shutdown() {
   try {
     await prisma.$disconnect();
 
-    if (redisClient.status === 'ready') {
-      await redisClient.quit();
-    }
+   if (typeof redisClient.status === 'string' && redisClient.status === 'ready') {
+  await redisClient.quit();
+}
+
 
     await disconnectKafkaProducer();
     await disconnectKafkaConsumer();

@@ -10,6 +10,8 @@ import { connectKafkaProducer, disconnectKafkaProducer } from '@shared/kafka';
 
 import { connectMinio, disconnectMinio } from '@shared/minio';
 
+console.log(dotenv.config());
+
 // 🌍 Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
