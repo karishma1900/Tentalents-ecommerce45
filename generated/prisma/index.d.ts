@@ -30,6 +30,37 @@ export type users = $Result.DefaultSelection<Prisma.$usersPayload>
 export type Vendor = $Result.DefaultSelection<Prisma.$VendorPayload>
 
 /**
+ * Enums
+ */
+export namespace $Enums {
+  export const VendorStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+export type VendorStatus = (typeof VendorStatus)[keyof typeof VendorStatus]
+
+
+export const UserRole: {
+  USER: 'USER',
+  VENDOR: 'VENDOR',
+  ADMIN: 'ADMIN'
+};
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+}
+
+export type VendorStatus = $Enums.VendorStatus
+
+export const VendorStatus: typeof $Enums.VendorStatus
+
+export type UserRole = $Enums.UserRole
+
+export const UserRole: typeof $Enums.UserRole
+
+/**
  * ##  Prisma Client ʲˢ
  *
  * Type-safe database client for TypeScript & Node.js
@@ -45,7 +76,7 @@ export type Vendor = $Result.DefaultSelection<Prisma.$VendorPayload>
  */
 export class PrismaClient<
   ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
@@ -241,8 +272,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.12.0
-   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
+   * Prisma Client JS version: 6.13.0
+   * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
    */
   export type PrismaVersion = {
     client: string
@@ -913,16 +944,24 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Defaults to stdout
+     * // Shorthand for `emit: 'stdout'`
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events
+     * // Emit as events only
      * log: [
-     *   { emit: 'stdout', level: 'query' },
-     *   { emit: 'stdout', level: 'info' },
-     *   { emit: 'stdout', level: 'warn' }
-     *   { emit: 'stdout', level: 'error' }
+     *   { emit: 'event', level: 'query' },
+     *   { emit: 'event', level: 'info' },
+     *   { emit: 'event', level: 'warn' }
+     *   { emit: 'event', level: 'error' }
      * ]
+     * 
+     * / Emit as events and log to stdout
+     * og: [
+     *  { emit: 'stdout', level: 'query' },
+     *  { emit: 'stdout', level: 'info' },
+     *  { emit: 'stdout', level: 'warn' }
+     *  { emit: 'stdout', level: 'error' }
+     * 
      * ```
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
@@ -966,10 +1005,15 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
-  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
-    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
-    : never
+  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
+
+  export type GetLogType<T> = CheckIsLogLevel<
+    T extends LogDefinition ? T['level'] : T
+  >;
+
+  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
+    ? GetLogType<T[number]>
+    : never;
 
   export type QueryEvent = {
     timestamp: Date
@@ -2130,6 +2174,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    role: $Enums.UserRole | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2139,6 +2184,7 @@ export namespace Prisma {
     name: string | null
     email: string | null
     password: string | null
+    role: $Enums.UserRole | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2149,6 +2195,7 @@ export namespace Prisma {
     email: number
     password: number
     following: number
+    role: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2160,6 +2207,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2169,6 +2217,7 @@ export namespace Prisma {
     name?: true
     email?: true
     password?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2179,6 +2228,7 @@ export namespace Prisma {
     email?: true
     password?: true
     following?: true
+    role?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2262,6 +2312,7 @@ export namespace Prisma {
     email: string
     password: string | null
     following: string[]
+    role: $Enums.UserRole
     createdAt: Date
     updatedAt: Date
     _count: UsersCountAggregateOutputType | null
@@ -2289,6 +2340,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     following?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     avatar?: boolean | users$avatarArgs<ExtArgs>
@@ -2300,6 +2352,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     following?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["users"]>
@@ -2310,6 +2363,7 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     following?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["users"]>
@@ -2320,11 +2374,12 @@ export namespace Prisma {
     email?: boolean
     password?: boolean
     following?: boolean
+    role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "following" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
+  export type usersOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "following" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["users"]>
   export type usersInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     avatar?: boolean | users$avatarArgs<ExtArgs>
   }
@@ -2342,6 +2397,7 @@ export namespace Prisma {
       email: string
       password: string | null
       following: string[]
+      role: $Enums.UserRole
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["users"]>
@@ -2773,6 +2829,7 @@ export namespace Prisma {
     readonly email: FieldRef<"users", 'String'>
     readonly password: FieldRef<"users", 'String'>
     readonly following: FieldRef<"users", 'String[]'>
+    readonly role: FieldRef<"users", 'UserRole'>
     readonly createdAt: FieldRef<"users", 'DateTime'>
     readonly updatedAt: FieldRef<"users", 'DateTime'>
   }
@@ -3218,10 +3275,9 @@ export namespace Prisma {
     country: string | null
     password: string | null
     stripeId: string | null
+    status: $Enums.VendorStatus | null
     createdAt: Date | null
     updatedAt: Date | null
-    shopId: string | null
-    shopsId: string | null
   }
 
   export type VendorMaxAggregateOutputType = {
@@ -3232,10 +3288,9 @@ export namespace Prisma {
     country: string | null
     password: string | null
     stripeId: string | null
+    status: $Enums.VendorStatus | null
     createdAt: Date | null
     updatedAt: Date | null
-    shopId: string | null
-    shopsId: string | null
   }
 
   export type VendorCountAggregateOutputType = {
@@ -3246,10 +3301,9 @@ export namespace Prisma {
     country: number
     password: number
     stripeId: number
+    status: number
     createdAt: number
     updatedAt: number
-    shopId: number
-    shopsId: number
     _all: number
   }
 
@@ -3262,10 +3316,9 @@ export namespace Prisma {
     country?: true
     password?: true
     stripeId?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
-    shopId?: true
-    shopsId?: true
   }
 
   export type VendorMaxAggregateInputType = {
@@ -3276,10 +3329,9 @@ export namespace Prisma {
     country?: true
     password?: true
     stripeId?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
-    shopId?: true
-    shopsId?: true
   }
 
   export type VendorCountAggregateInputType = {
@@ -3290,10 +3342,9 @@ export namespace Prisma {
     country?: true
     password?: true
     stripeId?: true
+    status?: true
     createdAt?: true
     updatedAt?: true
-    shopId?: true
-    shopsId?: true
     _all?: true
   }
 
@@ -3377,10 +3428,9 @@ export namespace Prisma {
     country: string
     password: string
     stripeId: string | null
+    status: $Enums.VendorStatus
     createdAt: Date
     updatedAt: Date
-    shopId: string | null
-    shopsId: string | null
     _count: VendorCountAggregateOutputType | null
     _min: VendorMinAggregateOutputType | null
     _max: VendorMaxAggregateOutputType | null
@@ -3408,10 +3458,9 @@ export namespace Prisma {
     country?: boolean
     password?: boolean
     stripeId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    shopId?: boolean
-    shopsId?: boolean
   }, ExtArgs["result"]["vendor"]>
 
   export type VendorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3422,10 +3471,9 @@ export namespace Prisma {
     country?: boolean
     password?: boolean
     stripeId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    shopId?: boolean
-    shopsId?: boolean
   }, ExtArgs["result"]["vendor"]>
 
   export type VendorSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3436,10 +3484,9 @@ export namespace Prisma {
     country?: boolean
     password?: boolean
     stripeId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    shopId?: boolean
-    shopsId?: boolean
   }, ExtArgs["result"]["vendor"]>
 
   export type VendorSelectScalar = {
@@ -3450,13 +3497,12 @@ export namespace Prisma {
     country?: boolean
     password?: boolean
     stripeId?: boolean
+    status?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    shopId?: boolean
-    shopsId?: boolean
   }
 
-  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone_number" | "country" | "password" | "stripeId" | "createdAt" | "updatedAt" | "shopId" | "shopsId", ExtArgs["result"]["vendor"]>
+  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phone_number" | "country" | "password" | "stripeId" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
 
   export type $VendorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Vendor"
@@ -3469,10 +3515,9 @@ export namespace Prisma {
       country: string
       password: string
       stripeId: string | null
+      status: $Enums.VendorStatus
       createdAt: Date
       updatedAt: Date
-      shopId: string | null
-      shopsId: string | null
     }, ExtArgs["result"]["vendor"]>
     composites: {}
   }
@@ -3903,10 +3948,9 @@ export namespace Prisma {
     readonly country: FieldRef<"Vendor", 'String'>
     readonly password: FieldRef<"Vendor", 'String'>
     readonly stripeId: FieldRef<"Vendor", 'String'>
+    readonly status: FieldRef<"Vendor", 'VendorStatus'>
     readonly createdAt: FieldRef<"Vendor", 'DateTime'>
     readonly updatedAt: FieldRef<"Vendor", 'DateTime'>
-    readonly shopId: FieldRef<"Vendor", 'String'>
-    readonly shopsId: FieldRef<"Vendor", 'String'>
   }
     
 
@@ -4303,6 +4347,7 @@ export namespace Prisma {
     email: 'email',
     password: 'password',
     following: 'following',
+    role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -4318,10 +4363,9 @@ export namespace Prisma {
     country: 'country',
     password: 'password',
     stripeId: 'stripeId',
+    status: 'status',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    shopId: 'shopId',
-    shopsId: 'shopsId'
+    updatedAt: 'updatedAt'
   };
 
   export type VendorScalarFieldEnum = (typeof VendorScalarFieldEnum)[keyof typeof VendorScalarFieldEnum]
@@ -4371,6 +4415,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UserRole'
+   */
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserRole[]'
+   */
+  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4381,6 +4439,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'VendorStatus'
+   */
+  export type EnumVendorStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VendorStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'VendorStatus[]'
+   */
+  export type ListEnumVendorStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'VendorStatus[]'>
     
 
 
@@ -4460,6 +4532,7 @@ export namespace Prisma {
     email?: StringFilter<"users"> | string
     password?: StringNullableFilter<"users"> | string | null
     following?: StringNullableListFilter<"users">
+    role?: EnumUserRoleFilter<"users"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"users"> | Date | string
     updatedAt?: DateTimeFilter<"users"> | Date | string
     avatar?: XOR<ImagesNullableScalarRelationFilter, imagesWhereInput> | null
@@ -4471,6 +4544,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrderInput | SortOrder
     following?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     avatar?: imagesOrderByWithRelationInput
@@ -4485,6 +4559,7 @@ export namespace Prisma {
     name?: StringFilter<"users"> | string
     password?: StringNullableFilter<"users"> | string | null
     following?: StringNullableListFilter<"users">
+    role?: EnumUserRoleFilter<"users"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"users"> | Date | string
     updatedAt?: DateTimeFilter<"users"> | Date | string
     avatar?: XOR<ImagesNullableScalarRelationFilter, imagesWhereInput> | null
@@ -4496,6 +4571,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrderInput | SortOrder
     following?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: usersCountOrderByAggregateInput
@@ -4512,6 +4588,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"users"> | string
     password?: StringNullableWithAggregatesFilter<"users"> | string | null
     following?: StringNullableListFilter<"users">
+    role?: EnumUserRoleWithAggregatesFilter<"users"> | $Enums.UserRole
     createdAt?: DateTimeWithAggregatesFilter<"users"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"users"> | Date | string
   }
@@ -4527,10 +4604,9 @@ export namespace Prisma {
     country?: StringFilter<"Vendor"> | string
     password?: StringFilter<"Vendor"> | string
     stripeId?: StringNullableFilter<"Vendor"> | string | null
+    status?: EnumVendorStatusFilter<"Vendor"> | $Enums.VendorStatus
     createdAt?: DateTimeFilter<"Vendor"> | Date | string
     updatedAt?: DateTimeFilter<"Vendor"> | Date | string
-    shopId?: UuidNullableFilter<"Vendor"> | string | null
-    shopsId?: UuidNullableFilter<"Vendor"> | string | null
   }
 
   export type VendorOrderByWithRelationInput = {
@@ -4541,10 +4617,9 @@ export namespace Prisma {
     country?: SortOrder
     password?: SortOrder
     stripeId?: SortOrderInput | SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    shopId?: SortOrderInput | SortOrder
-    shopsId?: SortOrderInput | SortOrder
   }
 
   export type VendorWhereUniqueInput = Prisma.AtLeast<{
@@ -4558,10 +4633,9 @@ export namespace Prisma {
     country?: StringFilter<"Vendor"> | string
     password?: StringFilter<"Vendor"> | string
     stripeId?: StringNullableFilter<"Vendor"> | string | null
+    status?: EnumVendorStatusFilter<"Vendor"> | $Enums.VendorStatus
     createdAt?: DateTimeFilter<"Vendor"> | Date | string
     updatedAt?: DateTimeFilter<"Vendor"> | Date | string
-    shopId?: UuidNullableFilter<"Vendor"> | string | null
-    shopsId?: UuidNullableFilter<"Vendor"> | string | null
   }, "id" | "email">
 
   export type VendorOrderByWithAggregationInput = {
@@ -4572,10 +4646,9 @@ export namespace Prisma {
     country?: SortOrder
     password?: SortOrder
     stripeId?: SortOrderInput | SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    shopId?: SortOrderInput | SortOrder
-    shopsId?: SortOrderInput | SortOrder
     _count?: VendorCountOrderByAggregateInput
     _max?: VendorMaxOrderByAggregateInput
     _min?: VendorMinOrderByAggregateInput
@@ -4592,10 +4665,9 @@ export namespace Prisma {
     country?: StringWithAggregatesFilter<"Vendor"> | string
     password?: StringWithAggregatesFilter<"Vendor"> | string
     stripeId?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    status?: EnumVendorStatusWithAggregatesFilter<"Vendor"> | $Enums.VendorStatus
     createdAt?: DateTimeWithAggregatesFilter<"Vendor"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Vendor"> | Date | string
-    shopId?: UuidNullableWithAggregatesFilter<"Vendor"> | string | null
-    shopsId?: UuidNullableWithAggregatesFilter<"Vendor"> | string | null
   }
 
   export type imagesCreateInput = {
@@ -4652,6 +4724,7 @@ export namespace Prisma {
     email: string
     password?: string | null
     following?: usersCreatefollowingInput | string[]
+    role: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: imagesCreateNestedOneWithoutUsersInput
@@ -4663,6 +4736,7 @@ export namespace Prisma {
     email: string
     password?: string | null
     following?: usersCreatefollowingInput | string[]
+    role: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
     avatar?: imagesUncheckedCreateNestedOneWithoutUsersInput
@@ -4674,6 +4748,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     following?: usersUpdatefollowingInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: imagesUpdateOneWithoutUsersNestedInput
@@ -4685,6 +4760,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     following?: usersUpdatefollowingInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     avatar?: imagesUncheckedUpdateOneWithoutUsersNestedInput
@@ -4696,6 +4772,7 @@ export namespace Prisma {
     email: string
     password?: string | null
     following?: usersCreatefollowingInput | string[]
+    role: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4706,6 +4783,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     following?: usersUpdatefollowingInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4716,6 +4794,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     following?: usersUpdatefollowingInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4728,10 +4807,9 @@ export namespace Prisma {
     country: string
     password: string
     stripeId?: string | null
+    status?: $Enums.VendorStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    shopId?: string | null
-    shopsId?: string | null
   }
 
   export type VendorUncheckedCreateInput = {
@@ -4742,10 +4820,9 @@ export namespace Prisma {
     country: string
     password: string
     stripeId?: string | null
+    status?: $Enums.VendorStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    shopId?: string | null
-    shopsId?: string | null
   }
 
   export type VendorUpdateInput = {
@@ -4756,10 +4833,9 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     stripeId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    shopId?: NullableStringFieldUpdateOperationsInput | string | null
-    shopsId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VendorUncheckedUpdateInput = {
@@ -4770,10 +4846,9 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     stripeId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    shopId?: NullableStringFieldUpdateOperationsInput | string | null
-    shopsId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VendorCreateManyInput = {
@@ -4784,10 +4859,9 @@ export namespace Prisma {
     country: string
     password: string
     stripeId?: string | null
+    status?: $Enums.VendorStatus
     createdAt?: Date | string
     updatedAt?: Date | string
-    shopId?: string | null
-    shopsId?: string | null
   }
 
   export type VendorUpdateManyMutationInput = {
@@ -4798,10 +4872,9 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     stripeId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    shopId?: NullableStringFieldUpdateOperationsInput | string | null
-    shopsId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type VendorUncheckedUpdateManyInput = {
@@ -4812,10 +4885,9 @@ export namespace Prisma {
     country?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     stripeId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    shopId?: NullableStringFieldUpdateOperationsInput | string | null
-    shopsId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UuidFilter<$PrismaModel = never> = {
@@ -4959,6 +5031,13 @@ export namespace Prisma {
     isEmpty?: boolean
   }
 
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4981,6 +5060,7 @@ export namespace Prisma {
     email?: SortOrder
     password?: SortOrder
     following?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4990,6 +5070,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4999,6 +5080,7 @@ export namespace Prisma {
     name?: SortOrder
     email?: SortOrder
     password?: SortOrder
+    role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -5021,6 +5103,16 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5035,6 +5127,13 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type EnumVendorStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorStatus | EnumVendorStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVendorStatusFilter<$PrismaModel> | $Enums.VendorStatus
+  }
+
   export type VendorCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -5043,10 +5142,9 @@ export namespace Prisma {
     country?: SortOrder
     password?: SortOrder
     stripeId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    shopId?: SortOrder
-    shopsId?: SortOrder
   }
 
   export type VendorMaxOrderByAggregateInput = {
@@ -5057,10 +5155,9 @@ export namespace Prisma {
     country?: SortOrder
     password?: SortOrder
     stripeId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    shopId?: SortOrder
-    shopsId?: SortOrder
   }
 
   export type VendorMinOrderByAggregateInput = {
@@ -5071,10 +5168,19 @@ export namespace Prisma {
     country?: SortOrder
     password?: SortOrder
     stripeId?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    shopId?: SortOrder
-    shopsId?: SortOrder
+  }
+
+  export type EnumVendorStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorStatus | EnumVendorStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVendorStatusWithAggregatesFilter<$PrismaModel> | $Enums.VendorStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVendorStatusFilter<$PrismaModel>
+    _max?: NestedEnumVendorStatusFilter<$PrismaModel>
   }
 
   export type usersCreateNestedOneWithoutAvatarInput = {
@@ -5122,6 +5228,10 @@ export namespace Prisma {
     push?: string | string[]
   }
 
+  export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -5144,6 +5254,10 @@ export namespace Prisma {
     delete?: imagesWhereInput | boolean
     connect?: imagesWhereUniqueInput
     update?: XOR<XOR<imagesUpdateToOneWithWhereWithoutUsersInput, imagesUpdateWithoutUsersInput>, imagesUncheckedUpdateWithoutUsersInput>
+  }
+
+  export type EnumVendorStatusFieldUpdateOperationsInput = {
+    set?: $Enums.VendorStatus
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -5263,6 +5377,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5291,6 +5412,16 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5305,12 +5436,30 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedEnumVendorStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorStatus | EnumVendorStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVendorStatusFilter<$PrismaModel> | $Enums.VendorStatus
+  }
+
+  export type NestedEnumVendorStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.VendorStatus | EnumVendorStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.VendorStatus[] | ListEnumVendorStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumVendorStatusWithAggregatesFilter<$PrismaModel> | $Enums.VendorStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumVendorStatusFilter<$PrismaModel>
+    _max?: NestedEnumVendorStatusFilter<$PrismaModel>
+  }
+
   export type usersCreateWithoutAvatarInput = {
     id?: string
     name: string
     email: string
     password?: string | null
     following?: usersCreatefollowingInput | string[]
+    role: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5321,6 +5470,7 @@ export namespace Prisma {
     email: string
     password?: string | null
     following?: usersCreatefollowingInput | string[]
+    role: $Enums.UserRole
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -5347,6 +5497,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     following?: usersUpdatefollowingInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5357,6 +5508,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     password?: NullableStringFieldUpdateOperationsInput | string | null
     following?: usersUpdatefollowingInput | string[]
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

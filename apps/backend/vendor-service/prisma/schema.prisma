@@ -1,6 +1,7 @@
 // === PRISMA GENERATOR ===
 generator client {
   provider = "prisma-client-js"
+  output   = "../generated/vendor-service"
 }
 
 // === DATABASE SOURCE ===

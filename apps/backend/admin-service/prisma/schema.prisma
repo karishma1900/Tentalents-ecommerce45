@@ -1,6 +1,7 @@
 // Prisma Client Generator
 generator client {
   provider = "prisma-client-js"
+    output   = "../generated/admin-service"
 }
 
 // PostgreSQL Datasource

@@ -4,7 +4,7 @@ import {
   Seller,
   UserRole,
   SellerStatus,
-} from '@prisma/client'; // ✅ Make sure this is the correct path
+} from '../../../generated/admin-service'; // ✅ Make sure this is the correct path
 
 const prisma = new PrismaClient();
 

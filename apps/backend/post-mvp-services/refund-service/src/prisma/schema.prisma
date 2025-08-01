@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+   output   = "../generated/refund-service"
 }
 datasource db {
   provider = "postgresql"

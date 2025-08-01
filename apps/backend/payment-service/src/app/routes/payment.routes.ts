@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { initiatePayment, verifyPayment } from './payment.controller';
+import { initiatePayment, verifyPayment } from '../controllers/payment.controller';
 import { authenticateJWT, requireRole } from '@shared/auth';
 
 const router = Router();

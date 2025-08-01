@@ -1,5 +1,5 @@
 import { prisma } from '@shared/prisma';
-import type { OrderStatus } from '@prisma/client';
+import type { OrderStatus } from '../../../generated/order-service';
 
 interface OrderItemInput {
   productId: string;

@@ -1,6 +1,7 @@
 // Generate Prisma client for TypeScript/Node.js
 generator client {
   provider = "prisma-client-js"
+    output   = "../generated/cart-service"
 }
 
 // PostgreSQL connection for isolated service DB

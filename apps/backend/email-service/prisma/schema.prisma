@@ -1,6 +1,7 @@
 // Generates Prisma client for Node.js/TypeScript
 generator client {
   provider = "prisma-client-js"
+   output   = "../generated/email-service"
 }
 
 // PostgreSQL datasource for isolated email-service DB

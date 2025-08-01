@@ -3,7 +3,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { paymentService } from '../services/payment.service';
 import { produceKafkaEvent } from '@shared/kafka';
-import { sendSuccess } from '@shared/utils/lib/response';
+import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 import { logger } from '@shared/logger';
 
 export const initiatePayment = async (

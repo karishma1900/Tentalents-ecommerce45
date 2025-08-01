@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { productService } from '../services/product.service';
-import { sendSuccess } from '@shared/utils/lib/response';
+import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 import { produceKafkaEvent } from '@shared/kafka';
 
 /**

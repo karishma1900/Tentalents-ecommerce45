@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -27,38 +21,38 @@ model users {
   name      String
   email     String   @unique
   password  String?
-  following String[] @default([]) @db.Text // Array of user IDs that this user is following
+  following String[] @default([]) @db.Text
   avatar    images?
+  role      UserRole
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(6)
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
 }
 
-// model sellers{
-//   id String  @id @default(auto()) @map("_id") @db.ObjectId 
-//   name String
-//   email String   @unique
-//   phone_number String
-//   country String
-//   password String
-//   stripeId String?
-//   shop Shops?
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   shopId String? @db.ObjectId
-//   shopsId String? @db.ObjectId
-// }
-
 model Vendor {
-  id           String   @id @default(uuid()) @map("_id") @db.Uuid
+  id           String       @id @default(uuid()) @map("_id") @db.Uuid
   name         String
-  email        String   @unique
+  email        String       @unique
   phone_number String
   country      String
   password     String
   stripeId     String?
-  // shop Shops?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  shopId       String?  @db.Uuid
-  shopsId      String?  @db.Uuid
+  status       VendorStatus @default(PENDING)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  // Uncomment and update this when Shop model is ready
+  // shopId     String?       @db.Uuid
+  // shop       Shop?         @relation(fields: [shopId], references: [id])
+}
+
+enum VendorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum UserRole {
+  USER
+  VENDOR
+  ADMIN
 }

@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/recommendation-service"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Recommendation {
+  id            String   @id @default(uuid())
+  userId        String // Who this is recommended to
+  productId     String // What is being recommended
+  score         Float // ML score / confidence
+  recommendedAt DateTime @default(now())
+
+  @@unique([userId, productId]) // No duplicate recommendations
+  @@index([userId])
+  @@index([productId])
+}
+
+model PopularProduct {
+  id        String   @id @default(uuid())
+  productId String   @unique // Globally trending product
+  score     Float // Popularity score (clicks/orders)
+  updatedAt DateTime @updatedAt
+}
