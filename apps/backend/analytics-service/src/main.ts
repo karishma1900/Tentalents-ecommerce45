@@ -1,5 +1,5 @@
 // ✅ Load environment variables from shared env loader
-import '@shared/config/src/lib/env';
+import '@shared/middlewares/config/src/lib/env';
 
 import app from './app';
 import { PrismaClient } from '@prisma/client';
