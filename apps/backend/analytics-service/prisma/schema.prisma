@@ -61,6 +61,16 @@ model AnalyticsEvent {
   @@index([productId])
   @@index([createdAt])
 }
+model Metric {
+  id          String    @id @default(uuid())
+  name        String
+  value       Float
+  recordedAt  DateTime  @default(now())
+  metadata    Json?     // Optional: extra info like dimensions or source
+
+  @@index([name])
+  @@index([recordedAt])
+}
 
 /// Aggregated daily page views (optional table for faster dashboards)
 model DailyPageView {
