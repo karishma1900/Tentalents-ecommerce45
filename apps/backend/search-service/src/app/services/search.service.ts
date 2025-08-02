@@ -1,6 +1,4 @@
-import { createRedisClient } from '@shared/redis';
-
-const redisClient = createRedisClient();
+import { redisClient } from '@shared/redis'; // import redisClient instance directly
 
 type SearchParams = {
   query?: string;
@@ -22,7 +20,8 @@ export const searchService = {
       productStringMap[k] = String(v);
     }
 
-    await redisClient.hset(key, productStringMap);
+    // Use correct casing for Redis command: hSet
+    await redisClient.hSet(key, productStringMap);
     // Optionally set a TTL: await redisClient.expire(key, 60 * 60); // 1 hour
   },
 
@@ -33,8 +32,10 @@ export const searchService = {
    */
   search: async (params: SearchParams): Promise<Record<string, string>[]> => {
     const keys = await redisClient.keys('product:*');
+
+    // Add explicit type for key param
     const products = await Promise.all(
-      keys.map((key) => redisClient.hgetall(key))
+      keys.map((key: string) => redisClient.hGetAll(key))
     );
 
     return products.filter((p: Record<string, string>) => {

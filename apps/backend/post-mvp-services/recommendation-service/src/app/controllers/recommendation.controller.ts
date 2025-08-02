@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { recommendationService } from '../services/recommendation.service';
-import { sendSuccess } from '@shared/utils/lib/response';
+import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 
 export const getRecommendations = async (
   req: Request,

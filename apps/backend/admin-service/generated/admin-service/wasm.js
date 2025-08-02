@@ -120,6 +120,24 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VendorScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AdminScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -142,24 +160,6 @@ exports.Prisma.ActionLogScalarFieldEnum = {
   resolvedAt: 'resolvedAt'
 };
 
-exports.Prisma.UserScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  password: 'password',
-  role: 'role',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.SellerScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -174,22 +174,35 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.UserRole = exports.$Enums.UserRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+};
+
+exports.VendorStatus = exports.$Enums.VendorStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED'
+};
+
 exports.AdminRole = exports.$Enums.AdminRole = {
   ADMIN: 'ADMIN',
   SUPER_ADMIN: 'SUPER_ADMIN'
 };
 
 exports.ModerationActionType = exports.$Enums.ModerationActionType = {
-  SUSPEND_SELLER: 'SUSPEND_SELLER',
+  SUSPEND_VENDOR: 'SUSPEND_VENDOR',
   REMOVE_PRODUCT: 'REMOVE_PRODUCT',
-  APPROVE_SELLER: 'APPROVE_SELLER',
-  REJECT_SELLER: 'REJECT_SELLER',
-  WARN_SELLER: 'WARN_SELLER',
+  APPROVE_VENDOR: 'APPROVE_VENDOR',
+  REJECT_VENDOR: 'REJECT_VENDOR',
+  WARN_VENDOR: 'WARN_VENDOR',
   SYSTEM_NOTE: 'SYSTEM_NOTE'
 };
 
 exports.TargetType = exports.$Enums.TargetType = {
-  SELLER: 'SELLER',
+  VENDOR: 'VENDOR',
   PRODUCT: 'PRODUCT',
   USER: 'USER',
   ORDER: 'ORDER'
@@ -202,24 +215,11 @@ exports.ModerationStatus = exports.$Enums.ModerationStatus = {
   DISMISSED: 'DISMISSED'
 };
 
-exports.UserRole = exports.$Enums.UserRole = {
-  USER: 'USER',
-  ADMIN: 'ADMIN',
-  SUPER_ADMIN: 'SUPER_ADMIN'
-};
-
-exports.SellerStatus = exports.$Enums.SellerStatus = {
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED',
-  SUSPENDED: 'SUSPENDED'
-};
-
 exports.Prisma.ModelName = {
-  Admin: 'Admin',
-  ActionLog: 'ActionLog',
   User: 'User',
-  Seller: 'Seller'
+  Vendor: 'Vendor',
+  Admin: 'Admin',
+  ActionLog: 'ActionLog'
 };
 
 /**

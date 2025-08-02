@@ -18,9 +18,9 @@ export const createRating = async (
     }
 
     const created = await ratingService.createRating(req.user.userId, {
-      productId,
-      rating,
-      comment,
+      targetId: productId,
+      targetType: 'PRODUCT', // or 'SELLER' if it's for sellers
+      stars: rating,
     });
     sendSuccess(res, 'Rating submitted', created);
   } catch (err) {

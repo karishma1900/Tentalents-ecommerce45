@@ -1,19 +1,20 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import app from './app/app';
+import app from './app';
 import { PrismaClient } from '@prisma/client';
-import { connectRedis, disconnectRedis, redisClient } from '@shared/redis';
+import { connectRedis, disconnectRedis, redisClient } from '@shared/middlewares/redis/src/index';
 import {
   connectKafkaProducer,
   disconnectKafkaProducer,
   connectKafkaConsumer,
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
-} from '@shared/kafka';
-import { logger } from '@shared/logger';
+} from '@shared/middlewares/kafka/src/index';
+
+import { logger } from '@shared/middlewares/logger/src/index';
 
 // 📦 Load environment variables
-dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+dotenv.config({ path: path.resolve(__dirname, '../../../../../.env') });
 
 const PORT = process.env.PORT || 3010;
 const prisma = new PrismaClient();
@@ -49,9 +50,12 @@ async function start() {
   try {
     await connectRedis();
     logger.info('✅ Redis connected');
+    console.log('✅ Redis connected');
+
 
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
+    console.log('✅ PostgreSQL connected');
 
     await connectKafkaProducer();
     logger.info('✅ Kafka producer connected');
@@ -60,10 +64,10 @@ async function start() {
     logger.info('✅ Kafka consumer subscribed');
 
     server = app.listen(PORT, () => {
-      logger.info(`🚀 Coupon Service running at http://localhost:${PORT}`);
-      logger.info(
-        `📚 Swagger docs available at http://localhost:${PORT}/api/docs/coupon`
-      );
+
+    console.log(`🚀 Coupon Service running at http://localhost:${PORT}`);
+  logger.info(`🚀 Coupon Service running at http://localhost:${PORT}`);
+  logger.info(`📚 Swagger docs available at http://localhost:${PORT}/api/docs/coupon`);
     });
   } catch (err) {
     logger.error('❌ Failed to start Coupon Service:', err);
@@ -103,5 +107,6 @@ async function shutdown() {
 // 🧼 Graceful shutdown
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
+
 
 start();

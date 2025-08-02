@@ -6,6 +6,8 @@ export const KAFKA_TOPICS = {
     UPDATED: 'user.updated',
     DELETED: 'user.deleted',
     REGISTERED: 'user.registered',
+    REGISTRATION_OTP: 'user.registration.otp',
+    VENDOR_REGISTERED: 'user.vendor.registered',
   },
   ORDER: {
     CREATED: 'order.created',

@@ -1,10 +1,10 @@
 import {
   PrismaClient,
   User,
-  Seller,
-  UserRole,
-  SellerStatus,
-} from '../../../generated/admin-service'; // ✅ Make sure this is the correct path
+  Vendor,
+  UserRole ,
+  VendorStatus,
+} from '../../../generated/admin-service';
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ export const adminService = {
       id: string;
       email: string;
       role: UserRole;
-      sellerStatus: SellerStatus | null;
+      vendorStatus: VendorStatus | null;
     }>
   > => {
     const users = await prisma.user.findMany({
@@ -22,7 +22,7 @@ export const adminService = {
         id: true,
         email: true,
         role: true,
-        seller: {
+        vendor: {
           select: {
             status: true,
           },
@@ -34,7 +34,7 @@ export const adminService = {
       id: user.id,
       email: user.email,
       role: user.role,
-      sellerStatus: user.seller?.status ?? null,
+      vendorStatus: user.vendor?.status ?? null,
     }));
   },
 
@@ -51,13 +51,13 @@ export const adminService = {
     });
   },
 
-  getPendingSellers: async (): Promise<
-    (Seller & {
+  getPendingVendors: async (): Promise<
+    (Vendor & {
       user: Pick<User, 'id' | 'email' | 'role'> | null;
     })[]
   > => {
-    return prisma.seller.findMany({
-      where: { status: SellerStatus.PENDING },
+    return prisma.vendor.findMany({
+      where: { status: VendorStatus.PENDING },
       include: {
         user: {
           select: {
@@ -70,37 +70,37 @@ export const adminService = {
     });
   },
 
-  updateSellerStatus: async (
-    sellerId: string,
+  updateVendorStatus: async (
+    vendorId: string,
     approve: boolean
-  ): Promise<Seller> => {
-    const newStatus: SellerStatus = approve
-      ? SellerStatus.APPROVED
-      : SellerStatus.REJECTED;
+  ): Promise<Vendor> => {
+    const newStatus: VendorStatus = approve
+      ? VendorStatus.APPROVED
+      : VendorStatus.REJECTED;
 
-    const seller = await prisma.seller.findUnique({
-      where: { id: sellerId },
+    const vendor = await prisma.vendor.findUnique({
+      where: { id: vendorId },
     });
 
-    if (!seller) {
-      throw new Error(`Seller not found with ID: ${sellerId}`);
+    if (!vendor) {
+      throw new Error(`Vendor not found with ID: ${vendorId}`);
     }
 
-    return prisma.seller.update({
-      where: { id: sellerId },
+    return prisma.vendor.update({
+      where: { id: vendorId },
       data: { status: newStatus },
     });
   },
 
   getDashboardSummary: async (): Promise<{
     userCount: number;
-    sellerCount: number;
+    vendorCount: number;
   }> => {
-    const [userCount, sellerCount] = await Promise.all([
+    const [userCount, vendorCount] = await Promise.all([
       prisma.user.count(),
-      prisma.seller.count(),
+      prisma.vendor.count(),
     ]);
 
-    return { userCount, sellerCount };
+    return { userCount, vendorCount };
   },
 };

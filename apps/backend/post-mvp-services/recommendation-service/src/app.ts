@@ -1,7 +1,8 @@
 import express from 'express';
-import recommendationRoutes from './routes/recommendation.routes';
-import { setupSwagger } from '@shared/swagger';
-import { errorHandler } from '@shared/error';
+
+import recommendationRoutes from './app/routes/recommendation.routes';
+import { setupSwagger } from '@shared/middlewares/swagger/src/index';
+import { errorHandler } from '@shared/middlewares/error/src/index';
 
 const app = express();
 

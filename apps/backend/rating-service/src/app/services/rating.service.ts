@@ -1,8 +1,10 @@
-import { prisma } from '@shared/prisma'; // ⬅️ Shared prisma import
+import { PrismaClient } from '../../../generated/rating-service'; 
+const prisma = new PrismaClient();
 
 interface CreateRatingInput {
-  productId: string;
-  rating: number;
+  targetId: string;           // productId → targetId
+  targetType: 'PRODUCT' | 'SELLER';  // you must specify type (enum)
+  stars: number;              // rating → stars
   comment?: string;
 }
 
@@ -11,32 +13,33 @@ export const ratingService = {
     return prisma.rating.create({
       data: {
         userId,
-        productId: data.productId,
-        rating: data.rating,
+        targetId: data.targetId,
+        targetType: data.targetType,
+        stars: data.stars,
         comment: data.comment,
       },
     });
   },
 
-  getRatingsByProduct: async (productId: string) => {
+  getRatingsByProduct: async (targetId: string) => {
     return prisma.rating.findMany({
-      where: { productId },
-      include: {
-        user: {
-          select: { name: true },
-        },
+      where: { 
+        targetId,
+        targetType: 'PRODUCT',
       },
+      // Note: You don't have user relation in schema, so this will error:
+      // include: { user: { select: { name: true } } },
     });
   },
 
   updateRating: async (
     userId: string,
     ratingId: string,
-    ratingValue: number
+    stars: number
   ) => {
     return prisma.rating.updateMany({
       where: { id: ratingId, userId },
-      data: { rating: ratingValue },
+      data: { stars },
     });
   },
 

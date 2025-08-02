@@ -79,7 +79,7 @@ async function shutdown() {
     await prisma.$disconnect();
     logger.info('✅ PostgreSQL disconnected');
 
-    if (redisClient.status === 'ready') {
+    if (redisClient.isOpen) {
       await redisClient.quit();
       logger.info('✅ Redis disconnected');
     }

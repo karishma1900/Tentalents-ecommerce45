@@ -38,20 +38,28 @@
       }
     },
     "serve": {
-      "continuous": true,
       "executor": "@nx/esbuild:esbuild",
       "defaultConfiguration": "development",
       "dependsOn": ["build"],
       "options": {
-        "buildTarget": "coupon-service:build",
-        "runBuildTargetDependencies": false
+        "tsConfig": "apps/backend/post-mvp-services/coupon-service/tsconfig.app.json",
+        "main": "apps/backend/post-mvp-services/coupon-service/src/main.ts",
+        "outputPath": "dist/apps/backend/post-mvp-services/coupon-service",
+        "platform": "node",
+        "bundle": false,
+        "format": ["cjs"],
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {
-          "buildTarget": "coupon-service:build:development"
+          "esbuildOptions": {
+            "sourcemap": true
+          }
         },
         "production": {
-          "buildTarget": "coupon-service:build:production"
+          "esbuildOptions": {
+            "sourcemap": false
+          }
         }
       }
     },

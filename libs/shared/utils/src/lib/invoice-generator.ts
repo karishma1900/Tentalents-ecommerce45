@@ -1,12 +1,12 @@
 import PDFDocument from 'pdfkit';
 import stream from 'stream';
-import { logger } from '@shared/logger';
+import { logger } from '@shared/middlewares/logger/src/index';
 import {
   uploadFileToMinIO,
   MinioFolderPaths,
   MinioBuckets,
   generateFilename,
-} from '@shared/minio';
+} from '@shared/middlewares/minio/src/index';
 
 export async function generateInvoiceAndUpload(
   orderId: string

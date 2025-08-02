@@ -147,9 +147,22 @@ exports.Prisma.DailyPageViewScalarFieldEnum = {
   count: 'count'
 };
 
+exports.Prisma.MetricScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  value: 'value',
+  recordedAt: 'recordedAt',
+  metadata: 'metadata'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -160,6 +173,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.TrafficSource = exports.$Enums.TrafficSource = {
   DIRECT: 'DIRECT',
@@ -181,7 +200,8 @@ exports.AnalyticsEventType = exports.$Enums.AnalyticsEventType = {
 exports.Prisma.ModelName = {
   Session: 'Session',
   AnalyticsEvent: 'AnalyticsEvent',
-  DailyPageView: 'DailyPageView'
+  DailyPageView: 'DailyPageView',
+  Metric: 'Metric'
 };
 
 /**

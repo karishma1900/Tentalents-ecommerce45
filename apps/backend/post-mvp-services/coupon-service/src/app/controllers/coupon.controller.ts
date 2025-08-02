@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { couponService } from '../services/coupon.service';
-import { sendSuccess } from '@shared/utils/lib/response';
+import { sendSuccess } from '@shared/middlewares/utils/src/index';
 
 export const createCoupon = async (
   req: Request,

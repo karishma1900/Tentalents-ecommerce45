@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import cmsRoutes from '../routes/cms.routes';
-import { setupSwagger } from '@shared/swagger';
-import { errorHandler } from '@shared/error';
-import { loggerMiddleware } from '@shared/logger';
+import cmsRoutes from './src/app/routes/cms.routes';
+import { setupSwagger } from '@shared/middlewares/swagger/src/index';
+import { errorHandler } from '@shared/middlewares/error/src/index';
+import { loggerMiddleware } from '@shared/middlewares/logger/src/index';
 
 const app = express();
 

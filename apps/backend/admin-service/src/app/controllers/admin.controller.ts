@@ -52,7 +52,7 @@ export const getPendingSellers = async (
   next: NextFunction
 ) => {
   try {
-    const pending = await adminService.getPendingSellers();
+    const pending = await adminService.getPendingVendors();
     return sendSuccess(res, '✅ Pending sellers fetched successfully', pending);
   } catch (err) {
     return next(err);
@@ -79,7 +79,7 @@ export const approveSeller = async (
       );
     }
 
-    const result = await adminService.updateSellerStatus(sellerId, approve);
+    const result = await adminService.updateVendorStatus(sellerId, approve);
     return sendSuccess(
       res,
       `✅ Seller ${approve ? 'approved' : 'rejected'} successfully`,

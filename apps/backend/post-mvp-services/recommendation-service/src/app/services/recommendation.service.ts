@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../../generated/recommendation-service';
 
 const prisma = new PrismaClient();
 
@@ -6,9 +6,9 @@ export const recommendationService = {
   getRecommendationsForUser: async (userId: string) => {
     // Example logic: Fetch recommendations based on user purchase history, ratings, etc.
     // For MVP, just return top products (placeholder)
-    return prisma.product.findMany({
+    return prisma.popularProduct.findMany({
       take: 10,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { updatedAt: 'desc' },
     });
   },
 

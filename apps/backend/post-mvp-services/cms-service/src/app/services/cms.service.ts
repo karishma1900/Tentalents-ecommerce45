@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, PageType } from '../../generated/cms-service';
 
 const prisma = new PrismaClient();
 
@@ -7,6 +7,7 @@ export const cmsService = {
     title: string;
     slug: string;
     content: string;
+    type: PageType;
   }) => {
     return prisma.page.create({ data });
   },

@@ -2,9 +2,18 @@ import { connectKafkaConsumer } from '@shared/middlewares/kafka/src/lib/kafka-co
 import { KafkaConsumerConfig } from '@shared/middlewares/kafka/src/lib/kafka-consumer';
 import { EachMessagePayload } from 'kafkajs';
 import { generateInvoiceAndUpload } from '../../../../../libs/shared/utils/src/lib/invoice-generator';
-import { prisma } from '@prisma';
+import { PrismaClient } from '../../generated/invoice-service';
 import { MinioBuckets } from '@shared/minio';
 import { logger } from '@shared/logger';
+
+const prisma = new PrismaClient();
+
+function getPublicUrl(filePath: string): string {
+  // TODO: Replace this with your actual logic to generate a public URL for the MinIO file.
+  // Example:
+  // return `https://minio.example.com/${MinioBuckets.INVOICE}/${filePath}`;
+  return `https://your-minio-domain/${MinioBuckets.INVOICE}/${filePath}`;
+}
 
 export async function startInvoiceConsumer(): Promise<void> {
   const config: KafkaConsumerConfig = {
@@ -20,14 +29,38 @@ export async function startInvoiceConsumer(): Promise<void> {
           return;
         }
 
-        logger.info(
-          `[invoice.generate] 📦 Generating invoice for orderId: ${orderId}`
-        );
+        logger.info(`[invoice.generate] 📦 Generating invoice for orderId: ${orderId}`);
+
+        // Find vendor(s) for the order - take first vendor for simplicity
+        const orderItems = await prisma.orderItem.findMany({
+          where: { orderId },
+          select: { sellerId: true },
+          take: 1,
+        });
+
+        if (orderItems.length === 0) {
+          logger.warn(`[invoice.generate] ⚠️ No vendor found for orderId: ${orderId}`);
+          return;
+        }
+
+        const vendorId = orderItems[0].sellerId;
+
+        // generateInvoiceAndUpload returns a string filePath only
         const filePath = await generateInvoiceAndUpload(orderId);
+
+        if (!filePath) {
+          logger.warn(`[invoice.generate] ⚠️ Missing filePath for orderId: ${orderId}`);
+          return;
+        }
+
+        // Derive public URL for the PDF file
+        const pdfUrl = getPublicUrl(filePath);
 
         await prisma.invoice.create({
           data: {
             orderId,
+            vendorId,
+            pdfUrl,
             filePath,
             bucket: MinioBuckets.INVOICE,
             createdAt: new Date(),

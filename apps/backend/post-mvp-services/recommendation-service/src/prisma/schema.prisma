@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-   output   = "../generated/recommendation-service"
+   output   = "../../../../../../libs/prisma-clients/recommendiation-service"
 }
 datasource db {
   provider = "postgresql"

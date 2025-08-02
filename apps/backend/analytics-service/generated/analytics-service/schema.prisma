@@ -72,3 +72,14 @@ model DailyPageView {
   @@unique([date, pageUrl])
   @@index([date])
 }
+
+model Metric {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  value      Float
+  recordedAt DateTime @default(now())
+  metadata   Json? // Optional: extra info like dimensions or source
+
+  @@index([name])
+  @@index([recordedAt])
+}

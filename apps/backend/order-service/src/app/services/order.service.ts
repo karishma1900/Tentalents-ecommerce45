@@ -1,11 +1,12 @@
-import { prisma } from '@shared/prisma';
+import { PrismaClient } from '../../../generated/order-service'
 import type { OrderStatus } from '../../../generated/order-service';
 
 interface OrderItemInput {
   productId: string;
   sellerId: string;
+  listingId: string; // NEW: must provide listingId from caller
   quantity: number;
-  price: number;
+  price: number; // price per unit
 }
 
 interface PlaceOrderInput {
@@ -14,16 +15,20 @@ interface PlaceOrderInput {
   shippingAddress: string;
 }
 
+const prisma = new PrismaClient();
+
 const VALID_STATUSES: OrderStatus[] = [
-  'PLACED',
-  'PROCESSING',
-  'SHIPPED',
-  'DELIVERED',
-  'CANCELLED',
+  'pending',
+  'confirmed',
+  'shipped',
+  'delivered',
+  'canceled',
+  'returned',
+  'refunded',
 ];
 
 export const orderService = {
-  placeOrder: async (userId: string, data: PlaceOrderInput) => {
+  placeOrder: async (buyerId: string, data: PlaceOrderInput) => {
     const { items, totalAmount, shippingAddress } = data;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -32,16 +37,18 @@ export const orderService = {
 
     const order = await prisma.order.create({
       data: {
-        userId,
+        buyerId,                  // use buyerId (not userId)
         totalAmount,
         shippingAddress,
-        status: 'PLACED',
+        status: 'pending',        // use valid enum value
         items: {
           create: items.map((item) => ({
             productId: item.productId,
             sellerId: item.sellerId,
+            listingId: item.listingId,                // provide listingId
             quantity: item.quantity,
-            price: item.price,
+            unitPrice: item.price,                     // unitPrice field
+            totalPrice: item.price * item.quantity,   // totalPrice field
           })),
         },
       },
@@ -51,9 +58,9 @@ export const orderService = {
     return order;
   },
 
-  getOrdersByUser: async (userId: string) => {
+  getOrdersByUser: async (buyerId: string) => {
     return prisma.order.findMany({
-      where: { userId },
+      where: { buyerId },
       include: { items: true },
     });
   },

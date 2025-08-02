@@ -1,41 +1,38 @@
-// Prisma Client Generator
-generator client {
-  provider = "prisma-client-js"
-    output   = "../generated/admin-service"
-}
+// === Prisma Client Generator ===
 
-// PostgreSQL Datasource
-// === DATABASE SOURCE ===
+// === PostgreSQL Datasource ===
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// Enum: Role of the admin
+// === Enums ===
+
+// Admin roles
 enum AdminRole {
-  ADMIN // Basic moderation access
-  SUPER_ADMIN // Full access
+  ADMIN        // Basic moderation access
+  SUPER_ADMIN  // Full access
 }
 
-// Enum: What type of moderation action is being logged
+// Types of moderation actions
 enum ModerationActionType {
-  SUSPEND_SELLER
+  SUSPEND_VENDOR
   REMOVE_PRODUCT
-  APPROVE_SELLER
-  REJECT_SELLER
-  WARN_SELLER
+  APPROVE_VENDOR
+  REJECT_VENDOR
+  WARN_VENDOR
   SYSTEM_NOTE
 }
 
-// Enum: Which type of entity the action is targeting (can evolve with system)
+// Entity types targeted by moderation
 enum TargetType {
-  SELLER
+  VENDOR
   PRODUCT
   USER
   ORDER
 }
 
-// Enum: Moderation resolution status
+// Moderation resolution statuses
 enum ModerationStatus {
   PENDING
   RESOLVED
@@ -43,79 +40,84 @@ enum ModerationStatus {
   DISMISSED
 }
 
-// Admin: Represents a platform admin/moderator
-model Admin {
-  id        String    @id @default(uuid())
-  userId    String    @unique // Cross-service User ID reference
-  name      String
-  role      AdminRole @default(ADMIN)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  // One admin can perform many actions
-  actions ActionLog[]
-
-  user User @relation(fields: [userId], references: [id])
-}
-
-// ActionLog: Tracks moderation actions taken by admins
-model ActionLog {
-  id         String               @id @default(uuid())
-  adminId    String
-  actionType ModerationActionType // What action was taken
-  targetType TargetType // Type of entity affected (e.g., product, seller)
-  targetId   String // UUID of the affected entity
-  reason     String? // Optional reason provided by the moderator
-  notes      String? // Additional notes/comments
-  status     ModerationStatus     @default(PENDING) // Action resolution state
-  createdAt  DateTime             @default(now()) // When the action was logged
-  resolvedAt DateTime? // When the action was resolved, if applicable
-
-  // Relation: ActionLog belongs to one Admin
-  admin Admin @relation(fields: [adminId], references: [id])
-
-  // Indexes for query performance
-  @@index([targetType])
-  @@index([targetId])
-  @@index([status])
-}
-
-// 🔐 Role of the platform user
+// User roles
 enum UserRole {
   USER
   ADMIN
   SUPER_ADMIN
 }
 
-// 📦 Seller account status
-enum SellerStatus {
+// Vendor account statuses
+enum VendorStatus {
   PENDING
   APPROVED
   REJECTED
   SUSPENDED
 }
 
-// 👤 User model
-model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  role      UserRole @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+//
+// === Models ===
+//
 
-  seller Seller?
-  admin  Admin?
+// User model
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  password  String
+  role      UserRole   @default(USER)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  vendor    Vendor?
+  admin     Admin?
 }
 
-// 🛍️ Seller model
-model Seller {
+// Vendor model
+model Vendor {
   id        String       @id @default(uuid())
   userId    String       @unique
   name      String
-  status    SellerStatus @default(PENDING)
+  status    VendorStatus @default(PENDING)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 
-  user User @relation(fields: [userId], references: [id])
+  user      User         @relation(fields: [userId], references: [id])
+}
+
+// Admin model
+model Admin {
+  id        String     @id @default(uuid())
+  userId    String     @unique
+  name      String
+  role      AdminRole  @default(ADMIN)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user      User       @relation(fields: [userId], references: [id])
+  actions   ActionLog[]
+}
+
+// ActionLog model (moderation logs)
+model ActionLog {
+  id         String               @id @default(uuid())
+  adminId    String
+  actionType ModerationActionType
+  targetType TargetType
+  targetId   String
+  reason     String?
+  notes      String?
+  status     ModerationStatus     @default(PENDING)
+  createdAt  DateTime             @default(now())
+  resolvedAt DateTime?
+
+  admin      Admin                @relation(fields: [adminId], references: [id])
+
+  @@index([targetType])
+  @@index([targetId])
+  @@index([status])
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/admin-service"
 }

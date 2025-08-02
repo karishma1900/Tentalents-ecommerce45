@@ -8,7 +8,7 @@ const router = Router();
 router.post(
   '/',
   authenticateJWT,
-  requireRole(['buyer', 'buyer_seller']),
+  requireRole('buyer', 'buyer_seller'),
   initiatePayment
 );
 
@@ -16,7 +16,7 @@ router.post(
 router.patch(
   '/:id/verify',
   authenticateJWT,
-  requireRole(['buyer', 'buyer_seller']),
+  requireRole('buyer', 'buyer_seller'),
   verifyPayment
 );
 

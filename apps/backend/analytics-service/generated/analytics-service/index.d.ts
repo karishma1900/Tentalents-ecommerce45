@@ -28,6 +28,11 @@ export type AnalyticsEvent = $Result.DefaultSelection<Prisma.$AnalyticsEventPayl
  * Aggregated daily page views (optional table for faster dashboards)
  */
 export type DailyPageView = $Result.DefaultSelection<Prisma.$DailyPageViewPayload>
+/**
+ * Model Metric
+ * 
+ */
+export type Metric = $Result.DefaultSelection<Prisma.$MetricPayload>
 
 /**
  * Enums
@@ -219,6 +224,16 @@ export class PrismaClient<
     * ```
     */
   get dailyPageView(): Prisma.DailyPageViewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.metric`: Exposes CRUD operations for the **Metric** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Metrics
+    * const metrics = await prisma.metric.findMany()
+    * ```
+    */
+  get metric(): Prisma.MetricDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -661,7 +676,8 @@ export namespace Prisma {
   export const ModelName: {
     Session: 'Session',
     AnalyticsEvent: 'AnalyticsEvent',
-    DailyPageView: 'DailyPageView'
+    DailyPageView: 'DailyPageView',
+    Metric: 'Metric'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -680,7 +696,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "session" | "analyticsEvent" | "dailyPageView"
+      modelProps: "session" | "analyticsEvent" | "dailyPageView" | "metric"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -906,6 +922,80 @@ export namespace Prisma {
           }
         }
       }
+      Metric: {
+        payload: Prisma.$MetricPayload<ExtArgs>
+        fields: Prisma.MetricFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MetricFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MetricFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>
+          }
+          findFirst: {
+            args: Prisma.MetricFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MetricFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>
+          }
+          findMany: {
+            args: Prisma.MetricFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>[]
+          }
+          create: {
+            args: Prisma.MetricCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>
+          }
+          createMany: {
+            args: Prisma.MetricCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MetricCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>[]
+          }
+          delete: {
+            args: Prisma.MetricDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>
+          }
+          update: {
+            args: Prisma.MetricUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>
+          }
+          deleteMany: {
+            args: Prisma.MetricDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MetricUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MetricUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>[]
+          }
+          upsert: {
+            args: Prisma.MetricUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MetricPayload>
+          }
+          aggregate: {
+            args: Prisma.MetricAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMetric>
+          }
+          groupBy: {
+            args: Prisma.MetricGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MetricGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MetricCountArgs<ExtArgs>
+            result: $Utils.Optional<MetricCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1001,6 +1091,7 @@ export namespace Prisma {
     session?: SessionOmit
     analyticsEvent?: AnalyticsEventOmit
     dailyPageView?: DailyPageViewOmit
+    metric?: MetricOmit
   }
 
   /* Types for Logging */
@@ -4327,6 +4418,1031 @@ export namespace Prisma {
 
 
   /**
+   * Model Metric
+   */
+
+  export type AggregateMetric = {
+    _count: MetricCountAggregateOutputType | null
+    _avg: MetricAvgAggregateOutputType | null
+    _sum: MetricSumAggregateOutputType | null
+    _min: MetricMinAggregateOutputType | null
+    _max: MetricMaxAggregateOutputType | null
+  }
+
+  export type MetricAvgAggregateOutputType = {
+    value: number | null
+  }
+
+  export type MetricSumAggregateOutputType = {
+    value: number | null
+  }
+
+  export type MetricMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    value: number | null
+    recordedAt: Date | null
+  }
+
+  export type MetricMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    value: number | null
+    recordedAt: Date | null
+  }
+
+  export type MetricCountAggregateOutputType = {
+    id: number
+    name: number
+    value: number
+    recordedAt: number
+    metadata: number
+    _all: number
+  }
+
+
+  export type MetricAvgAggregateInputType = {
+    value?: true
+  }
+
+  export type MetricSumAggregateInputType = {
+    value?: true
+  }
+
+  export type MetricMinAggregateInputType = {
+    id?: true
+    name?: true
+    value?: true
+    recordedAt?: true
+  }
+
+  export type MetricMaxAggregateInputType = {
+    id?: true
+    name?: true
+    value?: true
+    recordedAt?: true
+  }
+
+  export type MetricCountAggregateInputType = {
+    id?: true
+    name?: true
+    value?: true
+    recordedAt?: true
+    metadata?: true
+    _all?: true
+  }
+
+  export type MetricAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Metric to aggregate.
+     */
+    where?: MetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Metrics to fetch.
+     */
+    orderBy?: MetricOrderByWithRelationInput | MetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Metrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Metrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Metrics
+    **/
+    _count?: true | MetricCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MetricAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MetricSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MetricMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MetricMaxAggregateInputType
+  }
+
+  export type GetMetricAggregateType<T extends MetricAggregateArgs> = {
+        [P in keyof T & keyof AggregateMetric]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMetric[P]>
+      : GetScalarType<T[P], AggregateMetric[P]>
+  }
+
+
+
+
+  export type MetricGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MetricWhereInput
+    orderBy?: MetricOrderByWithAggregationInput | MetricOrderByWithAggregationInput[]
+    by: MetricScalarFieldEnum[] | MetricScalarFieldEnum
+    having?: MetricScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MetricCountAggregateInputType | true
+    _avg?: MetricAvgAggregateInputType
+    _sum?: MetricSumAggregateInputType
+    _min?: MetricMinAggregateInputType
+    _max?: MetricMaxAggregateInputType
+  }
+
+  export type MetricGroupByOutputType = {
+    id: string
+    name: string
+    value: number
+    recordedAt: Date
+    metadata: JsonValue | null
+    _count: MetricCountAggregateOutputType | null
+    _avg: MetricAvgAggregateOutputType | null
+    _sum: MetricSumAggregateOutputType | null
+    _min: MetricMinAggregateOutputType | null
+    _max: MetricMaxAggregateOutputType | null
+  }
+
+  type GetMetricGroupByPayload<T extends MetricGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MetricGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MetricGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MetricGroupByOutputType[P]>
+            : GetScalarType<T[P], MetricGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MetricSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    value?: boolean
+    recordedAt?: boolean
+    metadata?: boolean
+  }, ExtArgs["result"]["metric"]>
+
+  export type MetricSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    value?: boolean
+    recordedAt?: boolean
+    metadata?: boolean
+  }, ExtArgs["result"]["metric"]>
+
+  export type MetricSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    value?: boolean
+    recordedAt?: boolean
+    metadata?: boolean
+  }, ExtArgs["result"]["metric"]>
+
+  export type MetricSelectScalar = {
+    id?: boolean
+    name?: boolean
+    value?: boolean
+    recordedAt?: boolean
+    metadata?: boolean
+  }
+
+  export type MetricOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "value" | "recordedAt" | "metadata", ExtArgs["result"]["metric"]>
+
+  export type $MetricPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Metric"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      value: number
+      recordedAt: Date
+      metadata: Prisma.JsonValue | null
+    }, ExtArgs["result"]["metric"]>
+    composites: {}
+  }
+
+  type MetricGetPayload<S extends boolean | null | undefined | MetricDefaultArgs> = $Result.GetResult<Prisma.$MetricPayload, S>
+
+  type MetricCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MetricFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MetricCountAggregateInputType | true
+    }
+
+  export interface MetricDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Metric'], meta: { name: 'Metric' } }
+    /**
+     * Find zero or one Metric that matches the filter.
+     * @param {MetricFindUniqueArgs} args - Arguments to find a Metric
+     * @example
+     * // Get one Metric
+     * const metric = await prisma.metric.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MetricFindUniqueArgs>(args: SelectSubset<T, MetricFindUniqueArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Metric that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MetricFindUniqueOrThrowArgs} args - Arguments to find a Metric
+     * @example
+     * // Get one Metric
+     * const metric = await prisma.metric.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MetricFindUniqueOrThrowArgs>(args: SelectSubset<T, MetricFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Metric that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricFindFirstArgs} args - Arguments to find a Metric
+     * @example
+     * // Get one Metric
+     * const metric = await prisma.metric.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MetricFindFirstArgs>(args?: SelectSubset<T, MetricFindFirstArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Metric that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricFindFirstOrThrowArgs} args - Arguments to find a Metric
+     * @example
+     * // Get one Metric
+     * const metric = await prisma.metric.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MetricFindFirstOrThrowArgs>(args?: SelectSubset<T, MetricFindFirstOrThrowArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Metrics that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Metrics
+     * const metrics = await prisma.metric.findMany()
+     * 
+     * // Get first 10 Metrics
+     * const metrics = await prisma.metric.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const metricWithIdOnly = await prisma.metric.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MetricFindManyArgs>(args?: SelectSubset<T, MetricFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Metric.
+     * @param {MetricCreateArgs} args - Arguments to create a Metric.
+     * @example
+     * // Create one Metric
+     * const Metric = await prisma.metric.create({
+     *   data: {
+     *     // ... data to create a Metric
+     *   }
+     * })
+     * 
+     */
+    create<T extends MetricCreateArgs>(args: SelectSubset<T, MetricCreateArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Metrics.
+     * @param {MetricCreateManyArgs} args - Arguments to create many Metrics.
+     * @example
+     * // Create many Metrics
+     * const metric = await prisma.metric.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MetricCreateManyArgs>(args?: SelectSubset<T, MetricCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Metrics and returns the data saved in the database.
+     * @param {MetricCreateManyAndReturnArgs} args - Arguments to create many Metrics.
+     * @example
+     * // Create many Metrics
+     * const metric = await prisma.metric.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Metrics and only return the `id`
+     * const metricWithIdOnly = await prisma.metric.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MetricCreateManyAndReturnArgs>(args?: SelectSubset<T, MetricCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Metric.
+     * @param {MetricDeleteArgs} args - Arguments to delete one Metric.
+     * @example
+     * // Delete one Metric
+     * const Metric = await prisma.metric.delete({
+     *   where: {
+     *     // ... filter to delete one Metric
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MetricDeleteArgs>(args: SelectSubset<T, MetricDeleteArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Metric.
+     * @param {MetricUpdateArgs} args - Arguments to update one Metric.
+     * @example
+     * // Update one Metric
+     * const metric = await prisma.metric.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MetricUpdateArgs>(args: SelectSubset<T, MetricUpdateArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Metrics.
+     * @param {MetricDeleteManyArgs} args - Arguments to filter Metrics to delete.
+     * @example
+     * // Delete a few Metrics
+     * const { count } = await prisma.metric.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MetricDeleteManyArgs>(args?: SelectSubset<T, MetricDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Metrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Metrics
+     * const metric = await prisma.metric.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MetricUpdateManyArgs>(args: SelectSubset<T, MetricUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Metrics and returns the data updated in the database.
+     * @param {MetricUpdateManyAndReturnArgs} args - Arguments to update many Metrics.
+     * @example
+     * // Update many Metrics
+     * const metric = await prisma.metric.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Metrics and only return the `id`
+     * const metricWithIdOnly = await prisma.metric.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MetricUpdateManyAndReturnArgs>(args: SelectSubset<T, MetricUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Metric.
+     * @param {MetricUpsertArgs} args - Arguments to update or create a Metric.
+     * @example
+     * // Update or create a Metric
+     * const metric = await prisma.metric.upsert({
+     *   create: {
+     *     // ... data to create a Metric
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Metric we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MetricUpsertArgs>(args: SelectSubset<T, MetricUpsertArgs<ExtArgs>>): Prisma__MetricClient<$Result.GetResult<Prisma.$MetricPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Metrics.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricCountArgs} args - Arguments to filter Metrics to count.
+     * @example
+     * // Count the number of Metrics
+     * const count = await prisma.metric.count({
+     *   where: {
+     *     // ... the filter for the Metrics we want to count
+     *   }
+     * })
+    **/
+    count<T extends MetricCountArgs>(
+      args?: Subset<T, MetricCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MetricCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Metric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MetricAggregateArgs>(args: Subset<T, MetricAggregateArgs>): Prisma.PrismaPromise<GetMetricAggregateType<T>>
+
+    /**
+     * Group by Metric.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MetricGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MetricGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MetricGroupByArgs['orderBy'] }
+        : { orderBy?: MetricGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MetricGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMetricGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Metric model
+   */
+  readonly fields: MetricFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Metric.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MetricClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Metric model
+   */
+  interface MetricFieldRefs {
+    readonly id: FieldRef<"Metric", 'String'>
+    readonly name: FieldRef<"Metric", 'String'>
+    readonly value: FieldRef<"Metric", 'Float'>
+    readonly recordedAt: FieldRef<"Metric", 'DateTime'>
+    readonly metadata: FieldRef<"Metric", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Metric findUnique
+   */
+  export type MetricFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * Filter, which Metric to fetch.
+     */
+    where: MetricWhereUniqueInput
+  }
+
+  /**
+   * Metric findUniqueOrThrow
+   */
+  export type MetricFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * Filter, which Metric to fetch.
+     */
+    where: MetricWhereUniqueInput
+  }
+
+  /**
+   * Metric findFirst
+   */
+  export type MetricFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * Filter, which Metric to fetch.
+     */
+    where?: MetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Metrics to fetch.
+     */
+    orderBy?: MetricOrderByWithRelationInput | MetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Metrics.
+     */
+    cursor?: MetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Metrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Metrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Metrics.
+     */
+    distinct?: MetricScalarFieldEnum | MetricScalarFieldEnum[]
+  }
+
+  /**
+   * Metric findFirstOrThrow
+   */
+  export type MetricFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * Filter, which Metric to fetch.
+     */
+    where?: MetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Metrics to fetch.
+     */
+    orderBy?: MetricOrderByWithRelationInput | MetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Metrics.
+     */
+    cursor?: MetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Metrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Metrics.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Metrics.
+     */
+    distinct?: MetricScalarFieldEnum | MetricScalarFieldEnum[]
+  }
+
+  /**
+   * Metric findMany
+   */
+  export type MetricFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * Filter, which Metrics to fetch.
+     */
+    where?: MetricWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Metrics to fetch.
+     */
+    orderBy?: MetricOrderByWithRelationInput | MetricOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Metrics.
+     */
+    cursor?: MetricWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Metrics from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Metrics.
+     */
+    skip?: number
+    distinct?: MetricScalarFieldEnum | MetricScalarFieldEnum[]
+  }
+
+  /**
+   * Metric create
+   */
+  export type MetricCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Metric.
+     */
+    data: XOR<MetricCreateInput, MetricUncheckedCreateInput>
+  }
+
+  /**
+   * Metric createMany
+   */
+  export type MetricCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Metrics.
+     */
+    data: MetricCreateManyInput | MetricCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Metric createManyAndReturn
+   */
+  export type MetricCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * The data used to create many Metrics.
+     */
+    data: MetricCreateManyInput | MetricCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Metric update
+   */
+  export type MetricUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Metric.
+     */
+    data: XOR<MetricUpdateInput, MetricUncheckedUpdateInput>
+    /**
+     * Choose, which Metric to update.
+     */
+    where: MetricWhereUniqueInput
+  }
+
+  /**
+   * Metric updateMany
+   */
+  export type MetricUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Metrics.
+     */
+    data: XOR<MetricUpdateManyMutationInput, MetricUncheckedUpdateManyInput>
+    /**
+     * Filter which Metrics to update
+     */
+    where?: MetricWhereInput
+    /**
+     * Limit how many Metrics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Metric updateManyAndReturn
+   */
+  export type MetricUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * The data used to update Metrics.
+     */
+    data: XOR<MetricUpdateManyMutationInput, MetricUncheckedUpdateManyInput>
+    /**
+     * Filter which Metrics to update
+     */
+    where?: MetricWhereInput
+    /**
+     * Limit how many Metrics to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Metric upsert
+   */
+  export type MetricUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Metric to update in case it exists.
+     */
+    where: MetricWhereUniqueInput
+    /**
+     * In case the Metric found by the `where` argument doesn't exist, create a new Metric with this data.
+     */
+    create: XOR<MetricCreateInput, MetricUncheckedCreateInput>
+    /**
+     * In case the Metric was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MetricUpdateInput, MetricUncheckedUpdateInput>
+  }
+
+  /**
+   * Metric delete
+   */
+  export type MetricDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+    /**
+     * Filter which Metric to delete.
+     */
+    where: MetricWhereUniqueInput
+  }
+
+  /**
+   * Metric deleteMany
+   */
+  export type MetricDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Metrics to delete
+     */
+    where?: MetricWhereInput
+    /**
+     * Limit how many Metrics to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Metric without action
+   */
+  export type MetricDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Metric
+     */
+    select?: MetricSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Metric
+     */
+    omit?: MetricOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4376,12 +5492,31 @@ export namespace Prisma {
   export type DailyPageViewScalarFieldEnum = (typeof DailyPageViewScalarFieldEnum)[keyof typeof DailyPageViewScalarFieldEnum]
 
 
+  export const MetricScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    value: 'value',
+    recordedAt: 'recordedAt',
+    metadata: 'metadata'
+  };
+
+  export type MetricScalarFieldEnum = (typeof MetricScalarFieldEnum)[keyof typeof MetricScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const QueryMode: {
@@ -4398,6 +5533,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -4486,6 +5630,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
   /**
    * Deep Input Types
@@ -4670,6 +5828,60 @@ export namespace Prisma {
     date?: DateTimeWithAggregatesFilter<"DailyPageView"> | Date | string
     pageUrl?: StringWithAggregatesFilter<"DailyPageView"> | string
     count?: IntWithAggregatesFilter<"DailyPageView"> | number
+  }
+
+  export type MetricWhereInput = {
+    AND?: MetricWhereInput | MetricWhereInput[]
+    OR?: MetricWhereInput[]
+    NOT?: MetricWhereInput | MetricWhereInput[]
+    id?: StringFilter<"Metric"> | string
+    name?: StringFilter<"Metric"> | string
+    value?: FloatFilter<"Metric"> | number
+    recordedAt?: DateTimeFilter<"Metric"> | Date | string
+    metadata?: JsonNullableFilter<"Metric">
+  }
+
+  export type MetricOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
+    recordedAt?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+  }
+
+  export type MetricWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    name?: string
+    AND?: MetricWhereInput | MetricWhereInput[]
+    OR?: MetricWhereInput[]
+    NOT?: MetricWhereInput | MetricWhereInput[]
+    value?: FloatFilter<"Metric"> | number
+    recordedAt?: DateTimeFilter<"Metric"> | Date | string
+    metadata?: JsonNullableFilter<"Metric">
+  }, "id" | "name">
+
+  export type MetricOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
+    recordedAt?: SortOrder
+    metadata?: SortOrderInput | SortOrder
+    _count?: MetricCountOrderByAggregateInput
+    _avg?: MetricAvgOrderByAggregateInput
+    _max?: MetricMaxOrderByAggregateInput
+    _min?: MetricMinOrderByAggregateInput
+    _sum?: MetricSumOrderByAggregateInput
+  }
+
+  export type MetricScalarWhereWithAggregatesInput = {
+    AND?: MetricScalarWhereWithAggregatesInput | MetricScalarWhereWithAggregatesInput[]
+    OR?: MetricScalarWhereWithAggregatesInput[]
+    NOT?: MetricScalarWhereWithAggregatesInput | MetricScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Metric"> | string
+    name?: StringWithAggregatesFilter<"Metric"> | string
+    value?: FloatWithAggregatesFilter<"Metric"> | number
+    recordedAt?: DateTimeWithAggregatesFilter<"Metric"> | Date | string
+    metadata?: JsonNullableWithAggregatesFilter<"Metric">
   }
 
   export type SessionCreateInput = {
@@ -4862,6 +6074,62 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     pageUrl?: StringFieldUpdateOperationsInput | string
     count?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type MetricCreateInput = {
+    id?: string
+    name: string
+    value: number
+    recordedAt?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type MetricUncheckedCreateInput = {
+    id?: string
+    name: string
+    value: number
+    recordedAt?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type MetricUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    value?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type MetricUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    value?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type MetricCreateManyInput = {
+    id?: string
+    name: string
+    value: number
+    recordedAt?: Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type MetricUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    value?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type MetricUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    value?: FloatFieldUpdateOperationsInput | number
+    recordedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableJsonNullValueInput | InputJsonValue
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5155,6 +6423,112 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type MetricCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
+    recordedAt?: SortOrder
+    metadata?: SortOrder
+  }
+
+  export type MetricAvgOrderByAggregateInput = {
+    value?: SortOrder
+  }
+
+  export type MetricMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
+    recordedAt?: SortOrder
+  }
+
+  export type MetricMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    value?: SortOrder
+    recordedAt?: SortOrder
+  }
+
+  export type MetricSumOrderByAggregateInput = {
+    value?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
+  }
+
   export type AnalyticsEventCreateNestedManyWithoutSessionInput = {
     create?: XOR<AnalyticsEventCreateWithoutSessionInput, AnalyticsEventUncheckedCreateWithoutSessionInput> | AnalyticsEventCreateWithoutSessionInput[] | AnalyticsEventUncheckedCreateWithoutSessionInput[]
     connectOrCreate?: AnalyticsEventCreateOrConnectWithoutSessionInput | AnalyticsEventCreateOrConnectWithoutSessionInput[]
@@ -5236,6 +6610,14 @@ export namespace Prisma {
   }
 
   export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
@@ -5436,6 +6818,45 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type AnalyticsEventCreateWithoutSessionInput = {

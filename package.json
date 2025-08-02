@@ -2,7 +2,7 @@
   "name": "tentalents-ecommerce",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
+   "scripts": {
     "build:user-ui": "nx build user-ui",
     "nx": "npx nx",
     "lint": "npx nx lint",

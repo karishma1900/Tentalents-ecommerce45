@@ -89,7 +89,7 @@ async function shutdown(code = 0) {
   try {
     await prisma.$disconnect();
 
-    if (redisClient.status === 'ready') {
+    if (redisClient.isOpen) {
       await redisClient.quit();
       logger.info('✅ Redis disconnected');
     }

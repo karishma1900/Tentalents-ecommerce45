@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { cmsService } from '../services/cms.service';
-import { sendSuccess } from '@shared/utils/lib/response';
+import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 
 export const createPage = async (
   req: Request,

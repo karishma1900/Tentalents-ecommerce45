@@ -2,15 +2,15 @@ import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
-import { connectRedis, disconnectRedis, redisClient } from '@shared/redis';
+import { connectRedis, disconnectRedis, redisClient } from '@shared/middlewares/redis/src/index';
 import {
   connectKafkaProducer,
   disconnectKafkaProducer,
   connectKafkaConsumer,
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
-} from '@shared/kafka';
-import { logger } from '@shared/logger';
+} from '@shared/middlewares/kafka/src/index';
+import { logger } from '@shared/middlewares/logger/src/index';
 
 // 🌍 Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
