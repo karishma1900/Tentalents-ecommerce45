@@ -12,7 +12,7 @@ import Ramesh from "../assets/ramesh.png";
 export const navItems: NavItemsTypes[] = [
   {
     title: 'My Account',
-    href: '/account',
+    href: '/myaccount',
   },
   {
     title: 'My Orders',
