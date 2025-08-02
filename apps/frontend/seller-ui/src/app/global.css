@@ -223,6 +223,19 @@ textarea::placeholder {
   font-weight: 500;
 
 }
+.product-title2{
+  font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 16px;
+  color:var(--black-grey);
+  font-weight: 500;
+
+}
 .sellerheading{
   font-size:15px;
   color:var(--black-grey);
@@ -339,12 +352,16 @@ font-weight: 400;
 /* status stylings */
 .paid,.fulfilled,.refunded{
   background-color:var(--success);
+   font-family: 'Radhika Trial', sans-serif;
+  
   padding:10px;
   border-radius:10px;
   text-align: center;
 
 }
 .failed,.unfulfilled{
+   font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
   background-color:var(--failed);
   padding:10px;
   border-radius:10px;
@@ -356,13 +373,20 @@ font-weight: 400;
   padding:10px;
   border-radius:10px;
   text-align: center;
-  font-weight: 400;
+ font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
 }
 .process{
   background-color:var(--warning);
   padding:10px;
   border-radius:10px;
-  font-weight: 400;
+  font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+}
+.titleicon{
+  color:var(--grey);
+  font-size: 20px;
+
 }
 
 html {

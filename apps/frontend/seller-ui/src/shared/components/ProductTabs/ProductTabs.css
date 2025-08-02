@@ -51,3 +51,36 @@
   border-radius: 0px;
   border: 1px solid var(--primary);
 }
+@media(max-width:768px){
+  .tabs-container{
+    width: 100%;
+  }
+  .tab-button {
+    
+  padding: 10px 10px;
+
+
+
+}
+.product-tabs-header{
+    display: flex;
+    align-items: center;
+    gap:10px;    
+    margin:10px 0px;
+
+}
+.tab-button {
+    
+  padding: 10px 5px;
+
+ 
+
+}
+.product-tabs-title{
+  padding:0px;
+}
+.tabs-container{
+  margin: 0px;
+
+}
+}

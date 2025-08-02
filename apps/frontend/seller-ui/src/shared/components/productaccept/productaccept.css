@@ -96,3 +96,46 @@ font-family: 'Radhika Trial', sans-serif;
   font-size: 14px;
   
 }
+@media (max-width:768px) {
+  .produtdetails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content:space-between;
+
+}
+.productsection{
+  width:100%;
+}
+  .product-item {
+width:100% !important;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-direction:column;
+                 /* ⬅ Ensures full width */
+  /* box-sizing: border-box; */
+}
+.product-buttons{
+  display:flex;
+  /* flex-direction: column; */
+  align-items:center;
+
+  justify-content:space-between;
+  width: 100%;
+}
+.productstatus{
+  width: 100%;
+}
+.product-buttons button{
+ width: 100% !important;
+}
+.product-section{
+
+  display: flex;
+    justify-content: flex-start;
+}
+.center-borderedbutton{
+  width:100%;
+}
+
+}

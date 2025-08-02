@@ -1,0 +1,69 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+
+
+.arrow {
+  font-size: 10px;
+}
+
+.menu {
+  position: absolute;
+  padding-left:0px;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.menu li{
+  font-size: 14px;
+  list-style: none;
+}
+.item {
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #f5f5f5;
+}
+.button {
+  background: white;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+   font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+  gap: 8px;
+  z-index: 1;
+}
+
+.arrowBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+}
+
+.arrow {
+  font-size: 12px;
+  color: black;
+  line-height: 1;
+}
+
+@media(max-width:768px){
+
+}

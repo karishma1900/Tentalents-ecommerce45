@@ -1,0 +1,39 @@
+/* @media(max-width:900px){
+     .topsection{
+        display:grid;
+        grid-template-columns: 1fr;
+    }
+    .bottomsection{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+} */
+ .sidebar{
+    max-width: 280px;
+    width:100%;
+ }
+ 
+
+@media(max-width:768px){
+ .topsection{
+        display:grid;
+        grid-template-columns: 1fr;
+    }
+    .bottomsection{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    
+  .sidebar {
+    width: 0px;
+    min-width: 0px;
+    padding: 0;
+  
+}
+.inventory-sectionw{
+    width: 100%;
+}
+.prodiucttabdsw,.producthistorts{
+    width: 100%;
+}
+}

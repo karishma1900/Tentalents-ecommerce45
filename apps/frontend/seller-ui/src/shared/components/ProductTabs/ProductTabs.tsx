@@ -40,7 +40,7 @@ const ProductTabs = () => {
     <div>
         <div className='product-tabs-header'>
             <div className='product-tabs-title'>
-                <FaBox />
+                <FaBox className='titleicon' />
                 <h2 className='mainheading'>Orders </h2>
 
             </div>
@@ -59,7 +59,7 @@ const ProductTabs = () => {
       
 
       {/* Reuse ProductAccept component, pass filtered orders */}
-      <ProductAccept orders={filteredOrders} />
+      <ProductAccept orders={filteredOrders} limit={5} />
     </div>
   );
 };

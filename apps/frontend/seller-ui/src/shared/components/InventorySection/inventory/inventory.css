@@ -1,0 +1,146 @@
+.inventory-sectionin {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+
+}
+.inventory-top{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:10px;
+}
+
+.inventory-sectionin span {
+  min-width: 140px; /* adjust width for variant name */
+  font-weight: 500;
+}
+
+.inventorystock {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 160px; /* ensures all badges align */
+  justify-content: flex-start;
+}
+
+.inventorystock strong {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+
+/* Status badges */
+.paid {
+  background-color: #b8f3c4;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 70px;
+  text-align: center;
+}
+
+.process {
+  background-color: #fdfd96;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 70px;
+  text-align: center;
+}
+
+.failed {
+  background-color: #ff9d9d;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  min-width: 70px;
+  text-align: center;
+}
+.available{
+      background-color:var(--success);
+  padding:10px;
+  border-radius:10px;
+  text-align: center;
+}
+.restock-class{
+  background-color:var(--warning);
+  padding:10px;
+  border-radius:10px;
+  font-weight: 400;
+  text-align: center;
+}
+.empty-class{
+  background-color:var(--failed);
+  padding:10px;
+  border-radius:10px;
+  text-align: center;
+  font-weight: 400;
+}
+.single-inventory{
+    border: 1px solid var(--lightgrey);
+    border-radius:10px;
+    margin-bottom:10px;
+
+    padding:10px;
+}
+@media (max-width: 768px) {
+  .single-inventory {
+    width: 100%;
+  }
+
+  .inventory-top {
+ display: flex;
+ align-items: center;
+ justify-content: flex-start;
+   
+    gap: 8px;
+  }
+
+  .inventory-sectionin {
+   display: flex;
+
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .inventory-sectionin span {
+    min-width: auto;
+    width: 100%;
+    font-weight: 500;
+  }
+
+  .inventorystock {
+    display: flex;
+    /* flex-wrap: wrap; */
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  /* .inventorystock strong {
+    width: auto;
+    min-width: 30px;
+    text-align: left;
+  } */
+
+  .paid,
+  .process,
+  .failed,
+  .available,
+  .restock-class,
+  .empty-class {
+    min-width: auto;
+    padding: 10px 12px;
+    font-size: 13px;
+    text-align: center;
+    flex-grow: 1;
+  }
+}

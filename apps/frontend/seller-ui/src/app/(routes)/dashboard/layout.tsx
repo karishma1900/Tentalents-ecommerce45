@@ -1,13 +1,19 @@
+'use client'
 import SideBarWrapper from '../../../shared/components/sidebar/sidebar'
-import React from 'react'
+import React, { useState } from 'react';
+import './page.css';
 
 const Layout = ({children}: {children:React.ReactNode}) => {
+      const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <div className='flex h-full  min-h-sreen'>
         {/* sidebar */}
-        <aside className='w-[280px] min-w-[250px] max-w-[300px]  text-white p-4'>
+        <aside className='sidebar'>
             <div className='sticky top-0'>
-                <SideBarWrapper/>
+                 <SideBarWrapper
+          isMobileMenuOpen={isMobileMenuOpen}
+          onCloseMobileMenu={() => setIsMobileMenuOpen(false)}
+        />
             </div>
         </aside>
 

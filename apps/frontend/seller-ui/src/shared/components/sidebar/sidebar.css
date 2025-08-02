@@ -1,5 +1,70 @@
+
+
+/* ------------------ SHARED STYLES ------------------ */
+
+
+.itemsec {
+  display: flex;
+  /* align-items: center; */
+  gap: 10px;
+  padding: 15px;
+  color: #222;
+  font-weight: 500;
+  cursor: pointer;
+}
+.main {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-grow: 1;
+  }
+.itemsec:hover {
+  background-color: var(--darkblue);
+  border-radius: 10px;
+}
+
+.customer-support {
+  width: 24px;
+  height: 24px;
+}
+
+.sellerinfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid #eee;
+}
+
+.sellerheading {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.selleremail {
+  font-size: 13px;
+  color: var(--grey);
+  font-weight: 400;
+  margin: 0;
+}
+
+.sellerimage img {
+  border-radius: 50%;
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ------------------ DESKTOP SIDEBAR ------------------ */
 .sidebar-wrapper {
-  overflow: hidden; /* override any auto-scroll */
+  padding:10px 20px;
+  background-color: white;
+  overflow: hidden;
   height: 100vh;
   position: fixed;
   top: 0;
@@ -8,52 +73,75 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
-}
-.itemsec {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  color: black;
-  gap: 10px;
-  padding: 15px 15px;
-  cursor: pointer;
+  z-index: 202;
 }
 
-.itemsec:hover {
-  background-color: var(--darkblue);
-  border-radius: 10px;
+/* ------------------ MOBILE STYLES ------------------ */
+.hamburger-floating-button,
+.close-button {
+  display: none;
 }
 
-.main-layout {
-  width: 100%;
-  padding: 0px;
+.mobile-sidebar {
+  display: none;
 }
 
-.customer-support {
-  width: 24px;
-  height: 24px;
-}
+@media (max-width: 768px) {
+  .sidebar-wrapper {
+    display: none;
+  }
 
-.selleremail {
-  font-size: 13px;
-  color: var(--grey);
-  font-weight: 400;
-}
+  .mobile-sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    z-index: 999;
+    transition: left 0.3s ease-in-out;
+    padding: 1rem 1.5rem;
+  }
 
-.sellerinfo {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 16px;
-}
+  .mobile-sidebar.open {
+    left: 0;
+  }
 
-.sellerheading {
-  font-size: 14px;
-  font-weight: 600;
-}
+  .hamburger-floating-button {
+    display: block;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    /* background-color: white; */
+    background-color: transparent;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
 
-.sellerimage img {
-  border-radius: 50%;
+  .close-button {
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .main {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-grow: 1;
+  }
+
+  .sellerinfo {
+    padding-top: 1rem;
+  }
+
+ 
 }

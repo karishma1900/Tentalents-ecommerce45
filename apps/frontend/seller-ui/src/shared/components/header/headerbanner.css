@@ -60,3 +60,43 @@ border: 1px solid var(--primary);
     /* Add spacing between text and icon */
  
 }
+.hamburger-icon {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #222;
+}
+
+@media(max-width:768px){
+  .headerbanner{
+  flex-wrap:wrap;
+}
+.hamburger-icon {
+  display: block;
+}
+/* .hamburger-floating-button,
+.close-button {
+  display: none;
+} */
+
+.searchbar{
+  display: none;
+}
+.rightside .background-button{
+  padding:12px 5px;
+  width: 100%;
+  justify-content: center;
+  gap:5px;
+
+}
+.rightside{
+  width:100%;
+ 
+}
+.headerbanner{
+  margin: 0px;
+  padding:0px 5px;
+}
+
+}

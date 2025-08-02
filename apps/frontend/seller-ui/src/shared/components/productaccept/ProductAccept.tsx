@@ -7,9 +7,10 @@ import type { ProductOrder } from '../../../configs/global'; // Adjust path as n
 
 interface ProductAcceptProps {
   orders?: ProductOrder[];
+  limit?: number;
 }
 
-const ProductAccept = ({ orders }: ProductAcceptProps) => {
+const ProductAccept = ({ orders, limit }: ProductAcceptProps) => {
   const handleConfirm = (id: number) => console.log('Confirmed product ID:', id);
   const handleDeny = (id: number) => console.log('Denied product ID:', id);
   const handleViewStatus = (id: number) => console.log('Viewing status for product ID:', id);
@@ -35,9 +36,11 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
     return <div>No orders to display.</div>;
   }
 
+  const limitedOrders = limit ? orders.slice(0, limit) : orders;
+
   return (
-    <div>
-      {orders.map((order) => {
+    <div className="productsection">
+      {limitedOrders.map((order) => {
         const normalizedStatuses = order.status.toLowerCase().split(',').map((s) => s.trim());
 
         const isPaidOnly = normalizedStatuses.length === 1 && normalizedStatuses.includes('paid');
@@ -54,6 +57,7 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
           normalizedStatuses.includes('failed') || normalizedStatuses.includes('unfulfilled');
 
         return (
+         
           <div key={order.id} className="product-item">
             <div className="product-section">
               <Image
@@ -66,7 +70,7 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
             </div>
 
             <div className="produtdetails">
-                <p className="orderprice">{order.quantity}</p>
+              <p className="orderprice">{order.quantity}</p>
               <p className="orderprice">₹{order.price}</p>
               <p>{order.city}</p>
               <div className="status-tags">
@@ -124,9 +128,11 @@ const ProductAccept = ({ orders }: ProductAcceptProps) => {
               ) : null}
             </div>
           </div>
+          
         );
       })}
     </div>
+    
   );
 };
 
