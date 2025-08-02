@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Metric } from '../../../../generated/analytics-service';
 
 // Handle Prisma singleton in development
 const globalForPrisma = globalThis as unknown as {
@@ -19,20 +19,15 @@ if (process.env.NODE_ENV !== 'production') {
 type MetricSummary = Record<string, number>;
 
 export const analyticsService = {
-  /**
-   * Increment an event type in analytics.
-   * If it doesn't exist, create it.
-   * @param type - Metric type, e.g., "user_signup", "product_view"
-   */
   async incrementEvent(type: string): Promise<void> {
     try {
       await prisma.metric.upsert({
-        where: { type },
+        where: { name: type },
         update: {
           value: { increment: 1 },
         },
         create: {
-          type,
+          name: type,
           value: 1,
         },
       });
@@ -42,21 +37,16 @@ export const analyticsService = {
     }
   },
 
-  /**
-   * Get a summary of all metrics.
-   * Returns an object like: { "user_signup": 10, "product_view": 42 }
-   */
- async getSummary(): Promise<MetricSummary> {
-  try {
-    const allMetrics: Metric[] = await prisma.metric.findMany();
-
-    return allMetrics.reduce<MetricSummary>((acc: MetricSummary, metric: Metric) => {
-      acc[metric.type] = metric.value;
-      return acc;
-    }, {});
-  } catch (error) {
-    console.error('❌ Failed to get metric summary:', error);
-    throw new Error('Failed to get metric summary');
+  async getSummary(): Promise<MetricSummary> {
+    try {
+      const allMetrics: Metric[] = await prisma.metric.findMany();
+      return allMetrics.reduce<MetricSummary>((acc, metric) => {
+        acc[metric.name] = metric.value;
+        return acc;
+      }, {});
+    } catch (error) {
+      console.error('❌ Failed to get metric summary:', error);
+      throw new Error('Failed to get metric summary');
+    }
   }
-}
 };
