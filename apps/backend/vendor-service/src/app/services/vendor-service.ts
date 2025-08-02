@@ -1,5 +1,5 @@
 import { VendorStatus as PrismaVendorStatus } from '../../../generated/vendor-service';
-import { PrismaClient, Prisma } from '@prisma/client';
+import { PrismaClient, Prisma } from '../../../generated/vendor-service';
 import { produceKafkaEvent } from '@shared/kafka';
 import { SERVICE_NAMES } from '@shared/constants';
 import { VendorStatus } from '@shared/types';
