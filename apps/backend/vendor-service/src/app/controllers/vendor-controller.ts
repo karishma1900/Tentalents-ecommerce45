@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import {
   PrismaClient,
   VendorStatus as PrismaVendorStatus,
-} from '@prisma/client';
+} from '../../../generated/vendor-service';
 import { logger } from '@shared/logger';
 import { uploadFileToMinIO } from '@shared/minio';
 import {
