@@ -1,5 +1,5 @@
 import { VendorStatus as SharedVendorStatus } from '@shared/types';
-import { Vendor, Prisma } from '@prisma/client';
+import { Vendor, Prisma } from '../../../generated/vendor-service';
 
 export interface CreateVendorDto {
   storeName: string;
