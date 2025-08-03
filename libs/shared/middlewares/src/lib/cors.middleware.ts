@@ -2,7 +2,7 @@ import cors from 'cors';
 
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://your-vercel-frontend.vercel.app', // Replace with your actual Vercel domain
+  'https://tentalents-ecommerce-xi.vercel.app/', // Replace with your actual Vercel domain
 ];
 
 export const corsMiddleware = cors({

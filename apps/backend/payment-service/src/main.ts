@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
 import { redisClient, connectRedis } from '@shared/redis';
 import {
   connectKafkaProducer,
@@ -57,22 +58,22 @@ async function start() {
   try {
     logger.info('🚀 Starting Payment Service...');
 
-    // Connect Redis
     await connectRedis();
     logger.info('✅ Redis connected');
 
-    // Connect PostgreSQL
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
 
-    // Connect Kafka
+    // 👇 Add this BEFORE Kafka producer/consumer connect
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
     await connectKafkaProducer();
     logger.info('✅ Kafka producer ready');
 
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer subscribed');
 
-    // Start HTTP server
     server = app.listen(PORT, () => {
       logger.info(`💳 Payment Service running at http://localhost:${PORT}`);
     });

@@ -11,6 +11,7 @@ import {
   KafkaConsumerConfig,
 } from '@shared/middlewares/kafka/src/index';
 import { logger } from '@shared/middlewares/logger/src/index';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../../../../../.env') });
@@ -46,6 +47,8 @@ async function start() {
 
     await connectRedis();
     logger.info('✅ Redis connected');
+     await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
 
     await connectKafkaProducer();
     logger.info('✅ Kafka Producer connected');

@@ -3,6 +3,7 @@ import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
 import { connectRedis, disconnectRedis, redisClient } from '@shared/middlewares/redis/src/index';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
 import {
   connectKafkaProducer,
   disconnectKafkaProducer,
@@ -54,6 +55,8 @@ async function start() {
     await connectKafkaProducer();
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
 
+     await createTopicsIfNotExists(kafkaConfig.topics);
+         logger.info('✅ Kafka topics created or verified');
     server = app.listen(PORT, () => {
       logger.info(
         `🚀 Recommendation Service running at http://localhost:${PORT}`

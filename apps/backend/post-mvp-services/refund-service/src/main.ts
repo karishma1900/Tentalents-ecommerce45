@@ -3,6 +3,7 @@ import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
 import { connectRedis, disconnectRedis } from '@shared/middlewares/redis/src/index';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
 import {
   connectKafkaProducer,
   disconnectKafkaProducer,
@@ -44,6 +45,8 @@ let server: ReturnType<typeof app.listen> | null = null;
 // 🚀 Start Refund Service
 async function start() {
   try {
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
     await connectRedis();
     await connectKafkaProducer();
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);

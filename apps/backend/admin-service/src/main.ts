@@ -3,6 +3,8 @@ import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
 import { connectRedis, redisClient } from '@shared/redis';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+
 import {
   connectKafkaProducer,
   connectKafkaConsumer,
@@ -101,6 +103,10 @@ async function start() {
     await connectRedis();
     logger.info('✅ Redis connected');
 
+    // <<< Add topic creation here before producer/consumer connects
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
     await connectKafkaProducer();
     logger.info('✅ Kafka producer connected');
 
@@ -116,6 +122,7 @@ async function start() {
     process.exit(1);
   }
 }
+
 
 // 🧹 Graceful Shutdown
 async function shutdown() {

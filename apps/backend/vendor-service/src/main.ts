@@ -18,7 +18,7 @@ import { connectMinio, disconnectMinio } from '@shared/minio';
 // 🌍 Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const PORT = config.service.port;
+const PORT = process.env.PORT || 3010;
 
 async function start() {
   let server: Server | undefined;

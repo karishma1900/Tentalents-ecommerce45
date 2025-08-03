@@ -15,8 +15,8 @@
 
     // --- Critical path and output settings ---
     "outDir": "../../../dist/out-tsc",
-    "rootDir": "../../../",
-    "baseUrl": "../../../",
+    "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
       "@shared/auth": ["libs/shared/auth/src/index.ts"],
       "@shared/config": ["libs/shared/config/src/index.ts"],

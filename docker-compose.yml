@@ -110,24 +110,7 @@ services:
     networks:
       - backend
 
-  email-service:
-    build:
-      context: .
-      dockerfile: ./apps/email-service/Dockerfile
-    container_name: email-service
-    restart: unless-stopped
-    env_file:
-      - ./.env
-    environment:
-      KAFKA_BROKERS: kafka:9092
-      # Add any other env variables your service needs
-    depends_on:
-      - kafka
-      - redis
-    ports:
-      - "3004:3004" # adjust if needed
-    networks:
-      - backend
+
 
 volumes:
   pgdata:

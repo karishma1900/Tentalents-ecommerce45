@@ -10,6 +10,7 @@ import {
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
 } from '@shared/middlewares/kafka/src/index';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
 
 import { logger } from '@shared/middlewares/logger/src/index';
 
@@ -51,7 +52,8 @@ async function start() {
     await connectRedis();
     logger.info('✅ Redis connected');
     console.log('✅ Redis connected');
-
+ await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
 
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
