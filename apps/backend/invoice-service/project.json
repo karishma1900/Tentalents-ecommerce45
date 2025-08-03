@@ -15,7 +15,9 @@
         "assets": [],
         "generatePackageJson": true,
         "bundle": true,
-        "thirdParty": false
+        "thirdParty": false,
+        "format": ["cjs"],
+        "external": ["fs", "path", "os", "node:*"]  
       },
       "configurations": {
         "development": {},
@@ -37,11 +39,10 @@
         }
       }
     },
-
     "lint": {
       "executor": "nx:eslint",
       "options": {
-        "lintFilePatterns": ["pps/backend/invoice-service/src/**/*.ts"]
+        "lintFilePatterns": ["apps/backend/invoice-service/src/**/*.ts"]
       }
     },
     "test": {
@@ -57,6 +58,6 @@
         "command": "docker build -t invoice-service -f apps/backend/invoice-service/Dockerfile ."
       }
     }
-    },
-    "tags": ["type:service"]
-  }
+  },
+  "tags": ["type:service"]
+}

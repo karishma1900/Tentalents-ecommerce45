@@ -9,6 +9,7 @@ interface RegisterUserParams {
   email: string;
   password: string;
   phone: string;
+  name: string;
   role?: UserRole;
 }
 
@@ -22,6 +23,7 @@ export const userService = {
     email,
     password,
     phone,
+    name,
     role = UserRole.buyer,
   }: RegisterUserParams) => {
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -35,39 +37,60 @@ export const userService = {
       data: {
         email,
         phone,
+        name,
         password: hashedPassword,
         role,
       },
     });
 
-    // Publish core Kafka events
-    await publishEvent(KAFKA_TOPICS.USER_CREATED, {
-      value: JSON.stringify({
-        userId: user.id,
-        email: user.email,
-        role: user.role,
-      }),
+    // ✅ Kafka events using correct "messages" format
+    await publishEvent({
+      topic: KAFKA_TOPICS.USER.CREATED,
+      messages: [
+        {
+          value: JSON.stringify({
+            userId: user.id,
+            email: user.email,
+            role: user.role,
+          }),
+        },
+      ],
     });
 
-    await publishEvent(KAFKA_TOPICS.USER_REGISTRATION_EMAIL, {
-      value: JSON.stringify({ email: user.email }),
+    await publishEvent({
+      topic: KAFKA_TOPICS.EMAIL.USER_CREATED,
+      messages: [
+        {
+          value: JSON.stringify({ email: user.email }),
+        },
+      ],
     });
 
-    // Generate OTP and send event for SMS
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    await publishEvent(KAFKA_TOPICS.USER_REGISTRATION_OTP, {
-      value: JSON.stringify({ phone: user.phone, otp }),
+
+    await publishEvent({
+      topic: KAFKA_TOPICS.USER.REGISTRATION_OTP,
+      messages: [
+        {
+          value: JSON.stringify({ phone: user.phone, otp }),
+        },
+      ],
     });
 
-    // Additional event if user is vendor
-    if (user.role === UserRole.vendor) {
-      await publishEvent(KAFKA_TOPICS.VENDOR_USER_REGISTERED, {
-        value: JSON.stringify({
-          userId: user.id,
-          email: user.email,
-          phone: user.phone,
-          status: 'pending',
-        }),
+    // ✅ Send vendor registration event if role is seller
+    if (user.role === UserRole.seller) {
+      await publishEvent({
+        topic: KAFKA_TOPICS.USER.VENDOR_REGISTERED,
+        messages: [
+          {
+            value: JSON.stringify({
+              userId: user.id,
+              email: user.email,
+              phone: user.phone,
+              status: 'pending',
+            }),
+          },
+        ],
       });
     }
 
@@ -85,7 +108,7 @@ export const userService = {
       throw new Error('Invalid credentials');
     }
 
-    return generateJWT({ userId: user.id, role: user.role });
+    return generateJWT({ userId: user.id, email: user.email, role: user.role });
   },
 
   getUserProfile: async (userId: string) => {

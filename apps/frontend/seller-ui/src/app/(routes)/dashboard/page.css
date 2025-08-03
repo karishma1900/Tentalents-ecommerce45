@@ -8,11 +8,15 @@
         grid-template-columns: 1fr;
     }
 } */
- .sidebar{
+ /* .sidebar{
     max-width: 280px;
     width:100%;
+ } */
+ .main-content{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
  }
- 
 
 @media(max-width:768px){
  .topsection{

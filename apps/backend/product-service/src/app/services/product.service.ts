@@ -1,7 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import { minioClient } from '@shared/minio';
-import { MinioBuckets, MINIO_FOLDER_PATHS } from '@shared/minio/constants';
+import { MinioBuckets, MinioFolderPaths } from '@shared/middlewares/minio/src/lib/minio-constants';
+
 
 const prisma = new PrismaClient();
 
@@ -61,19 +62,22 @@ export const productService = {
    * 🖼️ Upload product image to MinIO
    */
   async uploadProductImage(productId: string, imageBase64: string) {
-    const buffer = Buffer.from(imageBase64, 'base64');
-    const objectName = `${
-      MINIO_FOLDER_PATHS.PRODUCT_IMAGES
-    }${productId}-${uuid()}.png`;
+  const buffer = Buffer.from(imageBase64, 'base64');
+  const objectName = `${MinioFolderPaths.PRODUCT_IMAGES}${productId}-${uuid()}.png`;
 
-    await minioClient.putObject(MinioBuckets.PRODUCT, objectName, buffer, {
-      'Content-Type': 'image/png',
-    });
+  // Pass buffer length as 4th argument, metadata as 5th
+  await minioClient.putObject(
+    MinioBuckets.PRODUCT,
+    objectName,
+    buffer,
+    buffer.length,
+    { 'Content-Type': 'image/png' }
+  );
 
-    return {
-      bucket: MinioBuckets.PRODUCT,
-      key: objectName,
-      url: `${process.env.MINIO_URL}/${MinioBuckets.PRODUCT}/${objectName}`,
-    };
-  },
+  return {
+    bucket: MinioBuckets.PRODUCT,
+    key: objectName,
+    url: `${process.env.MINIO_URL}/${MinioBuckets.PRODUCT}/${objectName}`,
+  };
+}
 };

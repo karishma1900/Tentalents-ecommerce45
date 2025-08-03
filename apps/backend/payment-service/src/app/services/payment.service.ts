@@ -1,22 +1,16 @@
-// apps/payment-service/src/services/payment.service.ts
-
-import { prisma } from '@shared/prisma';
+import { PrismaClient, PaymentMethod, PaymentStatus } from '../../../generated/payment-service';
 import { v4 as uuidv4 } from 'uuid';
 import { logger } from '@shared/logger';
 
-type PaymentMethod = 'UPI' | 'COD' | 'CARD' | 'NET_BANKING'; // Expand as needed
-type PaymentStatus = 'PENDING' | 'SUCCESS' | 'FAILED';
-
 interface InitiatePaymentDTO {
   amount: number;
-  method: PaymentMethod;
+  method: PaymentMethod;    // use generated enum here
   orderId: string;
 }
 
+const prisma = new PrismaClient();
+
 export const paymentService = {
-  /**
-   * Initiate a payment for a given order and user.
-   */
   initiatePayment: async (userId: string, data: InitiatePaymentDTO) => {
     const { amount, method, orderId } = data;
 
@@ -26,14 +20,15 @@ export const paymentService = {
         userId,
         amount,
         method,
-        status: 'PENDING',
+        status: PaymentStatus.pending,   // use enum value (lowercase)
         orderId,
+        transactionId: uuidv4(),         // you should provide a unique transactionId here as it's required and unique
       },
     });
 
     // Simulate UPI QR code (this can be extended per method)
     const qrCode =
-      method === 'UPI'
+      method === PaymentMethod.upi
         ? `upi://pay?pa=merchant@upi&pn=EcomStore&am=${amount}`
         : undefined;
 
@@ -46,11 +41,8 @@ export const paymentService = {
     };
   },
 
-  /**
-   * Update payment status (e.g., from gateway callback).
-   */
   verifyPayment: async (paymentId: string, status: PaymentStatus) => {
-    const validStatuses: PaymentStatus[] = ['PENDING', 'SUCCESS', 'FAILED'];
+    const validStatuses = [PaymentStatus.pending, PaymentStatus.success, PaymentStatus.failed];
     if (!validStatuses.includes(status)) {
       throw new Error(`Invalid payment status: ${status}`);
     }
@@ -60,9 +52,7 @@ export const paymentService = {
       data: { status },
     });
 
-    logger.info(
-      `[paymentService] 💸 Payment ${paymentId} updated to ${status}`
-    );
+    logger.info(`[paymentService] 💸 Payment ${paymentId} updated to ${status}`);
     return updated;
   },
 };

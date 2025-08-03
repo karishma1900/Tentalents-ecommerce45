@@ -1162,6 +1162,7 @@ export namespace Prisma {
     paymentRef: string | null
     placedAt: Date | null
     updatedAt: Date | null
+    shippingAddress: string | null
   }
 
   export type OrderMaxAggregateOutputType = {
@@ -1173,6 +1174,7 @@ export namespace Prisma {
     paymentRef: string | null
     placedAt: Date | null
     updatedAt: Date | null
+    shippingAddress: string | null
   }
 
   export type OrderCountAggregateOutputType = {
@@ -1184,6 +1186,7 @@ export namespace Prisma {
     paymentRef: number
     placedAt: number
     updatedAt: number
+    shippingAddress: number
     _all: number
   }
 
@@ -1205,6 +1208,7 @@ export namespace Prisma {
     paymentRef?: true
     placedAt?: true
     updatedAt?: true
+    shippingAddress?: true
   }
 
   export type OrderMaxAggregateInputType = {
@@ -1216,6 +1220,7 @@ export namespace Prisma {
     paymentRef?: true
     placedAt?: true
     updatedAt?: true
+    shippingAddress?: true
   }
 
   export type OrderCountAggregateInputType = {
@@ -1227,6 +1232,7 @@ export namespace Prisma {
     paymentRef?: true
     placedAt?: true
     updatedAt?: true
+    shippingAddress?: true
     _all?: true
   }
 
@@ -1325,6 +1331,7 @@ export namespace Prisma {
     paymentRef: string | null
     placedAt: Date
     updatedAt: Date
+    shippingAddress: string
     _count: OrderCountAggregateOutputType | null
     _avg: OrderAvgAggregateOutputType | null
     _sum: OrderSumAggregateOutputType | null
@@ -1355,6 +1362,7 @@ export namespace Prisma {
     paymentRef?: boolean
     placedAt?: boolean
     updatedAt?: boolean
+    shippingAddress?: boolean
     items?: boolean | Order$itemsArgs<ExtArgs>
     invoice?: boolean | Order$invoiceArgs<ExtArgs>
     _count?: boolean | OrderCountOutputTypeDefaultArgs<ExtArgs>
@@ -1369,6 +1377,7 @@ export namespace Prisma {
     paymentRef?: boolean
     placedAt?: boolean
     updatedAt?: boolean
+    shippingAddress?: boolean
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1380,6 +1389,7 @@ export namespace Prisma {
     paymentRef?: boolean
     placedAt?: boolean
     updatedAt?: boolean
+    shippingAddress?: boolean
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectScalar = {
@@ -1391,9 +1401,10 @@ export namespace Prisma {
     paymentRef?: boolean
     placedAt?: boolean
     updatedAt?: boolean
+    shippingAddress?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "buyerId" | "totalAmount" | "status" | "paymentMode" | "paymentRef" | "placedAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "buyerId" | "totalAmount" | "status" | "paymentMode" | "paymentRef" | "placedAt" | "updatedAt" | "shippingAddress", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | Order$itemsArgs<ExtArgs>
     invoice?: boolean | Order$invoiceArgs<ExtArgs>
@@ -1417,6 +1428,7 @@ export namespace Prisma {
       paymentRef: string | null
       placedAt: Date
       updatedAt: Date
+      shippingAddress: string
     }, ExtArgs["result"]["order"]>
     composites: {}
   }
@@ -1850,6 +1862,7 @@ export namespace Prisma {
     readonly paymentRef: FieldRef<"Order", 'String'>
     readonly placedAt: FieldRef<"Order", 'DateTime'>
     readonly updatedAt: FieldRef<"Order", 'DateTime'>
+    readonly shippingAddress: FieldRef<"Order", 'String'>
   }
     
 
@@ -4544,7 +4557,8 @@ export namespace Prisma {
     paymentMode: 'paymentMode',
     paymentRef: 'paymentRef',
     placedAt: 'placedAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    shippingAddress: 'shippingAddress'
   };
 
   export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -4719,6 +4733,7 @@ export namespace Prisma {
     paymentRef?: StringNullableFilter<"Order"> | string | null
     placedAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
+    shippingAddress?: StringFilter<"Order"> | string
     items?: OrderItemListRelationFilter
     invoice?: XOR<InvoiceNullableScalarRelationFilter, InvoiceWhereInput> | null
   }
@@ -4732,6 +4747,7 @@ export namespace Prisma {
     paymentRef?: SortOrderInput | SortOrder
     placedAt?: SortOrder
     updatedAt?: SortOrder
+    shippingAddress?: SortOrder
     items?: OrderItemOrderByRelationAggregateInput
     invoice?: InvoiceOrderByWithRelationInput
   }
@@ -4748,6 +4764,7 @@ export namespace Prisma {
     paymentRef?: StringNullableFilter<"Order"> | string | null
     placedAt?: DateTimeFilter<"Order"> | Date | string
     updatedAt?: DateTimeFilter<"Order"> | Date | string
+    shippingAddress?: StringFilter<"Order"> | string
     items?: OrderItemListRelationFilter
     invoice?: XOR<InvoiceNullableScalarRelationFilter, InvoiceWhereInput> | null
   }, "id">
@@ -4761,6 +4778,7 @@ export namespace Prisma {
     paymentRef?: SortOrderInput | SortOrder
     placedAt?: SortOrder
     updatedAt?: SortOrder
+    shippingAddress?: SortOrder
     _count?: OrderCountOrderByAggregateInput
     _avg?: OrderAvgOrderByAggregateInput
     _max?: OrderMaxOrderByAggregateInput
@@ -4780,6 +4798,7 @@ export namespace Prisma {
     paymentRef?: StringNullableWithAggregatesFilter<"Order"> | string | null
     placedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    shippingAddress?: StringWithAggregatesFilter<"Order"> | string
   }
 
   export type OrderItemWhereInput = {
@@ -4928,6 +4947,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
     items?: OrderItemCreateNestedManyWithoutOrderInput
     invoice?: InvoiceCreateNestedOneWithoutOrderInput
   }
@@ -4941,6 +4961,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
     invoice?: InvoiceUncheckedCreateNestedOneWithoutOrderInput
   }
@@ -4954,6 +4975,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
     items?: OrderItemUpdateManyWithoutOrderNestedInput
     invoice?: InvoiceUpdateOneWithoutOrderNestedInput
   }
@@ -4967,6 +4989,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
     invoice?: InvoiceUncheckedUpdateOneWithoutOrderNestedInput
   }
@@ -4980,6 +5003,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
   }
 
   export type OrderUpdateManyMutationInput = {
@@ -4991,6 +5015,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
   }
 
   export type OrderUncheckedUpdateManyInput = {
@@ -5002,6 +5027,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
   }
 
   export type OrderItemCreateInput = {
@@ -5237,6 +5263,7 @@ export namespace Prisma {
     paymentRef?: SortOrder
     placedAt?: SortOrder
     updatedAt?: SortOrder
+    shippingAddress?: SortOrder
   }
 
   export type OrderAvgOrderByAggregateInput = {
@@ -5252,6 +5279,7 @@ export namespace Prisma {
     paymentRef?: SortOrder
     placedAt?: SortOrder
     updatedAt?: SortOrder
+    shippingAddress?: SortOrder
   }
 
   export type OrderMinOrderByAggregateInput = {
@@ -5263,6 +5291,7 @@ export namespace Prisma {
     paymentRef?: SortOrder
     placedAt?: SortOrder
     updatedAt?: SortOrder
+    shippingAddress?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
@@ -5923,6 +5952,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
     invoice?: InvoiceCreateNestedOneWithoutOrderInput
   }
 
@@ -5935,6 +5965,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
     invoice?: InvoiceUncheckedCreateNestedOneWithoutOrderInput
   }
 
@@ -5963,6 +5994,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
     invoice?: InvoiceUpdateOneWithoutOrderNestedInput
   }
 
@@ -5975,6 +6007,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
     invoice?: InvoiceUncheckedUpdateOneWithoutOrderNestedInput
   }
 
@@ -5987,6 +6020,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
     items?: OrderItemCreateNestedManyWithoutOrderInput
   }
 
@@ -5999,6 +6033,7 @@ export namespace Prisma {
     paymentRef?: string | null
     placedAt?: Date | string
     updatedAt?: Date | string
+    shippingAddress: string
     items?: OrderItemUncheckedCreateNestedManyWithoutOrderInput
   }
 
@@ -6027,6 +6062,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
     items?: OrderItemUpdateManyWithoutOrderNestedInput
   }
 
@@ -6039,6 +6075,7 @@ export namespace Prisma {
     paymentRef?: NullableStringFieldUpdateOperationsInput | string | null
     placedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    shippingAddress?: StringFieldUpdateOperationsInput | string
     items?: OrderItemUncheckedUpdateManyWithoutOrderNestedInput
   }
 

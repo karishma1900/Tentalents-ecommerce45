@@ -128,7 +128,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   paymentMode: 'paymentMode',
   paymentRef: 'paymentRef',
   placedAt: 'placedAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  shippingAddress: 'shippingAddress'
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {

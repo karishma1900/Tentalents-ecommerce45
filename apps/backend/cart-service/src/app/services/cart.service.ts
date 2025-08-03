@@ -1,4 +1,4 @@
-import { createRedisClient, setCache, getCache } from '@shared/redis';
+import { redisClient, setCache, getCache } from '@shared/redis';
 import { connectKafkaProducer, KAFKA_TOPICS } from '@shared/kafka';
 import { v4 as uuidv4 } from 'uuid';
 import type { Producer } from 'kafkajs';
@@ -6,7 +6,6 @@ import type { Producer } from 'kafkajs';
 const CART_TTL = 60 * 60 * 2; // 2 hours in seconds
 
 // Redis (Sentinel-aware)
-const redisClient = createRedisClient();
 
 let kafkaProducer: Producer | null = null;
 
@@ -23,7 +22,7 @@ export const cartService = {
    */
   getCart: async (userId: string): Promise<any[]> => {
     const cacheKey = `cart:${userId}`;
-    const cart = await getCache<any[]>(redisClient, cacheKey);
+ const cart = await getCache<any[]>(`cart:${userId}`);
     return cart ?? [];
   },
 
@@ -35,12 +34,12 @@ export const cartService = {
     const cart = await cartService.getCart(userId);
     const updatedCart = [...cart, { ...item, id: uuidv4() }];
 
-    await setCache(redisClient, cacheKey, updatedCart, CART_TTL);
+await setCache(`cart:${userId}`, updatedCart, CART_TTL);
 
     try {
       const producer = await getKafkaProducer();
       await producer.send({
-        topic: KAFKA_TOPICS.CART_UPDATED,
+        topic: KAFKA_TOPICS.CART.UPDATED,
         messages: [
           {
             value: JSON.stringify({ userId, cart: updatedCart }),
@@ -66,7 +65,7 @@ export const cartService = {
     try {
       const producer = await getKafkaProducer();
       await producer.send({
-        topic: KAFKA_TOPICS.CART_CHECKED_OUT,
+        topic: KAFKA_TOPICS.CART.CHECKED_OUT,
         messages: [
           {
             value: JSON.stringify({ userId, cart }),
@@ -77,7 +76,7 @@ export const cartService = {
       console.error('❌ Failed to send CART_CHECKED_OUT Kafka message:', err);
     }
 
-    await redisClient.del(cacheKey);
+  await redisClient.del(`cart:${userId}`);
 
     return {
       status: 'checked_out',

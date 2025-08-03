@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { orderService } from '../services/order.service';
 import { produceKafkaEvent } from '@shared/kafka';
 import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
-import type { AuthPayload } from '@shared/middlewares/types/src/index';
+import type { AuthPayload } from '@shared/middlewares/auth/src/lib/types';
 
 interface AuthedRequest extends Request {
   user?: AuthPayload;
@@ -22,7 +22,10 @@ export const placeOrder = async (
     }
 
     const order = await orderService.placeOrder(userId, req.body);
-    await produceKafkaEvent('order.created', order); // Changed to match earlier Kafka topic
+   await produceKafkaEvent({
+  topic: 'order.created',
+  messages: [{ value: JSON.stringify(order) }],
+});
     sendSuccess(res, '✅ Order placed successfully', order);
   } catch (err) {
     next(err);
@@ -87,7 +90,10 @@ export const updateOrderStatus = async (
     }
 
     const updated = await orderService.updateOrderStatus(orderId, status);
-    await produceKafkaEvent('order.updated', updated);
+   await produceKafkaEvent({
+  topic: 'order.updated',
+  messages: [{ value: JSON.stringify(updated) }],
+});
     sendSuccess(res, '✅ Order status updated', updated);
   } catch (err) {
     next(err);

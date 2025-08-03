@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import app from '../app';
-import { PrismaClient } from '@prisma/client';
+import app from './app';
+import { PrismaClient } from '../generated/cms-service';
 import { connectRedis, disconnectRedis, redisClient } from '@shared/middlewares/redis/src/index';
 import {
   connectKafkaProducer,

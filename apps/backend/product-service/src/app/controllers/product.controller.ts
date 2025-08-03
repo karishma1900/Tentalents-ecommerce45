@@ -4,6 +4,17 @@ import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 import { produceKafkaEvent } from '@shared/kafka';
 
 /**
+ * Helper to get userId or send 401 if missing
+ */
+function getUserIdOrThrow(req: Request, res: Response): string | undefined {
+  if (!req.user) {
+    res.status(401).json({ message: 'Unauthorized: User not found' });
+    return undefined;
+  }
+  return req.user.userId;
+}
+
+/**
  * 📦 Create a new product
  */
 export const createProduct = async (
@@ -12,10 +23,10 @@ export const createProduct = async (
   next: NextFunction
 ) => {
   try {
-    const product = await productService.createProduct(
-      req.body,
-      req.user.userId
-    );
+    const userId = getUserIdOrThrow(req, res);
+    if (!userId) return;
+
+    const product = await productService.createProduct(req.body, userId);
     await produceKafkaEvent({
       topic: 'product.created',
       messages: [{ value: JSON.stringify(product) }],
@@ -67,11 +78,10 @@ export const updateProduct = async (
   next: NextFunction
 ) => {
   try {
-    const updated = await productService.updateProduct(
-      req.params.id,
-      req.body,
-      req.user.userId
-    );
+    const userId = getUserIdOrThrow(req, res);
+    if (!userId) return;
+
+    const updated = await productService.updateProduct(req.params.id, req.body, userId);
     await produceKafkaEvent({
       topic: 'product.updated',
       messages: [{ value: JSON.stringify(updated) }],
@@ -91,10 +101,10 @@ export const deleteProduct = async (
   next: NextFunction
 ) => {
   try {
-    const deleted = await productService.deleteProduct(
-      req.params.id,
-      req.user.userId
-    );
+    const userId = getUserIdOrThrow(req, res);
+    if (!userId) return;
+
+    const deleted = await productService.deleteProduct(req.params.id, userId);
     await produceKafkaEvent({
       topic: 'product.deleted',
       messages: [{ value: JSON.stringify({ productId: req.params.id }) }],
@@ -114,10 +124,8 @@ export const uploadProductImage = async (
   next: NextFunction
 ) => {
   try {
-    const result = await productService.uploadProductImage(
-      req.params.id,
-      req.body.imageBase64
-    );
+    // This operation might not require userId, but if it does, add similar check
+    const result = await productService.uploadProductImage(req.params.id, req.body.imageBase64);
     sendSuccess(res, '🖼️ Image uploaded to MinIO', result);
   } catch (err) {
     next(err);

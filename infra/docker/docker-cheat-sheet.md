@@ -1,8 +1,7 @@
 🧰 Tools (Redis, Kafka, MinIO, Swagger, etc.)
 
 # Restart tools only (force remove existing containers and start fresh)
-docker compose -f docker-compose.tools.yml down --remove-orphans \
-  && docker rm -f redis kafka minio swagger 2>/dev/null || true \
+docker compose -f docker-compose.tools.yml down --remove-orphans \&& docker rm -f redis kafka minio swagger 2>/dev/null || true \
   && docker compose -f docker-compose.tools.yml up -d
 
 

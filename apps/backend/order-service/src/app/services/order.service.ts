@@ -4,15 +4,16 @@ import type { OrderStatus } from '../../../generated/order-service';
 interface OrderItemInput {
   productId: string;
   sellerId: string;
-  listingId: string; // NEW: must provide listingId from caller
+  listingId: string;
   quantity: number;
-  price: number; // price per unit
+  price: number;
 }
 
 interface PlaceOrderInput {
   items: OrderItemInput[];
   totalAmount: number;
   shippingAddress: string;
+  paymentMode: string;   // <--- Add paymentMode here
 }
 
 const prisma = new PrismaClient();
@@ -29,7 +30,7 @@ const VALID_STATUSES: OrderStatus[] = [
 
 export const orderService = {
   placeOrder: async (buyerId: string, data: PlaceOrderInput) => {
-    const { items, totalAmount, shippingAddress } = data;
+    const { items, totalAmount, shippingAddress, paymentMode } = data;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       throw new Error('Order must contain at least one item.');
@@ -37,18 +38,19 @@ export const orderService = {
 
     const order = await prisma.order.create({
       data: {
-        buyerId,                  // use buyerId (not userId)
+        buyerId,
         totalAmount,
         shippingAddress,
-        status: 'pending',        // use valid enum value
+        paymentMode,       // <--- Pass paymentMode here
+        status: 'pending',
         items: {
           create: items.map((item) => ({
             productId: item.productId,
             sellerId: item.sellerId,
-            listingId: item.listingId,                // provide listingId
+            listingId: item.listingId,
             quantity: item.quantity,
-            unitPrice: item.price,                     // unitPrice field
-            totalPrice: item.price * item.quantity,   // totalPrice field
+            unitPrice: item.price,
+            totalPrice: item.price * item.quantity,
           })),
         },
       },

@@ -1,23 +1,23 @@
 import { Router } from 'express';
 import { initiatePayment, verifyPayment } from '../controllers/payment.controller';
-import { authenticateJWT, requireRole } from '@shared/auth';
+import { authMiddleware, requireRole } from '@shared/auth';
 
 const router = Router();
 
 // 🧾 Initiate a payment
 router.post(
   '/',
-  authenticateJWT,
-  requireRole('buyer', 'buyer_seller'),
+  authMiddleware(['buyer', 'buyer_seller']),
   initiatePayment
 );
 
 // ✅ Verify payment status
-router.patch(
-  '/:id/verify',
-  authenticateJWT,
+router.get(
+  '/',
+  authMiddleware(),
   requireRole('buyer', 'buyer_seller'),
   verifyPayment
 );
+
 
 export default router;

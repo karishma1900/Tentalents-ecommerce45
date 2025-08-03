@@ -15,9 +15,10 @@
 
     // --- Critical path and output settings ---
     "outDir": "../../../dist/out-tsc",
-    "rootDir": "../../../",
-    "baseUrl": "../../../",
+    "rootDir": "../../../../",
+    "baseUrl": ".",
     "paths": {
+      "@generated/cms-service": ["apps/backend/post-mvp-services/cms-service/generated/cms-service"],
       "@shared/auth": ["libs/shared/auth/src/index.ts"],
       "@shared/config": ["libs/shared/config/src/index.ts"],
       "@shared/constants": ["libs/shared/constants/src/index.ts"],
@@ -39,7 +40,7 @@
     // This path was the main issue. It now correctly includes all .ts files
     // from any package inside libs/shared.
     "../../../libs/shared/**/*.ts"
-    ,"app.ts" 
+     
   ],
   "exclude": [
     "jest.config.ts",

@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-   output   = "../generated/cms-service"
+  output   = "../generated/cms-service"
 }
 datasource db {
   provider = "postgresql"

@@ -41,17 +41,17 @@ enum ItemStatus {
 
 /// One buyer order, possibly containing items from multiple sellers
 model Order {
-  id          String      @id @default(uuid()) // Unique order ID
-  buyerId     String // FK to user-service
-  totalAmount Decimal // Final order value (sum of all items)
-  status      OrderStatus @default(pending) // Current overall status
-  paymentMode String // UPI / Card / COD / Netbanking
-  paymentRef  String? // Optional payment gateway ref (e.g., Razorpay txn ID)
-  placedAt    DateTime    @default(now()) // Timestamp when buyer placed the order
-  updatedAt   DateTime    @updatedAt // Tracked whenever status updates
-
-  items   OrderItem[] // 1:N to all order items
-  invoice Invoice? // 1:1 to invoice, optional if not yet generated
+  id              String      @id @default(uuid()) // Unique order ID
+  buyerId         String // FK to user-service
+  totalAmount     Decimal // Final order value (sum of all items)
+  status          OrderStatus @default(pending) // Current overall status
+  paymentMode     String // UPI / Card / COD / Netbanking
+  paymentRef      String? // Optional payment gateway ref (e.g., Razorpay txn ID)
+  placedAt        DateTime    @default(now()) // Timestamp when buyer placed the order
+  updatedAt       DateTime    @updatedAt // Tracked whenever status updates
+  shippingAddress String
+  items           OrderItem[] // 1:N to all order items
+  invoice         Invoice? // 1:1 to invoice, optional if not yet generated
 }
 
 /// Represents a specific item in an order tied to a product/vendor

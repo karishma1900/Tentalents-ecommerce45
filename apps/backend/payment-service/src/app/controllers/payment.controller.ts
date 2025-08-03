@@ -44,7 +44,15 @@ export const verifyPayment = async (
     const updated = await paymentService.verifyPayment(paymentId, status);
 
     const topic = status === 'SUCCESS' ? 'payment.success' : 'payment.failed';
-    await produceKafkaEvent(topic, updated);
+await produceKafkaEvent({
+  topic,
+  messages: [
+    {
+      key: updated.id,           // Optional, but recommended to partition messages
+      value: JSON.stringify(updated),  // Kafka messages are strings or buffers
+    },
+  ],
+});
 
     logger.info(
       `[paymentController] 🔁 Payment ${paymentId} verified as ${status}`

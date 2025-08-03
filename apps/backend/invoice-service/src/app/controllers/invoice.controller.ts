@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../../../generated/invoice-service';
 import { generateInvoiceAndUpload } from '@shared/utils';
 import { getPresignedUrl } from '@shared/minio'; // ✅ Corrected import
 

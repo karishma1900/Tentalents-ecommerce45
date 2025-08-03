@@ -1,5 +1,5 @@
 import redisClient from './redis-client';
-import { logger } from '../../../logger/src/lib/logger';
+import { logger } from '@shared/middlewares/logger/src/index';
 
 export const connectRedis = async (): Promise<void> => {
   try {

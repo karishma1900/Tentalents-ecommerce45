@@ -7,15 +7,14 @@ import {
   deleteProduct,
   uploadProductImage,
 } from '../controllers/product.controller';
-import { authenticateJWT, requireRole } from '@shared/auth';
+import { authMiddleware, requireRole } from '@shared/auth';
 
 const router = Router();
 
 // 🛒 Create product (admin/seller)
 router.post(
   '/',
-  authenticateJWT,
-  requireRole(['seller', 'admin', 'super_admin']),
+  authMiddleware(['seller', 'admin', 'super_admin']),
   createProduct
 );
 
@@ -26,27 +25,27 @@ router.get('/', getAllProducts);
 router.get('/:id', getProductById);
 
 // 📝 Update product (admin/seller)
-router.put(
+router.put (
   '/:id',
-  authenticateJWT,
-  requireRole(['seller', 'admin', 'super_admin']),
-  updateProduct
+  authMiddleware(),
+  requireRole('seller', 'admin', 'super_admin'),
+ updateProduct
 );
 
 // ❌ Delete product (admin/seller)
 router.delete(
   '/:id',
-  authenticateJWT,
-  requireRole(['seller', 'admin', 'super_admin']),
-  deleteProduct
+  authMiddleware(),
+  requireRole('seller', 'admin', 'super_admin'),
+ deleteProduct
 );
 
 // 🖼️ Upload product image to MinIO
 router.post(
   '/:id/image',
-  authenticateJWT,
-  requireRole(['seller', 'admin', 'super_admin']),
-  uploadProductImage
+  authMiddleware(),
+  requireRole('seller', 'admin', 'super_admin'),
+ uploadProductImage
 );
 
 export default router;

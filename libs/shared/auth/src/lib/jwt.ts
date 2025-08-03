@@ -1,7 +1,15 @@
-// libs/shared/auth/src/jwt.ts
-
 import jwt, { SignOptions, Secret } from 'jsonwebtoken';
 import { AuthPayload } from './types';
+import dotenv from 'dotenv';
+import path from 'path';
+
+dotenv.config({ path: path.resolve(__dirname, '../../../..', '.env') });
+
+const JWT_SECRET = process.env.JWT_SECRET || 'super_secret';
+
+if (!process.env.JWT_SECRET) {
+  console.warn('⚠️ Warning: JWT_SECRET env variable is not set, using default secret.');
+}
 
 /**
  * Sign a JWT token with AuthPayload
@@ -14,6 +22,10 @@ export function signToken(
   return jwt.sign(payload, secret, { expiresIn });
 }
 
+export function generateJWT(payload: AuthPayload): string {
+  return signToken(payload, JWT_SECRET, '1h');
+}
+
 /**
  * Verify a JWT token and return decoded AuthPayload
  * Throws error if invalid or expired
@@ -21,8 +33,7 @@ export function signToken(
 export function verifyToken(token: string, secret: Secret): AuthPayload {
   const decoded = jwt.verify(token, secret);
 
-  // Optional: Add type guard if you expect certain fields
-  if (typeof decoded === 'object' && 'id' in decoded && 'role' in decoded) {
+  if (typeof decoded === 'object' && 'userId' in decoded && 'role' in decoded) {
     return decoded as AuthPayload;
   }
 

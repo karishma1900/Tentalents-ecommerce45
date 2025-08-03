@@ -49,7 +49,7 @@ model Order {
   paymentRef   String?                                       // Optional payment gateway ref (e.g., Razorpay txn ID)
   placedAt     DateTime     @default(now())                  // Timestamp when buyer placed the order
   updatedAt    DateTime     @updatedAt                       // Tracked whenever status updates
-
+ shippingAddress String 
   items        OrderItem[]                                   // 1:N to all order items
   invoice      Invoice?                                      // 1:1 to invoice, optional if not yet generated
 }

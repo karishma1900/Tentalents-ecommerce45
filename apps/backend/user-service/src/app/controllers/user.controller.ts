@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { userService } from '../services/user.service';
 import { produceKafkaEvent } from '@shared/kafka';
-import { sendSuccess } from '@shared/utils/lib/response';
-import { KAFKA_TOPICS } from '@shared/kafka/lib/kafka-topics';
-import { UserRole } from '@prisma/client';
+import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
+import { KAFKA_TOPICS } from '@shared/middlewares/kafka/src/index';
+import { UserRole } from '../../../generated/user-service';
 
 // 📝 POST /api/users/register
 export const registerUser = async (
@@ -16,23 +16,19 @@ export const registerUser = async (
 
     // Emit generic user registration event
     await produceKafkaEvent({
-      topic: KAFKA_TOPICS.USER_REGISTERED,
+      topic: KAFKA_TOPICS.USER.CREATED,
       messages: [
         {
           key: user.id.toString(),
-          value: JSON.stringify({
-            id: user.id,
-            email: user.email,
-            role: user.role,
-          }),
+          value: JSON.stringify(user), // Pass the user object, not `{ ... }`
         },
       ],
     });
 
-    // If the registered user is a vendor, notify vendor-service
-    if (user.role === UserRole.vendor) {
+    // If the registered user is a seller (not vendor)
+    if (user.role === UserRole.seller) {
       await produceKafkaEvent({
-        topic: KAFKA_TOPICS.VENDOR_USER_REGISTERED,
+        topic: KAFKA_TOPICS.USER.VENDOR_REGISTERED, // Nested under USER
         messages: [
           {
             key: user.id.toString(),

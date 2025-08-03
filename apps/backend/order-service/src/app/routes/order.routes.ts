@@ -1,5 +1,3 @@
-// apps/order-service/src/routes/order.routes.ts
-
 import { Router } from 'express';
 import {
   placeOrder,
@@ -7,7 +5,7 @@ import {
   getOrderById,
   updateOrderStatus,
 } from '../controllers/order.controller';
-import { authenticateJWT, requireRole } from '@shared/auth';
+import { authMiddleware, requireRole } from '@shared/auth';
 
 const router = Router();
 
@@ -18,8 +16,7 @@ const router = Router();
  */
 router.post(
   '/',
-  authenticateJWT,
-  requireRole(['buyer', 'buyer_seller']),
+  authMiddleware(['buyer', 'buyer_seller']),
   placeOrder
 );
 
@@ -30,8 +27,8 @@ router.post(
  */
 router.get(
   '/',
-  authenticateJWT,
-  requireRole(['buyer', 'buyer_seller']),
+  authMiddleware(),
+  requireRole('buyer', 'buyer_seller'),
   getUserOrders
 );
 
@@ -40,7 +37,11 @@ router.get(
  * @desc Get order details by ID
  * @access all authenticated users
  */
-router.get('/:id', authenticateJWT, getOrderById);
+router.get(
+  '/:id',
+  authMiddleware(),
+  getOrderById
+);
 
 /**
  * @route PATCH /api/orders/:id
@@ -49,8 +50,8 @@ router.get('/:id', authenticateJWT, getOrderById);
  */
 router.patch(
   '/:id',
-  authenticateJWT,
-  requireRole(['admin', 'super_admin']),
+  authMiddleware(),
+  requireRole('admin', 'super_admin'),
   updateOrderStatus
 );
 

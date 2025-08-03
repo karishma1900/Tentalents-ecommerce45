@@ -135,7 +135,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\post-mvp-services\\cms-service\\src\\generated\\cms-service",
+      "value": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\post-mvp-services\\cms-service\\generated\\cms-service",
       "fromEnvVar": null
     },
     "config": {
@@ -149,12 +149,12 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\post-mvp-services\\cms-service\\src\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\post-mvp-services\\cms-service\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
     "rootEnvPath": null,
-    "schemaEnvPath": "../../../../../../../.env"
+    "schemaEnvPath": "../../../../../../.env"
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.13.0",
@@ -182,8 +182,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
-    "apps/backend/post-mvp-services/cms-service/src/generated/cms-service",
-    "backend/post-mvp-services/cms-service/src/generated/cms-service",
+    "apps/backend/post-mvp-services/cms-service/generated/cms-service",
+    "backend/post-mvp-services/cms-service/generated/cms-service",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -213,7 +213,7 @@ Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "apps/backend/post-mvp-services/cms-service/src/generated/cms-service/query_engine-windows.dll.node")
+path.join(process.cwd(), "apps/backend/post-mvp-services/cms-service/generated/cms-service/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "apps/backend/post-mvp-services/cms-service/src/generated/cms-service/schema.prisma")
+path.join(process.cwd(), "apps/backend/post-mvp-services/cms-service/generated/cms-service/schema.prisma")

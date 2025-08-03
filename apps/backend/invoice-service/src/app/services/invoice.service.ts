@@ -1,10 +1,10 @@
 import PDFDocument from 'pdfkit';
 import { minioClient } from '@shared/minio';
-import { prisma } from '../../../prisma'; // Adjust path if you're not using @shared/prisma
+import { PrismaClient } from '../../../generated/invoice-service'; // Adjust path if you're not using @shared/prisma
 import { Readable } from 'stream';
 
 const bucket = process.env.MINIO_BUCKET || 'invoices';
-
+const prisma = new PrismaClient();
 export const invoiceService = {
   generateInvoicePDF: async (orderData: {
     orderId: string;
@@ -37,13 +37,17 @@ export const invoiceService = {
 
           await minioClient.putObject(bucket, objectName, buffer);
 
-          await prisma.invoice.create({
-            data: {
-              orderId: orderData.orderId,
-              fileUrl: objectName,
-              userId: orderData.userId,
-            },
-          });
+        await prisma.invoice.create({
+  data: {
+    orderId: orderData.orderId,
+    vendorId: 'someVendorId',  // <-- you need to supply the correct vendorId here
+    pdfUrl: objectName,        // use 'pdfUrl', NOT 'fileUrl'
+    // optionally:
+    filePath: objectName,
+    bucket: bucket,
+  },
+});
+
 
           resolve();
         } catch (err) {

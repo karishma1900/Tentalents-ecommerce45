@@ -1,12 +1,12 @@
-# Stage 1: Build
+# Stage 1: Build the app
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy the full monorepo
+# Copy monorepo code
 COPY . .
 
-# Install dependencies & build the specific service
+# Install dependencies and build the email service
 RUN npm install -g nx \
  && npm install \
  && nx build email-service
@@ -16,18 +16,20 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-# Copy necessary runtime files
+# Copy necessary files from builder
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/package-lock.json ./
 COPY --from=builder /app/dist/apps/email-service ./dist
 COPY --from=builder /app/prisma ./prisma
 
+# Install only production dependencies
 RUN npm install --omit=dev
 
 # Set environment
 ENV NODE_ENV=production
 
-# Expose service-specific port
+# Expose the service's port
 EXPOSE 3004
 
+# Start the app
 CMD ["node", "dist/main"]
