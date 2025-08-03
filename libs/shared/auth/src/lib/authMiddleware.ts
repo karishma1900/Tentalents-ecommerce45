@@ -76,7 +76,7 @@ export function authMiddleware(
 ) {
   return (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization;
-
+ console.log('Authorization header:', authHeader);
     if (!authHeader?.startsWith('Bearer ')) {
       res
         .status(401)

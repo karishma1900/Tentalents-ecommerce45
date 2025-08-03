@@ -3,40 +3,41 @@ import path from 'path';
 import { Server } from 'http';
 import app from './app';
 
-import {logger}  from '@shared/logger';
+import { logger } from '@shared/logger';
 import { config } from '@shared/config';
 import { connectRedis, disconnectRedis } from '@shared/redis';
-import { connectKafkaProducer, disconnectKafkaProducer } from '@shared/kafka';
-
+import {
+      // ✅ Import this
+  connectKafkaProducer,
+  disconnectKafkaProducer
+} from '@shared/middlewares/kafka/src/index';
+import { getKafkaInstance } from '@shared/middlewares/kafka/src/index';
+import { kafkaConfig } from '@shared/middlewares/kafka/src/index'; // ✅ Import your Kafka config
 import { connectMinio, disconnectMinio } from '@shared/minio';
-
-console.log(dotenv.config());
 
 // 🌍 Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-// 📦 Extract configured port for this service
 const PORT = config.service.port;
 
 async function start() {
   let server: Server | undefined;
 
   try {
-    // ─────────────────────────────────────────────────────────────
+    // ✅ Initialize Kafka before using it
+   
+getKafkaInstance();
     // 🔌 Connect External Dependencies (Kafka, Redis, MinIO)
-    // ─────────────────────────────────────────────────────────────
     await Promise.all([
       connectKafkaProducer(),
       connectRedis(),
-      connectMinio(), // connectMinio now handles bucket creation
+      connectMinio(),
     ]);
 
     // 🟢 Start HTTP Server
     server = app.listen(PORT, () => {
       logger.info(`🚀 Vendor Service is running at http://localhost:${PORT}`);
-      logger.info(
-        `📚 Swagger docs available at http://localhost:${PORT}/api/docs/vendor`
-      );
+      logger.info(`📚 Swagger docs available at http://localhost:${PORT}/api/docs/vendor`);
     });
 
     // 🧼 Graceful Shutdown Handling
@@ -47,7 +48,7 @@ async function start() {
         await Promise.all([
           disconnectKafkaProducer(),
           disconnectRedis(),
-          disconnectMinio(), // graceful shutdown (no-op)
+          disconnectMinio(),
         ]);
 
         server?.close(() => {

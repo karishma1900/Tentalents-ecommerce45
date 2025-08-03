@@ -1,5 +1,6 @@
 // ✅ Load environment variables from shared env loader
 import '@shared/middlewares/config/src/lib/env';
+import net from 'net';
 
 import app from './app';
 import { PrismaClient } from '@prisma/client';
@@ -10,48 +11,32 @@ import {
   connectKafkaConsumer,
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
+  getKafkaConsumer
 } from '@shared/kafka';
+
 import { env } from '@shared/config';
 import { logger } from '@shared/logger';
 
 const prisma = new PrismaClient();
-const PORT = env.PORT || 3010;
 const SERVICE_NAME = env.SERVICE_NAME;
 
-// 🧠 Kafka Consumer Setup
-const kafkaConfig: KafkaConsumerConfig = {
-  groupId: SERVICE_NAME,
-  topics: ['analytics-topic'], // Replace with KAFKA_TOPICS if needed
-};
-
-// 📨 Kafka Message Handler
-const onMessage = async (
-  topic: string,
-  payload: Record<string, any>
-): Promise<void> => {
-  logger.info(`📩 Kafka: ${topic}`, payload);
-
-  try {
-    // Example DB insert (enable if needed):
-    // await prisma.analyticsEvent.create({ data: { topic, payload: JSON.stringify(payload) } });
-  } catch (err) {
-    logger.error(`❌ Failed to process message from topic ${topic}`, err);
-  }
-};
-
-// 🧾 Kafka Raw Message Wrapper
-const kafkaMessageHandler = async (message: string): Promise<void> => {
-  try {
-    const { topic, payload } = JSON.parse(message);
-    await onMessage(topic, payload);
-  } catch (err) {
-    logger.error('❌ Failed to parse Kafka message', err);
-  }
-};
+// Helper function to check if a port is free
+async function isPortAvailable(port: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    const server = net.createServer()
+      .once('error', (err: any) => {
+        if (err.code === 'EADDRINUSE') resolve(false);
+        else resolve(false);
+      })
+      .once('listening', () => {
+        server.close(() => resolve(true));
+      })
+      .listen(port);
+  });
+}
 
 let server: ReturnType<typeof app.listen> | null = null;
 
-// 🚀 Bootstrap Application
 async function start() {
   try {
     if (!env.JWT_SECRET) {
@@ -63,12 +48,28 @@ async function start() {
     await connectRedis();
     logger.info('✅ Redis connected');
 
-    await connectKafkaProducer();
-    await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
+    await getKafkaConsumer();
     logger.info('✅ Kafka connected');
 
-    server = app.listen(PORT, () => {
-      logger.info(`🚀 ${SERVICE_NAME} running at http://localhost:${PORT}`);
+    // Start trying ports at env.PORT or fallback to 3010
+const servicePortEnvVar = `${SERVICE_NAME.toUpperCase().replace(/-/g, '_')}_PORT`;
+
+// Get the port number from env dynamically
+let port = Number((env as any)[servicePortEnvVar]) || 3010;
+    const maxAttempts = 10;
+    let attempts = 0;
+
+    while (!(await isPortAvailable(port))) {
+      logger.warn(`⚠️ Port ${port} is busy, trying next port...`);
+      port++;
+      attempts++;
+      if (attempts >= maxAttempts) {
+        throw new Error(`No free ports found after ${maxAttempts} attempts`);
+      }
+    }
+
+    server = app.listen(port, () => {
+      logger.info(`🚀 ${SERVICE_NAME} running at http://localhost:${port}`);
     });
   } catch (err) {
     logger.error('❌ Service startup failed:', err);
@@ -77,7 +78,6 @@ async function start() {
   }
 }
 
-// 🧹 Graceful Shutdown Handler
 async function shutdown() {
   logger.info('🛑 Initiating graceful shutdown...');
 
@@ -108,9 +108,9 @@ async function shutdown() {
   }
 }
 
-// 🧯 OS Signal Listeners
+// OS Signal Listeners
 process.on('SIGINT', shutdown);
 process.on('SIGTERM', shutdown);
 
-// 🔧 Start the app
+// Start the app
 start();

@@ -147,6 +147,7 @@
     "vendor-service": {
       "tags": ["scope:vendor"]
     },
+    
     "user-ui": "apps/frontend/user-ui",
     "seller-ui": "apps/frontend/seller-ui"
   },

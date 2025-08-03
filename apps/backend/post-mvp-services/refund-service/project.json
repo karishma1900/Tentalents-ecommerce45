@@ -16,7 +16,8 @@
         "bundle": false,
         "main": "apps/backend/post-mvp-services/refund-service/src/main.ts",
         "tsConfig": "apps/backend/post-mvp-services/refund-service/tsconfig.app.json",
-        "assets": ["apps/backend/post-mvp-services/refund-service/src/assets"],
+        "assets": ["apps/backend/post-mvp-services/refund-service/src/assets",
+        "apps/backend/post-mvp-services/refund-service/generated"],
         "generatePackageJson": true,
         "esbuildOptions": {
           "sourcemap": true,
@@ -38,13 +39,10 @@
       }
     },
     "serve": {
-      "continuous": true,
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
       "options": {
-        "buildTarget": "refund-service:build",
-        "runBuildTargetDependencies": false
+        "buildTarget": "refund-service:build"
       },
       "configurations": {
         "development": {

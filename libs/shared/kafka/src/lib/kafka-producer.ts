@@ -13,8 +13,8 @@ export async function connectKafkaProducer(): Promise<Producer> {
     logger.debug('[Kafka Producer] 🟢 Already connected');
     return producer;
   }
-
-  const kafka: Kafka | null = getKafkaInstance(); // ✅ Safely retrieve instance
+const kafka: Kafka = getKafkaInstance();
+  // const kafka: Kafka | null = getKafkaInstance(); 
   if (!kafka) {
     throw new Error('[Kafka Producer] ❌ Kafka is not initialized');
   }

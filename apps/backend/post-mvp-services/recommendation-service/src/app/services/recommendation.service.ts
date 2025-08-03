@@ -1,4 +1,4 @@
-import { PrismaClient } from '../../generated/recommendation-service';
+import { PrismaClient } from '../../../generated/recommendation-service';
 
 const prisma = new PrismaClient();
 

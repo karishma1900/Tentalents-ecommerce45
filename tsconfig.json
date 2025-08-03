@@ -2,7 +2,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": ["node","jest"],
+    "types": ["node", "jest"],
     "baseUrl": ".",
     "paths": {
       "@shared/auth": ["libs/shared/auth/src/index.ts"],
@@ -20,6 +20,13 @@
       "@shared/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["../../node_modules", "../../dist", "**/__tests__"]
+  "include": [
+    "apps/**/*",
+    "libs/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/__tests__"
+  ]
 }

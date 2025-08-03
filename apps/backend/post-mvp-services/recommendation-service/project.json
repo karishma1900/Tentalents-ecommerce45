@@ -9,6 +9,7 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
+      
       "options": {
         "platform": "node",
         "outputPath": "dist/apps/backend/post-mvp-services/recommendation-service",
@@ -38,13 +39,10 @@
       }
     },
     "serve": {
-      "continuous": true,
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
       "options": {
-        "buildTarget": "recommendation-service:build",
-        "runBuildTargetDependencies": false
+        "buildTarget": "recommendation-service:build"
       },
       "configurations": {
         "development": {

@@ -1,27 +1,37 @@
 import { Kafka, KafkaConfig, Consumer } from 'kafkajs';
+import { kafkaConfig } from './kafka-config';
+import { logger } from '@shared/middlewares/logger/src/index';
 
 let kafka: Kafka | null = null;
 let consumer: Consumer | null = null;
 
-export const initKafka = (config: KafkaConfig): void => {
-  kafka = new Kafka(config);
-};
-
+/**
+ * Automatically initializes Kafka instance if not already created.
+ */
 export const getKafkaInstance = (): Kafka => {
   if (!kafka) {
-    throw new Error('Kafka is not initialized. Call initKafka() first.');
+    logger.info('[Kafka] 🔧 Initializing Kafka instance...');
+    kafka = new Kafka(kafkaConfig);
   }
   return kafka;
 };
 
-export const setKafkaConsumer = (instance: Consumer) => {
-  consumer = instance;
-};
-
+/**
+ * Automatically creates & returns Kafka consumer if not already created.
+ */
 export const getKafkaConsumer = (): Consumer => {
   if (!consumer) {
-    throw new Error('Kafka consumer is not initialized');
+    logger.info('[Kafka] 🔧 Creating Kafka consumer...');
+    const kafka = getKafkaInstance();
+consumer = kafka.consumer({ groupId: kafkaConfig.groupId || 'default-consumer-group' });
+
   }
   return consumer;
 };
 
+/**
+ * Optional: Manually set a consumer instance (still supported).
+ */
+export const setKafkaConsumer = (instance: Consumer) => {
+  consumer = instance;
+};

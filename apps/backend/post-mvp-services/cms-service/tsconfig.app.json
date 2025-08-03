@@ -38,7 +38,8 @@
     "src/**/*.ts",
     // This path was the main issue. It now correctly includes all .ts files
     // from any package inside libs/shared.
-    "../../../libs/shared/**/*.ts" 
+    "../../../libs/shared/**/*.ts"
+    ,"app.ts" 
   ],
   "exclude": [
     "jest.config.ts",

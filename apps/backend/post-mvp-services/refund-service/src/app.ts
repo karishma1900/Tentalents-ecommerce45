@@ -1,7 +1,7 @@
 import express from 'express';
-import refundRoutes from './routes/refund.routes';
-import { setupSwagger } from '@shared/swagger';
-import { errorHandler } from '@shared/error';
+import refundRoutes from '../src/app/routes/refund.routes';
+import { setupSwagger } from '@shared/middlewares/swagger/src/index';
+import { errorHandler } from '@shared/middlewares/error/src/index';
 
 const app = express();
 

@@ -16,7 +16,7 @@ export const env = {
   REDIS_PORT: parseInt(process.env.REDIS_PORT || '6379', 10),
 
   // Kafka
-  KAFKA_BROKER: process.env.KAFKA_BROKER || 'localhost:9092',
+  KAFKA_BROKER: process.env.KAFKA_BROKERS || 'localhost:9092',
   KAFKA_CLIENT_ID: process.env.KAFKA_CLIENT_ID || '',
   KAFKA_GROUP_ID: process.env.KAFKA_GROUP_ID || '',
 

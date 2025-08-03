@@ -1,5 +1,3 @@
-// apps/vendor-service/src/app.ts
-
 import express from 'express';
 import { setupSwagger } from '@shared/swagger';
 import { errorHandler, notFoundHandler } from '@shared/error';
@@ -12,22 +10,24 @@ const app = express();
 // 🌐 Global Middleware
 app.use(express.json());
 app.use(loggerMiddleware);
-app.use(authMiddleware());
 
-// 📚 Swagger API Docs
+// 📚 Swagger API Docs (public, before auth middleware)
 setupSwagger(app, {
   title: 'Vendor Service',
   version: '1.0.0',
   path: '/api/docs/vendor',
 });
 
-// 🛣️ Service Routes
-app.use('/api/vendor', vendorRoutes);
-
-// 🩺 Health Check Endpoint
+// 🩺 Health Check Endpoint (public, no auth required)
 app.get('/healthz', (_req, res) => {
   return res.status(200).send('✅ Vendor Service healthy');
 });
+
+// 🔐 Auth Middleware (protect all routes below)
+app.use(authMiddleware());
+
+// 🛣️ Service Routes
+app.use('/api/vendor', vendorRoutes);
 
 // 🚫 404 Handler
 app.use(notFoundHandler);

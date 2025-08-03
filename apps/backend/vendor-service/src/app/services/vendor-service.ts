@@ -21,21 +21,23 @@ export const vendorService = {
       createdAt: vendor.createdAt.toISOString(),
     };
 
-    await produceKafkaEvent({
-      topic: KAFKA_TOPICS.VENDOR.CREATED,
-      messages: [{ value: JSON.stringify(createdEvent) }],
-    });
-
     const statusUpdatedEvent: VendorStatusUpdatedEvent = {
       vendorId: vendor.id,
       status: vendor.status as VendorStatus,
       updatedAt: vendor.createdAt.toISOString(),
     };
 
-    await produceKafkaEvent({
-      topic: KAFKA_TOPICS.VENDOR.STATUS_UPDATED,
-      messages: [{ value: JSON.stringify(statusUpdatedEvent) }],
-    });
+    // 🔥 Produce Kafka events (created and status updated)
+    await Promise.all([
+      produceKafkaEvent({
+        topic: KAFKA_TOPICS.VENDOR.CREATED,
+        messages: [{ value: JSON.stringify(createdEvent) }],
+      }),
+      produceKafkaEvent({
+        topic: KAFKA_TOPICS.VENDOR.STATUS_UPDATED,
+        messages: [{ value: JSON.stringify(statusUpdatedEvent) }],
+      }),
+    ]);
 
     logger.info(
       `[${SERVICE_NAMES.VENDOR}] Vendor registered and status emitted: ${vendor.id}`
