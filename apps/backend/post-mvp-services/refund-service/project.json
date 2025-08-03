@@ -13,7 +13,8 @@
         "platform": "node",
         "outputPath": "dist/apps/backend/post-mvp-services/refund-service",
         "format": ["cjs"],
-        "bundle": false,
+        "bundle":true,
+        "external": ["@prisma/client"],
         "main": "apps/backend/post-mvp-services/refund-service/src/main.ts",
         "tsConfig": "apps/backend/post-mvp-services/refund-service/tsconfig.app.json",
         "assets": ["apps/backend/post-mvp-services/refund-service/src/assets",
@@ -41,6 +42,7 @@
     "serve": {
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
+       "dependsOn": ["build"],
       "options": {
         "buildTarget": "refund-service:build"
       },

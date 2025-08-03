@@ -1,4 +1,6 @@
-import { PrismaClient, PageType } from '../../../generated/cms-service';
+import { PrismaClient } from '../../../generated/cms-service';
+import type { PageType } from '../../../generated/cms-service';
+
 
 const prisma = new PrismaClient();
 

@@ -75,7 +75,7 @@
     "prisma:migrate:email-service": "prisma migrate dev --schema=apps/backend/email-service/prisma/schema.prisma",
     "prisma:migrate:invoice-service": "prisma migrate dev --schema=apps/backend/invoice-service/prisma/schema.prisma",
     "prisma:migrate:payment-service": "prisma migrate dev --schema=apps/backend/payment-service/prisma/schema.prisma",
-    "prisma:migrate:cms-service": "prisma migrate dev --schema=apps/backend/post-mvp-services/cms-service/prisma/schema.prisma",
+    "prisma:migrate:cms-service"   : "prisma migrate dev --schema=apps/backend/post-mvp-services/cms-service/prisma/schema.prisma",
     "prisma:migrate:coupon-service": "prisma migrate dev --schema=apps/backend/post-mvp-services/coupon-service/prisma/schema.prisma",
     "prisma:migrate:recommendation-service": "prisma migrate dev --schema=apps/backend/post-mvp-services/recommendation-service/prisma/schema.prisma",
     "prisma:migrate:refund-service": "prisma migrate dev --schema=apps/backend/post-mvp-services/refund-service/prisma/schema.prisma",

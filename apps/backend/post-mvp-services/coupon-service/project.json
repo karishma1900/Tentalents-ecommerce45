@@ -13,7 +13,8 @@
         "platform": "node",
         "outputPath": "dist/apps/backend/post-mvp-services/coupon-service",
         "format": ["cjs"],
-        "bundle": false,
+         "bundle":true,
+        "external": ["@prisma/client"],
         "main": "apps/backend/post-mvp-services/coupon-service/src/main.ts",
         "tsConfig": "apps/backend/post-mvp-services/coupon-service/tsconfig.app.json",
         "assets": ["apps/backend/post-mvp-services/coupon-service/src/assets"],
@@ -37,32 +38,23 @@
         }
       }
     },
-    "serve": {
-      "executor": "@nx/esbuild:esbuild",
-      "defaultConfiguration": "development",
-      "dependsOn": ["build"],
-      "options": {
-        "tsConfig": "apps/backend/post-mvp-services/coupon-service/tsconfig.app.json",
-        "main": "apps/backend/post-mvp-services/coupon-service/src/main.ts",
-        "outputPath": "dist/apps/backend/post-mvp-services/coupon-service",
-        "platform": "node",
-        "bundle": false,
-        "format": ["cjs"],
-        "generatePackageJson": true
-      },
-      "configurations": {
-        "development": {
-          "esbuildOptions": {
-            "sourcemap": true
-          }
-        },
-        "production": {
-          "esbuildOptions": {
-            "sourcemap": false
-          }
-        }
-      }
+   "serve": {
+  "executor": "@nx/js:node",
+  "defaultConfiguration": "development",
+  "dependsOn": ["build"],
+  "options": {
+    "buildTarget": "coupon-service:build"
+  },
+  "configurations": {
+    "development": {
+      "buildTarget": "coupon-service:build:development"
     },
+    "production": {
+      "buildTarget": "coupon-service:build:production"
+    }
+  }
+},
+
     "test": {
       "options": {
         "passWithNoTests": true

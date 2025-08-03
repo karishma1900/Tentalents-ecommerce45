@@ -34,6 +34,7 @@
     "rootDir": "../../../",
     "baseUrl": "../../../",
     "paths": {
+      "@generated/cms-service":["/apps/backend/post-mvp-services/cms-service/generated/cms-service"],
       "@shared/auth": ["libs/shared/auth/src/index.ts"],
       "@shared/config": ["libs/shared/config/src/index.ts"],
       "@shared/constants": ["libs/shared/constants/src/index.ts"],

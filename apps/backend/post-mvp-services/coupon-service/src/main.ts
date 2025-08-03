@@ -31,7 +31,7 @@ const onMessage = async (topic: string, payload: any): Promise<void> => {
   // TODO: Implement coupon-related logic based on events
 };
 
-const kafkaMessageHandler = async (message: string): Promise<void> => {
+const kafkaMessageHandler = async (message: string)=> {
   try {
     const { topic, payload } = JSON.parse(message);
     try {
@@ -57,11 +57,11 @@ async function start() {
     logger.info('✅ PostgreSQL connected');
     console.log('✅ PostgreSQL connected');
 
-    await connectKafkaProducer();
-    logger.info('✅ Kafka producer connected');
+   await connectKafkaProducer();
+    logger.info('✅ Kafka Producer connected');
 
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
-    logger.info('✅ Kafka consumer subscribed');
+    logger.info('✅ Kafka Consumer connected');
 
     server = app.listen(PORT, () => {
 
