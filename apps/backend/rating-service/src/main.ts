@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
-
-import { PrismaClient } from '@prisma/client';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+import { PrismaClient } from '../generated/rating-service';
 import { redisClient, connectRedis } from '@shared/redis';
 import {
   connectKafkaProducer,
@@ -48,11 +48,14 @@ async function start() {
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
 
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
     await connectKafkaProducer();
     logger.info('✅ Kafka producer connected');
 
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
-    logger.info('✅ Kafka consumer subscribed');
+    logger.info('✅ Kafka consumer connected');
 
     server = app.listen(PORT, () => {
       logger.info(`🌟 Rating Service running at http://localhost:${PORT}`);

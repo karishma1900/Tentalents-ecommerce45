@@ -27,19 +27,24 @@ export const ratingService = {
         targetId,
         targetType: 'PRODUCT',
       },
-      // Note: You don't have user relation in schema, so this will error:
-      // include: { user: { select: { name: true } } },
     });
   },
 
   updateRating: async (
     userId: string,
     ratingId: string,
-    stars: number
+    stars: number,
+    comment?: string  // Make comment optional and typed
   ) => {
+    const updateData: { stars: number; comment?: string } = { stars };
+
+    if (comment !== undefined) {
+      updateData.comment = comment;
+    }
+
     return prisma.rating.updateMany({
       where: { id: ratingId, userId },
-      data: { stars },
+      data: updateData,
     });
   },
 

@@ -26,16 +26,18 @@ export const createProduct = async (
     const userId = getUserIdOrThrow(req, res);
     if (!userId) return;
 
-    const product = await productService.createProduct(req.body, userId);
+    const product = await productService.createProduct(req.body);
     await produceKafkaEvent({
       topic: 'product.created',
       messages: [{ value: JSON.stringify(product) }],
     });
     sendSuccess(res, '✅ Product created successfully', product);
   } catch (err) {
+    console.error('❌ Error in createProduct:', err);  // <-- add this
     next(err);
   }
 };
+
 
 /**
  * 🔍 Get all products
@@ -81,13 +83,15 @@ export const updateProduct = async (
     const userId = getUserIdOrThrow(req, res);
     if (!userId) return;
 
-    const updated = await productService.updateProduct(req.params.id, req.body, userId);
+    const updated = await productService.updateProduct(req.params.id, req.body);
     await produceKafkaEvent({
       topic: 'product.updated',
       messages: [{ value: JSON.stringify(updated) }],
+
     });
     sendSuccess(res, '✅ Product updated successfully', updated);
   } catch (err) {
+    console.error('❌ Error in updateProduct:', err); // Add this line
     next(err);
   }
 };

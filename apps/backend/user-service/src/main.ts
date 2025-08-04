@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
+import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
 
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '../generated/user-service';
 import { connectRedis, redisClient } from '@shared/redis';
 import {
   connectKafkaProducer,
@@ -16,7 +17,7 @@ import { logger } from '@shared/logger';
 // 🔧 Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const PORT = process.env.PORT || 3012;
+const PORT = process.env.PORT || 3018;
 const prisma = new PrismaClient();
 
 // 🧭 Kafka Consumer Configuration
@@ -51,10 +52,15 @@ async function start() {
     await connectRedis();
     logger.info('✅ Redis connected');
 
-    // Kafka
+    // <<< Add topic creation here before producer/consumer connects
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
     await connectKafkaProducer();
+    logger.info('✅ Kafka producer connected');
+
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
-    logger.info('✅ Kafka connected');
+    logger.info('✅ Kafka consumer connected');
 
     // PostgreSQL
     await prisma.$connect();

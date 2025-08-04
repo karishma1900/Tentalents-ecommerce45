@@ -152,7 +152,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\product-service\\generated\\product-service",
+      "value": "D:\\Download\\Tentalents-ecommerce\\apps\\backend\\product-service\\generated\\product-service",
       "fromEnvVar": null
     },
     "config": {
@@ -166,12 +166,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\product-service\\prisma\\schema.prisma",
+    "sourceFilePath": "D:\\Download\\Tentalents-ecommerce\\apps\\backend\\product-service\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.13.0",
@@ -199,8 +198,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
-    "apps/backend/product-service/generated/product-service",
-    "backend/product-service/generated/product-service",
+    "generated/product-service",
+    "product-service",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -230,7 +229,7 @@ Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "apps/backend/product-service/generated/product-service/query_engine-windows.dll.node")
+path.join(process.cwd(), "generated/product-service/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "apps/backend/product-service/generated/product-service/schema.prisma")
+path.join(process.cwd(), "generated/product-service/schema.prisma")

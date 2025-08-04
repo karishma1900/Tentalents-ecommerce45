@@ -3,7 +3,7 @@ import { userService } from '../services/user.service';
 import { produceKafkaEvent } from '@shared/kafka';
 import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 import { KAFKA_TOPICS } from '@shared/middlewares/kafka/src/index';
-import { UserRole } from '../../../generated/user-service';
+import { PrismaClient,UserRole } from '../../../generated/user-service';
 
 // 📝 POST /api/users/register
 export const registerUser = async (
@@ -72,6 +72,7 @@ export const getProfile = async (
   try {
     const user = await userService.getUserProfile(req.user!.userId);
     return sendSuccess(res, 'Profile fetched successfully', user);
+    console.log('[getProfile] req.user:', req.user);
   } catch (err) {
     next(err);
   }

@@ -120,35 +120,60 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.ImagesScalarFieldEnum = {
-  id: 'id',
-  file_id: 'file_id',
-  url: 'url',
-  userId: 'userId'
-};
-
-exports.Prisma.UsersScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   password: 'password',
-  following: 'following',
   role: 'role',
   createdAt: 'createdAt',
+  phone: 'phone',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VendorScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  phone_number: 'phone_number',
-  country: 'country',
-  password: 'password',
-  stripeId: 'stripeId',
   status: 'status',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  address: 'address',
+  businessName: 'businessName',
+  gstNumber: 'gstNumber',
+  kycDocsUrl: 'kycDocsUrl',
+  id: 'id',
+  userId: 'userId'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  imageUrls: 'imageUrls',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProductListingScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  sellerId: 'sellerId',
+  sku: 'sku',
+  price: 'price',
+  stock: 'stock',
+  deliveryEta: 'deliveryEta',
+  status: 'status',
+  updatedAt: 'updatedAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.RatingScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  targetId: 'targetId',
+  targetType: 'targetType',
+  stars: 'stars',
+  comment: 'comment',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -166,21 +191,36 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 exports.UserRole = exports.$Enums.UserRole = {
-  USER: 'USER',
-  VENDOR: 'VENDOR',
-  ADMIN: 'ADMIN'
+  buyer: 'buyer',
+  seller: 'seller',
+  admin: 'admin',
+  super_admin: 'super_admin'
 };
 
 exports.VendorStatus = exports.$Enums.VendorStatus = {
-  PENDING: 'PENDING',
-  APPROVED: 'APPROVED',
-  REJECTED: 'REJECTED'
+  pending: 'pending',
+  approved: 'approved',
+  rejected: 'rejected'
+};
+
+exports.ProductListingStatus = exports.$Enums.ProductListingStatus = {
+  ACTIVE: 'ACTIVE',
+  INACTIVE: 'INACTIVE',
+  OUT_OF_STOCK: 'OUT_OF_STOCK',
+  DISCONTINUED: 'DISCONTINUED'
+};
+
+exports.RatingTargetType = exports.$Enums.RatingTargetType = {
+  PRODUCT: 'PRODUCT',
+  SELLER: 'SELLER'
 };
 
 exports.Prisma.ModelName = {
-  images: 'images',
-  users: 'users',
-  Vendor: 'Vendor'
+  User: 'User',
+  Vendor: 'Vendor',
+  Product: 'Product',
+  ProductListing: 'ProductListing',
+  Rating: 'Rating'
 };
 
 /**

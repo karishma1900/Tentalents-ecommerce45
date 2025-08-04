@@ -21,6 +21,7 @@ export const createRating = async (
       targetId: productId,
       targetType: 'PRODUCT', // or 'SELLER' if it's for sellers
       stars: rating,
+      comment
     });
     sendSuccess(res, 'Rating submitted', created);
   } catch (err) {
