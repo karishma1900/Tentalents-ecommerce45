@@ -176,6 +176,50 @@ exports.Prisma.RatingScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SearchLogScalarFieldEnum = {
+  id: 'id',
+  keyword: 'keyword',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  sourceIp: 'sourceIp',
+  deviceType: 'deviceType',
+  resultCount: 'resultCount',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.OrderScalarFieldEnum = {
+  id: 'id',
+  buyerId: 'buyerId',
+  totalAmount: 'totalAmount',
+  status: 'status',
+  paymentMode: 'paymentMode',
+  paymentRef: 'paymentRef',
+  placedAt: 'placedAt',
+  updatedAt: 'updatedAt',
+  shippingAddress: 'shippingAddress'
+};
+
+exports.Prisma.OrderItemScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  productId: 'productId',
+  listingId: 'listingId',
+  sellerId: 'sellerId',
+  quantity: 'quantity',
+  unitPrice: 'unitPrice',
+  totalPrice: 'totalPrice',
+  status: 'status',
+  addedAt: 'addedAt'
+};
+
+exports.Prisma.InvoiceScalarFieldEnum = {
+  id: 'id',
+  orderId: 'orderId',
+  vendorId: 'vendorId',
+  pdfUrl: 'pdfUrl',
+  issuedAt: 'issuedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -215,12 +259,36 @@ exports.RatingTargetType = exports.$Enums.RatingTargetType = {
   SELLER: 'SELLER'
 };
 
+exports.OrderStatus = exports.$Enums.OrderStatus = {
+  pending: 'pending',
+  confirmed: 'confirmed',
+  shipped: 'shipped',
+  delivered: 'delivered',
+  canceled: 'canceled',
+  returned: 'returned',
+  refunded: 'refunded'
+};
+
+exports.ItemStatus = exports.$Enums.ItemStatus = {
+  pending: 'pending',
+  confirmed: 'confirmed',
+  shipped: 'shipped',
+  delivered: 'delivered',
+  canceled: 'canceled',
+  returned: 'returned',
+  refunded: 'refunded'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Vendor: 'Vendor',
   Product: 'Product',
   ProductListing: 'ProductListing',
-  Rating: 'Rating'
+  Rating: 'Rating',
+  SearchLog: 'SearchLog',
+  Order: 'Order',
+  OrderItem: 'OrderItem',
+  Invoice: 'Invoice'
 };
 
 /**

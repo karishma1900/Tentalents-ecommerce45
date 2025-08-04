@@ -120,3 +120,90 @@ model Rating {
   @@index([targetType])
   @@unique([userId, targetId, targetType])                      // Prevent duplicate ratings per user per target
 }
+/// Logs every keyword searched by users (logged-in or anonymous)
+model SearchLog {
+  id          String   @id @default(uuid())          // Unique ID for each search log
+  keyword     String                                 // User-entered search term
+  userId      String?                                // FK to user if logged in (for personalization)
+  sessionId   String?                                // Optional session or device ID for anonymous users
+  sourceIp    String?                                // Optional IP address (for abuse detection)
+  deviceType  String?                                // Optional info: "mobile", "desktop", "app"
+  resultCount Int?                                   // Optional: number of search results returned
+  createdAt   DateTime @default(now())               // Timestamp of search
+
+  @@index([keyword])
+  @@index([userId])
+  @@index([createdAt])
+}
+/// Overall order status from the buyer's perspective
+enum OrderStatus {
+  pending      // Order created but not confirmed
+  confirmed    // Order confirmed by system/seller
+  shipped      // Shipped by vendor
+  delivered    // Delivered to buyer
+  canceled     // Buyer/system canceled the order
+  returned     // Returned by the buyer
+  refunded     // Refund has been processed
+}
+
+/// Status of an individual item inside an order
+enum ItemStatus {
+  pending      // Added to order but not yet processed
+  confirmed    // Item confirmed by seller
+  shipped      // Item shipped by seller
+  delivered    // Item delivered
+  canceled     // Item canceled separately
+  returned     // Returned by buyer
+  refunded     // Refund processed for this item
+}
+
+//
+// MODELS
+//
+
+/// One buyer order, possibly containing items from multiple sellers
+model Order {
+  id           String       @id @default(uuid())             // Unique order ID
+  buyerId      String                                        // FK to user-service
+  totalAmount  Decimal                                       // Final order value (sum of all items)
+  status       OrderStatus  @default(pending)                // Current overall status
+  paymentMode  String                                        // UPI / Card / COD / Netbanking
+  paymentRef   String?                                       // Optional payment gateway ref (e.g., Razorpay txn ID)
+  placedAt     DateTime     @default(now())                  // Timestamp when buyer placed the order
+  updatedAt    DateTime     @updatedAt                       // Tracked whenever status updates
+ shippingAddress String 
+  items        OrderItem[]                                   // 1:N to all order items
+  invoice      Invoice?                                      // 1:1 to invoice, optional if not yet generated
+}
+
+/// Represents a specific item in an order tied to a product/vendor
+model OrderItem {
+  id          String      @id @default(uuid())               // Unique item ID
+  orderId     String                                        // FK to parent order
+  productId   String                                        // FK to product-service
+  listingId   String                                        // FK to product listing (vendor-specific)
+  sellerId    String                                        // FK to vendor-service
+  quantity    Int                                           // Quantity of the item
+  unitPrice   Decimal                                       // Per unit cost (at time of order)
+  totalPrice  Decimal                                       // Precomputed = quantity * unitPrice
+  status      ItemStatus  @default(pending)                 // Per-item status
+  addedAt     DateTime    @default(now())                   // When added to the order
+
+  order       Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
+  @@index([sellerId])
+  @@index([status])
+}
+
+/// Invoice per vendor for their part of the order
+model Invoice {
+  id        String   @id @default(uuid())                    // Unique invoice ID
+  orderId   String   @unique                                // Each order has one invoice (can be multi-seller split)
+  vendorId  String                                           // Which vendor this invoice belongs to
+  pdfUrl    String                                           // PDF URL (MinIO/S3 etc.)
+  issuedAt  DateTime @default(now())                        // Time of invoice generation
+
+  order     Order    @relation(fields: [orderId], references: [id])
+}
