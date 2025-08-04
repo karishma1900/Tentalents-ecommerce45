@@ -126,21 +126,43 @@ exports.Prisma.UserScalarFieldEnum = {
   email: 'email',
   password: 'password',
   role: 'role',
-  createdAt: 'createdAt',
   phone: 'phone',
+  createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
 
 exports.Prisma.VendorScalarFieldEnum = {
-  status: 'status',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  address: 'address',
+  id: 'id',
+  userId: 'userId',
   businessName: 'businessName',
+  status: 'status',
+  address: 'address',
   gstNumber: 'gstNumber',
   kycDocsUrl: 'kycDocsUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AdminScalarFieldEnum = {
   id: 'id',
-  userId: 'userId'
+  userId: 'userId',
+  name: 'name',
+  role: 'role',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ActionLogScalarFieldEnum = {
+  id: 'id',
+  adminId: 'adminId',
+  actionType: 'actionType',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  reason: 'reason',
+  notes: 'notes',
+  status: 'status',
+  createdAt: 'createdAt',
+  resolvedAt: 'resolvedAt'
 };
 
 exports.Prisma.ProductScalarFieldEnum = {
@@ -169,11 +191,14 @@ exports.Prisma.ProductListingScalarFieldEnum = {
 exports.Prisma.RatingScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  targetId: 'targetId',
-  targetType: 'targetType',
-  stars: 'stars',
+  productId: 'productId',
+  sellerId: 'sellerId',
+  score: 'score',
   comment: 'comment',
-  createdAt: 'createdAt'
+  imageUrl: 'imageUrl',
+  videoUrl: 'videoUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SearchLogScalarFieldEnum = {
@@ -220,9 +245,145 @@ exports.Prisma.InvoiceScalarFieldEnum = {
   issuedAt: 'issuedAt'
 };
 
+exports.Prisma.SessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  source: 'source'
+};
+
+exports.Prisma.AnalyticsEventScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  eventType: 'eventType',
+  pageUrl: 'pageUrl',
+  referrer: 'referrer',
+  productId: 'productId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.DailyPageViewScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  pageUrl: 'pageUrl',
+  count: 'count'
+};
+
+exports.Prisma.MetricScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  value: 'value',
+  recordedAt: 'recordedAt',
+  metadata: 'metadata'
+};
+
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  listingId: 'listingId',
+  productId: 'productId',
+  sellerId: 'sellerId',
+  quantity: 'quantity',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.EmailLogScalarFieldEnum = {
+  id: 'id',
+  to: 'to',
+  subject: 'subject',
+  body: 'body',
+  sentAt: 'sentAt',
+  eventType: 'eventType'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  orderId: 'orderId',
+  amount: 'amount',
+  status: 'status',
+  method: 'method',
+  transactionId: 'transactionId',
+  gateway: 'gateway',
+  remarks: 'remarks',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PageScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  slug: 'slug',
+  type: 'type',
+  content: 'content',
+  isPublished: 'isPublished',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.CouponScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  type: 'type',
+  scope: 'scope',
+  value: 'value',
+  maxDiscount: 'maxDiscount',
+  minOrderValue: 'minOrderValue',
+  usageLimit: 'usageLimit',
+  perUserLimit: 'perUserLimit',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isActive: 'isActive',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CouponRedemptionScalarFieldEnum = {
+  id: 'id',
+  couponId: 'couponId',
+  userId: 'userId',
+  orderId: 'orderId',
+  redeemedAt: 'redeemedAt'
+};
+
+exports.Prisma.RecommendationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  score: 'score',
+  recommendedAt: 'recommendedAt'
+};
+
+exports.Prisma.PopularProductScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  score: 'score',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.RefundRequestScalarFieldEnum = {
+  id: 'id',
+  orderItemId: 'orderItemId',
+  userId: 'userId',
+  sellerId: 'sellerId',
+  reason: 'reason',
+  status: 'status',
+  comment: 'comment',
+  attachmentUrl: 'attachmentUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  resolvedAt: 'resolvedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -234,6 +395,12 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
+};
 exports.UserRole = exports.$Enums.UserRole = {
   buyer: 'buyer',
   seller: 'seller',
@@ -244,7 +411,36 @@ exports.UserRole = exports.$Enums.UserRole = {
 exports.VendorStatus = exports.$Enums.VendorStatus = {
   pending: 'pending',
   approved: 'approved',
-  rejected: 'rejected'
+  rejected: 'rejected',
+  suspended: 'suspended'
+};
+
+exports.AdminRole = exports.$Enums.AdminRole = {
+  ADMIN: 'ADMIN',
+  SUPER_ADMIN: 'SUPER_ADMIN'
+};
+
+exports.ModerationActionType = exports.$Enums.ModerationActionType = {
+  SUSPEND_VENDOR: 'SUSPEND_VENDOR',
+  REMOVE_PRODUCT: 'REMOVE_PRODUCT',
+  APPROVE_VENDOR: 'APPROVE_VENDOR',
+  REJECT_VENDOR: 'REJECT_VENDOR',
+  WARN_VENDOR: 'WARN_VENDOR',
+  SYSTEM_NOTE: 'SYSTEM_NOTE'
+};
+
+exports.TargetType = exports.$Enums.TargetType = {
+  VENDOR: 'VENDOR',
+  PRODUCT: 'PRODUCT',
+  USER: 'USER',
+  ORDER: 'ORDER'
+};
+
+exports.ModerationStatus = exports.$Enums.ModerationStatus = {
+  PENDING: 'PENDING',
+  RESOLVED: 'RESOLVED',
+  ESCALATED: 'ESCALATED',
+  DISMISSED: 'DISMISSED'
 };
 
 exports.ProductListingStatus = exports.$Enums.ProductListingStatus = {
@@ -252,11 +448,6 @@ exports.ProductListingStatus = exports.$Enums.ProductListingStatus = {
   INACTIVE: 'INACTIVE',
   OUT_OF_STOCK: 'OUT_OF_STOCK',
   DISCONTINUED: 'DISCONTINUED'
-};
-
-exports.RatingTargetType = exports.$Enums.RatingTargetType = {
-  PRODUCT: 'PRODUCT',
-  SELLER: 'SELLER'
 };
 
 exports.OrderStatus = exports.$Enums.OrderStatus = {
@@ -279,16 +470,104 @@ exports.ItemStatus = exports.$Enums.ItemStatus = {
   refunded: 'refunded'
 };
 
+exports.TrafficSource = exports.$Enums.TrafficSource = {
+  DIRECT: 'DIRECT',
+  ORGANIC: 'ORGANIC',
+  SOCIAL: 'SOCIAL',
+  EMAIL: 'EMAIL',
+  REFERRAL: 'REFERRAL',
+  PAID_AD: 'PAID_AD'
+};
+
+exports.AnalyticsEventType = exports.$Enums.AnalyticsEventType = {
+  PAGE_VIEW: 'PAGE_VIEW',
+  PRODUCT_VIEW: 'PRODUCT_VIEW',
+  ADD_TO_CART: 'ADD_TO_CART',
+  PURCHASE: 'PURCHASE',
+  SIGNUP: 'SIGNUP'
+};
+
+exports.EmailEventType = exports.$Enums.EmailEventType = {
+  registration: 'registration',
+  otp: 'otp',
+  order_confirmation: 'order_confirmation',
+  invoice: 'invoice'
+};
+
+exports.PaymentStatus = exports.$Enums.PaymentStatus = {
+  success: 'success',
+  failed: 'failed',
+  pending: 'pending'
+};
+
+exports.PaymentMethod = exports.$Enums.PaymentMethod = {
+  upi: 'upi',
+  cod: 'cod',
+  card: 'card'
+};
+
+exports.PageType = exports.$Enums.PageType = {
+  TERMS_AND_CONDITIONS: 'TERMS_AND_CONDITIONS',
+  PRIVACY_POLICY: 'PRIVACY_POLICY',
+  ABOUT_US: 'ABOUT_US',
+  FAQ: 'FAQ',
+  CUSTOM: 'CUSTOM'
+};
+
+exports.CouponType = exports.$Enums.CouponType = {
+  FLAT: 'FLAT',
+  PERCENTAGE: 'PERCENTAGE'
+};
+
+exports.CouponScope = exports.$Enums.CouponScope = {
+  GLOBAL: 'GLOBAL',
+  PRODUCT: 'PRODUCT',
+  CATEGORY: 'CATEGORY',
+  VENDOR: 'VENDOR',
+  USER: 'USER'
+};
+
+exports.RefundReason = exports.$Enums.RefundReason = {
+  DAMAGED_ITEM: 'DAMAGED_ITEM',
+  WRONG_ITEM: 'WRONG_ITEM',
+  NOT_DELIVERED: 'NOT_DELIVERED',
+  BUYER_CHANGED_MIND: 'BUYER_CHANGED_MIND',
+  OTHER: 'OTHER'
+};
+
+exports.RefundStatus = exports.$Enums.RefundStatus = {
+  REQUESTED: 'REQUESTED',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  REFUNDED: 'REFUNDED',
+  CANCELLED: 'CANCELLED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Vendor: 'Vendor',
+  Admin: 'Admin',
+  ActionLog: 'ActionLog',
   Product: 'Product',
   ProductListing: 'ProductListing',
   Rating: 'Rating',
   SearchLog: 'SearchLog',
   Order: 'Order',
   OrderItem: 'OrderItem',
-  Invoice: 'Invoice'
+  Invoice: 'Invoice',
+  Session: 'Session',
+  AnalyticsEvent: 'AnalyticsEvent',
+  DailyPageView: 'DailyPageView',
+  Metric: 'Metric',
+  CartItem: 'CartItem',
+  EmailLog: 'EmailLog',
+  Payment: 'Payment',
+  Page: 'Page',
+  Coupon: 'Coupon',
+  CouponRedemption: 'CouponRedemption',
+  Recommendation: 'Recommendation',
+  PopularProduct: 'PopularProduct',
+  RefundRequest: 'RefundRequest'
 };
 
 /**
