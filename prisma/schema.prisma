@@ -100,9 +100,9 @@ enum ItemStatus {
 
 model User {
   id        String   @id @default(uuid()) @map("_id") @db.Uuid
-  name      String
+  name      String?
   email     String   @unique
-  password  String
+  password  String?
   role      UserRole @default(buyer)
   phone     String?
   createdAt DateTime @default(now())

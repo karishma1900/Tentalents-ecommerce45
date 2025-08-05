@@ -2,6 +2,7 @@ import { PrismaClient, UserRole } from '../../../generated/user-service';
 import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { produceKafkaEvent as publishEvent } from '@shared/kafka';
 import { KAFKA_TOPICS } from '@shared/kafka';
+import { supabase } from '@shared/middlewares/auth/supabaselogin/supabaseClient';
 
 const prisma = new PrismaClient();
 
@@ -47,7 +48,7 @@ export const userService = {
           role,
         },
       });
-      console.log('[UserService] ✅ User created:', user);
+      console.log('[UserService] ✅ User created:', { id: user.id, email: user.email, role: user.role });
 
       // === Kafka Events ===
       try {
@@ -100,29 +101,36 @@ export const userService = {
     }
   },
 
-  loginUser: async ({ email, password }: LoginUserParams) => {
-    try {
-      console.log('[UserService] 🔑 Login attempt for:', email);
-      const user = await prisma.user.findUnique({ where: { email } });
+loginUser: async ({ email, password }: LoginUserParams) => {
+  try {
+    console.log('[UserService] 🔑 Login attempt for:', email);
+    const user = await prisma.user.findUnique({ where: { email } });
 
-      if (!user) {
-        console.warn('[UserService] ❌ Email not found');
-        throw new Error('Invalid credentials');
-      }
-
-      const isValid = await comparePassword(password, user.password);
-      if (!isValid) {
-        console.warn('[UserService] ❌ Password mismatch');
-        throw new Error('Invalid credentials');
-      }
-
-      console.log('[UserService] ✅ Authenticated:', user.email);
-      return generateJWT({ userId: user.id, email: user.email, role: user.role });
-    } catch (err: any) {
-      console.error('[UserService] ❌ Login error:', err.message || err);
-      throw err;
+    if (!user) {
+      console.warn('[UserService] ❌ Email not found');
+      throw new Error('Invalid credentials');
     }
-  },
+
+    // 🔐 Check if password exists in DB (i.e., user is NOT an OAuth user)
+    if (!user.password) {
+      console.warn('[UserService] ❌ User has no password (OAuth account)');
+      throw new Error('This account uses Google Login. Please sign in with Google.');
+    }
+
+    const isValid = await comparePassword(password, user.password);
+    if (!isValid) {
+      console.warn('[UserService] ❌ Password mismatch');
+      throw new Error('Invalid credentials');
+    }
+
+    console.log('[UserService] ✅ Authenticated:', user.email);
+    return generateJWT({ userId: user.id, email: user.email, role: user.role });
+  } catch (err: any) {
+    console.error('[UserService] ❌ Login error:', err.message || err);
+    throw err;
+  }
+},
+
 
   getUserProfile: async (userId: string) => {
     try {
@@ -131,10 +139,10 @@ export const userService = {
       }
 
       console.log('[UserService] 📄 Fetching profile for ID:', userId);
-      
+
       const user = await prisma.user.findUnique({
         where: { id: userId },
-        select: { id: true, email: true, role: true },
+        select: { id: true, email: true, role: true, name: true, phone: true },
       });
 
       if (!user) {
@@ -166,4 +174,63 @@ export const userService = {
       throw err;
     }
   },
-};
+
+ googleLoginWithSupabase: async (accessToken: string) => {
+  try {
+    if (!accessToken) throw new Error('Access token is required');
+
+    // Destructure user and error from supabase response
+    const { data: { user: supabaseUser }, error } = await supabase.auth.getUser(accessToken);
+
+    if (error) {
+      console.error('[UserService] Supabase getUser error:', error);
+      throw new Error('Invalid Supabase token');
+    }
+
+    if (!supabaseUser) throw new Error('User not found from Supabase token');
+
+    const email = supabaseUser.email;
+    const phone = supabaseUser.phone ?? null;
+    const userMetadata = supabaseUser.user_metadata || {};
+    const name = userMetadata.full_name || userMetadata.name || 'Google User';
+
+    if (!email) throw new Error('Email is required from Supabase');
+
+    console.log('[UserService] Supabase user info:', { email, name, phone });
+
+    // Find existing user
+    let existingUser = await prisma.user.findUnique({ where: { email } });
+
+    if (!existingUser) {
+      try {
+        existingUser = await prisma.user.create({
+          data: {
+            email,
+            phone,
+            name,
+            password: '', // OAuth user has no password
+            role: UserRole.buyer,
+          },
+        });
+        console.log('[UserService] New user created:', existingUser.id);
+      } catch (createErr) {
+        console.error('[UserService] Prisma create error:', createErr);
+        throw createErr;
+      }
+    } else {
+      console.log('[UserService] Existing user found:', existingUser.id);
+    }
+
+    const token = generateJWT({
+      userId: existingUser.id,
+      email: existingUser.email,
+      role: existingUser.role,
+    });
+
+    return { token, user: existingUser };
+  } catch (err) {
+    console.error('[UserService] googleLoginWithSupabase error:', err);
+    throw err;
+  }
+}
+}

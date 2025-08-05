@@ -36,8 +36,8 @@ enum VendorStatus {
 model User {
   id            String   @id @default(uuid()) @map("_id") @db.Uuid // Unique identifier for each user
   email         String   @unique // Email address (used for login)
-  name          String // Display name or full name
-  password      String // Securely hashed password
+  name          String? // Display name or full name
+  password      String? // Securely hashed password
   role          UserRole @default(buyer) // Role assigned to the user
   phone         String? // Optional phone number for OTP/2FA
   createdAt     DateTime @default(now()) // Created timestamp
@@ -51,8 +51,8 @@ model User {
 
 /// Seller profile – only created if a user signs up as a vendor
 model Vendor {
-  id           String       @id @default(uuid()) // Unique seller ID
-  userId       String       @unique // FK to the owning user account
+  id           String       @id @default(uuid()) @map("_id") @db.Uuid // Unique seller ID
+  userId       String       @unique @db.Uuid // FK to the owning user account
   businessName String // Legal business/store name
   gstNumber    String? // Optional: GSTIN or tax ID
   address      String? // Optional: full postal address

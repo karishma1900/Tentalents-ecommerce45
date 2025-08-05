@@ -4,6 +4,7 @@ import { produceKafkaEvent } from '@shared/kafka';
 import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 import { KAFKA_TOPICS } from '@shared/middlewares/kafka/src/index';
 import { PrismaClient,UserRole } from '../../../generated/user-service';
+import { supabase } from '@shared/middlewares/auth/supabaselogin/supabaseClient';
 
 // 📝 POST /api/users/register
 export const registerUser = async (
@@ -90,6 +91,20 @@ export const updateRole = async (
       req.body.role
     );
     return sendSuccess(res, 'User role updated successfully', updated);
+  } catch (err) {
+    next(err);
+  }
+};
+// in user.controller.ts
+export const googleLogin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { access_token } = req.body;
+    const result = await userService.googleLoginWithSupabase(access_token);
+    return res.status(200).json(result);
   } catch (err) {
     next(err);
   }

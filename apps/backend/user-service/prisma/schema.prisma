@@ -36,8 +36,8 @@ enum VendorStatus {
 model User {
   id        String   @id @default(uuid()) @map("_id") @db.Uuid          // Unique identifier for each user
   email          String       @unique                           // Email address (used for login)
-  name           String                                         // Display name or full name
-  password       String                                         // Securely hashed password
+  name           String?                                       // Display name or full name
+  password       String?                                        // Securely hashed password
   role           UserRole     @default(buyer)                   // Role assigned to the user
   phone          String?                                        // Optional phone number for OTP/2FA
   createdAt      DateTime     @default(now())                   // Created timestamp
