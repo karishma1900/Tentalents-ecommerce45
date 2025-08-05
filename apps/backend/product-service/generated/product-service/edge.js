@@ -151,7 +151,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "D:\\Download\\Tentalents-ecommerce\\apps\\backend\\product-service\\generated\\product-service",
+      "value": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\product-service\\generated\\product-service",
       "fromEnvVar": null
     },
     "config": {
@@ -165,11 +165,12 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "D:\\Download\\Tentalents-ecommerce\\apps\\backend\\product-service\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Karishma khatri\\Desktop\\Tentalents-ecommerce\\apps\\backend\\product-service\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../../../.env"
   },
   "relativePath": "../../prisma",
   "clientVersion": "6.13.0",

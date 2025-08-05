@@ -201,17 +201,21 @@ model ProductListing {
 model Rating {
   id        String   @id @default(uuid())
   user      User     @relation(fields: [userId], references: [id])
-  userId    String   @unique @db.Uuid
-  product   Product  @relation(fields: [productId], references: [id])
-  productId String
+  userId    String   @db.Uuid
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
   seller    User?    @relation("RatingSeller", fields: [sellerId], references: [id])
-  sellerId  String?  @unique @db.Uuid
-  score     Int // 1 to 5
+  sellerId  String?  @db.Uuid
+  score     Int
   comment   String?
-  imageUrl  String? // optional image upload URL
-  videoUrl  String? // optional video upload URL
+  imageUrl  String?
+  videoUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([productId])
+  @@index([sellerId])
 }
 
 model SearchLog {

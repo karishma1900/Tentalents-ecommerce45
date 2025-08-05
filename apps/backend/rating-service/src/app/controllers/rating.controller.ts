@@ -10,19 +10,21 @@ export const createRating = async (
   try {
     if (!req.user) return res.status(401).json({ message: 'Unauthorized' });
 
-    const { productId, rating, comment } = req.body;
-    if (!productId || typeof rating !== 'number') {
+    const { productId, sellerId, score, comment } = req.body;
+
+    if ((!productId && !sellerId) || typeof score !== 'number') {
       return res
         .status(400)
         .json({ message: 'Missing or invalid rating data' });
     }
 
     const created = await ratingService.createRating(req.user.userId, {
-      targetId: productId,
-      targetType: 'PRODUCT', // or 'SELLER' if it's for sellers
-      stars: rating,
-      comment
+      productId,
+      sellerId,
+      score,
+      comment,
     });
+
     sendSuccess(res, 'Rating submitted', created);
   } catch (err) {
     next(err);
@@ -43,6 +45,20 @@ export const getRatingsByProduct = async (
   }
 };
 
+export const getRatingsBySeller = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { sellerId } = req.params;
+    const ratings = await ratingService.getRatingsBySeller(sellerId);
+    sendSuccess(res, 'Ratings fetched', ratings);
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const updateRating = async (
   req: Request,
   res: Response,
@@ -52,17 +68,19 @@ export const updateRating = async (
     if (!req.user) return res.status(401).json({ message: 'Unauthorized' });
 
     const ratingId = req.params.id;
-    const { rating } = req.body;
+    const { score, comment } = req.body;
 
-    if (typeof rating !== 'number') {
-      return res.status(400).json({ message: 'Invalid rating value' });
+    if (typeof score !== 'number') {
+      return res.status(400).json({ message: 'Invalid score value' });
     }
 
     const updated = await ratingService.updateRating(
       req.user.userId,
       ratingId,
-      rating
+      score,
+      comment
     );
+
     sendSuccess(res, 'Rating updated', updated);
   } catch (err) {
     next(err);

@@ -1,10 +1,10 @@
-import { PrismaClient } from '../../../generated/rating-service'; 
+import { PrismaClient } from '../../../../../../generated/prisma';
 const prisma = new PrismaClient();
 
 interface CreateRatingInput {
-  targetId: string;           // productId → targetId
-  targetType: 'PRODUCT' | 'SELLER';  // you must specify type (enum)
-  stars: number;              // rating → stars
+  productId?: string;
+  sellerId?: string;
+  score: number;
   comment?: string;
 }
 
@@ -13,31 +13,35 @@ export const ratingService = {
     return prisma.rating.create({
       data: {
         userId,
-        targetId: data.targetId,
-        targetType: data.targetType,
-        stars: data.stars,
+        productId: data.productId,
+        sellerId: data.sellerId,
+        score: data.score,
         comment: data.comment,
       },
     });
   },
 
-  getRatingsByProduct: async (targetId: string) => {
+  getRatingsByProduct: async (productId: string) => {
     return prisma.rating.findMany({
-      where: { 
-        targetId,
-        targetType: 'PRODUCT',
-      },
+      where: { productId },
+      include: { user: true },
+    });
+  },
+
+  getRatingsBySeller: async (sellerId: string) => {
+    return prisma.rating.findMany({
+      where: { sellerId },
+      include: { user: true },
     });
   },
 
   updateRating: async (
     userId: string,
     ratingId: string,
-    stars: number,
-    comment?: string  // Make comment optional and typed
+    score: number,
+    comment?: string
   ) => {
-    const updateData: { stars: number; comment?: string } = { stars };
-
+    const updateData: { score: number; comment?: string } = { score };
     if (comment !== undefined) {
       updateData.comment = comment;
     }

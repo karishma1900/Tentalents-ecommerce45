@@ -16,3 +16,8 @@ fetching all products:http://localhost:3003/api/products
 
 <!-- product rating -->
 product arting comment:http://localhost:3007/api/rating/rate
+{
+  "productId": "some-product-id",
+  "rating": 4,
+  "comment": "Great product!"
+}

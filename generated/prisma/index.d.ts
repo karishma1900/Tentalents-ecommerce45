@@ -10597,7 +10597,7 @@ export namespace Prisma {
   export type RatingGroupByOutputType = {
     id: string
     userId: string
-    productId: string
+    productId: string | null
     sellerId: string | null
     score: number
     comment: string | null
@@ -10638,7 +10638,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    product?: boolean | ProductDefaultArgs<ExtArgs>
+    product?: boolean | Rating$productArgs<ExtArgs>
     seller?: boolean | Rating$sellerArgs<ExtArgs>
   }, ExtArgs["result"]["rating"]>
 
@@ -10654,7 +10654,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    product?: boolean | ProductDefaultArgs<ExtArgs>
+    product?: boolean | Rating$productArgs<ExtArgs>
     seller?: boolean | Rating$sellerArgs<ExtArgs>
   }, ExtArgs["result"]["rating"]>
 
@@ -10670,7 +10670,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
-    product?: boolean | ProductDefaultArgs<ExtArgs>
+    product?: boolean | Rating$productArgs<ExtArgs>
     seller?: boolean | Rating$sellerArgs<ExtArgs>
   }, ExtArgs["result"]["rating"]>
 
@@ -10690,17 +10690,17 @@ export namespace Prisma {
   export type RatingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "productId" | "sellerId" | "score" | "comment" | "imageUrl" | "videoUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["rating"]>
   export type RatingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    product?: boolean | ProductDefaultArgs<ExtArgs>
+    product?: boolean | Rating$productArgs<ExtArgs>
     seller?: boolean | Rating$sellerArgs<ExtArgs>
   }
   export type RatingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    product?: boolean | ProductDefaultArgs<ExtArgs>
+    product?: boolean | Rating$productArgs<ExtArgs>
     seller?: boolean | Rating$sellerArgs<ExtArgs>
   }
   export type RatingIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
-    product?: boolean | ProductDefaultArgs<ExtArgs>
+    product?: boolean | Rating$productArgs<ExtArgs>
     seller?: boolean | Rating$sellerArgs<ExtArgs>
   }
 
@@ -10708,13 +10708,13 @@ export namespace Prisma {
     name: "Rating"
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
-      product: Prisma.$ProductPayload<ExtArgs>
+      product: Prisma.$ProductPayload<ExtArgs> | null
       seller: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      productId: string
+      productId: string | null
       sellerId: string | null
       score: number
       comment: string | null
@@ -11117,7 +11117,7 @@ export namespace Prisma {
   export interface Prisma__RatingClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    product<T extends Rating$productArgs<ExtArgs> = {}>(args?: Subset<T, Rating$productArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     seller<T extends Rating$sellerArgs<ExtArgs> = {}>(args?: Subset<T, Rating$sellerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11551,6 +11551,25 @@ export namespace Prisma {
      * Limit how many Ratings to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Rating.product
+   */
+  export type Rating$productArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Product
+     */
+    select?: ProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Product
+     */
+    omit?: ProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProductInclude<ExtArgs> | null
+    where?: ProductWhereInput
   }
 
   /**
@@ -31191,7 +31210,7 @@ export namespace Prisma {
     NOT?: RatingWhereInput | RatingWhereInput[]
     id?: StringFilter<"Rating"> | string
     userId?: UuidFilter<"Rating"> | string
-    productId?: StringFilter<"Rating"> | string
+    productId?: StringNullableFilter<"Rating"> | string | null
     sellerId?: UuidNullableFilter<"Rating"> | string | null
     score?: IntFilter<"Rating"> | number
     comment?: StringNullableFilter<"Rating"> | string | null
@@ -31200,14 +31219,14 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Rating"> | Date | string
     updatedAt?: DateTimeFilter<"Rating"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     seller?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type RatingOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    productId?: SortOrder
+    productId?: SortOrderInput | SortOrder
     sellerId?: SortOrderInput | SortOrder
     score?: SortOrder
     comment?: SortOrderInput | SortOrder
@@ -31222,12 +31241,12 @@ export namespace Prisma {
 
   export type RatingWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    userId?: string
-    sellerId?: string
     AND?: RatingWhereInput | RatingWhereInput[]
     OR?: RatingWhereInput[]
     NOT?: RatingWhereInput | RatingWhereInput[]
-    productId?: StringFilter<"Rating"> | string
+    userId?: UuidFilter<"Rating"> | string
+    productId?: StringNullableFilter<"Rating"> | string | null
+    sellerId?: UuidNullableFilter<"Rating"> | string | null
     score?: IntFilter<"Rating"> | number
     comment?: StringNullableFilter<"Rating"> | string | null
     imageUrl?: StringNullableFilter<"Rating"> | string | null
@@ -31235,14 +31254,14 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Rating"> | Date | string
     updatedAt?: DateTimeFilter<"Rating"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+    product?: XOR<ProductNullableScalarRelationFilter, ProductWhereInput> | null
     seller?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id" | "userId" | "sellerId">
+  }, "id">
 
   export type RatingOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    productId?: SortOrder
+    productId?: SortOrderInput | SortOrder
     sellerId?: SortOrderInput | SortOrder
     score?: SortOrder
     comment?: SortOrderInput | SortOrder
@@ -31263,7 +31282,7 @@ export namespace Prisma {
     NOT?: RatingScalarWhereWithAggregatesInput | RatingScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Rating"> | string
     userId?: UuidWithAggregatesFilter<"Rating"> | string
-    productId?: StringWithAggregatesFilter<"Rating"> | string
+    productId?: StringNullableWithAggregatesFilter<"Rating"> | string | null
     sellerId?: UuidNullableWithAggregatesFilter<"Rating"> | string | null
     score?: IntWithAggregatesFilter<"Rating"> | number
     comment?: StringNullableWithAggregatesFilter<"Rating"> | string | null
@@ -32929,14 +32948,14 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutRatingsInput
-    product: ProductCreateNestedOneWithoutRatingsInput
+    product?: ProductCreateNestedOneWithoutRatingsInput
     seller?: UserCreateNestedOneWithoutReceivedRatingsInput
   }
 
   export type RatingUncheckedCreateInput = {
     id?: string
     userId: string
-    productId: string
+    productId?: string | null
     sellerId?: string | null
     score: number
     comment?: string | null
@@ -32955,14 +32974,14 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutRatingsNestedInput
-    product?: ProductUpdateOneRequiredWithoutRatingsNestedInput
+    product?: ProductUpdateOneWithoutRatingsNestedInput
     seller?: UserUpdateOneWithoutReceivedRatingsNestedInput
   }
 
   export type RatingUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32975,7 +32994,7 @@ export namespace Prisma {
   export type RatingCreateManyInput = {
     id?: string
     userId: string
-    productId: string
+    productId?: string | null
     sellerId?: string | null
     score: number
     comment?: string | null
@@ -32998,7 +33017,7 @@ export namespace Prisma {
   export type RatingUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
@@ -34878,6 +34897,11 @@ export namespace Prisma {
     not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
 
+  export type ProductNullableScalarRelationFilter = {
+    is?: ProductWhereInput | null
+    isNot?: ProductWhereInput | null
+  }
+
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -36538,10 +36562,12 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRatingsInput, UserUpdateWithoutRatingsInput>, UserUncheckedUpdateWithoutRatingsInput>
   }
 
-  export type ProductUpdateOneRequiredWithoutRatingsNestedInput = {
+  export type ProductUpdateOneWithoutRatingsNestedInput = {
     create?: XOR<ProductCreateWithoutRatingsInput, ProductUncheckedCreateWithoutRatingsInput>
     connectOrCreate?: ProductCreateOrConnectWithoutRatingsInput
     upsert?: ProductUpsertWithoutRatingsInput
+    disconnect?: ProductWhereInput | boolean
+    delete?: ProductWhereInput | boolean
     connect?: ProductWhereUniqueInput
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutRatingsInput, ProductUpdateWithoutRatingsInput>, ProductUncheckedUpdateWithoutRatingsInput>
   }
@@ -37566,13 +37592,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutRatingsInput
-    product: ProductCreateNestedOneWithoutRatingsInput
+    product?: ProductCreateNestedOneWithoutRatingsInput
   }
 
   export type RatingUncheckedCreateWithoutSellerInput = {
     id?: string
     userId: string
-    productId: string
+    productId?: string | null
     score: number
     comment?: string | null
     imageUrl?: string | null
@@ -37651,13 +37677,13 @@ export namespace Prisma {
     videoUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    product: ProductCreateNestedOneWithoutRatingsInput
+    product?: ProductCreateNestedOneWithoutRatingsInput
     seller?: UserCreateNestedOneWithoutReceivedRatingsInput
   }
 
   export type RatingUncheckedCreateWithoutUserInput = {
     id?: string
-    productId: string
+    productId?: string | null
     sellerId?: string | null
     score: number
     comment?: string | null
@@ -37765,7 +37791,7 @@ export namespace Prisma {
     NOT?: RatingScalarWhereInput | RatingScalarWhereInput[]
     id?: StringFilter<"Rating"> | string
     userId?: UuidFilter<"Rating"> | string
-    productId?: StringFilter<"Rating"> | string
+    productId?: StringNullableFilter<"Rating"> | string | null
     sellerId?: UuidNullableFilter<"Rating"> | string | null
     score?: IntFilter<"Rating"> | number
     comment?: StringNullableFilter<"Rating"> | string | null
@@ -39358,7 +39384,7 @@ export namespace Prisma {
   export type RatingCreateManySellerInput = {
     id?: string
     userId: string
-    productId: string
+    productId?: string | null
     score: number
     comment?: string | null
     imageUrl?: string | null
@@ -39369,7 +39395,7 @@ export namespace Prisma {
 
   export type RatingCreateManyUserInput = {
     id?: string
-    productId: string
+    productId?: string | null
     sellerId?: string | null
     score: number
     comment?: string | null
@@ -39409,13 +39435,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutRatingsNestedInput
-    product?: ProductUpdateOneRequiredWithoutRatingsNestedInput
+    product?: ProductUpdateOneWithoutRatingsNestedInput
   }
 
   export type RatingUncheckedUpdateWithoutSellerInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39427,7 +39453,7 @@ export namespace Prisma {
   export type RatingUncheckedUpdateManyWithoutSellerInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39444,13 +39470,13 @@ export namespace Prisma {
     videoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    product?: ProductUpdateOneRequiredWithoutRatingsNestedInput
+    product?: ProductUpdateOneWithoutRatingsNestedInput
     seller?: UserUpdateOneWithoutReceivedRatingsNestedInput
   }
 
   export type RatingUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39462,7 +39488,7 @@ export namespace Prisma {
 
   export type RatingUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
-    productId?: StringFieldUpdateOperationsInput | string
+    productId?: NullableStringFieldUpdateOperationsInput | string | null
     sellerId?: NullableStringFieldUpdateOperationsInput | string | null
     score?: IntFieldUpdateOperationsInput | number
     comment?: NullableStringFieldUpdateOperationsInput | string | null
