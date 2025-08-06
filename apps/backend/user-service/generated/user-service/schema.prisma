@@ -49,6 +49,13 @@ model User {
   @@map("users")
 }
 
+model PendingUserOtp {
+  email     String   @id
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
 /// Seller profile – only created if a user signs up as a vendor
 model Vendor {
   id           String       @id @default(uuid()) @map("_id") @db.Uuid // Unique seller ID

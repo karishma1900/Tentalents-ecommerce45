@@ -118,7 +118,12 @@ model User {
   @@index([role])
   @@map("users")
 }
-
+model PendingUserOtp {
+  email     String   @id
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
 model Vendor {
   id           String       @id @default(uuid()) @map("_id") @db.Uuid
   userId       String       @unique @db.Uuid

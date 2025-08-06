@@ -7,40 +7,46 @@ import { PrismaClient,UserRole } from '../../../generated/user-service';
 import { supabase } from '@shared/middlewares/auth/supabaselogin/supabaseClient';
 
 // 📝 POST /api/users/register
-export const registerUser = async (
+export const initiateOtp = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await userService.initiateRegistrationOtp(req.body.email);
+    return sendSuccess(res, 'OTP sent', result);
+  } catch (err:any) {
+     res.status(400).json({ error: err.message || 'Something went wrong' });
+  }
+};
+
+export const verifyOtp = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email, otp } = req.body;
+    const result = await userService.verifyEmailOtp(email, otp);
+    return sendSuccess(res, 'OTP verified', result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const completeOtpRegistration = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const user = await userService.registerUser(req.body);
+    const user = await userService.completeRegistration(req.body);
 
-    // Emit generic user registration event
+    // Send Kafka event after successful registration
     await produceKafkaEvent({
       topic: KAFKA_TOPICS.USER.CREATED,
-      messages: [
-        {
-          key: user.id.toString(),
-          value: JSON.stringify(user), // Pass the user object, not `{ ... }`
-        },
-      ],
+      messages: [{ key: user.id, value: JSON.stringify(user) }],
     });
 
-    // If the registered user is a seller (not vendor)
     if (user.role === UserRole.seller) {
       await produceKafkaEvent({
-        topic: KAFKA_TOPICS.USER.VENDOR_REGISTERED, // Nested under USER
-        messages: [
-          {
-            key: user.id.toString(),
-            value: JSON.stringify({
-              userId: user.id,
-              email: user.email,
-              phone: req.body.phone,
-              status: 'pending',
-            }),
-          },
-        ],
+        topic: KAFKA_TOPICS.USER.VENDOR_REGISTERED,
+        messages: [{
+          key: user.id,
+          value: JSON.stringify({ userId: user.id, email: user.email, status: 'pending' }),
+        }],
       });
     }
 
@@ -106,6 +112,16 @@ export const googleLogin = async (
     const result = await userService.googleLoginWithSupabase(access_token);
     return res.status(200).json(result);
   } catch (err) {
+    next(err);
+  }
+};
+export const resendOtp = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { email } = req.body;
+    const result = await userService.resendRegistrationOtp(email);
+    return sendSuccess(res, 'OTP resent', result);
+  } catch (err: any) {
+      res.status(400).json({ error: err.message || 'Something went wrong' });
     next(err);
   }
 };

@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model PendingUserOtp
+ * 
+ */
+export type PendingUserOtp = $Result.DefaultSelection<Prisma.$PendingUserOtpPayload>
+/**
  * Model Vendor
  * 
  */
@@ -560,6 +565,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pendingUserOtp`: Exposes CRUD operations for the **PendingUserOtp** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PendingUserOtps
+    * const pendingUserOtps = await prisma.pendingUserOtp.findMany()
+    * ```
+    */
+  get pendingUserOtp(): Prisma.PendingUserOtpDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.vendor`: Exposes CRUD operations for the **Vendor** model.
@@ -1231,6 +1246,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    PendingUserOtp: 'PendingUserOtp',
     Vendor: 'Vendor',
     Admin: 'Admin',
     ActionLog: 'ActionLog',
@@ -1272,7 +1288,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "vendor" | "admin" | "actionLog" | "product" | "productListing" | "rating" | "searchLog" | "order" | "orderItem" | "invoice" | "session" | "analyticsEvent" | "dailyPageView" | "metric" | "cartItem" | "emailLog" | "payment" | "page" | "coupon" | "couponRedemption" | "recommendation" | "popularProduct" | "refundRequest"
+      modelProps: "user" | "pendingUserOtp" | "vendor" | "admin" | "actionLog" | "product" | "productListing" | "rating" | "searchLog" | "order" | "orderItem" | "invoice" | "session" | "analyticsEvent" | "dailyPageView" | "metric" | "cartItem" | "emailLog" | "payment" | "page" | "coupon" | "couponRedemption" | "recommendation" | "popularProduct" | "refundRequest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1347,6 +1363,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      PendingUserOtp: {
+        payload: Prisma.$PendingUserOtpPayload<ExtArgs>
+        fields: Prisma.PendingUserOtpFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PendingUserOtpFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PendingUserOtpFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>
+          }
+          findFirst: {
+            args: Prisma.PendingUserOtpFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PendingUserOtpFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>
+          }
+          findMany: {
+            args: Prisma.PendingUserOtpFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>[]
+          }
+          create: {
+            args: Prisma.PendingUserOtpCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>
+          }
+          createMany: {
+            args: Prisma.PendingUserOtpCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PendingUserOtpCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>[]
+          }
+          delete: {
+            args: Prisma.PendingUserOtpDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>
+          }
+          update: {
+            args: Prisma.PendingUserOtpUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>
+          }
+          deleteMany: {
+            args: Prisma.PendingUserOtpDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PendingUserOtpUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PendingUserOtpUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>[]
+          }
+          upsert: {
+            args: Prisma.PendingUserOtpUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PendingUserOtpPayload>
+          }
+          aggregate: {
+            args: Prisma.PendingUserOtpAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePendingUserOtp>
+          }
+          groupBy: {
+            args: Prisma.PendingUserOtpGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PendingUserOtpGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PendingUserOtpCountArgs<ExtArgs>
+            result: $Utils.Optional<PendingUserOtpCountAggregateOutputType> | number
           }
         }
       }
@@ -3145,6 +3235,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    pendingUserOtp?: PendingUserOtpOmit
     vendor?: VendorOmit
     admin?: AdminOmit
     actionLog?: ActionLogOmit
@@ -4755,6 +4846,988 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PendingUserOtp
+   */
+
+  export type AggregatePendingUserOtp = {
+    _count: PendingUserOtpCountAggregateOutputType | null
+    _min: PendingUserOtpMinAggregateOutputType | null
+    _max: PendingUserOtpMaxAggregateOutputType | null
+  }
+
+  export type PendingUserOtpMinAggregateOutputType = {
+    email: string | null
+    otp: string | null
+    expiresAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type PendingUserOtpMaxAggregateOutputType = {
+    email: string | null
+    otp: string | null
+    expiresAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type PendingUserOtpCountAggregateOutputType = {
+    email: number
+    otp: number
+    expiresAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PendingUserOtpMinAggregateInputType = {
+    email?: true
+    otp?: true
+    expiresAt?: true
+    createdAt?: true
+  }
+
+  export type PendingUserOtpMaxAggregateInputType = {
+    email?: true
+    otp?: true
+    expiresAt?: true
+    createdAt?: true
+  }
+
+  export type PendingUserOtpCountAggregateInputType = {
+    email?: true
+    otp?: true
+    expiresAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PendingUserOtpAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PendingUserOtp to aggregate.
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingUserOtps to fetch.
+     */
+    orderBy?: PendingUserOtpOrderByWithRelationInput | PendingUserOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PendingUserOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingUserOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingUserOtps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PendingUserOtps
+    **/
+    _count?: true | PendingUserOtpCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PendingUserOtpMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PendingUserOtpMaxAggregateInputType
+  }
+
+  export type GetPendingUserOtpAggregateType<T extends PendingUserOtpAggregateArgs> = {
+        [P in keyof T & keyof AggregatePendingUserOtp]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePendingUserOtp[P]>
+      : GetScalarType<T[P], AggregatePendingUserOtp[P]>
+  }
+
+
+
+
+  export type PendingUserOtpGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PendingUserOtpWhereInput
+    orderBy?: PendingUserOtpOrderByWithAggregationInput | PendingUserOtpOrderByWithAggregationInput[]
+    by: PendingUserOtpScalarFieldEnum[] | PendingUserOtpScalarFieldEnum
+    having?: PendingUserOtpScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PendingUserOtpCountAggregateInputType | true
+    _min?: PendingUserOtpMinAggregateInputType
+    _max?: PendingUserOtpMaxAggregateInputType
+  }
+
+  export type PendingUserOtpGroupByOutputType = {
+    email: string
+    otp: string
+    expiresAt: Date
+    createdAt: Date
+    _count: PendingUserOtpCountAggregateOutputType | null
+    _min: PendingUserOtpMinAggregateOutputType | null
+    _max: PendingUserOtpMaxAggregateOutputType | null
+  }
+
+  type GetPendingUserOtpGroupByPayload<T extends PendingUserOtpGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PendingUserOtpGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PendingUserOtpGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PendingUserOtpGroupByOutputType[P]>
+            : GetScalarType<T[P], PendingUserOtpGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PendingUserOtpSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    email?: boolean
+    otp?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pendingUserOtp"]>
+
+  export type PendingUserOtpSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    email?: boolean
+    otp?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pendingUserOtp"]>
+
+  export type PendingUserOtpSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    email?: boolean
+    otp?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pendingUserOtp"]>
+
+  export type PendingUserOtpSelectScalar = {
+    email?: boolean
+    otp?: boolean
+    expiresAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type PendingUserOtpOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"email" | "otp" | "expiresAt" | "createdAt", ExtArgs["result"]["pendingUserOtp"]>
+
+  export type $PendingUserOtpPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PendingUserOtp"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      email: string
+      otp: string
+      expiresAt: Date
+      createdAt: Date
+    }, ExtArgs["result"]["pendingUserOtp"]>
+    composites: {}
+  }
+
+  type PendingUserOtpGetPayload<S extends boolean | null | undefined | PendingUserOtpDefaultArgs> = $Result.GetResult<Prisma.$PendingUserOtpPayload, S>
+
+  type PendingUserOtpCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PendingUserOtpFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PendingUserOtpCountAggregateInputType | true
+    }
+
+  export interface PendingUserOtpDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PendingUserOtp'], meta: { name: 'PendingUserOtp' } }
+    /**
+     * Find zero or one PendingUserOtp that matches the filter.
+     * @param {PendingUserOtpFindUniqueArgs} args - Arguments to find a PendingUserOtp
+     * @example
+     * // Get one PendingUserOtp
+     * const pendingUserOtp = await prisma.pendingUserOtp.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PendingUserOtpFindUniqueArgs>(args: SelectSubset<T, PendingUserOtpFindUniqueArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PendingUserOtp that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PendingUserOtpFindUniqueOrThrowArgs} args - Arguments to find a PendingUserOtp
+     * @example
+     * // Get one PendingUserOtp
+     * const pendingUserOtp = await prisma.pendingUserOtp.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PendingUserOtpFindUniqueOrThrowArgs>(args: SelectSubset<T, PendingUserOtpFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PendingUserOtp that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpFindFirstArgs} args - Arguments to find a PendingUserOtp
+     * @example
+     * // Get one PendingUserOtp
+     * const pendingUserOtp = await prisma.pendingUserOtp.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PendingUserOtpFindFirstArgs>(args?: SelectSubset<T, PendingUserOtpFindFirstArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PendingUserOtp that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpFindFirstOrThrowArgs} args - Arguments to find a PendingUserOtp
+     * @example
+     * // Get one PendingUserOtp
+     * const pendingUserOtp = await prisma.pendingUserOtp.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PendingUserOtpFindFirstOrThrowArgs>(args?: SelectSubset<T, PendingUserOtpFindFirstOrThrowArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PendingUserOtps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PendingUserOtps
+     * const pendingUserOtps = await prisma.pendingUserOtp.findMany()
+     * 
+     * // Get first 10 PendingUserOtps
+     * const pendingUserOtps = await prisma.pendingUserOtp.findMany({ take: 10 })
+     * 
+     * // Only select the `email`
+     * const pendingUserOtpWithEmailOnly = await prisma.pendingUserOtp.findMany({ select: { email: true } })
+     * 
+     */
+    findMany<T extends PendingUserOtpFindManyArgs>(args?: SelectSubset<T, PendingUserOtpFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PendingUserOtp.
+     * @param {PendingUserOtpCreateArgs} args - Arguments to create a PendingUserOtp.
+     * @example
+     * // Create one PendingUserOtp
+     * const PendingUserOtp = await prisma.pendingUserOtp.create({
+     *   data: {
+     *     // ... data to create a PendingUserOtp
+     *   }
+     * })
+     * 
+     */
+    create<T extends PendingUserOtpCreateArgs>(args: SelectSubset<T, PendingUserOtpCreateArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PendingUserOtps.
+     * @param {PendingUserOtpCreateManyArgs} args - Arguments to create many PendingUserOtps.
+     * @example
+     * // Create many PendingUserOtps
+     * const pendingUserOtp = await prisma.pendingUserOtp.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PendingUserOtpCreateManyArgs>(args?: SelectSubset<T, PendingUserOtpCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PendingUserOtps and returns the data saved in the database.
+     * @param {PendingUserOtpCreateManyAndReturnArgs} args - Arguments to create many PendingUserOtps.
+     * @example
+     * // Create many PendingUserOtps
+     * const pendingUserOtp = await prisma.pendingUserOtp.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PendingUserOtps and only return the `email`
+     * const pendingUserOtpWithEmailOnly = await prisma.pendingUserOtp.createManyAndReturn({
+     *   select: { email: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PendingUserOtpCreateManyAndReturnArgs>(args?: SelectSubset<T, PendingUserOtpCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PendingUserOtp.
+     * @param {PendingUserOtpDeleteArgs} args - Arguments to delete one PendingUserOtp.
+     * @example
+     * // Delete one PendingUserOtp
+     * const PendingUserOtp = await prisma.pendingUserOtp.delete({
+     *   where: {
+     *     // ... filter to delete one PendingUserOtp
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PendingUserOtpDeleteArgs>(args: SelectSubset<T, PendingUserOtpDeleteArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PendingUserOtp.
+     * @param {PendingUserOtpUpdateArgs} args - Arguments to update one PendingUserOtp.
+     * @example
+     * // Update one PendingUserOtp
+     * const pendingUserOtp = await prisma.pendingUserOtp.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PendingUserOtpUpdateArgs>(args: SelectSubset<T, PendingUserOtpUpdateArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PendingUserOtps.
+     * @param {PendingUserOtpDeleteManyArgs} args - Arguments to filter PendingUserOtps to delete.
+     * @example
+     * // Delete a few PendingUserOtps
+     * const { count } = await prisma.pendingUserOtp.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PendingUserOtpDeleteManyArgs>(args?: SelectSubset<T, PendingUserOtpDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PendingUserOtps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PendingUserOtps
+     * const pendingUserOtp = await prisma.pendingUserOtp.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PendingUserOtpUpdateManyArgs>(args: SelectSubset<T, PendingUserOtpUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PendingUserOtps and returns the data updated in the database.
+     * @param {PendingUserOtpUpdateManyAndReturnArgs} args - Arguments to update many PendingUserOtps.
+     * @example
+     * // Update many PendingUserOtps
+     * const pendingUserOtp = await prisma.pendingUserOtp.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PendingUserOtps and only return the `email`
+     * const pendingUserOtpWithEmailOnly = await prisma.pendingUserOtp.updateManyAndReturn({
+     *   select: { email: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PendingUserOtpUpdateManyAndReturnArgs>(args: SelectSubset<T, PendingUserOtpUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PendingUserOtp.
+     * @param {PendingUserOtpUpsertArgs} args - Arguments to update or create a PendingUserOtp.
+     * @example
+     * // Update or create a PendingUserOtp
+     * const pendingUserOtp = await prisma.pendingUserOtp.upsert({
+     *   create: {
+     *     // ... data to create a PendingUserOtp
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PendingUserOtp we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PendingUserOtpUpsertArgs>(args: SelectSubset<T, PendingUserOtpUpsertArgs<ExtArgs>>): Prisma__PendingUserOtpClient<$Result.GetResult<Prisma.$PendingUserOtpPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PendingUserOtps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpCountArgs} args - Arguments to filter PendingUserOtps to count.
+     * @example
+     * // Count the number of PendingUserOtps
+     * const count = await prisma.pendingUserOtp.count({
+     *   where: {
+     *     // ... the filter for the PendingUserOtps we want to count
+     *   }
+     * })
+    **/
+    count<T extends PendingUserOtpCountArgs>(
+      args?: Subset<T, PendingUserOtpCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PendingUserOtpCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PendingUserOtp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PendingUserOtpAggregateArgs>(args: Subset<T, PendingUserOtpAggregateArgs>): Prisma.PrismaPromise<GetPendingUserOtpAggregateType<T>>
+
+    /**
+     * Group by PendingUserOtp.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PendingUserOtpGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PendingUserOtpGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PendingUserOtpGroupByArgs['orderBy'] }
+        : { orderBy?: PendingUserOtpGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PendingUserOtpGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPendingUserOtpGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PendingUserOtp model
+   */
+  readonly fields: PendingUserOtpFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PendingUserOtp.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PendingUserOtpClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PendingUserOtp model
+   */
+  interface PendingUserOtpFieldRefs {
+    readonly email: FieldRef<"PendingUserOtp", 'String'>
+    readonly otp: FieldRef<"PendingUserOtp", 'String'>
+    readonly expiresAt: FieldRef<"PendingUserOtp", 'DateTime'>
+    readonly createdAt: FieldRef<"PendingUserOtp", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PendingUserOtp findUnique
+   */
+  export type PendingUserOtpFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which PendingUserOtp to fetch.
+     */
+    where: PendingUserOtpWhereUniqueInput
+  }
+
+  /**
+   * PendingUserOtp findUniqueOrThrow
+   */
+  export type PendingUserOtpFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which PendingUserOtp to fetch.
+     */
+    where: PendingUserOtpWhereUniqueInput
+  }
+
+  /**
+   * PendingUserOtp findFirst
+   */
+  export type PendingUserOtpFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which PendingUserOtp to fetch.
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingUserOtps to fetch.
+     */
+    orderBy?: PendingUserOtpOrderByWithRelationInput | PendingUserOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PendingUserOtps.
+     */
+    cursor?: PendingUserOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingUserOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingUserOtps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PendingUserOtps.
+     */
+    distinct?: PendingUserOtpScalarFieldEnum | PendingUserOtpScalarFieldEnum[]
+  }
+
+  /**
+   * PendingUserOtp findFirstOrThrow
+   */
+  export type PendingUserOtpFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which PendingUserOtp to fetch.
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingUserOtps to fetch.
+     */
+    orderBy?: PendingUserOtpOrderByWithRelationInput | PendingUserOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PendingUserOtps.
+     */
+    cursor?: PendingUserOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingUserOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingUserOtps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PendingUserOtps.
+     */
+    distinct?: PendingUserOtpScalarFieldEnum | PendingUserOtpScalarFieldEnum[]
+  }
+
+  /**
+   * PendingUserOtp findMany
+   */
+  export type PendingUserOtpFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * Filter, which PendingUserOtps to fetch.
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PendingUserOtps to fetch.
+     */
+    orderBy?: PendingUserOtpOrderByWithRelationInput | PendingUserOtpOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PendingUserOtps.
+     */
+    cursor?: PendingUserOtpWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PendingUserOtps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PendingUserOtps.
+     */
+    skip?: number
+    distinct?: PendingUserOtpScalarFieldEnum | PendingUserOtpScalarFieldEnum[]
+  }
+
+  /**
+   * PendingUserOtp create
+   */
+  export type PendingUserOtpCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PendingUserOtp.
+     */
+    data: XOR<PendingUserOtpCreateInput, PendingUserOtpUncheckedCreateInput>
+  }
+
+  /**
+   * PendingUserOtp createMany
+   */
+  export type PendingUserOtpCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PendingUserOtps.
+     */
+    data: PendingUserOtpCreateManyInput | PendingUserOtpCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PendingUserOtp createManyAndReturn
+   */
+  export type PendingUserOtpCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * The data used to create many PendingUserOtps.
+     */
+    data: PendingUserOtpCreateManyInput | PendingUserOtpCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PendingUserOtp update
+   */
+  export type PendingUserOtpUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PendingUserOtp.
+     */
+    data: XOR<PendingUserOtpUpdateInput, PendingUserOtpUncheckedUpdateInput>
+    /**
+     * Choose, which PendingUserOtp to update.
+     */
+    where: PendingUserOtpWhereUniqueInput
+  }
+
+  /**
+   * PendingUserOtp updateMany
+   */
+  export type PendingUserOtpUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PendingUserOtps.
+     */
+    data: XOR<PendingUserOtpUpdateManyMutationInput, PendingUserOtpUncheckedUpdateManyInput>
+    /**
+     * Filter which PendingUserOtps to update
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * Limit how many PendingUserOtps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PendingUserOtp updateManyAndReturn
+   */
+  export type PendingUserOtpUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * The data used to update PendingUserOtps.
+     */
+    data: XOR<PendingUserOtpUpdateManyMutationInput, PendingUserOtpUncheckedUpdateManyInput>
+    /**
+     * Filter which PendingUserOtps to update
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * Limit how many PendingUserOtps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PendingUserOtp upsert
+   */
+  export type PendingUserOtpUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PendingUserOtp to update in case it exists.
+     */
+    where: PendingUserOtpWhereUniqueInput
+    /**
+     * In case the PendingUserOtp found by the `where` argument doesn't exist, create a new PendingUserOtp with this data.
+     */
+    create: XOR<PendingUserOtpCreateInput, PendingUserOtpUncheckedCreateInput>
+    /**
+     * In case the PendingUserOtp was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PendingUserOtpUpdateInput, PendingUserOtpUncheckedUpdateInput>
+  }
+
+  /**
+   * PendingUserOtp delete
+   */
+  export type PendingUserOtpDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
+    /**
+     * Filter which PendingUserOtp to delete.
+     */
+    where: PendingUserOtpWhereUniqueInput
+  }
+
+  /**
+   * PendingUserOtp deleteMany
+   */
+  export type PendingUserOtpDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PendingUserOtps to delete
+     */
+    where?: PendingUserOtpWhereInput
+    /**
+     * Limit how many PendingUserOtps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PendingUserOtp without action
+   */
+  export type PendingUserOtpDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PendingUserOtp
+     */
+    select?: PendingUserOtpSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PendingUserOtp
+     */
+    omit?: PendingUserOtpOmit<ExtArgs> | null
   }
 
 
@@ -30028,6 +31101,16 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const PendingUserOtpScalarFieldEnum: {
+    email: 'email',
+    otp: 'otp',
+    expiresAt: 'expiresAt',
+    createdAt: 'createdAt'
+  };
+
+  export type PendingUserOtpScalarFieldEnum = (typeof PendingUserOtpScalarFieldEnum)[keyof typeof PendingUserOtpScalarFieldEnum]
+
+
   export const VendorScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -30831,6 +31914,53 @@ export namespace Prisma {
     phone?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type PendingUserOtpWhereInput = {
+    AND?: PendingUserOtpWhereInput | PendingUserOtpWhereInput[]
+    OR?: PendingUserOtpWhereInput[]
+    NOT?: PendingUserOtpWhereInput | PendingUserOtpWhereInput[]
+    email?: StringFilter<"PendingUserOtp"> | string
+    otp?: StringFilter<"PendingUserOtp"> | string
+    expiresAt?: DateTimeFilter<"PendingUserOtp"> | Date | string
+    createdAt?: DateTimeFilter<"PendingUserOtp"> | Date | string
+  }
+
+  export type PendingUserOtpOrderByWithRelationInput = {
+    email?: SortOrder
+    otp?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PendingUserOtpWhereUniqueInput = Prisma.AtLeast<{
+    email?: string
+    AND?: PendingUserOtpWhereInput | PendingUserOtpWhereInput[]
+    OR?: PendingUserOtpWhereInput[]
+    NOT?: PendingUserOtpWhereInput | PendingUserOtpWhereInput[]
+    otp?: StringFilter<"PendingUserOtp"> | string
+    expiresAt?: DateTimeFilter<"PendingUserOtp"> | Date | string
+    createdAt?: DateTimeFilter<"PendingUserOtp"> | Date | string
+  }, "email">
+
+  export type PendingUserOtpOrderByWithAggregationInput = {
+    email?: SortOrder
+    otp?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+    _count?: PendingUserOtpCountOrderByAggregateInput
+    _max?: PendingUserOtpMaxOrderByAggregateInput
+    _min?: PendingUserOtpMinOrderByAggregateInput
+  }
+
+  export type PendingUserOtpScalarWhereWithAggregatesInput = {
+    AND?: PendingUserOtpScalarWhereWithAggregatesInput | PendingUserOtpScalarWhereWithAggregatesInput[]
+    OR?: PendingUserOtpScalarWhereWithAggregatesInput[]
+    NOT?: PendingUserOtpScalarWhereWithAggregatesInput | PendingUserOtpScalarWhereWithAggregatesInput[]
+    email?: StringWithAggregatesFilter<"PendingUserOtp"> | string
+    otp?: StringWithAggregatesFilter<"PendingUserOtp"> | string
+    expiresAt?: DateTimeWithAggregatesFilter<"PendingUserOtp"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"PendingUserOtp"> | Date | string
   }
 
   export type VendorWhereInput = {
@@ -32526,6 +33656,55 @@ export namespace Prisma {
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PendingUserOtpCreateInput = {
+    email: string
+    otp: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PendingUserOtpUncheckedCreateInput = {
+    email: string
+    otp: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PendingUserOtpUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    otp?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PendingUserOtpUncheckedUpdateInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    otp?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PendingUserOtpCreateManyInput = {
+    email: string
+    otp: string
+    expiresAt: Date | string
+    createdAt?: Date | string
+  }
+
+  export type PendingUserOtpUpdateManyMutationInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    otp?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PendingUserOtpUncheckedUpdateManyInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    otp?: StringFieldUpdateOperationsInput | string
+    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type VendorCreateInput = {
@@ -34472,6 +35651,27 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type PendingUserOtpCountOrderByAggregateInput = {
+    email?: SortOrder
+    otp?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PendingUserOtpMaxOrderByAggregateInput = {
+    email?: SortOrder
+    otp?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PendingUserOtpMinOrderByAggregateInput = {
+    email?: SortOrder
+    otp?: SortOrder
+    expiresAt?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type EnumVendorStatusFilter<$PrismaModel = never> = {

@@ -1,8 +1,12 @@
 import { signToken } from './jwt';
-import { AuthPayload, UserRole } from './types';
+// Remove this import because you'll import UserRole from Prisma client
+// import { AuthPayload, UserRole } from './types';  
+
 import dotenv from 'dotenv';
 import path from 'path';
-import { PrismaClient } from '../../../../../apps/backend/user-service/generated/user-service';
+
+// Import PrismaClient and UserRole enum from generated Prisma client
+import { PrismaClient, UserRole } from '../../../../../apps/backend/user-service/generated/user-service';
 
 dotenv.config({ path: path.resolve(__dirname, '../../../../..', '.env') });
 
@@ -15,6 +19,13 @@ if (!JWT_SECRET || JWT_SECRET === 'super_secret') {
 
 const prisma = new PrismaClient();
 
+// Use Prisma enum UserRole for role here:
+const DUMMY_USER = {
+  email: 'dummy@example.com',
+  name: 'Dummy User',
+  role: UserRole.buyer,  // <-- Use enum value, not string literal
+};
+
 async function generateTokenForEmail(email?: string) {
   try {
     let user;
@@ -22,23 +33,33 @@ async function generateTokenForEmail(email?: string) {
     if (email) {
       user = await prisma.user.findUnique({ where: { email } });
       if (!user) {
-        throw new Error(`User with email ${email} not found`);
+        throw new Error(`❌ User with email ${email} not found`);
       }
     } else {
-      // No email provided — fetch the latest created user in DB
+      // No email provided — get the most recent user
       user = await prisma.user.findFirst({
         orderBy: { createdAt: 'desc' },
       });
+
       if (!user) {
-        throw new Error('No users found in the database');
+        console.warn('⚠️ No users found. Creating dummy user...');
+
+        user = await prisma.user.create({
+          data: {
+            email: DUMMY_USER.email,
+            name: DUMMY_USER.name,
+            role: DUMMY_USER.role,
+          },
+        });
+
+        console.log(`✅ Dummy user created: ${user.email}`);
       }
     }
 
-    // Use actual user UUID here for token
-    const payload: AuthPayload = {
+    const payload = {
       userId: user.id,
       email: user.email,
-      role: user.role as UserRole,
+      role: user.role as UserRole,  // Typecast just in case, but should be correct from DB
     };
 
     const token = signToken(payload, JWT_SECRET, '1h');
@@ -50,18 +71,18 @@ async function generateTokenForEmail(email?: string) {
 
     return token;
   } catch (err) {
-    console.error('Error generating token:', err);
+    console.error('❌ Error generating token:', err);
     throw err;
   } finally {
     await prisma.$disconnect();
   }
 }
 
-// Run the function immediately (no email means first user in DB)
+// Run the function
 (async () => {
   try {
     await generateTokenForEmail();
   } catch (err) {
-    console.error('Failed to generate token:', err);
+    console.error('❌ Failed to generate token:', err);
   }
 })();

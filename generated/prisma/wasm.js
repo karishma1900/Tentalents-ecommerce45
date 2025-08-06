@@ -131,6 +131,13 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PendingUserOtpScalarFieldEnum = {
+  email: 'email',
+  otp: 'otp',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.VendorScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -545,6 +552,7 @@ exports.RefundStatus = exports.$Enums.RefundStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  PendingUserOtp: 'PendingUserOtp',
   Vendor: 'Vendor',
   Admin: 'Admin',
   ActionLog: 'ActionLog',
