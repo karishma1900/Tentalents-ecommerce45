@@ -11,6 +11,7 @@ import axios from 'axios';
 import { supabase } from '../../../configs/supabaseClient';
 import '../login/login.css';
 import toast from 'react-hot-toast';
+import {jwtDecode} from 'jwt-decode'; 
 
 const maskEmail = (email: string) => {
   if (!email) return '';
@@ -129,24 +130,36 @@ const SignUp = () => {
     }
   };
 
-  const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URI}/api/auth/register/otp/complete`,
-        {
-          email,
-          password: data.password,
-          name: data.name || '',
-        }
-      );
-      router.push('/');
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Registration error. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
+ const onSubmit = async (data: FormData) => {
+  setLoading(true);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/api/auth/register/otp/complete`,
+      {
+        email,
+        password: data.password,
+        name: data.name || '',
+      }
+    );
+
+    // Assuming your backend sends a token like: { token: 'JWT_HERE' }
+    const token = response.data.token;
+
+    // Save token in localStorage or cookies
+    localStorage.setItem('token', token);
+
+    // Optionally decode token and store user info
+    const user = jwtDecode(token); // or use context, redux, etc.
+    console.log('Logged in user:', user);
+
+    toast.success('Registration successful! Logging you in...');
+    router.push('/'); // or any authenticated route
+  } catch (err: any) {
+    toast.error(err?.response?.data?.message || 'Registration error. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleOtpChange = (index: number, value: string) => {
     if (!/^[0-9]?$/.test(value)) return;
