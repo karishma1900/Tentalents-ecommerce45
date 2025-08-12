@@ -1,58 +1,68 @@
 import { Router } from 'express';
-import {
+import { 
   placeOrder,
   getUserOrders,
   getOrderById,
   updateOrderStatus,
+  addAddress,
+  editAddress,
+  deleteAddress,
+  getUserAddresses 
 } from '../controllers/order.controller';
 import { authMiddleware, requireRole } from '@shared/auth';
 
 const router = Router();
-
-/**
- * @route POST /api/orders
- * @desc Place a new order
- * @access buyer, buyer_seller
- */
+router.get(
+  '/addresses',
+  authMiddleware(['buyer', 'buyer_seller']),  // Ensure the user is authenticated
+  getUserAddresses  // Fetch all addresses for the authenticated user
+);
 router.post(
-  '/',
-  authMiddleware(['buyer', 'buyer_seller']),
+  '/addresses',
+  authMiddleware(['buyer', 'buyer_seller']),  // Ensure the user is authenticated
+  addAddress  // Add a new address for the authenticated user
+);
+
+
+router.patch(
+  '/addresses/:id',
+  authMiddleware(['buyer', 'buyer_seller']),  // Ensure the user is authenticated
+  editAddress  // Edit an existing address for the authenticated user
+);
+
+router.delete(
+  '/addresses/:id',
+  authMiddleware(['buyer', 'buyer_seller']),  // Ensure the user is authenticated
+  deleteAddress  // Delete an address for the authenticated user
+);
+// Orders routes
+router.post(
+  '/', 
+  authMiddleware(['buyer', 'buyer_seller']),  // Ensuring the user is authenticated
   placeOrder
 );
 
-/**
- * @route GET /api/orders
- * @desc Get all orders of authenticated user
- * @access buyer, buyer_seller
- */
 router.get(
-  '/',
-  authMiddleware(),
-  requireRole('buyer', 'buyer_seller'),
-  getUserOrders
+  '/', 
+  authMiddleware(),  // Ensure user is authenticated
+  requireRole('buyer', 'buyer_seller'),  // Ensure the correct role
+  getUserOrders  // Fetch all orders for the authenticated user
 );
 
-/**
- * @route GET /api/orders/:id
- * @desc Get order details by ID
- * @access all authenticated users
- */
 router.get(
-  '/:id',
-  authMiddleware(),
-  getOrderById
+  '/:id', 
+  authMiddleware(),  // User needs to be authenticated
+  getOrderById  // Fetch a specific order by ID
 );
 
-/**
- * @route PATCH /api/orders/:id
- * @desc Update order status (admin only)
- * @access admin, super_admin
- */
 router.patch(
   '/:id',
-  authMiddleware(),
-  requireRole('admin', 'super_admin'),
-  updateOrderStatus
+  authMiddleware(), 
+  requireRole('admin', 'super_admin'),  // Only admins can update order status
+  updateOrderStatus  // Update the order status
 );
+
+// Address routes
+
 
 export default router;

@@ -1,37 +1,204 @@
 'use client';
 
-import React, { useState } from 'react';
-import { products } from '../../configs/constants';
-import '../shop/[slug]/singleproductpage.css';
+import React, { useState, useEffect } from 'react';
 import { ChevronRight, Minus, PlusIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Products from '../home-page/products-grid/productsgrid';
 import './cart.css';
+import '../shop/[slug]/singleproductpage.css'; // For additional product styles
+
+type CartItem = {
+  id: string;
+  listingId: string;
+  productId: string;
+  quantity: number;
+  vendor: { id: string; name: string };
+  product?: {
+    id: string;
+    title: string;
+    description?: string;
+    imageUrls: string[];
+    category?: string;
+    brand?: string;
+  };
+  productListing?: {
+    id: string;
+    price: number;
+    stock?: number;
+    sku?: string;
+    status?: string;
+  };
+};
+
+type ApiCartResponse = {
+  data: CartItem[];
+};
 
 const Cart = () => {
-  const [quantity, setQuantity] = useState(1);
+  const CART_API_BASE_URL = process.env.NEXT_PUBLIC_CART_API_LINK ?? 'http://localhost:3020';
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  async function fetchCart() {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setCartItems([]);
+        setLoading(false);
+        return;
+      }
+
+      const res = await fetch(`${CART_API_BASE_URL}/api/cart`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error('Failed to fetch cart');
+
+      const responseData = await res.json();
+
+      const filtered = responseData.data
+        .map((item: CartItem) => {
+       const parsedPrice =
+  typeof item.productListing?.price === 'number'
+    ? item.productListing.price
+    : parseFloat(item.productListing?.price || '0');
+          if (
+            item.productListing &&
+            !isNaN(parsedPrice) &&
+            item.product &&
+            Array.isArray(item.product.imageUrls) &&
+            item.product.imageUrls.length > 0 &&
+            typeof item.product.title === 'string'
+          ) {
+            return {
+              ...item,
+              productListing: {
+                ...item.productListing,
+                price: parsedPrice,
+              },
+            };
+          }
+          return null;
+        })
+        .filter(Boolean) as CartItem[];
+
+      setCartItems(filtered);
+    } catch (error) {
+      console.error('Failed to fetch cart:', error);
+      setCartItems([]);
+    } finally {
+      setLoading(false);
+    }
+  }
+// Inside Cart component
+
+async function updateQuantity(listingId: string, currentQty: number, change: number) {
+  const newQty = currentQty + change;
+  if (newQty < 1) return;
+
+  const originalItems = [...cartItems];
+
+  // Optimistically update UI immediately
+  setCartItems((prevItems) =>
+    prevItems.map((item) =>
+      item.listingId === listingId ? { ...item, quantity: newQty } : item
+    )
+  );
+
+  try {
+    const token = localStorage.getItem('token');
+    const res = await fetch(`${CART_API_BASE_URL}/api/cart/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ listingId, quantityChange: change }),
+    });
+
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+
+    // OPTIONAL: update with API response if needed
+    const updatedResponse = (await res.json()) as ApiCartResponse;
+
+  const updatedItems = Array.isArray(updatedResponse.data)
+  ? updatedResponse.data
+      .map((item: CartItem) => {
+        const parsedPrice =
+          typeof item.productListing?.price === 'number'
+            ? item.productListing.price
+            : parseFloat(item.productListing?.price || '0');
+
+        if (
+          item.productListing &&
+          !isNaN(parsedPrice) &&
+          item.product &&
+          Array.isArray(item.product.imageUrls) &&
+          item.product.imageUrls.length > 0 &&
+          typeof item.product.title === 'string'
+        ) {
+          return {
+            ...item,
+            productListing: {
+              ...item.productListing,
+              price: parsedPrice,
+            },
+          };
+        }
+        return null;
+      })
+      .filter(Boolean) as CartItem[]
+  : [];
+
+    setCartItems(updatedItems);
+  } catch (error) {
+    console.error('Failed to update quantity:', error);
+    // Revert on error
+    setCartItems(originalItems);
+  }
+}
+
+
+  const subtotal = cartItems.reduce((acc, item) => {
+    const price = item.productListing?.price ?? 0;
+    return acc + price * item.quantity;
+  }, 0);
+
+  const shippingFee = 54.0;
+  const platformFee = 4.0;
+  const total = subtotal + shippingFee + platformFee;
 
   return (
     <div className="cartpage">
       <div className="cart-section">
         <div className="cartsection-left">
           <div className="product-list">
-            {products.map((product, index) => {
-              const hasDiscount =
-                product.offerPrice !== undefined && product.offerPrice < product.price;
+            {cartItems.map((item) => {
+              const product = item.product;
+              const listing = item.productListing;
+              if (!product || !listing) return null;
 
-              const productImage = Array.isArray(product.image)
-                ? product.image[0]
-                : product.image;
+              const productImage = product.imageUrls[0];
 
               return (
-                <div key={product.id || index} className="productcart">
+                <div key={item.id} className="productcart">
                   <div
                     className="image-wrapper2"
                     style={{ position: 'relative', width: '130px', height: '80px' }}
                   >
-                    <Link href={product.href}>
+                    <Link href={`/product/${product.id}`}>
                       <Image
                         src={productImage}
                         alt={product.title}
@@ -44,20 +211,13 @@ const Cart = () => {
 
                   <div className="detailcart">
                     <div className="cartcontentarea">
-                      <Link href={product.href}>
+                      <Link href={`/product/${product.id}`}>
                         <h3 className="product-title">{product.title}</h3>
                       </Link>
 
                       <div className="price-main">
                         <div className="price-section">
-                          {hasDiscount ? (
-                            <>
-                              <p className="original-price">${product.price.toFixed(2)}</p>
-                              <p className="offer-price">${product.offerPrice?.toFixed(2)}</p>
-                            </>
-                          ) : (
-                            <p>${product.price.toFixed(2)}</p>
-                          )}
+                          <p>${listing.price.toFixed(2)}</p>
                         </div>
                         <div className="saveforlater">
                           <button type="button">Save for later</button>
@@ -67,25 +227,32 @@ const Cart = () => {
 
                     <div className="adtocart-wrapper2">
                       <div className="counter">
-                        <Minus
-                          className="counter-icon"
-                          onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                        />
-                        <input
-                          type="number"
-                          value={quantity}
-                          onChange={(e) => setQuantity(Number(e.target.value))}
-                        />
-                        <PlusIcon
-                          className="counter-icon"
-                          onClick={() => setQuantity((prev) => prev + 1)}
-                        />
+                     <button
+  type="button"
+  onClick={() => updateQuantity(item.listingId, item.quantity, -1)}
+  className="icon-button"
+  aria-label="Decrease quantity"
+>
+  <Minus className="counter-icon" />
+</button>
+
+<input type="number" value={item.quantity} readOnly />
+
+<button
+  type="button"
+  onClick={() => updateQuantity(item.listingId, item.quantity, 1)}
+  className="icon-button"
+  aria-label="Increase quantity"
+>
+  <PlusIcon className="counter-icon" />
+</button>
+
                       </div>
                     </div>
 
                     <div className="orderprice">
                       <p className="original-price cartprice">
-                        ${product.offerPrice?.toFixed(2) ?? product.price.toFixed(2)}
+                        ${(listing.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -109,29 +276,33 @@ const Cart = () => {
               </button>
             </form>
           </div>
-          <div className='subtotal-section'>
-          <div className="subtotal">
-            <h2>Subtotal</h2>
-            <p>$1276.00</p>
-          </div>
-          <div className="subtotal">
-            <h2>Shipping</h2>
-            <p>$54.00</p>
-          </div>
-          <div className="subtotal">
-            <h2>Platform Fee</h2>
-            <p>$4.00</p>
-          </div>
-          <div className="subtotal total">
-            <h2 className="alltotal">Total</h2>
-            <p>$1334.00</p>
-          </div>
-          <div className="checkout">
-            <Link href="/cart/checkout" className="background-button checkoutbutton">
-               Checkout <ChevronRight />
-      </Link>
-          </div>
-          
+
+          <div className="subtotal-section">
+            <div className="subtotal">
+              <h2>Subtotal</h2>
+              <p>${subtotal.toFixed(2)}</p>
+            </div>
+
+            <div className="subtotal">
+              <h2>Shipping</h2>
+              <p>${shippingFee.toFixed(2)}</p>
+            </div>
+
+            <div className="subtotal">
+              <h2>Platform Fee</h2>
+              <p>${platformFee.toFixed(2)}</p>
+            </div>
+
+            <div className="subtotal total">
+              <h2 className="alltotal">Total</h2>
+              <p>${total.toFixed(2)}</p>
+            </div>
+
+            <div className="checkout">
+              <Link href="/cart/checkout" className="background-button checkoutbutton">
+                Checkout <ChevronRight />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

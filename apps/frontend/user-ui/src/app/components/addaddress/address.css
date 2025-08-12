@@ -14,12 +14,15 @@
     padding: 20px 0px;;
    
 }
-
+.address-bar.selected {
+  border: 2px solid var(--primary);  /* Highlight color for selected address */
+  /* Optional background color */
+}
 .address-bar{
     border:1px solid var(--grey);
     border-radius: 10px;
     padding:10px;
-    margin:0px 20px;
+    margin:10px 20px;
 }
 .addressheading{
     color:var(--secondary);

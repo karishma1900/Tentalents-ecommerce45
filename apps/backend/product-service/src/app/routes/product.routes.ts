@@ -6,6 +6,8 @@ import {
   updateProduct,
   deleteProduct,
   uploadProductImage,
+  getProductsForCard,
+  getProductBySlug
 } from '../controllers/product.controller';
 import { authMiddleware, requireRole } from '@shared/auth';
 
@@ -20,8 +22,10 @@ router.post(
 
 // 📦 Get all products (public)
 router.get('/', getAllProducts);
+router.get('/cards', getProductsForCard);
 
 // 🔍 Get product by ID (public)
+router.get('/slug/:slug', getProductBySlug);
 router.get('/:id', getProductById);
 
 // 📝 Update product (admin/seller)

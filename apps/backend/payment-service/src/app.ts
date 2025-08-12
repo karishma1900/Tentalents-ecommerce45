@@ -2,17 +2,28 @@ import express from 'express';
 import { setupSwagger } from '@shared/swagger';
 import { errorHandler } from '@shared/error';
 import { logger } from '@shared/logger';
-import paymentRoutes from './app/routes/payment.routes'; // ✅ Ensure this path is correct
-
+import paymentRoutes from './app/routes/payment.routes';
+import cors from 'cors';
+import rawBodyMiddleware from '@shared/middlewares/middlewares/src/lib/rawBodyMiddleware';
 const app = express();
 
-// 🧩 Middleware
+// Apply CORS middleware first
+app.use(cors({
+  origin: 'http://localhost:3000', // your frontend origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}));
+
+// Then apply JSON body parser
+// ⚠️ Mount only the webhook first with raw body
+
+app.post('/api/payments/stripe/webhook', rawBodyMiddleware, paymentRoutes);
 app.use(express.json());
 
-// 💳 Payment Routes
+// Now apply your routes
 app.use('/api/payments', paymentRoutes);
 
-// 📚 Swagger API Docs
+// Swagger docs
 setupSwagger(app, {
   title: 'Payment Service',
   version: '1.0.0',
@@ -20,15 +31,14 @@ setupSwagger(app, {
   description: 'Handles payment processing, verification, and callbacks',
 });
 
-// ✅ Health check
+// Health check
 app.get('/healthz', (_req, res) => {
   res.send('✅ Payment Service healthy');
 });
 
-// ❗ Centralized error handler
+// Centralized error handler
 app.use(errorHandler);
 
-// 🪵 Startup log
 logger.info('💳 Payment Service app initialized');
 
 export default app;

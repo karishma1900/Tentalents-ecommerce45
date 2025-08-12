@@ -1,35 +1,66 @@
-import { products } from '../../../configs/constants';
-import { ChevronRight, Star, PlusIcon } from 'lucide-react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-// import './productgrid.css';
-import star from "../../../assets/icons/kid_star.png"
-import "../../home-page/productlist/Productlist"
+import { PlusIcon } from 'lucide-react';
+import { getAllProducts } from '../../../services/productService'; // Your service
 
-type ProductsProps ={
-  listCount?: number;
-}
+type ProductType = {
+  id: string;
+  title: string;
+  price: number;
+  offerPrice?: number;
+  image: string | string[];
+  href: string;
+  rating: number;
+};
 
-const ProductCart = ({ listCount = 2 }: ProductsProps) => {
-  // Make offerPrice optional with `offerPrice?: number`
+const ProductCart = ({ listCount = 2 }) => {
+  const [items, setItems] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const rawProducts = await getAllProducts();
+        const mappedProducts = rawProducts.map((p: any) => {
+          const listing = p.listings?.[0];
+          return {
+            id: p.id,
+            title: p.title,
+            price: listing ? Number(listing.originalPrice) : 0,
+            offerPrice: listing ? Number(listing.price) : undefined,
+            image: p.imageUrls?.[0] || '',
+            rating: p.ratings?.length > 0 ? p.ratings[0].score : 0,
+            href: `/shop/${p.slug}`,
+          };
+        });
+        setItems(mappedProducts.slice(0, listCount));
+      } catch (error) {
+        console.error('Failed to load products', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProducts();
+  }, [listCount]);
+
   const getDiscount = (price: number, offerPrice?: number): number => {
     if (price <= 0 || offerPrice === undefined || offerPrice >= price) return 0;
     return Math.round(((price - offerPrice) / price) * 100);
   };
 
-  const items = products.slice(0, listCount);
+  if (loading) return <p>Loading...</p>;
+
   return (
     <div className="products-lists productlistaddtocart">
       <div className="main-heading">
         <h3 className="heading">People Also Bought</h3>
       </div>
-
       <div className="product-list">
-        {items.map((i, index) => {
+        {items.map((i) => {
           const hasDiscount = i.offerPrice !== undefined && i.offerPrice < i.price;
           return (
-            <div key={index}>
+            <div key={i.id}>
               <Link href={i.href}>
                 <div className="product-list-item">
                   <div className="image-wrapper2">
@@ -58,7 +89,8 @@ const ProductCart = ({ listCount = 2 }: ProductsProps) => {
                       </div>
                       <div className="rating">
                         <p>{i.rating}</p>
-                        <Image src={star} alt="star" />
+                        {/* Your star icon here */}
+                        <img src="/star.png" alt="star" />
                         <p className="number">(100)</p>
                       </div>
                     </div>

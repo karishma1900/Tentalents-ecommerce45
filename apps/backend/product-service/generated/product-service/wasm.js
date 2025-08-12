@@ -127,7 +127,8 @@ exports.Prisma.ProductScalarFieldEnum = {
   category: 'category',
   imageUrls: 'imageUrls',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  slug: 'slug'
 };
 
 exports.Prisma.ProductListingScalarFieldEnum = {

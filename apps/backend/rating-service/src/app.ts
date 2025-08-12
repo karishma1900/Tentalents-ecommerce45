@@ -14,7 +14,7 @@ app.use(helmet()); // Adds secure HTTP headers
 app.use(cors()); // Enables Cross-Origin Resource Sharing
 app.use(express.json()); // Parses incoming JSON
 app.use(loggerMiddleware); // Logs HTTP requests
-
+app.use('/uploads', express.static('uploads'));
 // 📚 Swagger API Docs
 setupSwagger(app, {
   title: 'Rating Service',

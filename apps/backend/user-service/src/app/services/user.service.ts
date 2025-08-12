@@ -334,7 +334,9 @@ const defaultProfileImage = `https://gravatar.com/avatar/${crypto.createHash('md
       logger.error('[userService] updateUserProfile error:', err.message || err);
       throw err;
     }
-  }
+  },
+
+
 };
 
 

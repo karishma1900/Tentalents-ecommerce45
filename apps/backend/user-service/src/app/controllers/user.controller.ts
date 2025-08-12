@@ -85,13 +85,19 @@ export const getProfile = async (
   next: NextFunction
 ) => {
   try {
-    const user = await userService.getUserProfile(req.user!.userId);
-    return sendSuccess(res, 'Profile fetched successfully', user);
+    if (!req.user?.userId) {
+      return res.status(401).json({ error: 'Unauthorized: userId missing' });
+    }
+    const userId = req.user.userId;
+
+    const user = await userService.getUserProfile(userId);
     console.log('[getProfile] req.user:', req.user);
+    return sendSuccess(res, 'Profile fetched successfully', user);
   } catch (err) {
     next(err);
   }
 };
+
 
 // 🔁 PATCH /api/users/:id/role
 export const updateRole = async (
@@ -115,9 +121,12 @@ export const updateProfileImage = async (
   next: NextFunction
 ) => {
   try {
-    const userId = req.user!.userId;
-    const file = req.file;
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized: userId missing' });
+    }
 
+    const file = req.file;
     if (!file) {
       return res.status(400).json({ error: 'No image file uploaded' });
     }
@@ -133,14 +142,17 @@ export const updateProfileImage = async (
 
 export const updateProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const userId = req.user!.userId;
-    const { name, phone,altPhone } = req.body;
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ error: 'Unauthorized: userId missing' });
+    }
 
-    const updated = await userService.updateUserProfile(userId, { name, phone,altPhone });
+    const { name, phone, altPhone } = req.body;
+
+    const updated = await userService.updateUserProfile(userId, { name, phone, altPhone });
 
     return sendSuccess(res, 'Profile updated successfully', updated);
   } catch (err) {
     next(err);
   }
-  
 };

@@ -5,13 +5,13 @@
     width: 100%;
     gap:30px;
 }
-.productpageleft{
-    width:70%;
-}
+/* .productpageleft{
+    width:80%;
+} */
 .productpageright{
   
 
-    width:55%;
+    width:30%;
 }
 .fullwidth-banner .section-1{
     width:100%;
@@ -23,11 +23,14 @@
   padding:15px;
 
 }
-.orderpageleft{
- 
+.orderpageleft-2{
+ width: 100%;
   padding:15px 0px;
   padding-top: 0px;;
   
+}
+.sectionsorder{
+  width: 100%;
 }
 .yourorder-header{
   display: flex;
@@ -80,4 +83,11 @@ background-color: transparent;
 
 .custom-dropdown option {
   padding: 40px;
+}
+
+
+.image-wrapper2 img{
+  width:50px;
+  height: 50px;
+  border-radius: 10px;
 }

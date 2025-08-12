@@ -1039,6 +1039,7 @@ export namespace Prisma {
     category: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    slug: string | null
   }
 
   export type ProductMaxAggregateOutputType = {
@@ -1048,6 +1049,7 @@ export namespace Prisma {
     category: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    slug: string | null
   }
 
   export type ProductCountAggregateOutputType = {
@@ -1058,6 +1060,7 @@ export namespace Prisma {
     imageUrls: number
     createdAt: number
     updatedAt: number
+    slug: number
     _all: number
   }
 
@@ -1069,6 +1072,7 @@ export namespace Prisma {
     category?: true
     createdAt?: true
     updatedAt?: true
+    slug?: true
   }
 
   export type ProductMaxAggregateInputType = {
@@ -1078,6 +1082,7 @@ export namespace Prisma {
     category?: true
     createdAt?: true
     updatedAt?: true
+    slug?: true
   }
 
   export type ProductCountAggregateInputType = {
@@ -1088,6 +1093,7 @@ export namespace Prisma {
     imageUrls?: true
     createdAt?: true
     updatedAt?: true
+    slug?: true
     _all?: true
   }
 
@@ -1171,6 +1177,7 @@ export namespace Prisma {
     imageUrls: string[]
     createdAt: Date
     updatedAt: Date
+    slug: string
     _count: ProductCountAggregateOutputType | null
     _min: ProductMinAggregateOutputType | null
     _max: ProductMaxAggregateOutputType | null
@@ -1198,6 +1205,7 @@ export namespace Prisma {
     imageUrls?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    slug?: boolean
     listings?: boolean | Product$listingsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
@@ -1210,6 +1218,7 @@ export namespace Prisma {
     imageUrls?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    slug?: boolean
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1220,6 +1229,7 @@ export namespace Prisma {
     imageUrls?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    slug?: boolean
   }, ExtArgs["result"]["product"]>
 
   export type ProductSelectScalar = {
@@ -1230,9 +1240,10 @@ export namespace Prisma {
     imageUrls?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    slug?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "category" | "imageUrls" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "category" | "imageUrls" | "createdAt" | "updatedAt" | "slug", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     listings?: boolean | Product$listingsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
@@ -1253,6 +1264,7 @@ export namespace Prisma {
       imageUrls: string[]
       createdAt: Date
       updatedAt: Date
+      slug: string
     }, ExtArgs["result"]["product"]>
     composites: {}
   }
@@ -1684,6 +1696,7 @@ export namespace Prisma {
     readonly imageUrls: FieldRef<"Product", 'String[]'>
     readonly createdAt: FieldRef<"Product", 'DateTime'>
     readonly updatedAt: FieldRef<"Product", 'DateTime'>
+    readonly slug: FieldRef<"Product", 'String'>
   }
     
 
@@ -3296,7 +3309,8 @@ export namespace Prisma {
     category: 'category',
     imageUrls: 'imageUrls',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    slug: 'slug'
   };
 
   export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
@@ -3445,6 +3459,7 @@ export namespace Prisma {
     imageUrls?: StringNullableListFilter<"Product">
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
+    slug?: StringFilter<"Product"> | string
     listings?: ProductListingListRelationFilter
   }
 
@@ -3456,11 +3471,13 @@ export namespace Prisma {
     imageUrls?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    slug?: SortOrder
     listings?: ProductListingOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    slug?: string
     AND?: ProductWhereInput | ProductWhereInput[]
     OR?: ProductWhereInput[]
     NOT?: ProductWhereInput | ProductWhereInput[]
@@ -3471,7 +3488,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     listings?: ProductListingListRelationFilter
-  }, "id">
+  }, "id" | "slug">
 
   export type ProductOrderByWithAggregationInput = {
     id?: SortOrder
@@ -3481,6 +3498,7 @@ export namespace Prisma {
     imageUrls?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    slug?: SortOrder
     _count?: ProductCountOrderByAggregateInput
     _max?: ProductMaxOrderByAggregateInput
     _min?: ProductMinOrderByAggregateInput
@@ -3497,6 +3515,7 @@ export namespace Prisma {
     imageUrls?: StringNullableListFilter<"Product">
     createdAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Product"> | Date | string
+    slug?: StringWithAggregatesFilter<"Product"> | string
   }
 
   export type ProductListingWhereInput = {
@@ -3589,6 +3608,7 @@ export namespace Prisma {
     imageUrls?: ProductCreateimageUrlsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    slug: string
     listings?: ProductListingCreateNestedManyWithoutProductInput
   }
 
@@ -3600,6 +3620,7 @@ export namespace Prisma {
     imageUrls?: ProductCreateimageUrlsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    slug: string
     listings?: ProductListingUncheckedCreateNestedManyWithoutProductInput
   }
 
@@ -3611,6 +3632,7 @@ export namespace Prisma {
     imageUrls?: ProductUpdateimageUrlsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
     listings?: ProductListingUpdateManyWithoutProductNestedInput
   }
 
@@ -3622,6 +3644,7 @@ export namespace Prisma {
     imageUrls?: ProductUpdateimageUrlsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
     listings?: ProductListingUncheckedUpdateManyWithoutProductNestedInput
   }
 
@@ -3633,6 +3656,7 @@ export namespace Prisma {
     imageUrls?: ProductCreateimageUrlsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    slug: string
   }
 
   export type ProductUpdateManyMutationInput = {
@@ -3643,6 +3667,7 @@ export namespace Prisma {
     imageUrls?: ProductUpdateimageUrlsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductUncheckedUpdateManyInput = {
@@ -3653,6 +3678,7 @@ export namespace Prisma {
     imageUrls?: ProductUpdateimageUrlsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductListingCreateInput = {
@@ -3817,6 +3843,7 @@ export namespace Prisma {
     imageUrls?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    slug?: SortOrder
   }
 
   export type ProductMaxOrderByAggregateInput = {
@@ -3826,6 +3853,7 @@ export namespace Prisma {
     category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    slug?: SortOrder
   }
 
   export type ProductMinOrderByAggregateInput = {
@@ -3835,6 +3863,7 @@ export namespace Prisma {
     category?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    slug?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -4363,6 +4392,7 @@ export namespace Prisma {
     imageUrls?: ProductCreateimageUrlsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    slug: string
   }
 
   export type ProductUncheckedCreateWithoutListingsInput = {
@@ -4373,6 +4403,7 @@ export namespace Prisma {
     imageUrls?: ProductCreateimageUrlsInput | string[]
     createdAt?: Date | string
     updatedAt?: Date | string
+    slug: string
   }
 
   export type ProductCreateOrConnectWithoutListingsInput = {
@@ -4399,6 +4430,7 @@ export namespace Prisma {
     imageUrls?: ProductUpdateimageUrlsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductUncheckedUpdateWithoutListingsInput = {
@@ -4409,6 +4441,7 @@ export namespace Prisma {
     imageUrls?: ProductUpdateimageUrlsInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    slug?: StringFieldUpdateOperationsInput | string
   }
 
   export type ProductListingCreateManyProductInput = {

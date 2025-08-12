@@ -3,14 +3,17 @@ import { z } from 'zod';
 import { VendorStatus } from '@shared/types';
 
 export const CreateVendorSchema = z.object({
-  name: z.string(),
+    name: z.string(),
   email: z.string().email(),
   phone: z.string(),
-  userId: z.string(),
-  storeName: z.string(),
-  storeSlug: z.string(),
+  userId: z.string().optional(), 
+  businessName: z.string(),
+  storeSlug: z.string().optional(),
   status: z.nativeEnum(VendorStatus).optional(),
   documents: z.array(z.string()).optional(),
+  address: z.string().optional(),
+  gstNumber: z.string().optional(),
+  profileImage: z.string().url().optional(),
 });
 
 export const UpdateVendorSchema = CreateVendorSchema.partial();

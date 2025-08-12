@@ -1,12 +1,8 @@
-import { signToken } from './jwt';
-// Remove this import because you'll import UserRole from Prisma client
-// import { AuthPayload, UserRole } from './types';  
-
 import dotenv from 'dotenv';
 import path from 'path';
-
-// Import PrismaClient and UserRole enum from generated Prisma client
-import { PrismaClient, UserRole } from '../../../../../apps/backend/user-service/generated/user-service';
+import { PrismaClient } from '../../../../../generated/prisma';
+import { AuthPayload, ROLES, UserRole } from '@shared/middlewares/auth/src/lib/types';
+import { signToken } from '@shared/middlewares/auth/src/lib/jwt';
 
 dotenv.config({ path: path.resolve(__dirname, '../../../../..', '.env') });
 
@@ -19,50 +15,74 @@ if (!JWT_SECRET || JWT_SECRET === 'super_secret') {
 
 const prisma = new PrismaClient();
 
-// Use Prisma enum UserRole for role here:
-const DUMMY_USER = {
-  email: 'dummy@example.com',
-  name: 'Dummy User',
-  role: UserRole.buyer,  // <-- Use enum value, not string literal
-};
-
-async function generateTokenForEmail(email?: string) {
+async function generateTokenForEmail(email?: string): Promise<string> {
   try {
-    let user;
+    let user = null;
+    let vendor = null;
 
-    if (email) {
-      user = await prisma.user.findUnique({ where: { email } });
-      if (!user) {
-        throw new Error(`❌ User with email ${email} not found`);
+    if (!email) {
+      vendor = await prisma.vendor.findFirst({ orderBy: { createdAt: 'desc' } });
+
+      if (vendor?.userId) {
+        user = await prisma.user.findUnique({ where: { id: vendor.userId } });
+      } else {
+        user = await prisma.user.findFirst({ orderBy: { createdAt: 'desc' } });
       }
     } else {
-      // No email provided — get the most recent user
-      user = await prisma.user.findFirst({
-        orderBy: { createdAt: 'desc' },
-      });
+      user = await prisma.user.findUnique({ where: { email } });
 
       if (!user) {
-        console.warn('⚠️ No users found. Creating dummy user...');
+        vendor = await prisma.vendor.findUnique({ where: { email } });
 
-        user = await prisma.user.create({
-          data: {
-            email: DUMMY_USER.email,
-            name: DUMMY_USER.name,
-            role: DUMMY_USER.role,
-          },
-        });
-
-        console.log(`✅ Dummy user created: ${user.email}`);
+        if (vendor?.userId) {
+          user = await prisma.user.findUnique({ where: { id: vendor.userId } });
+        }
       }
     }
 
-    const payload = {
-      userId: user.id,
-      email: user.email,
-      role: user.role as UserRole,  // Typecast just in case, but should be correct from DB
-    };
+    if (!vendor && user?.id) {
+      vendor = await prisma.vendor.findFirst({ where: { userId: user.id } });
+    }
 
-    const token = signToken(payload, JWT_SECRET, '1h');
+    let payload: AuthPayload;
+
+    if (vendor) {
+      if (!vendor.email) throw new Error('Vendor email is null');
+
+      payload = {
+        userId: vendor.userId ?? undefined,
+        email: vendor.email,
+        role: ROLES.VENDOR,
+        vendorId: vendor.id,
+      };
+    } else if (user) {
+      if (!user.email) throw new Error('User email is null');
+
+      const role = user.role ?? ROLES.BUYER;
+
+      payload = {
+        userId: user.id,
+        email: user.email,
+        role: role as UserRole,
+      };
+    } else {
+      throw new Error(`❌ No valid user or vendor data found for ${email}`);
+    }
+
+    // ✅ Now safe to generate token
+    const token = signToken(payload, JWT_SECRET);
+
+    // ✅ Store token in UserToken table
+    await prisma.userToken.create({
+      data: {
+        token,
+        userId: payload.userId ?? null,
+        vendorId: payload.vendorId ?? null,
+        revoked: false,
+        createdAt: new Date(),
+        // expiresAt: null,
+      },
+    });
 
     console.log('\n🔐 Generated JWT Token:\n');
     console.log(token);
@@ -77,11 +97,9 @@ async function generateTokenForEmail(email?: string) {
     await prisma.$disconnect();
   }
 }
-
-// Run the function
 (async () => {
   try {
-    await generateTokenForEmail();
+    await generateTokenForEmail(); // or pass an email string
   } catch (err) {
     console.error('❌ Failed to generate token:', err);
   }

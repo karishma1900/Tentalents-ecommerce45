@@ -3,117 +3,32 @@ generator client {
   output   = "../generated/prisma"
 }
 
-// === Datasource ===
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-// === ENUMS ===
-
-// Admin roles
-enum AdminRole {
-  ADMIN
-  SUPER_ADMIN
-}
-
-// Moderation action types
-enum ModerationActionType {
-  SUSPEND_VENDOR
-  REMOVE_PRODUCT
-  APPROVE_VENDOR
-  REJECT_VENDOR
-  WARN_VENDOR
-  SYSTEM_NOTE
-}
-
-// Moderation target types
-enum TargetType {
-  VENDOR
-  PRODUCT
-  USER
-  ORDER
-}
-
-// Moderation status
-enum ModerationStatus {
-  PENDING
-  RESOLVED
-  ESCALATED
-  DISMISSED
-}
-
-// User roles
-enum UserRole {
-  buyer
-  seller
-  admin
-  super_admin
-}
-
-// Vendor statuses
-enum VendorStatus {
-  pending
-  approved
-  rejected
-  suspended
-}
-
-// Product listing status
-enum ProductListingStatus {
-  ACTIVE
-  INACTIVE
-  OUT_OF_STOCK
-  DISCONTINUED
-}
-
-// Rating target type
-enum RatingTargetType {
-  PRODUCT
-  SELLER
-}
-
-// Order status
-enum OrderStatus {
-  pending
-  confirmed
-  shipped
-  delivered
-  canceled
-  returned
-  refunded
-}
-
-// Order item status
-enum ItemStatus {
-  pending
-  confirmed
-  shipped
-  delivered
-  canceled
-  returned
-  refunded
-}
-
-// === MODELS ===
-
 model User {
-  id              String      @id @default(uuid()) @map("_id") @db.Uuid
-  name            String?
-  email           String      @unique
-  password        String?
-  role            UserRole    @default(buyer)
-  phone           String?
-  altPhone        String?
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime
-  receivedRatings Rating[]    @relation("RatingSeller")
-  vendor          Vendor?
-  admin           Admin?
-  ratings         Rating[]
-  searchLogs      SearchLog[]
-  orders          Order[]
-  profileImage    String?
+  id             String          @id @default(uuid()) @map("_id") @db.Uuid
+  name           String?
+  email          String          @unique
+  password       String?
+  role           UserRole        @default(buyer)
+  phone          String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  profileImage   String?
+  altPhone       String?
+  address        String?
+  admin          Admin?
+  tokens         UserToken[]
+  orders         Order[]
+  ratings        Rating[]
+  searchLogs     SearchLog[]
+  vendor         Vendor?
+  refundRequests RefundRequest[]
+  addresses      Address[] // Relation to User's addresses
+  cartItems      CartItem[]
 
   @@index([email])
   @@index([role])
@@ -128,30 +43,39 @@ model PendingUserOtp {
 }
 
 model Vendor {
-  id           String       @id @default(uuid()) @map("_id") @db.Uuid
-  userId       String       @unique @db.Uuid
-  businessName String
-  status       VendorStatus @default(pending)
-  address      String?
-  gstNumber    String?
-  kycDocsUrl   String[]     @default([])
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
-
-  users    User      @relation(fields: [userId], references: [id])
-  invoices Invoice[]
+  id              String           @id @default(uuid()) @map("_id") @db.Uuid
+  userId          String?          @unique @db.Uuid // optional now, because user may not exist
+  name            String
+  email           String           @unique
+  profileImage    String?
+  businessName    String
+  phone           String?
+  tokens          UserToken[]
+  addresses       Address[] // Relation to User's addresses
+  status          VendorStatus     @default(pending)
+  address         String?
+  gstNumber       String?
+  kycDocsUrl      String[]         @default([])
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  invoices        Invoice[]
+  productListings ProductListing[]
+  user            User?            @relation(fields: [userId], references: [id])
+  ratings         Rating[]
+  orderItems      OrderItem[]
+  refundRequests  RefundRequest[]
+  cartItems       CartItem[]
 }
 
 model Admin {
-  id        String    @id @default(uuid())
-  userId    String    @unique @db.Uuid
+  id        String      @id @default(uuid())
+  userId    String      @unique @db.Uuid
   name      String
-  role      AdminRole @default(ADMIN)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  user    User        @relation(fields: [userId], references: [id])
-  actions ActionLog[]
+  role      AdminRole   @default(ADMIN)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  actions   ActionLog[]
+  user      User        @relation(fields: [userId], references: [id])
 }
 
 model ActionLog {
@@ -165,66 +89,130 @@ model ActionLog {
   status     ModerationStatus     @default(PENDING)
   createdAt  DateTime             @default(now())
   resolvedAt DateTime?
-
-  admin Admin @relation(fields: [adminId], references: [id])
+  admin      Admin                @relation(fields: [adminId], references: [id])
 
   @@index([targetType])
   @@index([targetId])
   @@index([status])
 }
 
+model Address {
+  id           String   @id @default(uuid()) @map("_id") @db.Uuid
+  userId       String?  @db.Uuid
+  vendorId     String?  @db.Uuid
+  name         String
+  phone        String
+  country      String
+  state        String
+  city         String
+  pinCode      String
+  addressLine1 String
+  addressLine2 String?
+  addressType  String
+  isDefault    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user   User?   @relation(fields: [userId], references: [id])
+  vendor Vendor? @relation(fields: [vendorId], references: [id])
+
+  orders Order[] @relation("OrderShippingAddress")
+
+  @@index([userId])
+  @@index([vendorId])
+  @@index([addressType])
+}
+
 model Product {
-  id          String           @id @default(uuid())
-  title       String
-  description String?
-  category    String?
-  imageUrls   String[]
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  ratings     Rating[]
-  listings    ProductListing[]
+  id                      String           @id @default(uuid())
+  title                   String
+  description             String?
+  category                String?
+  imageUrls               String[]
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  subCategory             String?
+  slug                    String?          @unique
+  listings                ProductListing[]
+  ratings                 Rating[]
+  cartItems               CartItem[]
+  // New fields
+  order                   OrderItem[]
+  brand                   String?
+  includedComponents      String[]         @default([])
+  numberOfItems           Int?
+  enclosureMaterial       String?
+  productCareInstructions String?
+  productFeatures         String[]         @default([])
 
   @@index([title])
   @@index([category])
+  @@index([subCategory])
 }
 
 model ProductListing {
-  id          String               @id @default(uuid())
-  productId   String
-  sellerId    String
-  sku         String?              @unique
-  price       Decimal
-  stock       Int                  @default(0)
-  deliveryEta String?
-  status      ProductListingStatus @default(ACTIVE)
-  updatedAt   DateTime             @updatedAt
-  createdAt   DateTime             @default(now())
+  id                      String               @id @default(uuid())
+  productId               String
+  vendorId                String               @db.Uuid
+  sku                     String?              @unique
+  price                   Decimal
+  stock                   Int                  @default(0)
+  deliveryEta             String?
+  status                  ProductListingStatus @default(ACTIVE)
+  updatedAt               DateTime             @updatedAt
+  createdAt               DateTime             @default(now())
+  itemWeight              Decimal
+  originalPrice           Decimal
+  packageHeight           Float?
+  packageLength           Float?
+  packageWidth            Float?
+  unit                    String
+  vendor                  Vendor               @relation(fields: [vendorId], references: [id])
+  product                 Product              @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variants                ProductVariant[]
+  cartItems               CartItem[]
+  brand                   String?
+  includedComponents      String[]             @default([])
+  numberOfItems           Int?
+  enclosureMaterial       String?
+  productCareInstructions String?
+  productFeatures         String[]             @default([])
 
-  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@index([sellerId])
   @@index([productId])
   @@index([status])
 }
 
+model ProductVariant {
+  id               String         @id @default(uuid())
+  productListingId String
+  name             String
+  value            String
+  productListing   ProductListing @relation(fields: [productListingId], references: [id], onDelete: Cascade)
+
+  @@index([productListingId])
+}
+
 model Rating {
   id        String   @id @default(uuid())
-  user      User     @relation(fields: [userId], references: [id])
   userId    String   @db.Uuid
-  product   Product? @relation(fields: [productId], references: [id])
   productId String?
-  seller    User?    @relation("RatingSeller", fields: [sellerId], references: [id])
-  sellerId  String?  @db.Uuid
+  vendorId  String?  @db.Uuid
   score     Int
   comment   String?
   imageUrl  String?
   videoUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  product   Product? @relation(fields: [productId], references: [id])
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
+  // ✅ Add these:
+  @@unique([userId, productId])
+  @@unique([userId, vendorId])
   @@index([userId])
   @@index([productId])
-  @@index([sellerId])
+  @@index([vendorId])
 }
 
 model SearchLog {
@@ -236,92 +224,78 @@ model SearchLog {
   deviceType  String?
   resultCount Int?
   createdAt   DateTime @default(now())
-
-  user User? @relation(fields: [userId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
 
   @@index([keyword])
   @@index([userId])
   @@index([createdAt])
 }
 
-model Order {
-  id              String      @id @default(uuid())
-  buyerId         String      @db.Uuid
-  totalAmount     Decimal
-  status          OrderStatus @default(pending)
-  paymentMode     String
-  paymentRef      String?
-  placedAt        DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  shippingAddress String
-
-  items   OrderItem[]
-  invoice Invoice?
-  buyer   User        @relation(fields: [buyerId], references: [id])
-
-  @@index([buyerId])
-  @@index([status])
-}
-
 model OrderItem {
-  id         String     @id @default(uuid())
-  orderId    String
-  productId  String
-  listingId  String
-  sellerId   String
-  quantity   Int
-  unitPrice  Decimal
-  totalPrice Decimal
-  status     ItemStatus @default(pending)
-  addedAt    DateTime   @default(now())
-
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  id             String         @id @default(uuid())
+  orderId        String
+  productId      String
+  listingId      String
+  vendorId       String         @db.Uuid
+  quantity       Int
+  unitPrice      Decimal
+  totalPrice     Decimal
+  status         ItemStatus     @default(pending)
+  addedAt        DateTime       @default(now())
+  order          Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  vendor         Vendor         @relation(fields: [vendorId], references: [id])
+  dispatchStatus DispatchStatus @default(not_started) // Enum is applied here
+  dispatchTime   DateTime? // Optional time when the order was dispatched
+  product        Product        @relation(fields: [productId], references: [id]) // Ensure this relation exists
 
   @@index([orderId])
   @@index([productId])
-  @@index([sellerId])
+  @@index([vendorId])
+  @@index([status])
+}
+
+model Order {
+  id                    String         @id @default(uuid())
+  buyerId               String         @db.Uuid
+  totalAmount           Decimal
+  status                OrderStatus    @default(pending) // Order status, including confirmed, shipped, etc.
+  paymentMode           String
+  paymentRef            String?
+  placedAt              DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  shippingAddressId     String?        @db.Uuid
+  shippingAddress       Address?       @relation("OrderShippingAddress", fields: [shippingAddressId], references: [id])
+  invoice               Invoice?
+  buyer                 User           @relation(fields: [buyerId], references: [id])
+  items                 OrderItem[]
+  paymentStatus         PaymentStatus
+  stripePaymentIntentId String?
+  dispatchStatus        DispatchStatus @default(not_started) // Enum is applied here
+  dispatchTime          DateTime?
+
+  @@index([buyerId])
   @@index([status])
 }
 
 model Invoice {
   id       String   @id @default(uuid())
   orderId  String   @unique
-  vendorId String   @db.Uuid // <-- Add @db.Uuid here to match Vendor.id
+  vendorId String   @db.Uuid
   pdfUrl   String
   issuedAt DateTime @default(now())
-
-  order  Order  @relation(fields: [orderId], references: [id])
-  vendor Vendor @relation(fields: [vendorId], references: [id])
-}
-
-enum TrafficSource {
-  DIRECT // No referrer
-  ORGANIC // Search engine traffic
-  SOCIAL // Facebook, Instagram, etc.
-  EMAIL // Newsletter, transactional email
-  REFERRAL // External link
-  PAID_AD // Paid campaign (Google/Facebook ads)
-}
-
-enum AnalyticsEventType {
-  PAGE_VIEW
-  PRODUCT_VIEW
-  ADD_TO_CART
-  PURCHASE
-  SIGNUP
+  order    Order    @relation(fields: [orderId], references: [id])
+  vendor   Vendor   @relation(fields: [vendorId], references: [id])
 }
 
 model Session {
-  id        String    @id @default(uuid())
-  userId    String    @unique @db.Uuid // Nullable: not logged in
+  id        String           @id @default(uuid())
+  userId    String           @unique @db.Uuid
   ipAddress String?
   userAgent String?
-  startedAt DateTime  @default(now())
+  startedAt DateTime         @default(now())
   endedAt   DateTime?
-
-  source TrafficSource @default(DIRECT)
-
-  events AnalyticsEvent[]
+  source    TrafficSource    @default(DIRECT)
+  events    AnalyticsEvent[]
 
   @@index([userId])
   @@index([startedAt])
@@ -332,12 +306,11 @@ model AnalyticsEvent {
   id        String             @id @default(uuid())
   sessionId String
   eventType AnalyticsEventType
-  pageUrl   String // URL where the event occurred
-  referrer  String? // Optional referrer
-  productId String? // Optional (used for PRODUCT_VIEW)
+  pageUrl   String
+  referrer  String?
+  productId String?
   createdAt DateTime           @default(now())
-
-  session Session @relation(fields: [sessionId], references: [id])
+  session   Session            @relation(fields: [sessionId], references: [id])
 
   @@index([eventType])
   @@index([productId])
@@ -360,84 +333,73 @@ model Metric {
   name       String   @unique
   value      Float
   recordedAt DateTime @default(now())
-  metadata   Json? // Optional: extra info like dimensions or source
+  metadata   Json?
 
   @@index([name])
   @@index([recordedAt])
 }
 
 model CartItem {
-  id        String   @id @default(uuid()) // Unique ID for each cart item
-  userId    String   @unique @db.Uuid // Cross-service reference to user-service User ID
-  listingId String // FK to product-service ProductListing ID
-  productId String // FK to product-service Product ID
-  sellerId  String // FK to vendor-service or seller in user-service
-  quantity  Int      @default(1) // Quantity of the item added
-  createdAt DateTime @default(now()) // Timestamp when added to cart
+  id             String         @id @default(uuid())
+  userId         String         @db.Uuid
+  listingId      String
+  productId      String
+  vendorId       String         @db.Uuid
+  quantity       Int            @default(1)
+  createdAt      DateTime       @default(now())
+  user           User           @relation(fields: [userId], references: [id])
+  vendor         Vendor         @relation(fields: [vendorId], references: [id])
+  product        Product        @relation(fields: [productId], references: [id])
+  productListing ProductListing @relation(fields: [listingId], references: [id])
 
-  // Indexes for efficient querying/filtering (e.g., user cart fetch, analytics)
   @@index([userId])
   @@index([listingId])
-  @@index([sellerId])
+  @@index([vendorId])
   @@index([productId])
 }
 
-enum EmailEventType {
-  registration // User registration confirmation
-  otp // OTP for login or sensitive actions
-  order_confirmation // Email sent after successful order
-  invoice // PDF invoice attached email
+model UserToken {
+  id        String    @id @default(uuid())
+  token     String    @unique
+  userId    String?   @db.Uuid
+  vendorId  String?   @db.Uuid
+  createdAt DateTime  @default(now())
+  revoked   Boolean   @default(false)
+  expiresAt DateTime?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  vendor Vendor? @relation(fields: [vendorId], references: [id])
+
+  @@index([userId])
+  @@index([vendorId])
+  @@index([revoked])
 }
 
-//
-// MODEL: EmailLog
-//
-// Stores each email sent for audit, debugging, or retry logic.
-//
 model EmailLog {
-  id        String         @id @default(uuid()) // Unique email log ID
-  to        String // Recipient email address
-  subject   String // Subject line of the email
-  body      String // Raw/plaintext or rendered body
-  sentAt    DateTime       @default(now()) // When the email was sent
-  eventType EmailEventType // Why the email was triggered
+  id        String         @id @default(uuid())
+  to        String
+  subject   String
+  body      String
+  sentAt    DateTime       @default(now())
+  eventType EmailEventType
 
-  // Indexes to support querying/filtering/reporting
   @@index([to])
   @@index([eventType])
   @@index([sentAt])
 }
 
-/// Status of the payment after gateway/logic processing
-enum PaymentStatus {
-  success // Payment completed successfully
-  failed // Gateway declined or error
-  pending // Awaiting user/gateway confirmation (e.g. UPI timeout)
-}
-
-/// Mode selected by user at checkout
-enum PaymentMethod {
-  upi // UPI (QR/intent)
-  cod // Cash on Delivery (to be collected by delivery agent)
-  card // Credit/Debit card
-}
-
-//
-// MODELS
-//
-
 /// Stores metadata for each payment made for an order
 model Payment {
-  id            String        @id @default(uuid()) // Internal unique payment ID
-  userId        String        @unique @db.Uuid // FK to user-service (buyer)
-  orderId       String // FK to order-service
-  amount        Decimal // Gross amount paid
-  status        PaymentStatus // Current state of the payment
-  method        PaymentMethod // Method used by buyer
-  transactionId String        @unique // Unique ID from payment gateway (UPI ref, card txn, etc.)
-  gateway       String? // Optional: e.g., Razorpay, Stripe, Cashfree
-  remarks       String? // Optional: Failure reason, gateway note, etc.
-  createdAt     DateTime      @default(now()) // When payment was initiated
+  id            String        @id @default(uuid())
+  userId        String        @db.Uuid
+  orderId       String
+  amount        Decimal
+  status        PaymentStatus
+  method        PaymentMethod
+  transactionId String        @unique
+  gateway       String?
+  remarks       String?
+  createdAt     DateTime      @default(now())
 
   @@index([userId])
   @@index([orderId])
@@ -445,86 +407,226 @@ model Payment {
   @@index([transactionId])
 }
 
-enum PageType {
-  TERMS_AND_CONDITIONS
-  PRIVACY_POLICY
-  ABOUT_US
-  FAQ
-  CUSTOM // Any other CMS-defined page
-}
-
 model Page {
   id          String   @id @default(uuid())
-  title       String // Page title (e.g., "Terms & Conditions")
-  slug        String   @unique // URL-friendly slug (e.g., "terms")
+  title       String
+  slug        String   @unique
   type        PageType
-  content     String // Full HTML or markdown body
+  content     String
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-enum CouponType {
-  FLAT // Fixed amount (e.g., ₹100 off)
-  PERCENTAGE // Percentage-based (e.g., 10% off)
-}
-
-enum CouponScope {
-  GLOBAL // Can be used platform-wide
-  PRODUCT // Valid only for specific products
-  CATEGORY // Valid on specific product categories
-  VENDOR // Vendor-specific coupon
-  USER // User-specific personal coupon
-}
-
 model Coupon {
-  id            String      @id @default(uuid())
-  code          String      @unique // Unique coupon code (e.g., SAVE10)
+  id            String             @id @default(uuid())
+  code          String             @unique
   type          CouponType
   scope         CouponScope
-  value         Decimal // Discount value (₹ or %)
-  maxDiscount   Decimal? // Cap for percentage discounts (optional)
-  minOrderValue Decimal? // Minimum cart value to apply coupon (optional)
-  usageLimit    Int? // Max total redemptions (e.g., 100 uses)
-  perUserLimit  Int? // Max times one user can redeem
-  startDate     DateTime // Coupon valid from
-  endDate       DateTime // Coupon valid till
-  isActive      Boolean     @default(true)
-  createdAt     DateTime    @default(now())
-
-  redemptions CouponRedemption[]
+  value         Decimal
+  maxDiscount   Decimal?
+  minOrderValue Decimal?
+  usageLimit    Int?
+  perUserLimit  Int?
+  startDate     DateTime
+  endDate       DateTime
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  redemptions   CouponRedemption[]
 }
 
 model CouponRedemption {
   id         String   @id @default(uuid())
   couponId   String
-  userId     String   @unique @db.Uuid // User who used it
-  orderId    String // Order where coupon was used
+  userId     String   @unique @db.Uuid
+  orderId    String
   redeemedAt DateTime @default(now())
+  coupon     Coupon   @relation(fields: [couponId], references: [id])
 
-  coupon Coupon @relation(fields: [couponId], references: [id])
-
-  @@unique([couponId, userId, orderId]) // Prevent duplicate redemptions
+  @@unique([couponId, userId, orderId])
   @@index([userId])
 }
 
 model Recommendation {
   id            String   @id @default(uuid())
-  userId        String   @unique @db.Uuid // Who this is recommended to
-  productId     String // What is being recommended
-  score         Float // ML score / confidence
+  userId        String   @unique @db.Uuid
+  productId     String
+  score         Float
   recommendedAt DateTime @default(now())
 
-  @@unique([userId, productId]) // No duplicate recommendations
+  @@unique([userId, productId])
   @@index([userId])
   @@index([productId])
 }
 
 model PopularProduct {
   id        String   @id @default(uuid())
-  productId String   @unique // Globally trending product
-  score     Float // Popularity score (clicks/orders)
+  productId String   @unique
+  score     Float
   updatedAt DateTime @updatedAt
+}
+
+model RefundRequest {
+  id            String       @id @default(uuid())
+  orderItemId   String
+  userId        String       @db.Uuid
+  vendorId      String       @db.Uuid
+  reason        RefundReason
+  status        RefundStatus @default(REQUESTED)
+  comment       String?
+  attachmentUrl String?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  resolvedAt    DateTime?
+  user          User         @relation(fields: [userId], references: [id])
+  vendor        Vendor       @relation(fields: [vendorId], references: [id])
+
+  @@index([userId])
+  @@index([vendorId])
+  @@index([orderItemId])
+  @@index([status])
+}
+
+enum AdminRole {
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum ModerationActionType {
+  SUSPEND_VENDOR
+  REMOVE_PRODUCT
+  APPROVE_VENDOR
+  REJECT_VENDOR
+  WARN_VENDOR
+  SYSTEM_NOTE
+}
+
+enum TargetType {
+  VENDOR
+  PRODUCT
+  USER
+  ORDER
+}
+
+enum ModerationStatus {
+  PENDING
+  RESOLVED
+  ESCALATED
+  DISMISSED
+}
+
+enum UserRole {
+  buyer
+  seller
+  admin
+  super_admin
+}
+
+enum VendorStatus {
+  pending
+  approved
+  rejected
+  suspended
+}
+
+enum ProductListingStatus {
+  ACTIVE
+  INACTIVE
+  OUT_OF_STOCK
+  DISCONTINUED
+}
+
+enum RatingTargetType {
+  PRODUCT
+  SELLER
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  shipped
+  delivered
+  canceled
+  returned
+  refunded
+}
+
+enum ItemStatus {
+  pending
+  confirmed
+  shipped
+  delivered
+  canceled
+  returned
+  refunded
+}
+
+enum TrafficSource {
+  DIRECT
+  ORGANIC
+  SOCIAL
+  EMAIL
+  REFERRAL
+  PAID_AD
+}
+
+enum DispatchStatus {
+  not_started
+  preparing
+  dispatched
+  in_transit
+  delivered
+  failed
+}
+
+enum AnalyticsEventType {
+  PAGE_VIEW
+  PRODUCT_VIEW
+  ADD_TO_CART
+  PURCHASE
+  SIGNUP
+}
+
+enum EmailEventType {
+  registration
+  otp
+  order_confirmation
+  invoice
+}
+
+/// Status of the payment after gateway/logic processing
+enum PaymentStatus {
+  success
+  failed
+  pending
+}
+
+/// Mode selected by user at checkout
+enum PaymentMethod {
+  upi
+  cod
+  card
+}
+
+enum PageType {
+  TERMS_AND_CONDITIONS
+  PRIVACY_POLICY
+  ABOUT_US
+  FAQ
+  CUSTOM
+}
+
+enum CouponType {
+  FLAT
+  PERCENTAGE
+}
+
+enum CouponScope {
+  GLOBAL
+  PRODUCT
+  CATEGORY
+  VENDOR
+  USER
 }
 
 enum RefundReason {
@@ -536,28 +638,9 @@ enum RefundReason {
 }
 
 enum RefundStatus {
-  REQUESTED // Created by buyer
-  APPROVED // Verified by seller/admin
-  REJECTED // Declined with reason
-  REFUNDED // Amount returned to buyer
-  CANCELLED // Buyer or admin cancelled
-}
-
-model RefundRequest {
-  id            String       @id @default(uuid())
-  orderItemId   String // References item from order-service
-  userId        String       @unique @db.Uuid // Buyer who requested refund
-  sellerId      String // Related seller
-  reason        RefundReason
-  status        RefundStatus @default(REQUESTED)
-  comment       String? // Optional buyer message
-  attachmentUrl String? // Optional proof image (MinIO)
-  createdAt     DateTime     @default(now())
-  updatedAt     DateTime     @updatedAt
-  resolvedAt    DateTime? // Set when resolved
-
-  @@index([userId])
-  @@index([sellerId])
-  @@index([orderItemId])
-  @@index([status])
+  REQUESTED
+  APPROVED
+  REJECTED
+  REFUNDED
+  CANCELLED
 }

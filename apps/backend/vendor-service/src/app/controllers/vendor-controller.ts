@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import { createVendorDtoToPrisma } from '../dto/vendor.dto';
 import {
   PrismaClient,
   VendorStatus as PrismaVendorStatus,
-} from '../../../generated/vendor-service';
+} from '../../../../../../generated/prisma';
 import { logger } from '@shared/logger';
 import { uploadFileToMinIO } from '@shared/minio';
 import {
@@ -25,7 +26,7 @@ import { KAFKA_TOPICS } from '@shared/kafka';
 const prisma = new PrismaClient();
 
 function toPrismaStatus(status: SharedVendorStatus): PrismaVendorStatus {
-  return status as unknown as PrismaVendorStatus;
+  return status.toLowerCase() as PrismaVendorStatus;
 }
 
 /**
@@ -33,6 +34,7 @@ function toPrismaStatus(status: SharedVendorStatus): PrismaVendorStatus {
  */
 export const createVendor = async (req: Request, res: Response) => {
   try {
+    // Validate request body with schema
     const result = CreateVendorSchema.safeParse(req.body);
     if (!result.success) {
       return res.status(400).json({ error: result.error.format() });
@@ -40,27 +42,8 @@ export const createVendor = async (req: Request, res: Response) => {
 
     const dto: CreateVendorDto = result.data;
 
-    const vendor = await prisma.vendor.create({
-      data: {
-        ...dto,
-        status: toPrismaStatus(dto.status ?? SharedVendorStatus.PENDING),
-      },
-    });
-
-    await produceKafkaEvent({
-      topic: KAFKA_TOPICS.VENDOR.CREATED,
-      messages: [
-        {
-          value: JSON.stringify({
-            vendorId: vendor.id,
-            name: vendor.name,
-            email: vendor.email,
-            status: vendor.status,
-            createdAt: vendor.createdAt.toISOString(),
-          }),
-        },
-      ],
-    });
+    // Call service method to create vendor + produce kafka event
+ const vendor = await vendorService.register(createVendorDtoToPrisma(dto));
 
     return res.status(201).json({ vendor });
   } catch (err) {
@@ -68,6 +51,7 @@ export const createVendor = async (req: Request, res: Response) => {
     return res.status(500).json({ error: 'Failed to create vendor' });
   }
 };
+
 
 /**
  * Update vendor fields (excluding status-only updates)
@@ -191,10 +175,10 @@ export const uploadVendorDocuments = async (req: Request, res: Response) => {
     const vendor = await prisma.vendor.update({
       where: { id },
       data: {
-        documents: {
-          push: uploadedUrls,
-        },
-      },
+  kycDocsUrl: {
+    push: uploadedUrls,
+  },
+},
     });
 
     res.status(200).json({
@@ -211,7 +195,7 @@ export const approveVendor = async (req: Request, res: Response) => {
   try {
     const data = UpdateVendorStatusSchema.parse({
       id: req.params.id,
-      status: 'APPROVED',
+      status: SharedVendorStatus.APPROVED.toLowerCase(),
     });
     const vendor = await vendorService.updateStatus(data.id, data.status);
     res.json({ success: true, data: vendor });
@@ -225,7 +209,7 @@ export const rejectVendor = async (req: Request, res: Response) => {
   try {
     const data = UpdateVendorStatusSchema.parse({
       id: req.params.id,
-      status: 'REJECTED',
+      status: SharedVendorStatus.REJECTED.toLowerCase(),
     });
     const vendor = await vendorService.updateStatus(data.id, data.status);
     res.json({ success: true, data: vendor });
@@ -241,8 +225,25 @@ export const getVendorAnalytics = async (_req: Request, res: Response) => {
     // res.json({ success: true, data: analytics });
   } catch (err) {
     logger.error('Vendor Analytics Error:', err);
-    res
-      .status(500)
-      .json({ success: false, error: 'Failed to fetch analytics' });
+    res.status(500).json({ success: false, error: 'Failed to fetch analytics' });
   }
 };
+
+export const convertUserToVendor = async (req: Request, res: Response) => {
+  try {
+    const { userId, email, phone, altphone } = req.body;
+
+    if (!userId || !email || !phone) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    await vendorService.handleUserBecameVendor({ userId, email, phone, altphone });
+
+    res.status(200).json({ message: 'User successfully converted to vendor' });
+  } catch (err) {
+    logger.error('Error converting user to vendor', err);
+    res.status(500).json({ error: 'Failed to convert user to vendor' });
+  }
+};
+
+

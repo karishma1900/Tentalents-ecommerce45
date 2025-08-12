@@ -10,7 +10,7 @@ import { ChevronLeft, Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
 import '../login/login.css';
 import toast from 'react-hot-toast';
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 
 const maskEmail = (email: string) => {
   if (!email) return '';

@@ -1,15 +1,14 @@
-'use client';
-
+'use client'
 import React, { useEffect, useState, useRef } from 'react';
 import './address.css';
 import Address from '../components/addaddress/Address';
 import Image from 'next/image';
 import { ChevronRight } from 'lucide-react';
 import Mainimage from '../../assets/tenanlenst-menu.png';
-import '../components/addaddresspopup/addaddress.css';
 import ProfileIcn from '../../assets/profileicon.png';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+
 const AccountPage = () => {
   const [profile, setProfile] = useState<any>(null);
   const [formData, setFormData] = useState({
@@ -20,6 +19,7 @@ const AccountPage = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(null); // state for selected address
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [updatingProfile, setUpdatingProfile] = useState(false);
@@ -28,6 +28,7 @@ const AccountPage = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
+       console.log('Fetched token:', token);
       if (!token) {
         router.push('/login');
         return;
@@ -57,68 +58,6 @@ const AccountPage = () => {
     }
   };
 
-  const handleImageClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('avatar', file);
-
-    try {
-      setUploadingImage(true);
-      const token = localStorage.getItem('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/user/profile/image`, {
-        method: 'PATCH',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error('Failed to upload profile image');
-
-      await fetchProfile(); // refresh image
-    } catch (err) {
-      console.error('Upload error:', err);
-      toast.error('Image upload failed.');
-    } finally {
-      setUploadingImage(false);
-    }
-  };
-
-  const handleProfileUpdate = async () => {
-    try {
-      setUpdatingProfile(true);
-      const token = localStorage.getItem('token');
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/user/profile`, {
-        method: 'PATCH',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          altPhone: formData.altPhone,
-        }),
-      });
-
-      if (!res.ok) throw new Error('Profile update failed');
-
-      toast.success('Profile updated successfully');
-      await fetchProfile();
-    } catch (err) {
-      console.error(err);
-      toast.error('Error updating profile');
-    } finally {
-      setUpdatingProfile(false);
-    }
-  };
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -131,10 +70,14 @@ const AccountPage = () => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div style={{ color: 'red' }}>{error}</div>;
-const handleLogout = () => {
-  localStorage.removeItem('token'); // remove JWT
-  router.push('/login'); // redirect to login page
-};
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // remove JWT
+    router.push('/login'); // redirect to login page
+  };
+
+  const vendorId = profile?.vendorId || '';
+
   return (
     <div className="accountpage">
       <div className="accountheader">
@@ -147,22 +90,24 @@ const handleLogout = () => {
           <div className="acountdetails">
             <div className="accountdetailsheader">
               <h2 className="sectiontitle">Personal Details</h2>
+              <div className="accountbuttons flex items-center justify-between gap-[10px]">
               <button
                 className="background-button"
-                onClick={handleProfileUpdate}
+                onClick={() => {}}
                 disabled={updatingProfile}
               >
                 {updatingProfile ? 'Updating...' : 'Update Profile'}
               </button>
-               <button className="background-button logout-btn" onClick={handleLogout}>
-      Logout
-    </button>
+              <button className="background-button logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+              </div>
             </div>
 
             <div className="profiledetails">
               <div
                 className="profiledetailsleft"
-                onClick={handleImageClick}
+                onClick={() => fileInputRef.current?.click()}
                 style={{ cursor: uploadingImage ? 'wait' : 'pointer' }}
               >
                 <Image
@@ -175,7 +120,6 @@ const handleLogout = () => {
                 <input
                   type="file"
                   ref={fileInputRef}
-                  onChange={handleImageChange}
                   accept="image/*"
                   style={{ display: 'none' }}
                   disabled={uploadingImage}
@@ -211,7 +155,12 @@ const handleLogout = () => {
             </div>
           </div>
 
-          <Address showLocate={false} />
+          {/* Pass setAddress to Address component */}
+          <Address
+            showLocate={false}
+            vendorId={vendorId}
+            setAddress={setSelectedAddress} // Pass setSelectedAddress function to Address component
+          />
         </div>
 
         <div className="accountpage-right">

@@ -3,6 +3,7 @@ import {
   getCart,
   addToCart,
   checkoutCart,
+    updateCartItemQuantity, 
 } from '../controllers/cart.controller';
 import { optionalAuthMiddleware } from '@shared/auth'; // ✅ Supports JWT or guest session
 
@@ -13,6 +14,7 @@ const router = Router();
  * - Authenticated users: via JWT in Authorization header
  * - Guests: via `sessionId` in query or body
  */
+router.post('/update', updateCartItemQuantity);
 router.use(optionalAuthMiddleware()); // ✅ Call factory
 
 /**

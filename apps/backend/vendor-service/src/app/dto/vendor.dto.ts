@@ -1,16 +1,19 @@
 import { VendorStatus as SharedVendorStatus } from '@shared/types';
-import { Vendor, Prisma } from '../../../generated/vendor-service';
+import { Prisma, VendorStatus as PrismaVendorStatus } from '../../../../../../generated/prisma';
 
 export interface CreateVendorDto {
-  storeName: string;
-  storeSlug: string;
+  businessName: string;  // rename from storeName
   name: string;
   email: string;
   phone?: string;
-  userId: string;
+  userId?: string;
   status?: SharedVendorStatus;
   documents?: string[];
+   address?: string;
+  gstNumber?: string;
+  profileImage?: string;
 }
+
 export interface UpdateVendorDto extends Partial<CreateVendorDto> {}
 
 export interface UpdateVendorStatusDto {
@@ -20,18 +23,27 @@ export interface UpdateVendorStatusDto {
 export const createVendorDtoToPrisma = (
   dto: CreateVendorDto
 ): Prisma.VendorCreateInput => {
-  return {
-    storeName: dto.storeName,
-    storeSlug: dto.storeSlug,
+  const data: Prisma.VendorCreateInput = {
+    businessName: dto.businessName,
     name: dto.name,
     email: dto.email,
     phone: dto.phone ?? null,
-    documents: dto.documents ?? [],
-    status: dto.status ?? SharedVendorStatus.PENDING,
-    user: {
+    kycDocsUrl: dto.documents ?? [],
+    status: (dto.status ?? SharedVendorStatus.PENDING) as unknown as PrismaVendorStatus,
+    address: dto.address ?? null,
+    gstNumber: dto.gstNumber ?? null,
+    profileImage: dto.profileImage ?? null,
+  };
+
+  if (dto.userId) {
+    data.user = {
       connect: {
         id: dto.userId,
       },
-    },
-  };
+    };
+  }
+
+  return data;
 };
+
+

@@ -1,15 +1,19 @@
 // pages/api/verify-token.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { supabaseAdmin } from '../../supabaselogin/supabaseClient'; // ✅ Now it exists
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { verifyToken } from '@shared/middlewares/auth/src/lib/jwt';
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { accessToken } = req.body;
 
-const { data, error } = await supabaseAdmin.auth.getUser(accessToken); // ✅ This works now
-
-  if (error || !data.user) {
-    return res.status(401).json({ message: 'Invalid token' });
+  if (!accessToken) {
+    return res.status(400).json({ message: 'Missing token' });
   }
 
-  res.status(200).json({ user: data.user });
+  try {
+    const user = verifyToken(accessToken);
+    return res.status(200).json({ user });
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid token' });
+  }
 }

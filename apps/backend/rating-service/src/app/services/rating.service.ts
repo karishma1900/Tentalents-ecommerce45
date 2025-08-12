@@ -2,24 +2,38 @@ import { PrismaClient } from '../../../../../../generated/prisma';
 const prisma = new PrismaClient();
 
 interface CreateRatingInput {
-  productId?: string;
-  sellerId?: string;
+  productId?: string | null;  // allow null explicitly
+  vendorId?: string | null; 
   score: number;
-  comment?: string;
+  imageUrl?: string | null;
+  videoUrl?: string | null;
+  comment?: string | null;
 }
 
 export const ratingService = {
-  createRating: async (userId: string, data: CreateRatingInput) => {
-    return prisma.rating.create({
-      data: {
-        userId,
-        productId: data.productId,
-        sellerId: data.sellerId,
-        score: data.score,
-        comment: data.comment,
-      },
+createRating: async (userId: string, data: CreateRatingInput) => {
+  let vendorId = data.vendorId ?? null;
+
+  if (!vendorId && data.productId) {
+    const productListing = await prisma.productListing.findFirst({
+      where: { productId: data.productId },
+      select: { vendorId: true },
     });
-  },
+    vendorId = productListing?.vendorId ?? null;
+  }
+
+  return prisma.rating.create({
+    data: {
+      userId,
+      productId: data.productId ?? null,
+      vendorId,
+      score: data.score,
+      comment: data.comment ?? null,
+      imageUrl: data.imageUrl ?? null,
+      videoUrl: data.videoUrl ?? null,
+    },
+  });
+},
 
   getRatingsByProduct: async (productId: string) => {
     return prisma.rating.findMany({
@@ -28,9 +42,9 @@ export const ratingService = {
     });
   },
 
-  getRatingsBySeller: async (sellerId: string) => {
+  getRatingsBySeller: async (vendorId: string) => {
     return prisma.rating.findMany({
-      where: { sellerId },
+      where: { vendorId },
       include: { user: true },
     });
   },

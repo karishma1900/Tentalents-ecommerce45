@@ -10,6 +10,10 @@
  
     
 }
+.debitleft.selected {
+  border-color: 2px solid var(--secondary); /* Highlight color */
+  
+}
 .paymentcard{
    
     display: flex;

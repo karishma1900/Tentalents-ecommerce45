@@ -260,7 +260,7 @@ textarea::placeholder {
   color:var(--darkgrey);
   font-weight: 500;
   line-height: 1.4; /* Optional: improves vertical spacing */
-  height: 2.8em; /* 2 lines * line-height */
+ /* 2 lines * line-height */
 }
 
 /* price section stylings  */

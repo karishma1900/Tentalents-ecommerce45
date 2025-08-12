@@ -34,7 +34,7 @@ model Product {
   imageUrls   String[]                                           // Array of image URLs (MinIO + ImageKit)
   createdAt   DateTime         @default(now())                  // Creation timestamp
   updatedAt   DateTime         @updatedAt                       // Auto-update on change
-
+  slug        String?  @unique
   listings    ProductListing[]                                  // Linked listings from various sellers
 
   @@index([title])

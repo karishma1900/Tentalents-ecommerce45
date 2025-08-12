@@ -1,17 +1,69 @@
-import { products } from '../../../configs/constants';
+import React, { useEffect, useState } from 'react';
 import { PlusIcon } from 'lucide-react';
-import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import star from "../../../assets/icons/kid_star.png";
 import "../../home-page/productlist/Productlist";
+import { useAddToCart } from '../../api/hello/UseAddToCart';
+type Product = {
+  id: string;
+  title: string;
+  price: number;
+  offerPrice?: number;
+  image: string | string[];
+  href: string;
+  rating: number;
+};
 
 type ProductsProps = {
   listCount?: number;
 };
 
 const ProductCart = ({ listCount = 2 }: ProductsProps) => {
-  const items = products.slice(0, listCount);
+  const [items, setItems] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_FETCH_LINK}/products`);
+        if (!res.ok) throw new Error('Failed to fetch products');
+
+        const json = await res.json();
+
+        // Assuming backend response is { data: [...] }
+        const productsFromBackend = json.data;
+
+        // Map backend data to expected product shape
+        const mappedProducts: Product[] = productsFromBackend.map((p: any) => {
+          const listing = p.listings?.[0];
+          return {
+            id: p.id,
+            title: p.title,
+            price: listing ? Number(listing.originalPrice) : 0,
+            offerPrice: listing ? Number(listing.price) : undefined,
+            image: p.imageUrls?.[0] || '',
+            rating: p.ratings?.length > 0 ? p.ratings[0].score : 0,
+            href: `/shop/${p.slug}`,
+          };
+        });
+
+        setItems(mappedProducts.slice(0, listCount));
+      } catch (err) {
+        setError('Failed to load products');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, [listCount]);
+
+  if (loading) return <p>Loading products...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="products-lists productlistaddtocart">
@@ -20,8 +72,8 @@ const ProductCart = ({ listCount = 2 }: ProductsProps) => {
       </div>
 
       <div className="product-list">
-        {items.map((i, index) => (
-          <div key={index}>
+        {items.map((i) => (
+          <div key={i.id}>
             <Link href={i.href}>
               <div className="product-list-item">
                 <div className="image-wrapper2">

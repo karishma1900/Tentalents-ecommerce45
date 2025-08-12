@@ -61,7 +61,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken } from './jwt';
-import { AuthPayload, UserRole } from './types';
+import { AuthPayload, UserRole, ROLES } from './types';
 
 
 declare module 'express' {
@@ -96,20 +96,19 @@ export function authMiddleware(
       const decoded = verifyToken(token, secret) as AuthPayload;
       req.user = decoded;
 
-      if (allowedRoles) {
-        const allowed = Array.isArray(allowedRoles)
-          ? allowedRoles
-          : [allowedRoles];
-        if (!allowed.includes(req.user.role)) {
-          res
-            .status(403)
-            .json({
-              message: `Forbidden: Role "${req.user.role}" not authorized`,
-            });
-          return;
-        }
-      }
+     if (allowedRoles) {
+  const allowed = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
 
+  // Map vendor role to seller before check
+  const userRole = req.user.role === ROLES.VENDOR ? ROLES.SELLER : req.user.role;
+
+  if (!allowed.includes(userRole)) {
+    res.status(403).json({
+      message: `Forbidden: Role "${req.user.role}" not authorized`,
+    });
+    return;
+  }
+}
       next();
     } catch (err: any) {
       console.error('❌ [authMiddleware] Token verification failed:', err);

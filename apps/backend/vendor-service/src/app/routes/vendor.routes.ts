@@ -11,7 +11,9 @@ import {
   approveVendor,
   rejectVendor,
   getVendorAnalytics,
+  convertUserToVendor
 } from '../controllers/vendor-controller';
+
 
 import { authMiddleware } from '@shared/auth';
 import { UserRole } from '@shared/types';
@@ -36,11 +38,11 @@ const upload = multer({
 // === Authenticated & Role-Based Vendor Routes ===
 
 // Register a new vendor
-router.post('/', authMiddleware(UserRole.SELLER), createVendor);
+router.post('/', authMiddleware([UserRole.BUYER, UserRole.SELLER,UserRole.ADMIN]), createVendor);
 
 // Get all vendors (admin access)
 router.get('/', authMiddleware(UserRole.ADMIN), getAllVendors);
-
+router.post('/vendor/convert', convertUserToVendor);
 // Get vendor by ID (any authenticated user)
 router.get('/:id', authMiddleware(), getVendorById);
 

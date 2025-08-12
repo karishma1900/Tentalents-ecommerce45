@@ -27,15 +27,15 @@ enum ProductListingStatus {
 
 /// Represents a unique product (shared across all vendors)
 model Product {
-  id          String   @id @default(uuid()) // Global product ID
+  id          String           @id @default(uuid()) // Global product ID
   title       String // Product name
   description String? // Optional full description (Markdown/HTML)
   category    String? // E.g., "Electronics > Phones"
   imageUrls   String[] // Array of image URLs (MinIO + ImageKit)
-  createdAt   DateTime @default(now()) // Creation timestamp
-  updatedAt   DateTime @updatedAt // Auto-update on change
-
-  listings ProductListing[] // Linked listings from various sellers
+  createdAt   DateTime         @default(now()) // Creation timestamp
+  updatedAt   DateTime         @updatedAt // Auto-update on change
+  slug        String           @unique
+  listings    ProductListing[] // Linked listings from various sellers
 
   @@index([title])
   @@index([category])

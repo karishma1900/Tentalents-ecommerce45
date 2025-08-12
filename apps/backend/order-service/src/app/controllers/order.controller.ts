@@ -3,7 +3,7 @@ import { orderService } from '../services/order.service';
 import { produceKafkaEvent } from '@shared/kafka';
 import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
 import type { AuthPayload } from '@shared/middlewares/auth/src/lib/types';
-
+import { addressService } from '../services/order.service';
 interface AuthedRequest extends Request {
   user?: AuthPayload;
 }
@@ -16,21 +16,23 @@ export const placeOrder = async (
   try {
     const userId = req.user?.userId;
     if (!userId) {
-      return res
-        .status(401)
-        .json({ message: '❌ Unauthorized: missing user ID' });
+      return res.status(401).json({ message: '❌ Unauthorized: missing user ID' });
     }
 
+    // Pass the request body directly to placeOrder, which already does address validation
     const order = await orderService.placeOrder(userId, req.body);
-   await produceKafkaEvent({
-  topic: 'order.created',
-  messages: [{ value: JSON.stringify(order) }],
-});
+
+    await produceKafkaEvent({
+      topic: 'order.created',
+      messages: [{ value: JSON.stringify(order) }],
+    });
+
     sendSuccess(res, '✅ Order placed successfully', order);
   } catch (err) {
     next(err);
   }
 };
+
 
 export const getUserOrders = async (
   req: AuthedRequest,
@@ -97,5 +99,67 @@ export const updateOrderStatus = async (
     sendSuccess(res, '✅ Order status updated', updated);
   } catch (err) {
     next(err);
+  }
+};
+export const addAddress = async (
+  req: AuthedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+
+    const address = await addressService.addAddress(userId, req.body);
+    res.status(201).json({ message: 'Address added', data: address });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const editAddress = async (
+  req: AuthedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.userId;
+    const addressId = req.params.id;
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+
+    const updatedAddress = await addressService.editAddress(userId, addressId, req.body);
+    res.json({ message: 'Address updated', data: updatedAddress });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deleteAddress = async (
+  req: AuthedRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userId = req.user?.userId;
+    const addressId = req.params.id;
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+
+    await addressService.deleteAddress(userId, addressId);
+    res.json({ message: 'Address deleted' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const getUserAddresses = async (req: AuthedRequest, res: Response, next: NextFunction) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+    console.log(`Fetching addresses for userId: ${userId}`);
+    // Make sure we're calling the correct service for fetching addresses
+    const addresses = await addressService.getAddressesByUser(userId); // Correct service
+    sendSuccess(res, '📍 Addresses fetched', addresses); 
+  } catch (err) {
+    next(err);  // Handle any errors
   }
 };

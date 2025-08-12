@@ -1,21 +1,23 @@
 // Define constant ROLES object
 export const ROLES = {
-  BUYER: 'buyer',
+ BUYER: 'buyer',
   SELLER: 'seller',
   BUYER_SELLER: 'buyer_seller',
   ADMIN: 'admin',
   SUPER_ADMIN: 'super_admin',
+  VENDOR: 'vendor',
 } as const;
 
 // Create union type from ROLES values
 export type UserRole = (typeof ROLES)[keyof typeof ROLES];
 
 export interface AuthPayload {
-  userId: string;
+  userId?: string; // optional for vendors
   email: string;
   role: UserRole;
   iat?: number;
   exp?: number;
+  vendorId?: string;
 }
 
 // ✅ Role-check helpers using ROLES constant
