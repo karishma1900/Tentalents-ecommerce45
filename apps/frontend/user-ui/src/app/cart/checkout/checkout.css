@@ -20,3 +20,24 @@
 .checkoutright .quantitycard{
     margin-top:30px;
 }
+.address-container{
+    padding:10px;
+
+}
+.address-container p{
+    color:var(--grey);
+    font-size: 17px;
+    
+}
+@media(max-width:768px){
+    .deliverylocation{
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+    .checkoutleft{
+        width: 100%;
+    }
+    .checkoutright{
+        width: 100%;
+    }
+}

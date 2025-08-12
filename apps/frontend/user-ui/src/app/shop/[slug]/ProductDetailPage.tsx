@@ -374,7 +374,7 @@ const sellerInfo = product.vendor;
         </div>
         <div className="paymentwrapper">
           <div className="paymentimages"><Image src={UPI} alt="upi"/><Image src={visa} alt="visa"/><Image src={bank} alt="bank"/><Image src={BankTransfer} alt="bank-transfer"/></div>
-          <button className="background-button addtocart">Buy Now</button>
+         <a href="/cart/checkout"><button  className="background-button addtocart">Buy Now</button></a> 
         </div>
       </div>
     </div>

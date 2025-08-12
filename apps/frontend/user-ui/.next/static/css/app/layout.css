@@ -322,7 +322,7 @@ textarea::placeholder {
   font-weight: 500;
   line-height: 1.4;
 }
-.price-main ,.rating {
+.rating {
   padding: 5px 0px;
   display: flex;
   align-items: center;

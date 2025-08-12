@@ -10,7 +10,7 @@ import {
  rateLimiterMiddleware as rateLimiter,
   requestLoggerMiddleware as requestLogger,
 } from '@shared/middlewares';
-
+export * from './app/services/cart.service';
 import cartRoutes from './app/routes/cart.routes';
 
 const app = express();

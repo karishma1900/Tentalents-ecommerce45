@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { logger } from '@shared/logger';
 import { orderService } from '@order-service/services/order.service';
 import Stripe from 'stripe';
-
+import { cartService } from '@cart-service/services/cart.service';
 interface InitiatePaymentDTO {
   amount: number;
   method: PaymentMethod;
@@ -24,26 +24,34 @@ export const paymentService = {
     const { amount, method, orderId, shippingAddressId, items, totalAmount } = data;
 
     // COD payments → no Stripe needed
-    if (method === PaymentMethod.cod) {
-      const order = await orderService.placeOrder(userId, {
-        items,
-        totalAmount,
-        shippingAddressId,
-        paymentMode: 'cash_on_delivery',
-      });
+  if (method === PaymentMethod.cod) {
+  const order = await orderService.placeOrder(userId, {
+    items,
+    totalAmount,
+    shippingAddressId,
+    paymentMode: 'cash_on_delivery',
+  });
 
-      if ('id' in order) {
-        logger.info(`[paymentService] Created order ${order.id} for user ${userId} via COD`);
-        return {
-          paymentId: null,
-          amount,
-          method,
-          status: PaymentStatus.success,
-          orderId: order.id,
-        };
-      } else {
-        throw new Error('Order creation failed for COD');
-      }
+  if ('id' in order) {
+    logger.info(`[paymentService] Created order ${order.id} for user ${userId} via COD`);
+
+    // ✅ Clear cart after successful COD order
+    try {
+      await cartService.checkout(userId);
+    } catch (err) {
+      logger.warn(`[paymentService] Failed to clear cart for COD: ${err}`);
+    }
+
+    return {
+      paymentId: null,
+      amount,
+      method,
+      status: PaymentStatus.success,
+      orderId: order.id,
+    };
+  } else {
+    throw new Error('Order creation failed for COD');
+  }
     }
 
     // Create payment entry first
@@ -122,22 +130,16 @@ export const paymentService = {
   },
 
   handleStripeWebhook: async (event: Stripe.Event) => {
-  logger.info(`[Stripe Webhook] Received event: ${event.type}`);
-
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
-    logger.info(`[Stripe Webhook] Checkout Session ID: ${session.id}`);
-    logger.info(`[Stripe Webhook] Metadata: ${JSON.stringify(session.metadata)}`);
 
     if (!session.metadata) {
-      logger.error(`[Stripe Webhook] ❌ Metadata missing from Stripe session`);
       throw new Error('Metadata missing from Stripe session');
     }
 
     const { paymentId, orderId } = session.metadata;
 
     if (!paymentId) {
-      logger.error(`[Stripe Webhook] ❌ paymentId missing from metadata`);
       throw new Error('PaymentId missing in metadata');
     }
 
@@ -147,35 +149,35 @@ export const paymentService = {
     });
 
     if (!existingPayment) {
-      logger.error(`[Stripe Webhook] ❌ Payment record not found for id: ${paymentId}`);
       throw new Error(`Payment record not found: ${paymentId}`);
     }
 
-    logger.info(`[Stripe Webhook] Found Payment: ${JSON.stringify(existingPayment)}`);
-
-    // Update payment status & transactionId
+    // **Single update here** — update status to success and save payment_intent as transactionId
     await prisma.payment.update({
       where: { id: paymentId },
       data: {
         status: PaymentStatus.success,
-        transactionId: session.id, // Save Stripe session ID
+        transactionId: session.payment_intent as string,
+        
       },
     });
 
-    logger.info(`[Stripe Webhook] ✅ Payment ${paymentId} marked as success with transactionId: ${session.id}`);
-
-    // Update order
-    if (orderId) {
-      await orderService.updateOrderStatus(orderId, 'confirmed');
-     await prisma.payment.update({
-  where: { id: paymentId },
-  data: { status: PaymentStatus.success, transactionId: session.payment_intent as string }
+    // Update order status
+await prisma.order.update({
+  where: { id: orderId },
+  data: {
+    status: 'confirmed',
+    paymentStatus: PaymentStatus.success, // ✅ This line is critical
+  },
 });
-
-      logger.info(`[Stripe Webhook] ✅ Order ${orderId} marked as confirmed`);
-    }
+try {
+  await cartService.checkout(session.metadata.userId);
+} catch (err) {
+  logger.warn(`[paymentService] Failed to clear cart after Stripe payment: ${err}`);
+}
   }
 },
+
 
   handleStripeWebhookRaw: async (rawBody: Buffer, signature: string): Promise<Stripe.Event> => {
     let event: Stripe.Event;

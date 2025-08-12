@@ -28,14 +28,16 @@
       "@shared/utils": ["libs/shared/utils/src/index.ts"],
       // Correct paths for service imports (include whole src folder)
       "@payment-service/*": ["apps/backend/payment-service/src/app/*"],  // Including all files in the payment-service
-      "@order-service/*": ["apps/backend/order-service/src/app/*"]  // Including all files in the order-service
+      "@order-service/*": ["apps/backend/order-service/src/app/*"],
+      "@cart-service/*":["apps/backend/cart-service/src/app/*"]  // Including all files in the order-service
     }
   },
   "include": [
     "src/**/*.ts",
     "../../../libs/shared/**/*.ts",
     "../../../apps/backend/payment-service/src/**/*.ts",  // Ensure payment service files are included
-    "../../../apps/backend/order-service/src/**/*.ts"    // Ensure order service files are included
+    "../../../apps/backend/order-service/src/**/*.ts",
+        "../../../apps/backend/cart-service/src/**/*.ts", // Ensure order service files are included
   ],
   "exclude": [
     "jest.config.ts",

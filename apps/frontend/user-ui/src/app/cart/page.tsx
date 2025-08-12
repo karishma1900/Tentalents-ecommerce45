@@ -194,23 +194,20 @@ async function updateQuantity(listingId: string, currentQty: number, change: num
 
               return (
                 <div key={item.id} className="productcart">
-                  <div
-                    className="image-wrapper2"
-                    style={{ position: 'relative', width: '130px', height: '80px' }}
-                  >
+                  <div className="productcart-image">
                     <Link href={`/product/${product.id}`}>
                       <Image
                         src={productImage}
                         alt={product.title}
-                        layout="fill"
-                        objectFit="cover"
+
+                        width={65}
+                        height={65}
+                       
                         className="product-image cartproduct-image"
                       />
                     </Link>
-                  </div>
-
-                  <div className="detailcart">
-                    <div className="cartcontentarea">
+                   
+              <div className="cartcontentarea">
                       <Link href={`/product/${product.id}`}>
                         <h3 className="product-title">{product.title}</h3>
                       </Link>
@@ -224,7 +221,11 @@ async function updateQuantity(listingId: string, currentQty: number, change: num
                         </div>
                       </div>
                     </div>
+                     </div>
 
+                  <div className="detailcart">
+                 
+                  
                     <div className="adtocart-wrapper2">
                       <div className="counter">
                      <button
