@@ -6,23 +6,17 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/page": [
+    "/shop/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/css/app/shop/page.css",
+      "static/chunks/app/shop/page.js"
     ],
-    "/(routes)/login/page": [
+    "/shop/[slug]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/(routes)/login/page.css",
-      "static/chunks/app/(routes)/login/page.js"
-    ],
-    "/myaccount/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/myaccount/page.css",
-      "static/chunks/app/myaccount/page.js"
+      "static/css/app/shop/[slug]/page.css",
+      "static/chunks/app/shop/[slug]/page.js"
     ],
     "/cart/page": [
       "static/chunks/webpack.js",
@@ -30,16 +24,17 @@
       "static/css/app/cart/page.css",
       "static/chunks/app/cart/page.js"
     ],
-    "/cart/checkout/page": [
+    "/myaccount/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/cart/checkout/page.css",
-      "static/chunks/app/cart/checkout/page.js"
+      "static/css/app/myaccount/page.css",
+      "static/chunks/app/myaccount/page.js"
     ],
-    "/_not-found/page": [
+    "/(routes)/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/css/app/(routes)/login/page.css",
+      "static/chunks/app/(routes)/login/page.js"
     ]
   }
 }

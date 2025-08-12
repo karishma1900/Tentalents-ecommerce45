@@ -4,13 +4,18 @@ import { errorHandler, notFoundHandler } from '@shared/error';
 import { loggerMiddleware } from '@shared/logger';
 import { authMiddleware } from '@shared/auth';
 import vendorRoutes from './app/routes/vendor.routes';
-
+import cors from 'cors'; 
 const app = express();
 
 // 🌐 Global Middleware
 app.use(express.json());
-app.use(loggerMiddleware);
 
+app.use(cors({
+  origin: 'http://localhost:3001',  // Frontend URL (adjust if necessary)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary methods
+  allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+}));
+app.use(loggerMiddleware);
 // 📚 Swagger API Docs (public, before auth middleware)
 setupSwagger(app, {
   title: 'Vendor Service',

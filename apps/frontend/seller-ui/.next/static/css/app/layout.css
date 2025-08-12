@@ -12,8 +12,8 @@
 .fixed {
   position: fixed;
 }
-.sticky {
-  position: sticky;
+.relative {
+  position: relative;
 }
 .mb-\[10px\] {
   margin-bottom: 10px;
@@ -26,9 +26,6 @@
 }
 .flex {
   display: flex;
-}
-.hidden {
-  display: none;
 }
 .h-full {
   height: 100%;
@@ -84,11 +81,12 @@
 .gap-\[15px\] {
   gap: 15px;
 }
-.overflow-x-auto {
-  overflow-x: auto;
-}
 .rounded-\[10px\] {
   border-radius: 10px;
+}
+.border {
+  border-style: var(--tw-border-style);
+  border-width: 1px;
 }
 .border-t {
   border-top-style: var(--tw-border-style);
@@ -139,6 +137,13 @@
 }
 .text-\[var\(--secondary\)\] {
   color: var(--secondary);
+}
+.underline {
+  text-decoration-line: underline;
+}
+.outline {
+  outline-style: var(--tw-outline-style);
+  outline-width: 1px;
 }
 .outline-0 {
   outline-style: var(--tw-outline-style);

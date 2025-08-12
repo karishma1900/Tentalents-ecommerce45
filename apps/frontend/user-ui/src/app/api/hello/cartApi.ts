@@ -35,7 +35,7 @@ export const addToCart = async (
 
   // If listingId or sellerId is missing, fetch complete product details
   if (!listingId || !sellerId) {
-    console.warn('🔎 Missing listingId or sellerId. Fetching full product details...');
+    console.warn(' Missing listingId or sellerId. Fetching full product details...');
     const fullDetails = await fetchFullProductDetails(productId);
     listingId = fullDetails.listingId;
     sellerId = fullDetails.sellerId;
@@ -52,7 +52,7 @@ export const addToCart = async (
     quantity,
   };
 
-  console.log('🛒 addToCart -> payload:', item);
+  console.log(' addToCart -> payload:', item);
 
   const token = localStorage.getItem('token');
   if (!token) throw new Error('User not authenticated.');

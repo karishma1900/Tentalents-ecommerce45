@@ -3,47 +3,89 @@ import { produceKafkaEvent } from '@shared/kafka';
 import { SERVICE_NAMES } from '@shared/constants';
 import { VendorStatus } from '@shared/types';
 import { KAFKA_TOPICS } from '@shared/kafka';
+import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { VendorCreatedEvent, VendorStatusUpdatedEvent } from '@shared/kafka';
 import { logger } from '@shared/logger';
-
+import { sendEmail } from '@shared/middlewares/email/src/index';
 const prisma = new PrismaClient();
 
 export const vendorService = {
-  async register(data: Omit<Prisma.VendorCreateInput, 'userId'>) {
-    // We remove any userId property if present, because Prisma expects 'user' relation, not scalar foreign key.
-    const { userId, ...vendorData } = data as any;
+initiateVendorRegistrationOtp: async (email: string) => {
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) throw new Error('User already exists');
 
-    // Find or create user with vendor email
-    let user = await prisma.user.findUnique({ where: { email: vendorData.email } });
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiresAt = new Date(Date.now() + 5 * 60 * 1000); // 5 minutes expiry
 
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
-          email: vendorData.email!,
-          name: vendorData.name || '',
-          phone: vendorData.phone || '',
-          role: UserRole.buyer, // or UserRole.vendor if applicable
-        },
-      });
-    } else {
-      user = await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          name: vendorData.name || user.name,
-          phone: vendorData.phone || user.phone,
-        },
-      });
+    await prisma.pendingUserOtp.upsert({
+      where: { email },
+      update: { otp, expiresAt },
+      create: { email, otp, expiresAt },
+    });
+
+    // ✅ Send OTP email
+    await sendEmail({
+      to: email,
+      subject: 'Your Vendor OTP Code',
+      html: `<p>Your OTP is: <strong>${otp}</strong>. It expires in 5 minutes.</p>`,
+    });
+
+    logger.info(`[VendorService] ✅ OTP sent to ${email}`);
+    return { message: 'OTP sent to email' };
+  } catch (err) {
+    logger.error('[VendorService] ❌ initiateVendorRegistrationOtp error:', err);
+    throw err;
+  }
+},
+  // Step 2: Verify OTP
+  verifyVendorEmailOtp: async (email: string, otp: string) => {
+    const record = await prisma.pendingUserOtp.findUnique({ where: { email } });
+    if (!record || record.otp !== otp || record.expiresAt < new Date()) {
+      throw new Error('Invalid or expired OTP');
+    }
+    logger.info(`[VendorService] OTP verified for ${email}`);
+    return { verified: true };
+  },
+
+  // Step 3: Complete vendor user registration (email + password)
+  completeVendorUserRegistration: async (email: string, password: string) => {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) throw new Error('User already exists');
+
+    const otpRecord = await prisma.pendingUserOtp.findUnique({ where: { email } });
+    if (!otpRecord || otpRecord.expiresAt < new Date()) {
+      throw new Error('OTP verification expired or not found');
     }
 
-    // Construct Prisma VendorCreateInput with relation
-    const createVendorData: Prisma.VendorCreateInput = {
-      ...vendorData,
-      user: { connect: { id: user.id } },
-    };
+    const hashedPassword = await hashPassword(password);
 
-    // Create vendor
+    const user = await prisma.user.create({
+      data: {
+        email,
+        password: hashedPassword,
+        role: UserRole.buyer, // vendor role
+      },
+    });
+
+    await prisma.pendingUserOtp.delete({ where: { email } });
+    logger.info(`[VendorService] Vendor user registered for ${email}`);
+    return user;
+  },
+
+  // Step 4: Register vendor details (after user created)
+  completeVendorProfileRegistration: async (userId: string, vendorData: Omit<Prisma.VendorCreateInput, 'userId'>) => {
+    // Check user exists
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) throw new Error('User not found');
+
+    // Create vendor linked to user
     const vendor = await prisma.vendor.create({
-      data: createVendorData,
+      data: {
+        ...vendorData,
+        user: { connect: { id: userId } },
+        status: PrismaVendorStatus.pending,
+      },
     });
 
     // Emit Kafka events
@@ -53,7 +95,6 @@ export const vendorService = {
       status: vendor.status as VendorStatus,
       createdAt: vendor.createdAt.toISOString(),
     };
-
     const statusUpdatedEvent: VendorStatusUpdatedEvent = {
       vendorId: vendor.id,
       status: vendor.status as VendorStatus,
@@ -71,7 +112,7 @@ export const vendorService = {
       }),
     ]);
 
-    logger.info(`[${SERVICE_NAMES.VENDOR}] Vendor registered and status emitted: ${vendor.id}`);
+    logger.info(`[VendorService] Vendor profile completed for user ${userId}`);
     return vendor;
   },
 

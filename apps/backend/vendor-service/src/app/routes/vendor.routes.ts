@@ -2,7 +2,7 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import {
-  createVendor,
+
   updateVendor,
   getVendorById,
   getAllVendors,
@@ -11,7 +11,11 @@ import {
   approveVendor,
   rejectVendor,
   getVendorAnalytics,
-  convertUserToVendor
+  convertUserToVendor,
+  initiateVendorRegistrationOtp,
+  verifyVendorEmailOtp,
+  completeVendorUserRegistration,
+  completeVendorProfileRegistration,
 } from '../controllers/vendor-controller';
 
 
@@ -38,8 +42,11 @@ const upload = multer({
 // === Authenticated & Role-Based Vendor Routes ===
 
 // Register a new vendor
-router.post('/', authMiddleware([UserRole.BUYER, UserRole.SELLER,UserRole.ADMIN]), createVendor);
 
+router.post('/register/initiate-otp', initiateVendorRegistrationOtp);
+router.post('/register/verify-otp', verifyVendorEmailOtp);
+router.post('/register/user', completeVendorUserRegistration);
+router.post('/register/profile', authMiddleware([UserRole.SELLER]), completeVendorProfileRegistration);
 // Get all vendors (admin access)
 router.get('/', authMiddleware(UserRole.ADMIN), getAllVendors);
 router.post('/vendor/convert', convertUserToVendor);

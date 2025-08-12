@@ -33,18 +33,18 @@ export default function ProductDetailClient({ product }: { product: any }) {
     reviews: true,
   });
 useEffect(() => {
-  console.log("✅ Product received in ProductDetailClient:");
+  console.log("Product received in ProductDetailClient:");
   console.log("Full product object:", product);
-  console.log("🆔 Listing ID:", product.listingId);
-  console.log("🧑 Seller ID:", product.sellerId);
-  console.log("🏪 Seller Name:", product.seller?.name);
+  console.log("Listing ID:", product.listingId);
+  console.log("Seller ID:", product.sellerId);
+  console.log(" Seller Name:", product.seller?.name);
 }, [product]);
   const [reviews, setReviews] = useState<any[]>([]);
 const { handleAddToCart, loading, error, userId } = useAddToCart();
 
 const onAddToCartClick = async () => {
   if (!userId) {
-    toast.error('🚪 Please log in to add items to your cart.');
+    toast.error(' Please log in to add items to your cart.');
     router.push('/login');
     return;
   }
@@ -62,7 +62,7 @@ const onAddToCartClick = async () => {
     toast.success('✅ Added to cart!');
   } catch (e) {
       console.error('Add to cart failed:', e);
-    toast.error('❌ Failed to add to cart.');
+    toast.error(' Failed to add to cart.');
   }
 };
 

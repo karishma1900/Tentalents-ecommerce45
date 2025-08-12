@@ -20,8 +20,8 @@ const OrderPlaced: React.FC<{ product: Product }> = ({ product }) => {
   const productImage = Array.isArray(image) ? image[0] : image;
 
   return (
-    <Link href={href}>
-      <div className="product-list-item">
+    <Link href={href} className='main-containerproduct'>
+      <div className="product-list-item2">
         <div className="image-wrapper2">
           <Image
             src={productImage}

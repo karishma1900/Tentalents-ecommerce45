@@ -5,6 +5,7 @@ import Link from 'next/link';
 import star from "../../../assets/icons/kid_star.png";
 import "../../home-page/productlist/Productlist";
 import { useAddToCart } from '../../api/hello/UseAddToCart';
+import './addtocart.css';
 type Product = {
   id: string;
   title: string;
@@ -90,7 +91,7 @@ const ProductCart = ({ listCount = 2 }: ProductsProps) => {
                     <div className="price-section">
                       <p>${i.price}</p>
                     </div>
-                    <div className="rating">
+                    <div className="rating cart-ratingcom">
                       <p>{i.rating}</p>
                       <Image src={star} alt="star" />
                       <p className="number">(100)</p>

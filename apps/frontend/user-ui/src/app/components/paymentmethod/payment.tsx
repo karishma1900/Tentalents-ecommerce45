@@ -17,9 +17,13 @@ import toast from 'react-hot-toast';
 const Payment = ({
   onPaymentModeSelect,
   total,
+   onConfirmPayment
+  
 }: {
   onPaymentModeSelect: (paymentMode: string) => void;
-  total: number;  // Add 'total' here to accept it as a prop
+  total: number;
+  onConfirmPayment:() => void;  
+  // Add 'total' here to accept it as a prop
 }) => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [selectedPaymentMode, setSelectedPaymentMode] = useState<string>('');
@@ -41,7 +45,8 @@ const confirmPaymentSelection = () => {
     return;
   }
   onPaymentModeSelect(selectedPaymentMode); // Pass to parent
-  setIsPaymentOpen(false); // Close after selection
+  setIsPaymentOpen(false); 
+    onConfirmPayment();// Close after selection
 };
 
   return (
@@ -74,7 +79,7 @@ const confirmPaymentSelection = () => {
                   <Image src={Phonepay} alt="Phonepay" />
                 </div>
                 <p className="text">Scan and Pay with any UPI App</p>
-              <p>Amount: ${total.toFixed(2)}</p>
+         <p>Amount: ${total.toFixed(2)}</p>
                 <div className="or">
                   <p>Or</p>
                 </div>
@@ -86,10 +91,11 @@ const confirmPaymentSelection = () => {
             </div>
 
             <div className="paymentright">
-                    <div className="debitcard">
+                    <div className={`debitcard ${selectedPaymentMode === 'credit_card' ? 'selected' : ''}`}
+                      onClick={() => handlePaymentModeSelect('credit_card')}>
              <div
-  className={`debitleft ${selectedPaymentMode === 'credit_card' ? 'selected' : ''}`}
-  onClick={() => handlePaymentModeSelect('credit_card')}
+  className= 'debitleft'
+ 
 >
   <Image src={Card} alt="card" />
   <h2>Debit/Credit Card</h2>
@@ -107,10 +113,11 @@ const confirmPaymentSelection = () => {
   </div>
                 <input type="checkbox" />
               </div> */}
-  <div className="cashondeilvery">
+  <div  className={`cashondeilvery ${selectedPaymentMode === 'cash_on_delivery' ? 'selected' : ''}`}
+  onClick={() => handlePaymentModeSelect('cash_on_delivery')}>
               <div
-  className={`debitleft ${selectedPaymentMode === 'cash_on_delivery' ? 'selected' : ''}`}
-  onClick={() => handlePaymentModeSelect('cash_on_delivery')}
+  className='debitleft '
+  
 >
   <Image src={cash} alt="cash" />
   <h2>Cash On Delivery (COD)</h2>

@@ -5,13 +5,48 @@
     width: 100%;
     gap:30px;
 }
+p{
+   font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+}
+/* .product-list-item{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap:5px;
+} */
 /* .productpageleft{
     width:80%;
 } */
 .productpageright{
   
 
-    width:30%;
+    width:28%;
+}
+.product-list-item2{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap:10px;
+  margin: 10px 0px;
+
+}
+.product-list-item2 .content-area2{
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+}
+.main-containerproduct{
+  margin:20px 0px;
+}
+.product-list-item2 .image-wrapper2{
+  width:30%;
+  position: inherit;
+
+}
+.product-list-item2 .image-wrapper2 img{
+  width:100px;
+  height:100px;
 }
 .fullwidth-banner .section-1{
     width:100%;
@@ -24,12 +59,13 @@
 
 }
 .orderpageleft-2{
- width: 100%;
+ width: 77%;
   padding:15px 0px;
   padding-top: 0px;;
   
 }
 .sectionsorder{
+  margin-bottom:20px;
   width: 100%;
 }
 .yourorder-header{
@@ -79,6 +115,14 @@ background-color: transparent;
  cursor: pointer;
   outline: none;
  
+}
+.error-message{
+  font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+  color:var(--grey);
+  font-size: 18px;
+  text-align: center;
+
 }
 
 .custom-dropdown option {

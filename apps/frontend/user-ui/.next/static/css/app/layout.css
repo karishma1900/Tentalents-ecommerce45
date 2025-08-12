@@ -74,6 +74,9 @@
   outline-style: var(--tw-outline-style);
   outline-width: 1px;
 }
+.filter {
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+}
 .transition {
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, visibility, content-visibility, overlay, pointer-events;
   transition-timing-function: var(--tw-ease, ease);
@@ -233,6 +236,14 @@ input, textarea {
   margin: 5px 0px;
   width: 100%;
 }
+.image-wrapper2 {
+  position: relative;
+  width: 100%;
+}
+.product-image {
+  position: relative !important;
+  height: 100%;
+}
 input::-moz-placeholder, textarea::-moz-placeholder {
   color: #c0c0c0;
   opacity: 1;
@@ -243,6 +254,9 @@ textarea::placeholder {
   color: #c0c0c0;
   opacity: 1;
   font-size: 14px;
+}
+button {
+  cursor: pointer;
 }
 .backgroundwhite-button {
   font-family: 'Radhika Trial', sans-serif;
@@ -264,8 +278,10 @@ textarea::placeholder {
   font-weight: 500;
 }
 .heading {
+  margin: 0px 0px !important;
   color: var(--secondary);
   font-size: 24px;
+  font-weight: 500 !important;
 }
 .rating-stars {
   display: flex;
@@ -311,15 +327,22 @@ textarea::placeholder {
   font-size: 16px;
   color: var(--grey);
 }
+.price-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between !important;
+}
 .product-title {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  padding: 10px 0px;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 16px;
   color: var(--darkgrey);
   font-weight: 500;
+  margin: 0px !important;
   line-height: 1.4;
 }
 .rating {
@@ -836,6 +859,59 @@ summary svg {
   inherits: false;
   initial-value: solid;
 }
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
@@ -846,6 +922,19 @@ summary svg {
       --tw-skew-y: initial;
       --tw-border-style: solid;
       --tw-outline-style: solid;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
     }
   }
 }

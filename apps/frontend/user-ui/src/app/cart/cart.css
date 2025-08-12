@@ -151,7 +151,28 @@
     margin:0px  !important;
 
 }
-
+.shopping-carticon{
+    width:80px;
+    height: 80px;
+    color: var(--grey);
+}
+.empty-cart {
+  max-width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers children horizontally */
+  justify-content: center; /* centers children vertically */
+  text-align: center;
+  min-height: 300px; /* or 100vh for full screen */
+}
+.empty-cart p{
+    font-size: 20px;
+      font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+    color: var(--grey);
+    padding:10px 0px;
+}
 @media(max-width:780px){
     .productcart{
         display: grid !important;

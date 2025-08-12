@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './shop.css';
 import { ChevronDown, AlignJustify, LayoutDashboard, StarIcon } from 'lucide-react';
 import Products from '../home-page/products-grid/productsgrid';
-import { categories, products as defaultProducts } from '../../configs/constants';
+import { categories } from '../../configs/constants';
+import { getAllProducts } from '../../services/productService';
 import Image from 'next/image';
-
+import type { ProductItem } from '../components/productcard/productcard';
 // Define the Category type used in product.category
 type Category = string | { name: string };
 
@@ -21,23 +22,56 @@ const Page = () => {
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [selectedPriceRange, setSelectedPriceRange] = useState<{ min: number; max: number } | null>(null);
   const [selectedDiscountRange, setSelectedDiscountRange] = useState<{ min: number; max: number } | null>(null);
+const [products, setProducts] = useState<ProductItem[]>([]);
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState<string | null>(null);
+useEffect(() => {
+  async function fetchProducts() {
+    try {
+      const rawProducts = await getAllProducts();
+    const mappedProducts = rawProducts.map((p: any) => {
+  const listing = p.listings?.[0];
+  return {
+    id: p.id,
+    title: p.title,
+    price: listing ? Number(listing.originalPrice) : 0,
+    offerPrice: listing ? Number(listing.price) : undefined,
+    image: p.imageUrls?.[0] || '',
+    rating: p.ratings?.length > 0 ? p.ratings[0].score : 0,
+    href: `/shop/${p.slug}`,
+    vendor: p.seller,   // changed from seller to vendor
+    category: p.category,
+  };
+});
+      setProducts(mappedProducts);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to load products');
+    } finally {
+      setLoading(false);
+    }
+  }
 
+  fetchProducts();
+}, []);
   // Get unique sellers (assuming each seller is an object with name and image)
- const sellers: Seller[] = Array.from(
+type Vendor = { name: string; image: string };
+
+const sellers: Vendor[] = Array.from(
   new Map(
-    defaultProducts
-      .map((item) => item.seller)
-      .filter((seller): seller is Seller => seller !== undefined && seller !== null)
-      .map((seller) => [seller.name, seller])
+    products
+      .map((item) => item.vendor)
+      .filter((vendor): vendor is Vendor => vendor !== undefined && vendor !== null)
+      .map((vendor) => [vendor.name, vendor])
   ).values()
 );
 
   const getDiscount = (price: number, offer?: number) =>
     offer && offer < price ? Math.round(((price - offer) / price) * 100) : 0;
 
-  const prices = defaultProducts.map((p) => p.offerPrice ?? p.price);
+  const prices = products.map((p) => p.offerPrice ?? p.price);
   const availableRatings = Array.from(
-    new Set(defaultProducts.map((p) => Math.floor(p.rating * 2) / 2))
+    new Set(products.map((p) => Math.floor(p.rating * 2) / 2))
   ).sort((a, b) => b - a);
 
   const priceRanges = [
@@ -53,13 +87,17 @@ const Page = () => {
     { label: '30%+', min: 31, max: Infinity },
   ];
 
-const filteredProducts = defaultProducts.filter((product) => {
+const filteredProducts = products.filter((product) => {
   const matchCategory = selectedCategory
-    ? product.category.includes(selectedCategory)
+    ? Array.isArray(product.category)
+      ? product.category.includes(selectedCategory)
+      : typeof product.category === 'object'
+      ? product.category?.name === selectedCategory
+      : product.category === selectedCategory
     : true;
 
   const matchSeller = selectedSeller
-    ? product.seller?.name === selectedSeller
+    ? product.vendor?.name === selectedSeller
     : true;
 
   const matchRating = selectedRating ? product.rating >= selectedRating : true;
@@ -76,6 +114,7 @@ const filteredProducts = defaultProducts.filter((product) => {
 
   return matchCategory && matchSeller && matchRating && matchPrice && matchDiscount;
 });
+
 
   return (
     <div className="shop-page-container">
@@ -135,23 +174,23 @@ const filteredProducts = defaultProducts.filter((product) => {
                   By Seller
                   <ChevronDown />
                 </div>
-                {showSellerDropdown && (
-                  <div className="dropdown-menu">
-                    {sellers.map((seller, index) => (
-                      <div
-                        key={index}
-                        className="dropdown-item"
-                        onClick={() => {
-                          setSelectedSeller(seller.name);
-                          setShowSellerDropdown(false);
-                        }}
-                      >
-                        <Image src={seller.image} alt={seller.name} width={20} height={20} />
-                        <span>{seller.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              {showSellerDropdown && (
+  <div className="dropdown-menu">
+    {sellers.map((seller, index) => (
+      <div
+        key={index}
+        className="dropdown-item"
+        onClick={() => {
+          setSelectedSeller(seller.name);
+          setShowSellerDropdown(false);
+        }}
+      >
+        <Image src={seller.image} alt={seller.name} width={20} height={20} />
+        <span>{seller.name}</span>
+      </div>
+    ))}
+  </div>
+)}
               </div>
             </div>
           </div>

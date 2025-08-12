@@ -58,9 +58,13 @@ const Login = () => {
 
       const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result.message || 'Login failed');
-      }
+     if (!response.ok) {
+  if (response.status === 401) {
+    throw new Error('Incorrect email or password.');
+  } else {
+    throw new Error(result.message || 'Login failed');
+  }
+}
 
       const token = result?.data?.token;
       if (!token) throw new Error('Token missing in response');

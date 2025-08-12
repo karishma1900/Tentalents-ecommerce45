@@ -12,6 +12,24 @@ interface CreateRatingInput {
 
 export const ratingService = {
 createRating: async (userId: string, data: CreateRatingInput) => {
+   if (!data.productId) {
+    throw new Error('Product ID is required to submit a review.');
+  }
+
+  // ✅ 1. Check if user has purchased this product
+  const hasPurchased = await prisma.orderItem.findFirst({
+    where: {
+      productId: data.productId,
+      order: {
+        buyerId: userId,
+        status: 'delivered', // Make sure your order has a completed/delivered status
+      },
+    },
+  });
+
+  if (!hasPurchased) {
+    throw new Error('You can only review products you have purchased.');
+  }
   let vendorId = data.vendorId ?? null;
 
   if (!vendorId && data.productId) {

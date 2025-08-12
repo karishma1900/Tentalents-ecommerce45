@@ -19,21 +19,29 @@ const Address = ({ vendorId, setAddress }: AddressProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [addressToEdit, setAddressToEdit] = useState<any | null>(null);
 
-  useEffect(() => {
-    const fetchAddresses = async () => {
-      setLoading(true);
-      try {
-        const response = await getAllAddresses(); 
-        setAddresses(response?.data || []);
-      } catch (error) {
-        console.error('Error fetching addresses:', error);
-        toast.error('Failed to load addresses');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAddresses();
-  }, []);
+ useEffect(() => {
+  const fetchAddresses = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.warn('User not logged in. Skipping address fetch.');
+      setAddresses([]); // Clear any old state
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await getAllAddresses(); 
+      setAddresses(response?.data || []);
+    } catch (error) {
+      console.error('Error fetching addresses:', error);
+      toast.error('Failed to load addresses');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchAddresses();
+}, []);
 
   const handleSelectAddress = (addressId: string) => {
     setSelectedAddressId(addressId);  // Set the selected address ID

@@ -306,6 +306,7 @@ async isUserAuthorizedForProduct(userId: string, productId: string): Promise<boo
               include: {
                 user: true,
                 productListings: true,
+                
               },
             },
           },

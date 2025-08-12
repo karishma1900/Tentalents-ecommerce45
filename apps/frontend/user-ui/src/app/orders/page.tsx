@@ -67,7 +67,7 @@ const Page = () => {
   const [orders, setOrders] = useState<OrderData[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [orderError, setOrderError] = useState<string | null>(null);
-
+const [dateFilter, setDateFilter] = useState('all');
   const [products, setProducts] = useState<Product[]>([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
   const [productError, setProductError] = useState<string | null>(null);
@@ -77,7 +77,7 @@ const Page = () => {
     async function fetchOrders() {
       const token = localStorage.getItem('token');
       if (!token) {
-        setOrderError('No token found, please log in again.');
+        setOrderError('Please Log in to view your orders');
         setLoadingOrders(false);
         return;
       }
@@ -144,6 +144,64 @@ const Page = () => {
     fetchPopularProducts();
   }, []);
 
+
+function filterOrdersByDate(orders: OrderData[], filter: string) {
+  if (filter === 'all') return orders;
+
+  const now = new Date();
+  let dateLimit: Date;
+  let nextDateLimit: Date | null = null;
+
+  switch (filter) {
+    case 'today': {
+      const todayStart = new Date(now);
+      todayStart.setHours(0, 0, 0, 0);
+      const todayEnd = new Date(now);
+      todayEnd.setHours(23, 59, 59, 999);
+      return orders.filter(order => {
+        const placedAt = new Date(order.placedAt);
+        return placedAt >= todayStart && placedAt <= todayEnd;
+      });
+    }
+    case 'yesterday': {
+      const yesterdayStart = new Date(now);
+      yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+      yesterdayStart.setHours(0, 0, 0, 0);
+      const yesterdayEnd = new Date(now);
+      yesterdayEnd.setDate(yesterdayEnd.getDate() - 1);
+      yesterdayEnd.setHours(23, 59, 59, 999);
+      return orders.filter(order => {
+        const placedAt = new Date(order.placedAt);
+        return placedAt >= yesterdayStart && placedAt <= yesterdayEnd;
+      });
+    }
+    case '15days':
+      dateLimit = new Date(now.getTime() - 15 * 24 * 60 * 60 * 1000);
+      break;
+    case '30days':
+      dateLimit = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      break;
+    case '3months':
+      dateLimit = new Date(now);
+      dateLimit.setMonth(dateLimit.getMonth() - 3);
+      break;
+    case '6months':
+      dateLimit = new Date(now);
+      dateLimit.setMonth(dateLimit.getMonth() - 6);
+      break;
+    case '1year':
+      dateLimit = new Date(now);
+      dateLimit.setFullYear(dateLimit.getFullYear() - 1);
+      break;
+    default:
+      return orders;
+  }
+
+  return orders.filter(order => new Date(order.placedAt) >= dateLimit);
+}
+
+const filteredOrders = filterOrdersByDate(orders, dateFilter);
+
   return (
   <div className="orderapagefull2">
   <div className="orderapagefull">
@@ -158,8 +216,16 @@ const Page = () => {
               <Search className="search-icon" />
             </button>
           </div>
-          <select id="dateFilter" className="bordered-button custom-dropdown">
+        <select
+  id="dateFilter"
+  className="bordered-button custom-dropdown"
+  value={dateFilter}
+  onChange={(e) => setDateFilter(e.target.value)}
+>
+
             <option value="all">All Orders</option>
+              <option value="today">Today</option>
+  <option value="yesterday">Yesterday</option>
             <option value="15days">Past 15 Days</option>
             <option value="30days">Past 30 Days</option>
             <option value="3months">Past 3 Months</option>
@@ -169,13 +235,31 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="sectionsorder">
-        {orders.length > 0 && <OrderCard order={orders[0]} />}
-        <YourOrder orders={orders} loading={loadingOrders} error={orderError} />
-      </div>
+     <div className="sectionorder">
+ {loadingOrders ? (
+  <p>Loading your orders...</p>
+) : orderError ? (
+  <p className="error-message">{orderError}</p>
+) : orders.length > 0 ? (
+  filteredOrders.map(order => (
+    <div key={order.id} className="sectionsorder">
+      {/* You can put OrderCard for that order */}
+      <OrderCard order={order} />
+
+      {/* If YourOrder is supposed to show multiple orders, you might want to filter or pass only this order */}
+      {/* Or if YourOrder is a summary component, maybe keep it outside the map? */}
+      {/* But since you want the section repeated for every order, let's assume you want YourOrder here as well */}
+      <YourOrder orders={[order]} loading={false} error={null} />
+    </div>
+  ))
+) : (
+  <p className="empty-message">Nothing in your orders.</p>
+)}
+
+</div>
     </div>
 
-    {/* <div className="productpageright">
+    <div className="productpageright">
       <div className="popularproductcard">
         <h2 className="sectiontitle">Popular Products</h2>
         {loadingProducts && <p>Loading products...</p>}
@@ -199,13 +283,14 @@ const Page = () => {
               Explore Now <ChevronRight />
             </button>
           </div>
-        </div> */}
-      
+        </div>
+      </div>
+      </div>
  
   </div>
 
   <div>
-    <Products />
+<Products />
     <Closet />
   </div>
 </div>

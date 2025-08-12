@@ -24,7 +24,7 @@ const Page = () => {
           <Productslist listCount={3} />
         </div>
         <div className="product-grid-tem">
-        <Products columns={3} />
+        <Products columns={4} />
       </div>
 
       </div>

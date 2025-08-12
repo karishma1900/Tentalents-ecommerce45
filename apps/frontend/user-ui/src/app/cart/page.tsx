@@ -5,6 +5,7 @@ import { ChevronRight, Minus, PlusIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Products from '../home-page/products-grid/productsgrid';
+import { ShoppingCart } from 'lucide-react';
 import './cart.css';
 import '../shop/[slug]/singleproductpage.css'; // For additional product styles
 
@@ -176,16 +177,27 @@ async function updateQuantity(listingId: string, currentQty: number, change: num
     return acc + price * item.quantity;
   }, 0);
 
-  const shippingFee = 54.0;
-  const platformFee = 4.0;
-  const total = subtotal + shippingFee + platformFee;
+const hasItems = cartItems.length > 0;
+const shippingFee = hasItems ? 54.0 : 0;
+const platformFee = hasItems ? 4.0 : 0;
+const total = subtotal + shippingFee + platformFee;
 
   return (
     <div className="cartpage">
       <div className="cart-section">
         <div className="cartsection-left">
           <div className="product-list">
-            {cartItems.map((item) => {
+            { cartItems.length === 0 && !loading ? (
+    <div className="empty-cart">
+      <ShoppingCart className='shopping-carticon' />
+      <p>Your cart is empty.</p>
+      {/* Optional: Add an image or link to shop */}
+      <Link href="/shop" className="background-button">
+        Continue Shopping
+      </Link>
+    </div>
+  ) : (
+            cartItems.map((item) => {
               const product = item.product;
               const listing = item.productListing;
               if (!product || !listing) return null;
@@ -259,7 +271,8 @@ async function updateQuantity(listingId: string, currentQty: number, change: num
                   </div>
                 </div>
               );
-            })}
+            })
+            )}
           </div>
         </div>
 

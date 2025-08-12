@@ -39,15 +39,17 @@
 .productinfo{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     gap:10px;
+   
     background:var(--lightbackground);
     border-radius:10px;
     margin:10px;
     padding:10px;
 }
 .productinfo h3{
-    font-size: 13px;
+    font-size: 16px;
+    font-weight: 500;
     color:var(--grey)
 }
 .headingstar h2{
@@ -93,6 +95,8 @@
 }
 
 .review-textarea {
+     font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
   width: 100%;
   height: 100px;
   resize: none;

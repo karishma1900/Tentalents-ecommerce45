@@ -28,27 +28,79 @@ const prisma = new PrismaClient();
 function toPrismaStatus(status: SharedVendorStatus): PrismaVendorStatus {
   return status.toLowerCase() as PrismaVendorStatus;
 }
-
 /**
- * Create a new vendor
+ * Step 1: Initiate OTP for vendor registration
  */
-export const createVendor = async (req: Request, res: Response) => {
+export const initiateVendorRegistrationOtp = async (req: Request, res: Response) => {
   try {
-    // Validate request body with schema
-    const result = CreateVendorSchema.safeParse(req.body);
-    if (!result.success) {
-      return res.status(400).json({ error: result.error.format() });
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
     }
 
-    const dto: CreateVendorDto = result.data;
+    const result = await vendorService.initiateVendorRegistrationOtp(email);
+    return res.status(200).json(result);
+  } catch (err) {
+    logger.error('Error initiating vendor OTP', err);
+    return res.status(500).json({ error: 'Failed to send OTP' });
+  }
+};
 
-    // Call service method to create vendor + produce kafka event
- const vendor = await vendorService.register(createVendorDtoToPrisma(dto));
+/**
+ * Step 2: Verify vendor email OTP
+ */
+export const verifyVendorEmailOtp = async (req: Request, res: Response) => {
+  try {
+    const { email, otp } = req.body;
 
+    if (!email || !otp) {
+      return res.status(400).json({ error: 'Email and OTP are required' });
+    }
+
+    const result = await vendorService.verifyVendorEmailOtp(email, otp);
+    return res.status(200).json(result);
+  } catch (err) {
+    logger.error('Error verifying vendor OTP', err);
+    return res.status(400).json({ error: 'Invalid or expired OTP' });
+  }
+};
+
+/**
+ * Step 3: Complete vendor user registration
+ */
+export const completeVendorUserRegistration = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const user = await vendorService.completeVendorUserRegistration(email, password);
+    return res.status(201).json({ user });
+  } catch (err) {
+    logger.error('Error completing vendor user registration', err);
+    return res.status(500).json({ error: 'Failed to register vendor user' });
+  }
+};
+
+/**
+ * Step 4: Complete vendor profile registration
+ */
+export const completeVendorProfileRegistration = async (req: Request, res: Response) => {
+  try {
+    const { userId, ...vendorData } = req.body;
+
+    if (!userId) {
+      return res.status(400).json({ error: 'User ID is required' });
+    }
+
+    const vendor = await vendorService.completeVendorProfileRegistration(userId, vendorData);
     return res.status(201).json({ vendor });
   } catch (err) {
-    logger.error('Error creating vendor', err);
-    return res.status(500).json({ error: 'Failed to create vendor' });
+    logger.error('Error completing vendor profile registration', err);
+    return res.status(500).json({ error: 'Failed to complete vendor profile' });
   }
 };
 

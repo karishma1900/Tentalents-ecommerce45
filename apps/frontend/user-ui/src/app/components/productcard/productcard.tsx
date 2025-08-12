@@ -4,7 +4,22 @@ import Link from 'next/link';
 import Image from 'next/image';
 import star from '../../../assets/icons/kid_star.png';
 import type { StaticImageData } from 'next/image';
-export type ProductItem = productItems;
+export type ProductItem = {
+  id: string;
+  title: string;
+  price: number;
+  offerPrice?: number;
+  image: string | string[];
+  rating: number;
+  href: string;
+   vendor?: {         // <-- changed from seller to vendor
+    id?: string;     // add id if you need it for addToCart etc.
+    name: string;
+    image: string;
+  };
+  category: string | string[] | { name: string };
+};
+
 
 type ProductCardProps = {
   product: ProductItem;

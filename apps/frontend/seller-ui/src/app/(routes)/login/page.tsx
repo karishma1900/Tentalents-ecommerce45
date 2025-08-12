@@ -1,147 +1,168 @@
-// this has been taken from the timestamp 4:45:00 (the 45 minutes before has been skipped will be handled by Karishma)
-"use client";
-import React, { useState } from 'react'
-import { useForm } from "react-hook-form"
-import {useMutation} from "@tanstack/react-query"
+'use client';
+
+import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
-import { Eye, EyeOff } from 'lucide-react';
-// Update the path below to the correct location of GoogleButton in your project
-
-import axios, { AxiosError } from 'axios';
-
+import Image from 'next/image';
+import Google from '../../../assets/google.png';
+import './login.css';
+import { ChevronLeft } from 'lucide-react';
+import toast from 'react-hot-toast';
+import {jwtDecode} from 'jwt-decode';
 type FormData = {
-    email:string;
-    password: string
+  email: string;
+  password: string;
 };
 
 const Login = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-    const [passwordVisible, setPasswordVisible] = useState(false);
-    const [serverError, setServerError] = useState<string | null>();
-    const [remeberMe, setRememberMe] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-    const router = useRouter();
-
-    const {register, handleSubmit, formState:{errors}} = useForm<FormData>();
-
-    const loginMutation = useMutation({
-        mutationFn: async(data:FormData) => {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/login-user`, 
-                data,
-                {withCredentials:true}
-            );
-            return response.data;
-        },
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        onSuccess: (data) => {
-            setServerError(null);
-            router.push('/');
-        },
-        onError: (error:AxiosError) =>{
-            const errorMessage = (error.response?.data as {message?: string})?.message || "Invalid Credentials";
-            setServerError(errorMessage);
-        },
-    });
-
-    //implementing Login Functioanlity at frontend for Consumer
-    const onSubmit = (data:FormData) => {
-        //login implementation
-        loginMutation.mutate(data);
+  // ✅ Check if already logged in
+ useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      const decoded: any = jwtDecode(token);
+      const isExpired = decoded.exp * 1000 < Date.now();
+      if (!isExpired) {
+        router.replace('/myaccount');
+      } else {
+        localStorage.removeItem('token'); // remove expired token
+      }
+    } catch (err) {
+      localStorage.removeItem('token'); // if invalid token
     }
+  }
+}, [router]);
 
+  const onSubmit = async (data: FormData) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-  return (
-    <div className='w-full py-10 min-h-[85vh] bg-[#f1f1f1]'>
-        <h1 className='text-4xl font-poppins font-semibold text-black text-center'>
-            Sign-in
-        </h1>
-        <p className='text-center fomt-medium text-lg py-3 text-[#00000099]'>
-            Home . Sign-In
-        </p>
-        <div className='w-full flex justify-center'>
-            <div className='md:w-[480px] p-8 bg-white shadow rounded-lg'>
-                <h3 className='text-3xl font-semibold text-center mb-2'>
-                    Login to Tentalents Marketplace
-                </h3>
-                <p className='text-center text-gray-500 mb-4'>
-                    Dont have an Account? {" "}
-                    <Link href={"/signup"} className='text-blue-500'>
-                    <span>Register Here.</span>
-                    </Link>
-                </p>
+      const result = await response.json();
 
-                <div className='flex items-center my-5 text-gray-400 text-sm'>
-                    <div className='flex-1 border-t border-gray-300'/>
-                    <span className='px-3'>Or Sign-in with Email.</span>
-                    <div className='flex-1 border-t border-gray-300'/>
-                </div>
-
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <label className='block text-gray-700 mb-1'>Email</label>
-                    <input type="email" placeholder='support@tetalents.com' 
-                    className='w-full p-2 border-gray-300 outline-0 rounded-sm mb-1'
-                    {...register("email", {
-                        required:"Email is required",
-                        pattern:{
-                            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                            message:"Email is Not Valid, Please put a valid email",
-                        }
-                    })}
-                    />
-                    {errors.email && (
-                        <p className='text-red-500 text-sm'>{String(errors.email.message)}</p>
-                    )}
-
-                    <label className='block text-gray-700 mb-1'>Password</label>
-                    <div className="realtive">
-                         <input type={passwordVisible ? "text" : "password"} placeholder='Password of 8 Characters' 
-                    className='w-full p-2 border-gray-300 outline-0 rounded-sm mb-1'
-                   {...register("password", {
-                    required: "Password is required",
-                    minLength: {
-                        value: 8,
-                        message: "Password must be at least 8 characters",
-                    },
-                    pattern: {
-                        // Now allows letters, digits, AND underscores:
-                        value: /^[A-Za-z0-9_]+$/,
-                        message: `Password must be alphanumeric and can include underscores no "-" or "." `,
-                    },
-                    })}
-                    />
-
-                    <button type="button" className='absolute inset-y-0 right-3 flex items-center text-gray-700' 
-                    onClick={()=> setPasswordVisible(!passwordVisible)}>
-                        {passwordVisible ?<Eye/> : <EyeOff/>}
-                    </button>
-                    {errors.password && (
-                        <p className='text-red-500 text-sm'>{String(errors.password.message)}</p>
-                    )}
-                    </div>
-                    <div className='flex justify-between items-center my-4'>
-                        <label className='flex items-center text-gray-600'>
-                            <input type="checkbox" className='mr-2' checked={remeberMe} onChange={()=>{setRememberMe(!remeberMe)}}/>
-                            Remember Me :{")"}
-                        </label>
-                        <Link href={"/forgot-password"} className='text-blue-500 text-sm'>
-                            Forgot Password 😅
-                        </Link>
-                    </div>
-
-                    <button disabled={loginMutation.isPending} className='w-full text-lg cursor-pointer mt-4 bg-black text-white py-2 rounded-lg' type='submit'>
-                         {loginMutation.isPending? "Logging In..." : "Sign-in +_+"}
-                    </button>
-
-                    {serverError && (
-                        <p className='text-red-500 text-sm mt-2'>{serverError}</p>
-                    )}
-                </form>
-            </div>
-        </div>
-    </div>
-  )
+     if (!response.ok) {
+  if (response.status === 401) {
+    throw new Error('Incorrect email or password.');
+  } else {
+    throw new Error(result.message || 'Login failed');
+  }
 }
 
-export default Login
+      const token = result?.data?.token;
+      if (!token) throw new Error('Token missing in response');
+
+      // ✅ Save token to localStorage
+      localStorage.setItem('token', token);
+      toast.success('Login successful!');
+      router.push('/myaccount');
+    } catch (err: any) {
+      console.error('Login error:', err);
+      toast.error(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = () => {
+    console.log('Google sign in');
+    // TODO: Implement Google login logic
+  };
+
+  return (
+    <div className="login-page">
+      <div className="logincontainer">
+        <div className="login-heading">
+          <button className="bordered-button">
+            <ChevronLeft />
+          </button>
+          <h1 className="heading">Login</h1>
+        </div>
+
+        <div className="login-box">
+          <button className="google-button" onClick={handleGoogleSignIn}>
+            <Image src={Google} alt="Google" width={20} height={20} />
+            Continue With Google
+          </button>
+
+          <div className="divider" />
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group">
+              <input
+                type="email"
+                placeholder="Email"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'Invalid email address',
+                  },
+                })}
+              />
+              {errors.email && <p className="error">{errors.email.message}</p>}
+            </div>
+
+            <div className="form-group">
+              <input
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder="Your Password"
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 6,
+                    message: 'Password must be at least 6 characters',
+                  },
+                })}
+              />
+              {errors.password && (
+                <p className="error">{errors.password.message}</p>
+              )}
+            </div>
+
+            <div className="options">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+              />
+              Remember My Password
+            </div>
+
+            <button type="submit" className="background-buttonver" disabled={loading}>
+              {loading ? 'Logging in...' : 'Continue'}
+            </button>
+          </form>
+        </div>
+
+        <div className="bottom-links">
+          <p>
+            Are You A New User? <Link href="/signup">Sign Up Here</Link>
+          </p>
+          <p style={{ marginTop: '8px' }}>
+            <Link href="/forgot-password">Forgot Password ?</Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

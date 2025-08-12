@@ -113,7 +113,7 @@ const Page = () => {
 
   const shippingFee = 54;
   const platformFee = 4;
-  const total = subtotal + shippingFee + platformFee;
+const total = subtotal > 0 ? subtotal + shippingFee + platformFee : 0;
 
   const vendorId = cartItems.length > 0 ? cartItems[0].vendor.id : '';
 
@@ -222,7 +222,7 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
             vendorId={vendorId}
             setAddress={setAddress}
           />
-          <Payment onPaymentModeSelect={setPaymentMode} total={total} />
+          <Payment onPaymentModeSelect={setPaymentMode} total={total}  onConfirmPayment={handlePlaceOrder} />
         </div>
 
         <div className="checkoutright">
@@ -231,6 +231,8 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
               <h2>Subtotal</h2>
               <p>${subtotal.toFixed(2)}</p>
             </div>
+             {cartItems.length > 0 && (
+      <>
             <div className="subtotal">
               <h2>Shipping</h2>
               <p>${shippingFee.toFixed(2)}</p>
@@ -239,16 +241,20 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
               <h2>Platform Fee</h2>
               <p>${platformFee.toFixed(2)}</p>
             </div>
+          </>
+          )}
             <div className="subtotal total">
               <h2 className="alltotal">Total</h2>
-              <p>${total.toFixed(2)}</p>
+              <p>${cartItems.length > 0
+        ? total.toFixed(2)
+        : '0.00'}</p>
             </div>
           </div>
 
           <QuantityAdded />
-          <button onClick={handlePlaceOrder} className="background-button">
+          {/* <button onClick={handlePlaceOrder} className="background-button">
             Place Order
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
