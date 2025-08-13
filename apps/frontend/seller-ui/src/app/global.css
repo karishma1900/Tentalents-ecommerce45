@@ -163,7 +163,14 @@ input[type="checkbox"]:checked::after {
   border-radius: 10px;
   margin:10px 0px; cursor: pointer;
 }
-
+input, textarea{
+  background-color: var(--lightbackground);
+  padding:10px;
+  border-radius: 10px;
+  outline: none;
+  margin:5px 0px;
+  width: 100%;
+}
 
 .normal-button{
   font-family: 'Radhika Trial', sans-serif;

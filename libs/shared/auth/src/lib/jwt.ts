@@ -20,7 +20,7 @@ if (!process.env.JWT_SECRET) {
 export function signToken(
   payload: AuthPayload,
   secret: Secret = JWT_SECRET,
-  expiresIn: SignOptions['expiresIn'] = '100y' // Set to a very long duration or leave as `undefined` for no expiry
+  expiresIn: SignOptions['expiresIn'] = '50h'// Set to a very long duration or leave as `undefined` for no expiry
 ): string {
   return jwt.sign(payload, secret, { expiresIn });
 }

@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-  origin: 'http://localhost:3001',  // Frontend URL (adjust if necessary)
+  origin: 'http://localhost:3000',  // Frontend URL (adjust if necessary)
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary methods
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
 }));
@@ -29,7 +29,7 @@ app.get('/healthz', (_req, res) => {
 });
 
 // 🔐 Auth Middleware (protect all routes below)
-app.use(authMiddleware());
+// app.use(authMiddleware());
 
 // 🛣️ Service Routes
 app.use('/api/vendor', vendorRoutes);

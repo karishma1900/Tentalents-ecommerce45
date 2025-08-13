@@ -8,14 +8,14 @@ export const searchProducts = async (
   next: NextFunction
 ) => {
   try {
-    const query =
-      typeof req.query.query === 'string' ? req.query.query : undefined;
-    const category =
-      typeof req.query.category === 'string' ? req.query.category : undefined;
-    const brand =
-      typeof req.query.brand === 'string' ? req.query.brand : undefined;
+    const { query, category, brand } = req.query;
 
-    const products = await searchService.search({ query, category, brand });
+    const products = await searchService.search({
+      query: typeof query === 'string' ? query : undefined,
+      category: typeof category === 'string' ? category : undefined,
+      brand: typeof brand === 'string' ? brand : undefined,
+    });
+
     sendSuccess(res, 'Search results', products);
   } catch (err) {
     next(err);

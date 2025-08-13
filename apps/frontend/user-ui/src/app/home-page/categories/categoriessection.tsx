@@ -1,35 +1,40 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { categories } from '../../../configs/constants';
-// import './headerbanner.css';
 import './categories.css';
-import jeans from '../../../assets/jeans.png';
-import appliances from '../../../assets/appliances.png';
-import { ChevronRight } from 'lucide-react';
 
 const Categories = () => {
+  const router = useRouter();
+
+  const handleCategoryClick = (category: string) => {
+    router.push(`/shop?category=${encodeURIComponent(category)}`);
+  };
+
   return (
     <div>
       <div className="category-main">
-        {/* Category section */}
         <div className="category-section">
           <ul className="category-list">
-            {categories.map((i, index) => (
+            {categories.map((cat, index) => (
               <li key={index} className="list-none">
-                <Link href={i.href} className="lists">
-                  <Image src={i.image} alt={i.title} width={30} height={30} />
-                  <span>{i.title}</span>
-                </Link>
+                <button
+                  className="lists"
+                 
+                  onClick={() => handleCategoryClick(cat.title)}
+                >
+                  <Image src={cat.image} alt={cat.title} width={30} height={30} />
+                  <span>{cat.title}</span>
+                </button>
               </li>
             ))}
           </ul>
         </div>
-
-        
-        </div>
       </div>
- 
+    </div>
   );
 };
 

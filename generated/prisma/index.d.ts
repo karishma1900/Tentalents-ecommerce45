@@ -44,6 +44,11 @@ export type ActionLog = $Result.DefaultSelection<Prisma.$ActionLogPayload>
  */
 export type Address = $Result.DefaultSelection<Prisma.$AddressPayload>
 /**
+ * Model BankDetail
+ * 
+ */
+export type BankDetail = $Result.DefaultSelection<Prisma.$BankDetailPayload>
+/**
  * Model Product
  * 
  */
@@ -646,6 +651,16 @@ export class PrismaClient<
     * ```
     */
   get address(): Prisma.AddressDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.bankDetail`: Exposes CRUD operations for the **BankDetail** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BankDetails
+    * const bankDetails = await prisma.bankDetail.findMany()
+    * ```
+    */
+  get bankDetail(): Prisma.BankDetailDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.product`: Exposes CRUD operations for the **Product** model.
@@ -1312,6 +1327,7 @@ export namespace Prisma {
     Admin: 'Admin',
     ActionLog: 'ActionLog',
     Address: 'Address',
+    BankDetail: 'BankDetail',
     Product: 'Product',
     ProductListing: 'ProductListing',
     ProductVariant: 'ProductVariant',
@@ -1352,7 +1368,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "pendingUserOtp" | "vendor" | "admin" | "actionLog" | "address" | "product" | "productListing" | "productVariant" | "rating" | "searchLog" | "orderItem" | "order" | "invoice" | "session" | "analyticsEvent" | "dailyPageView" | "metric" | "cartItem" | "userToken" | "emailLog" | "payment" | "page" | "coupon" | "couponRedemption" | "recommendation" | "popularProduct" | "refundRequest"
+      modelProps: "user" | "pendingUserOtp" | "vendor" | "admin" | "actionLog" | "address" | "bankDetail" | "product" | "productListing" | "productVariant" | "rating" | "searchLog" | "orderItem" | "order" | "invoice" | "session" | "analyticsEvent" | "dailyPageView" | "metric" | "cartItem" | "userToken" | "emailLog" | "payment" | "page" | "coupon" | "couponRedemption" | "recommendation" | "popularProduct" | "refundRequest"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1797,6 +1813,80 @@ export namespace Prisma {
           count: {
             args: Prisma.AddressCountArgs<ExtArgs>
             result: $Utils.Optional<AddressCountAggregateOutputType> | number
+          }
+        }
+      }
+      BankDetail: {
+        payload: Prisma.$BankDetailPayload<ExtArgs>
+        fields: Prisma.BankDetailFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BankDetailFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BankDetailFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>
+          }
+          findFirst: {
+            args: Prisma.BankDetailFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BankDetailFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>
+          }
+          findMany: {
+            args: Prisma.BankDetailFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>[]
+          }
+          create: {
+            args: Prisma.BankDetailCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>
+          }
+          createMany: {
+            args: Prisma.BankDetailCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.BankDetailCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>[]
+          }
+          delete: {
+            args: Prisma.BankDetailDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>
+          }
+          update: {
+            args: Prisma.BankDetailUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>
+          }
+          deleteMany: {
+            args: Prisma.BankDetailDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BankDetailUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.BankDetailUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>[]
+          }
+          upsert: {
+            args: Prisma.BankDetailUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BankDetailPayload>
+          }
+          aggregate: {
+            args: Prisma.BankDetailAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBankDetail>
+          }
+          groupBy: {
+            args: Prisma.BankDetailGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BankDetailGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BankDetailCountArgs<ExtArgs>
+            result: $Utils.Optional<BankDetailCountAggregateOutputType> | number
           }
         }
       }
@@ -3526,6 +3616,7 @@ export namespace Prisma {
     admin?: AdminOmit
     actionLog?: ActionLogOmit
     address?: AddressOmit
+    bankDetail?: BankDetailOmit
     product?: ProductOmit
     productListing?: ProductListingOmit
     productVariant?: ProductVariantOmit
@@ -6437,6 +6528,7 @@ export namespace Prisma {
     userId: string | null
     name: string | null
     email: string | null
+    password: string | null
     profileImage: string | null
     businessName: string | null
     phone: string | null
@@ -6452,6 +6544,7 @@ export namespace Prisma {
     userId: string | null
     name: string | null
     email: string | null
+    password: string | null
     profileImage: string | null
     businessName: string | null
     phone: string | null
@@ -6467,6 +6560,7 @@ export namespace Prisma {
     userId: number
     name: number
     email: number
+    password: number
     profileImage: number
     businessName: number
     phone: number
@@ -6485,6 +6579,7 @@ export namespace Prisma {
     userId?: true
     name?: true
     email?: true
+    password?: true
     profileImage?: true
     businessName?: true
     phone?: true
@@ -6500,6 +6595,7 @@ export namespace Prisma {
     userId?: true
     name?: true
     email?: true
+    password?: true
     profileImage?: true
     businessName?: true
     phone?: true
@@ -6515,6 +6611,7 @@ export namespace Prisma {
     userId?: true
     name?: true
     email?: true
+    password?: true
     profileImage?: true
     businessName?: true
     phone?: true
@@ -6604,6 +6701,7 @@ export namespace Prisma {
     userId: string | null
     name: string
     email: string
+    password: string | null
     profileImage: string | null
     businessName: string
     phone: string | null
@@ -6637,6 +6735,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     email?: boolean
+    password?: boolean
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
@@ -6655,6 +6754,7 @@ export namespace Prisma {
     orderItems?: boolean | Vendor$orderItemsArgs<ExtArgs>
     refundRequests?: boolean | Vendor$refundRequestsArgs<ExtArgs>
     cartItems?: boolean | Vendor$cartItemsArgs<ExtArgs>
+    bankDetail?: boolean | Vendor$bankDetailArgs<ExtArgs>
     _count?: boolean | VendorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["vendor"]>
 
@@ -6663,6 +6763,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     email?: boolean
+    password?: boolean
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
@@ -6680,6 +6781,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     email?: boolean
+    password?: boolean
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
@@ -6697,6 +6799,7 @@ export namespace Prisma {
     userId?: boolean
     name?: boolean
     email?: boolean
+    password?: boolean
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
@@ -6708,7 +6811,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "email" | "profileImage" | "businessName" | "phone" | "status" | "address" | "gstNumber" | "kycDocsUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
+  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "email" | "password" | "profileImage" | "businessName" | "phone" | "status" | "address" | "gstNumber" | "kycDocsUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
   export type VendorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | Vendor$tokensArgs<ExtArgs>
     addresses?: boolean | Vendor$addressesArgs<ExtArgs>
@@ -6719,6 +6822,7 @@ export namespace Prisma {
     orderItems?: boolean | Vendor$orderItemsArgs<ExtArgs>
     refundRequests?: boolean | Vendor$refundRequestsArgs<ExtArgs>
     cartItems?: boolean | Vendor$cartItemsArgs<ExtArgs>
+    bankDetail?: boolean | Vendor$bankDetailArgs<ExtArgs>
     _count?: boolean | VendorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type VendorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6740,12 +6844,14 @@ export namespace Prisma {
       orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
       refundRequests: Prisma.$RefundRequestPayload<ExtArgs>[]
       cartItems: Prisma.$CartItemPayload<ExtArgs>[]
+      bankDetail: Prisma.$BankDetailPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string | null
       name: string
       email: string
+      password: string | null
       profileImage: string | null
       businessName: string
       phone: string | null
@@ -7158,6 +7264,7 @@ export namespace Prisma {
     orderItems<T extends Vendor$orderItemsArgs<ExtArgs> = {}>(args?: Subset<T, Vendor$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     refundRequests<T extends Vendor$refundRequestsArgs<ExtArgs> = {}>(args?: Subset<T, Vendor$refundRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RefundRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cartItems<T extends Vendor$cartItemsArgs<ExtArgs> = {}>(args?: Subset<T, Vendor$cartItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CartItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bankDetail<T extends Vendor$bankDetailArgs<ExtArgs> = {}>(args?: Subset<T, Vendor$bankDetailArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7191,6 +7298,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Vendor", 'String'>
     readonly name: FieldRef<"Vendor", 'String'>
     readonly email: FieldRef<"Vendor", 'String'>
+    readonly password: FieldRef<"Vendor", 'String'>
     readonly profileImage: FieldRef<"Vendor", 'String'>
     readonly businessName: FieldRef<"Vendor", 'String'>
     readonly phone: FieldRef<"Vendor", 'String'>
@@ -7807,6 +7915,25 @@ export namespace Prisma {
   }
 
   /**
+   * Vendor.bankDetail
+   */
+  export type Vendor$bankDetailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    where?: BankDetailWhereInput
+  }
+
+  /**
    * Vendor without action
    */
   export type VendorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7997,6 +8124,7 @@ export namespace Prisma {
     role?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    bankDetail?: boolean | Admin$bankDetailArgs<ExtArgs>
     actions?: boolean | Admin$actionsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
@@ -8033,6 +8161,7 @@ export namespace Prisma {
 
   export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
   export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    bankDetail?: boolean | Admin$bankDetailArgs<ExtArgs>
     actions?: boolean | Admin$actionsArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     _count?: boolean | AdminCountOutputTypeDefaultArgs<ExtArgs>
@@ -8047,6 +8176,7 @@ export namespace Prisma {
   export type $AdminPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Admin"
     objects: {
+      bankDetail: Prisma.$BankDetailPayload<ExtArgs> | null
       actions: Prisma.$ActionLogPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
     }
@@ -8451,6 +8581,7 @@ export namespace Prisma {
    */
   export interface Prisma__AdminClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    bankDetail<T extends Admin$bankDetailArgs<ExtArgs> = {}>(args?: Subset<T, Admin$bankDetailArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     actions<T extends Admin$actionsArgs<ExtArgs> = {}>(args?: Subset<T, Admin$actionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActionLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -8881,6 +9012,25 @@ export namespace Prisma {
      * Limit how many Admins to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Admin.bankDetail
+   */
+  export type Admin$bankDetailArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    where?: BankDetailWhereInput
   }
 
   /**
@@ -11314,6 +11464,1201 @@ export namespace Prisma {
 
 
   /**
+   * Model BankDetail
+   */
+
+  export type AggregateBankDetail = {
+    _count: BankDetailCountAggregateOutputType | null
+    _min: BankDetailMinAggregateOutputType | null
+    _max: BankDetailMaxAggregateOutputType | null
+  }
+
+  export type BankDetailMinAggregateOutputType = {
+    id: string | null
+    accountHolder: string | null
+    accountNumber: string | null
+    ifscCode: string | null
+    bankName: string | null
+    branchName: string | null
+    upiId: string | null
+    isVerified: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    vendorId: string | null
+    adminId: string | null
+  }
+
+  export type BankDetailMaxAggregateOutputType = {
+    id: string | null
+    accountHolder: string | null
+    accountNumber: string | null
+    ifscCode: string | null
+    bankName: string | null
+    branchName: string | null
+    upiId: string | null
+    isVerified: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    vendorId: string | null
+    adminId: string | null
+  }
+
+  export type BankDetailCountAggregateOutputType = {
+    id: number
+    accountHolder: number
+    accountNumber: number
+    ifscCode: number
+    bankName: number
+    branchName: number
+    upiId: number
+    isVerified: number
+    createdAt: number
+    updatedAt: number
+    vendorId: number
+    adminId: number
+    _all: number
+  }
+
+
+  export type BankDetailMinAggregateInputType = {
+    id?: true
+    accountHolder?: true
+    accountNumber?: true
+    ifscCode?: true
+    bankName?: true
+    branchName?: true
+    upiId?: true
+    isVerified?: true
+    createdAt?: true
+    updatedAt?: true
+    vendorId?: true
+    adminId?: true
+  }
+
+  export type BankDetailMaxAggregateInputType = {
+    id?: true
+    accountHolder?: true
+    accountNumber?: true
+    ifscCode?: true
+    bankName?: true
+    branchName?: true
+    upiId?: true
+    isVerified?: true
+    createdAt?: true
+    updatedAt?: true
+    vendorId?: true
+    adminId?: true
+  }
+
+  export type BankDetailCountAggregateInputType = {
+    id?: true
+    accountHolder?: true
+    accountNumber?: true
+    ifscCode?: true
+    bankName?: true
+    branchName?: true
+    upiId?: true
+    isVerified?: true
+    createdAt?: true
+    updatedAt?: true
+    vendorId?: true
+    adminId?: true
+    _all?: true
+  }
+
+  export type BankDetailAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BankDetail to aggregate.
+     */
+    where?: BankDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankDetails to fetch.
+     */
+    orderBy?: BankDetailOrderByWithRelationInput | BankDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BankDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BankDetails
+    **/
+    _count?: true | BankDetailCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BankDetailMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BankDetailMaxAggregateInputType
+  }
+
+  export type GetBankDetailAggregateType<T extends BankDetailAggregateArgs> = {
+        [P in keyof T & keyof AggregateBankDetail]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBankDetail[P]>
+      : GetScalarType<T[P], AggregateBankDetail[P]>
+  }
+
+
+
+
+  export type BankDetailGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BankDetailWhereInput
+    orderBy?: BankDetailOrderByWithAggregationInput | BankDetailOrderByWithAggregationInput[]
+    by: BankDetailScalarFieldEnum[] | BankDetailScalarFieldEnum
+    having?: BankDetailScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BankDetailCountAggregateInputType | true
+    _min?: BankDetailMinAggregateInputType
+    _max?: BankDetailMaxAggregateInputType
+  }
+
+  export type BankDetailGroupByOutputType = {
+    id: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName: string | null
+    upiId: string | null
+    isVerified: boolean
+    createdAt: Date
+    updatedAt: Date
+    vendorId: string | null
+    adminId: string | null
+    _count: BankDetailCountAggregateOutputType | null
+    _min: BankDetailMinAggregateOutputType | null
+    _max: BankDetailMaxAggregateOutputType | null
+  }
+
+  type GetBankDetailGroupByPayload<T extends BankDetailGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BankDetailGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BankDetailGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BankDetailGroupByOutputType[P]>
+            : GetScalarType<T[P], BankDetailGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BankDetailSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountHolder?: boolean
+    accountNumber?: boolean
+    ifscCode?: boolean
+    bankName?: boolean
+    branchName?: boolean
+    upiId?: boolean
+    isVerified?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendorId?: boolean
+    adminId?: boolean
+    vendor?: boolean | BankDetail$vendorArgs<ExtArgs>
+    admin?: boolean | BankDetail$adminArgs<ExtArgs>
+  }, ExtArgs["result"]["bankDetail"]>
+
+  export type BankDetailSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountHolder?: boolean
+    accountNumber?: boolean
+    ifscCode?: boolean
+    bankName?: boolean
+    branchName?: boolean
+    upiId?: boolean
+    isVerified?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendorId?: boolean
+    adminId?: boolean
+    vendor?: boolean | BankDetail$vendorArgs<ExtArgs>
+    admin?: boolean | BankDetail$adminArgs<ExtArgs>
+  }, ExtArgs["result"]["bankDetail"]>
+
+  export type BankDetailSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    accountHolder?: boolean
+    accountNumber?: boolean
+    ifscCode?: boolean
+    bankName?: boolean
+    branchName?: boolean
+    upiId?: boolean
+    isVerified?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendorId?: boolean
+    adminId?: boolean
+    vendor?: boolean | BankDetail$vendorArgs<ExtArgs>
+    admin?: boolean | BankDetail$adminArgs<ExtArgs>
+  }, ExtArgs["result"]["bankDetail"]>
+
+  export type BankDetailSelectScalar = {
+    id?: boolean
+    accountHolder?: boolean
+    accountNumber?: boolean
+    ifscCode?: boolean
+    bankName?: boolean
+    branchName?: boolean
+    upiId?: boolean
+    isVerified?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    vendorId?: boolean
+    adminId?: boolean
+  }
+
+  export type BankDetailOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "accountHolder" | "accountNumber" | "ifscCode" | "bankName" | "branchName" | "upiId" | "isVerified" | "createdAt" | "updatedAt" | "vendorId" | "adminId", ExtArgs["result"]["bankDetail"]>
+  export type BankDetailInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vendor?: boolean | BankDetail$vendorArgs<ExtArgs>
+    admin?: boolean | BankDetail$adminArgs<ExtArgs>
+  }
+  export type BankDetailIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vendor?: boolean | BankDetail$vendorArgs<ExtArgs>
+    admin?: boolean | BankDetail$adminArgs<ExtArgs>
+  }
+  export type BankDetailIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    vendor?: boolean | BankDetail$vendorArgs<ExtArgs>
+    admin?: boolean | BankDetail$adminArgs<ExtArgs>
+  }
+
+  export type $BankDetailPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BankDetail"
+    objects: {
+      vendor: Prisma.$VendorPayload<ExtArgs> | null
+      admin: Prisma.$AdminPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      accountHolder: string
+      accountNumber: string
+      ifscCode: string
+      bankName: string
+      branchName: string | null
+      upiId: string | null
+      isVerified: boolean
+      createdAt: Date
+      updatedAt: Date
+      vendorId: string | null
+      adminId: string | null
+    }, ExtArgs["result"]["bankDetail"]>
+    composites: {}
+  }
+
+  type BankDetailGetPayload<S extends boolean | null | undefined | BankDetailDefaultArgs> = $Result.GetResult<Prisma.$BankDetailPayload, S>
+
+  type BankDetailCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<BankDetailFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: BankDetailCountAggregateInputType | true
+    }
+
+  export interface BankDetailDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BankDetail'], meta: { name: 'BankDetail' } }
+    /**
+     * Find zero or one BankDetail that matches the filter.
+     * @param {BankDetailFindUniqueArgs} args - Arguments to find a BankDetail
+     * @example
+     * // Get one BankDetail
+     * const bankDetail = await prisma.bankDetail.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BankDetailFindUniqueArgs>(args: SelectSubset<T, BankDetailFindUniqueArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one BankDetail that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {BankDetailFindUniqueOrThrowArgs} args - Arguments to find a BankDetail
+     * @example
+     * // Get one BankDetail
+     * const bankDetail = await prisma.bankDetail.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BankDetailFindUniqueOrThrowArgs>(args: SelectSubset<T, BankDetailFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BankDetail that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailFindFirstArgs} args - Arguments to find a BankDetail
+     * @example
+     * // Get one BankDetail
+     * const bankDetail = await prisma.bankDetail.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BankDetailFindFirstArgs>(args?: SelectSubset<T, BankDetailFindFirstArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first BankDetail that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailFindFirstOrThrowArgs} args - Arguments to find a BankDetail
+     * @example
+     * // Get one BankDetail
+     * const bankDetail = await prisma.bankDetail.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BankDetailFindFirstOrThrowArgs>(args?: SelectSubset<T, BankDetailFindFirstOrThrowArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more BankDetails that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BankDetails
+     * const bankDetails = await prisma.bankDetail.findMany()
+     * 
+     * // Get first 10 BankDetails
+     * const bankDetails = await prisma.bankDetail.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const bankDetailWithIdOnly = await prisma.bankDetail.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BankDetailFindManyArgs>(args?: SelectSubset<T, BankDetailFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a BankDetail.
+     * @param {BankDetailCreateArgs} args - Arguments to create a BankDetail.
+     * @example
+     * // Create one BankDetail
+     * const BankDetail = await prisma.bankDetail.create({
+     *   data: {
+     *     // ... data to create a BankDetail
+     *   }
+     * })
+     * 
+     */
+    create<T extends BankDetailCreateArgs>(args: SelectSubset<T, BankDetailCreateArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many BankDetails.
+     * @param {BankDetailCreateManyArgs} args - Arguments to create many BankDetails.
+     * @example
+     * // Create many BankDetails
+     * const bankDetail = await prisma.bankDetail.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BankDetailCreateManyArgs>(args?: SelectSubset<T, BankDetailCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many BankDetails and returns the data saved in the database.
+     * @param {BankDetailCreateManyAndReturnArgs} args - Arguments to create many BankDetails.
+     * @example
+     * // Create many BankDetails
+     * const bankDetail = await prisma.bankDetail.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many BankDetails and only return the `id`
+     * const bankDetailWithIdOnly = await prisma.bankDetail.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends BankDetailCreateManyAndReturnArgs>(args?: SelectSubset<T, BankDetailCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a BankDetail.
+     * @param {BankDetailDeleteArgs} args - Arguments to delete one BankDetail.
+     * @example
+     * // Delete one BankDetail
+     * const BankDetail = await prisma.bankDetail.delete({
+     *   where: {
+     *     // ... filter to delete one BankDetail
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BankDetailDeleteArgs>(args: SelectSubset<T, BankDetailDeleteArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one BankDetail.
+     * @param {BankDetailUpdateArgs} args - Arguments to update one BankDetail.
+     * @example
+     * // Update one BankDetail
+     * const bankDetail = await prisma.bankDetail.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BankDetailUpdateArgs>(args: SelectSubset<T, BankDetailUpdateArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more BankDetails.
+     * @param {BankDetailDeleteManyArgs} args - Arguments to filter BankDetails to delete.
+     * @example
+     * // Delete a few BankDetails
+     * const { count } = await prisma.bankDetail.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BankDetailDeleteManyArgs>(args?: SelectSubset<T, BankDetailDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BankDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BankDetails
+     * const bankDetail = await prisma.bankDetail.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BankDetailUpdateManyArgs>(args: SelectSubset<T, BankDetailUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BankDetails and returns the data updated in the database.
+     * @param {BankDetailUpdateManyAndReturnArgs} args - Arguments to update many BankDetails.
+     * @example
+     * // Update many BankDetails
+     * const bankDetail = await prisma.bankDetail.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more BankDetails and only return the `id`
+     * const bankDetailWithIdOnly = await prisma.bankDetail.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends BankDetailUpdateManyAndReturnArgs>(args: SelectSubset<T, BankDetailUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one BankDetail.
+     * @param {BankDetailUpsertArgs} args - Arguments to update or create a BankDetail.
+     * @example
+     * // Update or create a BankDetail
+     * const bankDetail = await prisma.bankDetail.upsert({
+     *   create: {
+     *     // ... data to create a BankDetail
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BankDetail we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BankDetailUpsertArgs>(args: SelectSubset<T, BankDetailUpsertArgs<ExtArgs>>): Prisma__BankDetailClient<$Result.GetResult<Prisma.$BankDetailPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of BankDetails.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailCountArgs} args - Arguments to filter BankDetails to count.
+     * @example
+     * // Count the number of BankDetails
+     * const count = await prisma.bankDetail.count({
+     *   where: {
+     *     // ... the filter for the BankDetails we want to count
+     *   }
+     * })
+    **/
+    count<T extends BankDetailCountArgs>(
+      args?: Subset<T, BankDetailCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BankDetailCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BankDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BankDetailAggregateArgs>(args: Subset<T, BankDetailAggregateArgs>): Prisma.PrismaPromise<GetBankDetailAggregateType<T>>
+
+    /**
+     * Group by BankDetail.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BankDetailGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BankDetailGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BankDetailGroupByArgs['orderBy'] }
+        : { orderBy?: BankDetailGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BankDetailGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBankDetailGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BankDetail model
+   */
+  readonly fields: BankDetailFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BankDetail.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BankDetailClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    vendor<T extends BankDetail$vendorArgs<ExtArgs> = {}>(args?: Subset<T, BankDetail$vendorArgs<ExtArgs>>): Prisma__VendorClient<$Result.GetResult<Prisma.$VendorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    admin<T extends BankDetail$adminArgs<ExtArgs> = {}>(args?: Subset<T, BankDetail$adminArgs<ExtArgs>>): Prisma__AdminClient<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BankDetail model
+   */
+  interface BankDetailFieldRefs {
+    readonly id: FieldRef<"BankDetail", 'String'>
+    readonly accountHolder: FieldRef<"BankDetail", 'String'>
+    readonly accountNumber: FieldRef<"BankDetail", 'String'>
+    readonly ifscCode: FieldRef<"BankDetail", 'String'>
+    readonly bankName: FieldRef<"BankDetail", 'String'>
+    readonly branchName: FieldRef<"BankDetail", 'String'>
+    readonly upiId: FieldRef<"BankDetail", 'String'>
+    readonly isVerified: FieldRef<"BankDetail", 'Boolean'>
+    readonly createdAt: FieldRef<"BankDetail", 'DateTime'>
+    readonly updatedAt: FieldRef<"BankDetail", 'DateTime'>
+    readonly vendorId: FieldRef<"BankDetail", 'String'>
+    readonly adminId: FieldRef<"BankDetail", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BankDetail findUnique
+   */
+  export type BankDetailFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which BankDetail to fetch.
+     */
+    where: BankDetailWhereUniqueInput
+  }
+
+  /**
+   * BankDetail findUniqueOrThrow
+   */
+  export type BankDetailFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which BankDetail to fetch.
+     */
+    where: BankDetailWhereUniqueInput
+  }
+
+  /**
+   * BankDetail findFirst
+   */
+  export type BankDetailFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which BankDetail to fetch.
+     */
+    where?: BankDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankDetails to fetch.
+     */
+    orderBy?: BankDetailOrderByWithRelationInput | BankDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BankDetails.
+     */
+    cursor?: BankDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankDetails.
+     */
+    distinct?: BankDetailScalarFieldEnum | BankDetailScalarFieldEnum[]
+  }
+
+  /**
+   * BankDetail findFirstOrThrow
+   */
+  export type BankDetailFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which BankDetail to fetch.
+     */
+    where?: BankDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankDetails to fetch.
+     */
+    orderBy?: BankDetailOrderByWithRelationInput | BankDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BankDetails.
+     */
+    cursor?: BankDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankDetails.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BankDetails.
+     */
+    distinct?: BankDetailScalarFieldEnum | BankDetailScalarFieldEnum[]
+  }
+
+  /**
+   * BankDetail findMany
+   */
+  export type BankDetailFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * Filter, which BankDetails to fetch.
+     */
+    where?: BankDetailWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BankDetails to fetch.
+     */
+    orderBy?: BankDetailOrderByWithRelationInput | BankDetailOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BankDetails.
+     */
+    cursor?: BankDetailWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BankDetails from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BankDetails.
+     */
+    skip?: number
+    distinct?: BankDetailScalarFieldEnum | BankDetailScalarFieldEnum[]
+  }
+
+  /**
+   * BankDetail create
+   */
+  export type BankDetailCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BankDetail.
+     */
+    data: XOR<BankDetailCreateInput, BankDetailUncheckedCreateInput>
+  }
+
+  /**
+   * BankDetail createMany
+   */
+  export type BankDetailCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BankDetails.
+     */
+    data: BankDetailCreateManyInput | BankDetailCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BankDetail createManyAndReturn
+   */
+  export type BankDetailCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * The data used to create many BankDetails.
+     */
+    data: BankDetailCreateManyInput | BankDetailCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BankDetail update
+   */
+  export type BankDetailUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BankDetail.
+     */
+    data: XOR<BankDetailUpdateInput, BankDetailUncheckedUpdateInput>
+    /**
+     * Choose, which BankDetail to update.
+     */
+    where: BankDetailWhereUniqueInput
+  }
+
+  /**
+   * BankDetail updateMany
+   */
+  export type BankDetailUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BankDetails.
+     */
+    data: XOR<BankDetailUpdateManyMutationInput, BankDetailUncheckedUpdateManyInput>
+    /**
+     * Filter which BankDetails to update
+     */
+    where?: BankDetailWhereInput
+    /**
+     * Limit how many BankDetails to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * BankDetail updateManyAndReturn
+   */
+  export type BankDetailUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * The data used to update BankDetails.
+     */
+    data: XOR<BankDetailUpdateManyMutationInput, BankDetailUncheckedUpdateManyInput>
+    /**
+     * Filter which BankDetails to update
+     */
+    where?: BankDetailWhereInput
+    /**
+     * Limit how many BankDetails to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * BankDetail upsert
+   */
+  export type BankDetailUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BankDetail to update in case it exists.
+     */
+    where: BankDetailWhereUniqueInput
+    /**
+     * In case the BankDetail found by the `where` argument doesn't exist, create a new BankDetail with this data.
+     */
+    create: XOR<BankDetailCreateInput, BankDetailUncheckedCreateInput>
+    /**
+     * In case the BankDetail was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BankDetailUpdateInput, BankDetailUncheckedUpdateInput>
+  }
+
+  /**
+   * BankDetail delete
+   */
+  export type BankDetailDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+    /**
+     * Filter which BankDetail to delete.
+     */
+    where: BankDetailWhereUniqueInput
+  }
+
+  /**
+   * BankDetail deleteMany
+   */
+  export type BankDetailDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BankDetails to delete
+     */
+    where?: BankDetailWhereInput
+    /**
+     * Limit how many BankDetails to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * BankDetail.vendor
+   */
+  export type BankDetail$vendorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Vendor
+     */
+    select?: VendorSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Vendor
+     */
+    omit?: VendorOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: VendorInclude<ExtArgs> | null
+    where?: VendorWhereInput
+  }
+
+  /**
+   * BankDetail.admin
+   */
+  export type BankDetail$adminArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Admin
+     */
+    select?: AdminSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Admin
+     */
+    omit?: AdminOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AdminInclude<ExtArgs> | null
+    where?: AdminWhereInput
+  }
+
+  /**
+   * BankDetail without action
+   */
+  export type BankDetailDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BankDetail
+     */
+    select?: BankDetailSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the BankDetail
+     */
+    omit?: BankDetailOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BankDetailInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Product
    */
 
@@ -12640,6 +13985,8 @@ export namespace Prisma {
     packageLength: number | null
     packageWidth: number | null
     numberOfItems: number | null
+    dispatchTimeInDays: number | null
+    shippingCost: Decimal | null
   }
 
   export type ProductListingSumAggregateOutputType = {
@@ -12651,6 +13998,8 @@ export namespace Prisma {
     packageLength: number | null
     packageWidth: number | null
     numberOfItems: number | null
+    dispatchTimeInDays: number | null
+    shippingCost: Decimal | null
   }
 
   export type ProductListingMinAggregateOutputType = {
@@ -12674,6 +14023,8 @@ export namespace Prisma {
     numberOfItems: number | null
     enclosureMaterial: string | null
     productCareInstructions: string | null
+    dispatchTimeInDays: number | null
+    shippingCost: Decimal | null
   }
 
   export type ProductListingMaxAggregateOutputType = {
@@ -12697,6 +14048,8 @@ export namespace Prisma {
     numberOfItems: number | null
     enclosureMaterial: string | null
     productCareInstructions: string | null
+    dispatchTimeInDays: number | null
+    shippingCost: Decimal | null
   }
 
   export type ProductListingCountAggregateOutputType = {
@@ -12722,6 +14075,8 @@ export namespace Prisma {
     enclosureMaterial: number
     productCareInstructions: number
     productFeatures: number
+    dispatchTimeInDays: number
+    shippingCost: number
     _all: number
   }
 
@@ -12735,6 +14090,8 @@ export namespace Prisma {
     packageLength?: true
     packageWidth?: true
     numberOfItems?: true
+    dispatchTimeInDays?: true
+    shippingCost?: true
   }
 
   export type ProductListingSumAggregateInputType = {
@@ -12746,6 +14103,8 @@ export namespace Prisma {
     packageLength?: true
     packageWidth?: true
     numberOfItems?: true
+    dispatchTimeInDays?: true
+    shippingCost?: true
   }
 
   export type ProductListingMinAggregateInputType = {
@@ -12769,6 +14128,8 @@ export namespace Prisma {
     numberOfItems?: true
     enclosureMaterial?: true
     productCareInstructions?: true
+    dispatchTimeInDays?: true
+    shippingCost?: true
   }
 
   export type ProductListingMaxAggregateInputType = {
@@ -12792,6 +14153,8 @@ export namespace Prisma {
     numberOfItems?: true
     enclosureMaterial?: true
     productCareInstructions?: true
+    dispatchTimeInDays?: true
+    shippingCost?: true
   }
 
   export type ProductListingCountAggregateInputType = {
@@ -12817,6 +14180,8 @@ export namespace Prisma {
     enclosureMaterial?: true
     productCareInstructions?: true
     productFeatures?: true
+    dispatchTimeInDays?: true
+    shippingCost?: true
     _all?: true
   }
 
@@ -12929,6 +14294,8 @@ export namespace Prisma {
     enclosureMaterial: string | null
     productCareInstructions: string | null
     productFeatures: string[]
+    dispatchTimeInDays: number | null
+    shippingCost: Decimal
     _count: ProductListingCountAggregateOutputType | null
     _avg: ProductListingAvgAggregateOutputType | null
     _sum: ProductListingSumAggregateOutputType | null
@@ -12973,6 +14340,8 @@ export namespace Prisma {
     enclosureMaterial?: boolean
     productCareInstructions?: boolean
     productFeatures?: boolean
+    dispatchTimeInDays?: boolean
+    shippingCost?: boolean
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
     variants?: boolean | ProductListing$variantsArgs<ExtArgs>
@@ -13003,6 +14372,8 @@ export namespace Prisma {
     enclosureMaterial?: boolean
     productCareInstructions?: boolean
     productFeatures?: boolean
+    dispatchTimeInDays?: boolean
+    shippingCost?: boolean
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productListing"]>
@@ -13030,6 +14401,8 @@ export namespace Prisma {
     enclosureMaterial?: boolean
     productCareInstructions?: boolean
     productFeatures?: boolean
+    dispatchTimeInDays?: boolean
+    shippingCost?: boolean
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["productListing"]>
@@ -13057,9 +14430,11 @@ export namespace Prisma {
     enclosureMaterial?: boolean
     productCareInstructions?: boolean
     productFeatures?: boolean
+    dispatchTimeInDays?: boolean
+    shippingCost?: boolean
   }
 
-  export type ProductListingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "vendorId" | "sku" | "price" | "stock" | "deliveryEta" | "status" | "updatedAt" | "createdAt" | "itemWeight" | "originalPrice" | "packageHeight" | "packageLength" | "packageWidth" | "unit" | "brand" | "includedComponents" | "numberOfItems" | "enclosureMaterial" | "productCareInstructions" | "productFeatures", ExtArgs["result"]["productListing"]>
+  export type ProductListingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "vendorId" | "sku" | "price" | "stock" | "deliveryEta" | "status" | "updatedAt" | "createdAt" | "itemWeight" | "originalPrice" | "packageHeight" | "packageLength" | "packageWidth" | "unit" | "brand" | "includedComponents" | "numberOfItems" | "enclosureMaterial" | "productCareInstructions" | "productFeatures" | "dispatchTimeInDays" | "shippingCost", ExtArgs["result"]["productListing"]>
   export type ProductListingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -13107,6 +14482,8 @@ export namespace Prisma {
       enclosureMaterial: string | null
       productCareInstructions: string | null
       productFeatures: string[]
+      dispatchTimeInDays: number | null
+      shippingCost: Prisma.Decimal
     }, ExtArgs["result"]["productListing"]>
     composites: {}
   }
@@ -13556,6 +14933,8 @@ export namespace Prisma {
     readonly enclosureMaterial: FieldRef<"ProductListing", 'String'>
     readonly productCareInstructions: FieldRef<"ProductListing", 'String'>
     readonly productFeatures: FieldRef<"ProductListing", 'String[]'>
+    readonly dispatchTimeInDays: FieldRef<"ProductListing", 'Int'>
+    readonly shippingCost: FieldRef<"ProductListing", 'Decimal'>
   }
     
 
@@ -17421,12 +18800,14 @@ export namespace Prisma {
     quantity: number | null
     unitPrice: Decimal | null
     totalPrice: Decimal | null
+    shippingCost: Decimal | null
   }
 
   export type OrderItemSumAggregateOutputType = {
     quantity: number | null
     unitPrice: Decimal | null
     totalPrice: Decimal | null
+    shippingCost: Decimal | null
   }
 
   export type OrderItemMinAggregateOutputType = {
@@ -17442,6 +18823,7 @@ export namespace Prisma {
     addedAt: Date | null
     dispatchStatus: $Enums.DispatchStatus | null
     dispatchTime: Date | null
+    shippingCost: Decimal | null
   }
 
   export type OrderItemMaxAggregateOutputType = {
@@ -17457,6 +18839,7 @@ export namespace Prisma {
     addedAt: Date | null
     dispatchStatus: $Enums.DispatchStatus | null
     dispatchTime: Date | null
+    shippingCost: Decimal | null
   }
 
   export type OrderItemCountAggregateOutputType = {
@@ -17472,6 +18855,7 @@ export namespace Prisma {
     addedAt: number
     dispatchStatus: number
     dispatchTime: number
+    shippingCost: number
     _all: number
   }
 
@@ -17480,12 +18864,14 @@ export namespace Prisma {
     quantity?: true
     unitPrice?: true
     totalPrice?: true
+    shippingCost?: true
   }
 
   export type OrderItemSumAggregateInputType = {
     quantity?: true
     unitPrice?: true
     totalPrice?: true
+    shippingCost?: true
   }
 
   export type OrderItemMinAggregateInputType = {
@@ -17501,6 +18887,7 @@ export namespace Prisma {
     addedAt?: true
     dispatchStatus?: true
     dispatchTime?: true
+    shippingCost?: true
   }
 
   export type OrderItemMaxAggregateInputType = {
@@ -17516,6 +18903,7 @@ export namespace Prisma {
     addedAt?: true
     dispatchStatus?: true
     dispatchTime?: true
+    shippingCost?: true
   }
 
   export type OrderItemCountAggregateInputType = {
@@ -17531,6 +18919,7 @@ export namespace Prisma {
     addedAt?: true
     dispatchStatus?: true
     dispatchTime?: true
+    shippingCost?: true
     _all?: true
   }
 
@@ -17633,6 +19022,7 @@ export namespace Prisma {
     addedAt: Date
     dispatchStatus: $Enums.DispatchStatus
     dispatchTime: Date | null
+    shippingCost: Decimal
     _count: OrderItemCountAggregateOutputType | null
     _avg: OrderItemAvgAggregateOutputType | null
     _sum: OrderItemSumAggregateOutputType | null
@@ -17667,6 +19057,7 @@ export namespace Prisma {
     addedAt?: boolean
     dispatchStatus?: boolean
     dispatchTime?: boolean
+    shippingCost?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -17685,6 +19076,7 @@ export namespace Prisma {
     addedAt?: boolean
     dispatchStatus?: boolean
     dispatchTime?: boolean
+    shippingCost?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -17703,6 +19095,7 @@ export namespace Prisma {
     addedAt?: boolean
     dispatchStatus?: boolean
     dispatchTime?: boolean
+    shippingCost?: boolean
     order?: boolean | OrderDefaultArgs<ExtArgs>
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
     product?: boolean | ProductDefaultArgs<ExtArgs>
@@ -17721,9 +19114,10 @@ export namespace Prisma {
     addedAt?: boolean
     dispatchStatus?: boolean
     dispatchTime?: boolean
+    shippingCost?: boolean
   }
 
-  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "productId" | "listingId" | "vendorId" | "quantity" | "unitPrice" | "totalPrice" | "status" | "addedAt" | "dispatchStatus" | "dispatchTime", ExtArgs["result"]["orderItem"]>
+  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "productId" | "listingId" | "vendorId" | "quantity" | "unitPrice" | "totalPrice" | "status" | "addedAt" | "dispatchStatus" | "dispatchTime" | "shippingCost", ExtArgs["result"]["orderItem"]>
   export type OrderItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
     vendor?: boolean | VendorDefaultArgs<ExtArgs>
@@ -17760,6 +19154,7 @@ export namespace Prisma {
       addedAt: Date
       dispatchStatus: $Enums.DispatchStatus
       dispatchTime: Date | null
+      shippingCost: Prisma.Decimal
     }, ExtArgs["result"]["orderItem"]>
     composites: {}
   }
@@ -18198,6 +19593,7 @@ export namespace Prisma {
     readonly addedAt: FieldRef<"OrderItem", 'DateTime'>
     readonly dispatchStatus: FieldRef<"OrderItem", 'DispatchStatus'>
     readonly dispatchTime: FieldRef<"OrderItem", 'DateTime'>
+    readonly shippingCost: FieldRef<"OrderItem", 'Decimal'>
   }
     
 
@@ -36100,6 +37496,7 @@ export namespace Prisma {
     userId: 'userId',
     name: 'name',
     email: 'email',
+    password: 'password',
     profileImage: 'profileImage',
     businessName: 'businessName',
     phone: 'phone',
@@ -36163,6 +37560,24 @@ export namespace Prisma {
   export type AddressScalarFieldEnum = (typeof AddressScalarFieldEnum)[keyof typeof AddressScalarFieldEnum]
 
 
+  export const BankDetailScalarFieldEnum: {
+    id: 'id',
+    accountHolder: 'accountHolder',
+    accountNumber: 'accountNumber',
+    ifscCode: 'ifscCode',
+    bankName: 'bankName',
+    branchName: 'branchName',
+    upiId: 'upiId',
+    isVerified: 'isVerified',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    vendorId: 'vendorId',
+    adminId: 'adminId'
+  };
+
+  export type BankDetailScalarFieldEnum = (typeof BankDetailScalarFieldEnum)[keyof typeof BankDetailScalarFieldEnum]
+
+
   export const ProductScalarFieldEnum: {
     id: 'id',
     title: 'title',
@@ -36206,7 +37621,9 @@ export namespace Prisma {
     numberOfItems: 'numberOfItems',
     enclosureMaterial: 'enclosureMaterial',
     productCareInstructions: 'productCareInstructions',
-    productFeatures: 'productFeatures'
+    productFeatures: 'productFeatures',
+    dispatchTimeInDays: 'dispatchTimeInDays',
+    shippingCost: 'shippingCost'
   };
 
   export type ProductListingScalarFieldEnum = (typeof ProductListingScalarFieldEnum)[keyof typeof ProductListingScalarFieldEnum]
@@ -36264,7 +37681,8 @@ export namespace Prisma {
     status: 'status',
     addedAt: 'addedAt',
     dispatchStatus: 'dispatchStatus',
-    dispatchTime: 'dispatchTime'
+    dispatchTime: 'dispatchTime',
+    shippingCost: 'shippingCost'
   };
 
   export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
@@ -37067,6 +38485,7 @@ export namespace Prisma {
     userId?: UuidNullableFilter<"Vendor"> | string | null
     name?: StringFilter<"Vendor"> | string
     email?: StringFilter<"Vendor"> | string
+    password?: StringNullableFilter<"Vendor"> | string | null
     profileImage?: StringNullableFilter<"Vendor"> | string | null
     businessName?: StringFilter<"Vendor"> | string
     phone?: StringNullableFilter<"Vendor"> | string | null
@@ -37085,6 +38504,7 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     refundRequests?: RefundRequestListRelationFilter
     cartItems?: CartItemListRelationFilter
+    bankDetail?: XOR<BankDetailNullableScalarRelationFilter, BankDetailWhereInput> | null
   }
 
   export type VendorOrderByWithRelationInput = {
@@ -37092,6 +38512,7 @@ export namespace Prisma {
     userId?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
+    password?: SortOrderInput | SortOrder
     profileImage?: SortOrderInput | SortOrder
     businessName?: SortOrder
     phone?: SortOrderInput | SortOrder
@@ -37110,6 +38531,7 @@ export namespace Prisma {
     orderItems?: OrderItemOrderByRelationAggregateInput
     refundRequests?: RefundRequestOrderByRelationAggregateInput
     cartItems?: CartItemOrderByRelationAggregateInput
+    bankDetail?: BankDetailOrderByWithRelationInput
   }
 
   export type VendorWhereUniqueInput = Prisma.AtLeast<{
@@ -37120,6 +38542,7 @@ export namespace Prisma {
     OR?: VendorWhereInput[]
     NOT?: VendorWhereInput | VendorWhereInput[]
     name?: StringFilter<"Vendor"> | string
+    password?: StringNullableFilter<"Vendor"> | string | null
     profileImage?: StringNullableFilter<"Vendor"> | string | null
     businessName?: StringFilter<"Vendor"> | string
     phone?: StringNullableFilter<"Vendor"> | string | null
@@ -37138,6 +38561,7 @@ export namespace Prisma {
     orderItems?: OrderItemListRelationFilter
     refundRequests?: RefundRequestListRelationFilter
     cartItems?: CartItemListRelationFilter
+    bankDetail?: XOR<BankDetailNullableScalarRelationFilter, BankDetailWhereInput> | null
   }, "id" | "userId" | "email">
 
   export type VendorOrderByWithAggregationInput = {
@@ -37145,6 +38569,7 @@ export namespace Prisma {
     userId?: SortOrderInput | SortOrder
     name?: SortOrder
     email?: SortOrder
+    password?: SortOrderInput | SortOrder
     profileImage?: SortOrderInput | SortOrder
     businessName?: SortOrder
     phone?: SortOrderInput | SortOrder
@@ -37167,6 +38592,7 @@ export namespace Prisma {
     userId?: UuidNullableWithAggregatesFilter<"Vendor"> | string | null
     name?: StringWithAggregatesFilter<"Vendor"> | string
     email?: StringWithAggregatesFilter<"Vendor"> | string
+    password?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
     profileImage?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
     businessName?: StringWithAggregatesFilter<"Vendor"> | string
     phone?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
@@ -37182,12 +38608,13 @@ export namespace Prisma {
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
-    id?: StringFilter<"Admin"> | string
+    id?: UuidFilter<"Admin"> | string
     userId?: UuidFilter<"Admin"> | string
     name?: StringFilter<"Admin"> | string
     role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    bankDetail?: XOR<BankDetailNullableScalarRelationFilter, BankDetailWhereInput> | null
     actions?: ActionLogListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -37199,6 +38626,7 @@ export namespace Prisma {
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    bankDetail?: BankDetailOrderByWithRelationInput
     actions?: ActionLogOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
@@ -37213,6 +38641,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Admin"> | $Enums.AdminRole
     createdAt?: DateTimeFilter<"Admin"> | Date | string
     updatedAt?: DateTimeFilter<"Admin"> | Date | string
+    bankDetail?: XOR<BankDetailNullableScalarRelationFilter, BankDetailWhereInput> | null
     actions?: ActionLogListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "userId">
@@ -37233,7 +38662,7 @@ export namespace Prisma {
     AND?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
     OR?: AdminScalarWhereWithAggregatesInput[]
     NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"Admin"> | string
+    id?: UuidWithAggregatesFilter<"Admin"> | string
     userId?: UuidWithAggregatesFilter<"Admin"> | string
     name?: StringWithAggregatesFilter<"Admin"> | string
     role?: EnumAdminRoleWithAggregatesFilter<"Admin"> | $Enums.AdminRole
@@ -37246,7 +38675,7 @@ export namespace Prisma {
     OR?: ActionLogWhereInput[]
     NOT?: ActionLogWhereInput | ActionLogWhereInput[]
     id?: StringFilter<"ActionLog"> | string
-    adminId?: StringFilter<"ActionLog"> | string
+    adminId?: UuidFilter<"ActionLog"> | string
     actionType?: EnumModerationActionTypeFilter<"ActionLog"> | $Enums.ModerationActionType
     targetType?: EnumTargetTypeFilter<"ActionLog"> | $Enums.TargetType
     targetId?: StringFilter<"ActionLog"> | string
@@ -37277,7 +38706,7 @@ export namespace Prisma {
     AND?: ActionLogWhereInput | ActionLogWhereInput[]
     OR?: ActionLogWhereInput[]
     NOT?: ActionLogWhereInput | ActionLogWhereInput[]
-    adminId?: StringFilter<"ActionLog"> | string
+    adminId?: UuidFilter<"ActionLog"> | string
     actionType?: EnumModerationActionTypeFilter<"ActionLog"> | $Enums.ModerationActionType
     targetType?: EnumTargetTypeFilter<"ActionLog"> | $Enums.TargetType
     targetId?: StringFilter<"ActionLog"> | string
@@ -37310,7 +38739,7 @@ export namespace Prisma {
     OR?: ActionLogScalarWhereWithAggregatesInput[]
     NOT?: ActionLogScalarWhereWithAggregatesInput | ActionLogScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"ActionLog"> | string
-    adminId?: StringWithAggregatesFilter<"ActionLog"> | string
+    adminId?: UuidWithAggregatesFilter<"ActionLog"> | string
     actionType?: EnumModerationActionTypeWithAggregatesFilter<"ActionLog"> | $Enums.ModerationActionType
     targetType?: EnumTargetTypeWithAggregatesFilter<"ActionLog"> | $Enums.TargetType
     targetId?: StringWithAggregatesFilter<"ActionLog"> | string
@@ -37430,6 +38859,99 @@ export namespace Prisma {
     isDefault?: BoolWithAggregatesFilter<"Address"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Address"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Address"> | Date | string
+  }
+
+  export type BankDetailWhereInput = {
+    AND?: BankDetailWhereInput | BankDetailWhereInput[]
+    OR?: BankDetailWhereInput[]
+    NOT?: BankDetailWhereInput | BankDetailWhereInput[]
+    id?: StringFilter<"BankDetail"> | string
+    accountHolder?: StringFilter<"BankDetail"> | string
+    accountNumber?: StringFilter<"BankDetail"> | string
+    ifscCode?: StringFilter<"BankDetail"> | string
+    bankName?: StringFilter<"BankDetail"> | string
+    branchName?: StringNullableFilter<"BankDetail"> | string | null
+    upiId?: StringNullableFilter<"BankDetail"> | string | null
+    isVerified?: BoolFilter<"BankDetail"> | boolean
+    createdAt?: DateTimeFilter<"BankDetail"> | Date | string
+    updatedAt?: DateTimeFilter<"BankDetail"> | Date | string
+    vendorId?: UuidNullableFilter<"BankDetail"> | string | null
+    adminId?: UuidNullableFilter<"BankDetail"> | string | null
+    vendor?: XOR<VendorNullableScalarRelationFilter, VendorWhereInput> | null
+    admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
+  }
+
+  export type BankDetailOrderByWithRelationInput = {
+    id?: SortOrder
+    accountHolder?: SortOrder
+    accountNumber?: SortOrder
+    ifscCode?: SortOrder
+    bankName?: SortOrder
+    branchName?: SortOrderInput | SortOrder
+    upiId?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vendorId?: SortOrderInput | SortOrder
+    adminId?: SortOrderInput | SortOrder
+    vendor?: VendorOrderByWithRelationInput
+    admin?: AdminOrderByWithRelationInput
+  }
+
+  export type BankDetailWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    vendorId?: string
+    adminId?: string
+    AND?: BankDetailWhereInput | BankDetailWhereInput[]
+    OR?: BankDetailWhereInput[]
+    NOT?: BankDetailWhereInput | BankDetailWhereInput[]
+    accountHolder?: StringFilter<"BankDetail"> | string
+    accountNumber?: StringFilter<"BankDetail"> | string
+    ifscCode?: StringFilter<"BankDetail"> | string
+    bankName?: StringFilter<"BankDetail"> | string
+    branchName?: StringNullableFilter<"BankDetail"> | string | null
+    upiId?: StringNullableFilter<"BankDetail"> | string | null
+    isVerified?: BoolFilter<"BankDetail"> | boolean
+    createdAt?: DateTimeFilter<"BankDetail"> | Date | string
+    updatedAt?: DateTimeFilter<"BankDetail"> | Date | string
+    vendor?: XOR<VendorNullableScalarRelationFilter, VendorWhereInput> | null
+    admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
+  }, "id" | "vendorId" | "adminId">
+
+  export type BankDetailOrderByWithAggregationInput = {
+    id?: SortOrder
+    accountHolder?: SortOrder
+    accountNumber?: SortOrder
+    ifscCode?: SortOrder
+    bankName?: SortOrder
+    branchName?: SortOrderInput | SortOrder
+    upiId?: SortOrderInput | SortOrder
+    isVerified?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vendorId?: SortOrderInput | SortOrder
+    adminId?: SortOrderInput | SortOrder
+    _count?: BankDetailCountOrderByAggregateInput
+    _max?: BankDetailMaxOrderByAggregateInput
+    _min?: BankDetailMinOrderByAggregateInput
+  }
+
+  export type BankDetailScalarWhereWithAggregatesInput = {
+    AND?: BankDetailScalarWhereWithAggregatesInput | BankDetailScalarWhereWithAggregatesInput[]
+    OR?: BankDetailScalarWhereWithAggregatesInput[]
+    NOT?: BankDetailScalarWhereWithAggregatesInput | BankDetailScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BankDetail"> | string
+    accountHolder?: StringWithAggregatesFilter<"BankDetail"> | string
+    accountNumber?: StringWithAggregatesFilter<"BankDetail"> | string
+    ifscCode?: StringWithAggregatesFilter<"BankDetail"> | string
+    bankName?: StringWithAggregatesFilter<"BankDetail"> | string
+    branchName?: StringNullableWithAggregatesFilter<"BankDetail"> | string | null
+    upiId?: StringNullableWithAggregatesFilter<"BankDetail"> | string | null
+    isVerified?: BoolWithAggregatesFilter<"BankDetail"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"BankDetail"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"BankDetail"> | Date | string
+    vendorId?: UuidNullableWithAggregatesFilter<"BankDetail"> | string | null
+    adminId?: UuidNullableWithAggregatesFilter<"BankDetail"> | string | null
   }
 
   export type ProductWhereInput = {
@@ -37574,6 +39096,8 @@ export namespace Prisma {
     enclosureMaterial?: StringNullableFilter<"ProductListing"> | string | null
     productCareInstructions?: StringNullableFilter<"ProductListing"> | string | null
     productFeatures?: StringNullableListFilter<"ProductListing">
+    dispatchTimeInDays?: IntNullableFilter<"ProductListing"> | number | null
+    shippingCost?: DecimalFilter<"ProductListing"> | Decimal | DecimalJsLike | number | string
     vendor?: XOR<VendorScalarRelationFilter, VendorWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     variants?: ProductVariantListRelationFilter
@@ -37603,6 +39127,8 @@ export namespace Prisma {
     enclosureMaterial?: SortOrderInput | SortOrder
     productCareInstructions?: SortOrderInput | SortOrder
     productFeatures?: SortOrder
+    dispatchTimeInDays?: SortOrderInput | SortOrder
+    shippingCost?: SortOrder
     vendor?: VendorOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
     variants?: ProductVariantOrderByRelationAggregateInput
@@ -37635,6 +39161,8 @@ export namespace Prisma {
     enclosureMaterial?: StringNullableFilter<"ProductListing"> | string | null
     productCareInstructions?: StringNullableFilter<"ProductListing"> | string | null
     productFeatures?: StringNullableListFilter<"ProductListing">
+    dispatchTimeInDays?: IntNullableFilter<"ProductListing"> | number | null
+    shippingCost?: DecimalFilter<"ProductListing"> | Decimal | DecimalJsLike | number | string
     vendor?: XOR<VendorScalarRelationFilter, VendorWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
     variants?: ProductVariantListRelationFilter
@@ -37664,6 +39192,8 @@ export namespace Prisma {
     enclosureMaterial?: SortOrderInput | SortOrder
     productCareInstructions?: SortOrderInput | SortOrder
     productFeatures?: SortOrder
+    dispatchTimeInDays?: SortOrderInput | SortOrder
+    shippingCost?: SortOrder
     _count?: ProductListingCountOrderByAggregateInput
     _avg?: ProductListingAvgOrderByAggregateInput
     _max?: ProductListingMaxOrderByAggregateInput
@@ -37697,6 +39227,8 @@ export namespace Prisma {
     enclosureMaterial?: StringNullableWithAggregatesFilter<"ProductListing"> | string | null
     productCareInstructions?: StringNullableWithAggregatesFilter<"ProductListing"> | string | null
     productFeatures?: StringNullableListFilter<"ProductListing">
+    dispatchTimeInDays?: IntNullableWithAggregatesFilter<"ProductListing"> | number | null
+    shippingCost?: DecimalWithAggregatesFilter<"ProductListing"> | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductVariantWhereInput = {
@@ -37927,6 +39459,7 @@ export namespace Prisma {
     addedAt?: DateTimeFilter<"OrderItem"> | Date | string
     dispatchStatus?: EnumDispatchStatusFilter<"OrderItem"> | $Enums.DispatchStatus
     dispatchTime?: DateTimeNullableFilter<"OrderItem"> | Date | string | null
+    shippingCost?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     vendor?: XOR<VendorScalarRelationFilter, VendorWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
@@ -37945,6 +39478,7 @@ export namespace Prisma {
     addedAt?: SortOrder
     dispatchStatus?: SortOrder
     dispatchTime?: SortOrderInput | SortOrder
+    shippingCost?: SortOrder
     order?: OrderOrderByWithRelationInput
     vendor?: VendorOrderByWithRelationInput
     product?: ProductOrderByWithRelationInput
@@ -37966,6 +39500,7 @@ export namespace Prisma {
     addedAt?: DateTimeFilter<"OrderItem"> | Date | string
     dispatchStatus?: EnumDispatchStatusFilter<"OrderItem"> | $Enums.DispatchStatus
     dispatchTime?: DateTimeNullableFilter<"OrderItem"> | Date | string | null
+    shippingCost?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
     order?: XOR<OrderScalarRelationFilter, OrderWhereInput>
     vendor?: XOR<VendorScalarRelationFilter, VendorWhereInput>
     product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
@@ -37984,6 +39519,7 @@ export namespace Prisma {
     addedAt?: SortOrder
     dispatchStatus?: SortOrder
     dispatchTime?: SortOrderInput | SortOrder
+    shippingCost?: SortOrder
     _count?: OrderItemCountOrderByAggregateInput
     _avg?: OrderItemAvgOrderByAggregateInput
     _max?: OrderItemMaxOrderByAggregateInput
@@ -38007,6 +39543,7 @@ export namespace Prisma {
     addedAt?: DateTimeWithAggregatesFilter<"OrderItem"> | Date | string
     dispatchStatus?: EnumDispatchStatusWithAggregatesFilter<"OrderItem"> | $Enums.DispatchStatus
     dispatchTime?: DateTimeNullableWithAggregatesFilter<"OrderItem"> | Date | string | null
+    shippingCost?: DecimalWithAggregatesFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderWhereInput = {
@@ -39286,6 +40823,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -39304,6 +40842,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateInput = {
@@ -39311,6 +40850,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -39328,12 +40868,14 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39352,6 +40894,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateInput = {
@@ -39359,6 +40902,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39376,6 +40920,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorCreateManyInput = {
@@ -39383,6 +40928,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -39398,6 +40944,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39414,6 +40961,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39431,6 +40979,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    bankDetail?: BankDetailCreateNestedOneWithoutAdminInput
     actions?: ActionLogCreateNestedManyWithoutAdminInput
     user: UserCreateNestedOneWithoutAdminInput
   }
@@ -39442,6 +40991,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutAdminInput
     actions?: ActionLogUncheckedCreateNestedManyWithoutAdminInput
   }
 
@@ -39451,6 +41001,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bankDetail?: BankDetailUpdateOneWithoutAdminNestedInput
     actions?: ActionLogUpdateManyWithoutAdminNestedInput
     user?: UserUpdateOneRequiredWithoutAdminNestedInput
   }
@@ -39462,6 +41013,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutAdminNestedInput
     actions?: ActionLogUncheckedUpdateManyWithoutAdminNestedInput
   }
 
@@ -39709,6 +41261,109 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BankDetailCreateInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendor?: VendorCreateNestedOneWithoutBankDetailInput
+    admin?: AdminCreateNestedOneWithoutBankDetailInput
+  }
+
+  export type BankDetailUncheckedCreateInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendorId?: string | null
+    adminId?: string | null
+  }
+
+  export type BankDetailUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendor?: VendorUpdateOneWithoutBankDetailNestedInput
+    admin?: AdminUpdateOneWithoutBankDetailNestedInput
+  }
+
+  export type BankDetailUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BankDetailCreateManyInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendorId?: string | null
+    adminId?: string | null
+  }
+
+  export type BankDetailUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BankDetailUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ProductCreateInput = {
     id?: string
     title: string
@@ -39872,6 +41527,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     vendor: VendorCreateNestedOneWithoutProductListingsInput
     product: ProductCreateNestedOneWithoutListingsInput
     variants?: ProductVariantCreateNestedManyWithoutProductListingInput
@@ -39901,6 +41558,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedCreateNestedManyWithoutProductListingInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductListingInput
   }
@@ -39926,6 +41585,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     vendor?: VendorUpdateOneRequiredWithoutProductListingsNestedInput
     product?: ProductUpdateOneRequiredWithoutListingsNestedInput
     variants?: ProductVariantUpdateManyWithoutProductListingNestedInput
@@ -39955,6 +41616,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedUpdateManyWithoutProductListingNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductListingNestedInput
   }
@@ -39982,6 +41645,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductListingUpdateManyMutationInput = {
@@ -40005,6 +41670,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductListingUncheckedUpdateManyInput = {
@@ -40030,6 +41697,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductVariantCreateInput = {
@@ -40254,6 +41923,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     order: OrderCreateNestedOneWithoutItemsInput
     vendor: VendorCreateNestedOneWithoutOrderItemsInput
     product: ProductCreateNestedOneWithoutOrderInput
@@ -40272,6 +41942,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUpdateInput = {
@@ -40284,6 +41955,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     order?: OrderUpdateOneRequiredWithoutItemsNestedInput
     vendor?: VendorUpdateOneRequiredWithoutOrderItemsNestedInput
     product?: ProductUpdateOneRequiredWithoutOrderNestedInput
@@ -40302,6 +41974,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemCreateManyInput = {
@@ -40317,6 +41990,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUpdateManyMutationInput = {
@@ -40329,6 +42003,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUncheckedUpdateManyInput = {
@@ -40344,6 +42019,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderCreateInput = {
@@ -41836,6 +43512,11 @@ export namespace Prisma {
     none?: OrderItemWhereInput
   }
 
+  export type BankDetailNullableScalarRelationFilter = {
+    is?: BankDetailWhereInput | null
+    isNot?: BankDetailWhereInput | null
+  }
+
   export type InvoiceOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -41853,6 +43534,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     profileImage?: SortOrder
     businessName?: SortOrder
     phone?: SortOrder
@@ -41869,6 +43551,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     profileImage?: SortOrder
     businessName?: SortOrder
     phone?: SortOrder
@@ -41884,6 +43567,7 @@ export namespace Prisma {
     userId?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    password?: SortOrder
     profileImage?: SortOrder
     businessName?: SortOrder
     phone?: SortOrder
@@ -42165,6 +43849,51 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type BankDetailCountOrderByAggregateInput = {
+    id?: SortOrder
+    accountHolder?: SortOrder
+    accountNumber?: SortOrder
+    ifscCode?: SortOrder
+    bankName?: SortOrder
+    branchName?: SortOrder
+    upiId?: SortOrder
+    isVerified?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vendorId?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type BankDetailMaxOrderByAggregateInput = {
+    id?: SortOrder
+    accountHolder?: SortOrder
+    accountNumber?: SortOrder
+    ifscCode?: SortOrder
+    bankName?: SortOrder
+    branchName?: SortOrder
+    upiId?: SortOrder
+    isVerified?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vendorId?: SortOrder
+    adminId?: SortOrder
+  }
+
+  export type BankDetailMinOrderByAggregateInput = {
+    id?: SortOrder
+    accountHolder?: SortOrder
+    accountNumber?: SortOrder
+    ifscCode?: SortOrder
+    bankName?: SortOrder
+    branchName?: SortOrder
+    upiId?: SortOrder
+    isVerified?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    vendorId?: SortOrder
+    adminId?: SortOrder
+  }
+
   export type IntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -42331,6 +44060,8 @@ export namespace Prisma {
     enclosureMaterial?: SortOrder
     productCareInstructions?: SortOrder
     productFeatures?: SortOrder
+    dispatchTimeInDays?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type ProductListingAvgOrderByAggregateInput = {
@@ -42342,6 +44073,8 @@ export namespace Prisma {
     packageLength?: SortOrder
     packageWidth?: SortOrder
     numberOfItems?: SortOrder
+    dispatchTimeInDays?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type ProductListingMaxOrderByAggregateInput = {
@@ -42365,6 +44098,8 @@ export namespace Prisma {
     numberOfItems?: SortOrder
     enclosureMaterial?: SortOrder
     productCareInstructions?: SortOrder
+    dispatchTimeInDays?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type ProductListingMinOrderByAggregateInput = {
@@ -42388,6 +44123,8 @@ export namespace Prisma {
     numberOfItems?: SortOrder
     enclosureMaterial?: SortOrder
     productCareInstructions?: SortOrder
+    dispatchTimeInDays?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type ProductListingSumOrderByAggregateInput = {
@@ -42399,6 +44136,8 @@ export namespace Prisma {
     packageLength?: SortOrder
     packageWidth?: SortOrder
     numberOfItems?: SortOrder
+    dispatchTimeInDays?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -42620,12 +44359,14 @@ export namespace Prisma {
     addedAt?: SortOrder
     dispatchStatus?: SortOrder
     dispatchTime?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderItemAvgOrderByAggregateInput = {
     quantity?: SortOrder
     unitPrice?: SortOrder
     totalPrice?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderItemMaxOrderByAggregateInput = {
@@ -42641,6 +44382,7 @@ export namespace Prisma {
     addedAt?: SortOrder
     dispatchStatus?: SortOrder
     dispatchTime?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderItemMinOrderByAggregateInput = {
@@ -42656,12 +44398,14 @@ export namespace Prisma {
     addedAt?: SortOrder
     dispatchStatus?: SortOrder
     dispatchTime?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type OrderItemSumOrderByAggregateInput = {
     quantity?: SortOrder
     unitPrice?: SortOrder
     totalPrice?: SortOrder
+    shippingCost?: SortOrder
   }
 
   export type EnumItemStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -44035,6 +45779,12 @@ export namespace Prisma {
     connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
   }
 
+  export type BankDetailCreateNestedOneWithoutVendorInput = {
+    create?: XOR<BankDetailCreateWithoutVendorInput, BankDetailUncheckedCreateWithoutVendorInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutVendorInput
+    connect?: BankDetailWhereUniqueInput
+  }
+
   export type UserTokenUncheckedCreateNestedManyWithoutVendorInput = {
     create?: XOR<UserTokenCreateWithoutVendorInput, UserTokenUncheckedCreateWithoutVendorInput> | UserTokenCreateWithoutVendorInput[] | UserTokenUncheckedCreateWithoutVendorInput[]
     connectOrCreate?: UserTokenCreateOrConnectWithoutVendorInput | UserTokenCreateOrConnectWithoutVendorInput[]
@@ -44089,6 +45839,12 @@ export namespace Prisma {
     connectOrCreate?: CartItemCreateOrConnectWithoutVendorInput | CartItemCreateOrConnectWithoutVendorInput[]
     createMany?: CartItemCreateManyVendorInputEnvelope
     connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+  }
+
+  export type BankDetailUncheckedCreateNestedOneWithoutVendorInput = {
+    create?: XOR<BankDetailCreateWithoutVendorInput, BankDetailUncheckedCreateWithoutVendorInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutVendorInput
+    connect?: BankDetailWhereUniqueInput
   }
 
   export type EnumVendorStatusFieldUpdateOperationsInput = {
@@ -44222,6 +45978,16 @@ export namespace Prisma {
     deleteMany?: CartItemScalarWhereInput | CartItemScalarWhereInput[]
   }
 
+  export type BankDetailUpdateOneWithoutVendorNestedInput = {
+    create?: XOR<BankDetailCreateWithoutVendorInput, BankDetailUncheckedCreateWithoutVendorInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutVendorInput
+    upsert?: BankDetailUpsertWithoutVendorInput
+    disconnect?: BankDetailWhereInput | boolean
+    delete?: BankDetailWhereInput | boolean
+    connect?: BankDetailWhereUniqueInput
+    update?: XOR<XOR<BankDetailUpdateToOneWithWhereWithoutVendorInput, BankDetailUpdateWithoutVendorInput>, BankDetailUncheckedUpdateWithoutVendorInput>
+  }
+
   export type UserTokenUncheckedUpdateManyWithoutVendorNestedInput = {
     create?: XOR<UserTokenCreateWithoutVendorInput, UserTokenUncheckedCreateWithoutVendorInput> | UserTokenCreateWithoutVendorInput[] | UserTokenUncheckedCreateWithoutVendorInput[]
     connectOrCreate?: UserTokenCreateOrConnectWithoutVendorInput | UserTokenCreateOrConnectWithoutVendorInput[]
@@ -44334,6 +46100,22 @@ export namespace Prisma {
     deleteMany?: CartItemScalarWhereInput | CartItemScalarWhereInput[]
   }
 
+  export type BankDetailUncheckedUpdateOneWithoutVendorNestedInput = {
+    create?: XOR<BankDetailCreateWithoutVendorInput, BankDetailUncheckedCreateWithoutVendorInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutVendorInput
+    upsert?: BankDetailUpsertWithoutVendorInput
+    disconnect?: BankDetailWhereInput | boolean
+    delete?: BankDetailWhereInput | boolean
+    connect?: BankDetailWhereUniqueInput
+    update?: XOR<XOR<BankDetailUpdateToOneWithWhereWithoutVendorInput, BankDetailUpdateWithoutVendorInput>, BankDetailUncheckedUpdateWithoutVendorInput>
+  }
+
+  export type BankDetailCreateNestedOneWithoutAdminInput = {
+    create?: XOR<BankDetailCreateWithoutAdminInput, BankDetailUncheckedCreateWithoutAdminInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutAdminInput
+    connect?: BankDetailWhereUniqueInput
+  }
+
   export type ActionLogCreateNestedManyWithoutAdminInput = {
     create?: XOR<ActionLogCreateWithoutAdminInput, ActionLogUncheckedCreateWithoutAdminInput> | ActionLogCreateWithoutAdminInput[] | ActionLogUncheckedCreateWithoutAdminInput[]
     connectOrCreate?: ActionLogCreateOrConnectWithoutAdminInput | ActionLogCreateOrConnectWithoutAdminInput[]
@@ -44347,6 +46129,12 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
+  export type BankDetailUncheckedCreateNestedOneWithoutAdminInput = {
+    create?: XOR<BankDetailCreateWithoutAdminInput, BankDetailUncheckedCreateWithoutAdminInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutAdminInput
+    connect?: BankDetailWhereUniqueInput
+  }
+
   export type ActionLogUncheckedCreateNestedManyWithoutAdminInput = {
     create?: XOR<ActionLogCreateWithoutAdminInput, ActionLogUncheckedCreateWithoutAdminInput> | ActionLogCreateWithoutAdminInput[] | ActionLogUncheckedCreateWithoutAdminInput[]
     connectOrCreate?: ActionLogCreateOrConnectWithoutAdminInput | ActionLogCreateOrConnectWithoutAdminInput[]
@@ -44356,6 +46144,16 @@ export namespace Prisma {
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
     set?: $Enums.AdminRole
+  }
+
+  export type BankDetailUpdateOneWithoutAdminNestedInput = {
+    create?: XOR<BankDetailCreateWithoutAdminInput, BankDetailUncheckedCreateWithoutAdminInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutAdminInput
+    upsert?: BankDetailUpsertWithoutAdminInput
+    disconnect?: BankDetailWhereInput | boolean
+    delete?: BankDetailWhereInput | boolean
+    connect?: BankDetailWhereUniqueInput
+    update?: XOR<XOR<BankDetailUpdateToOneWithWhereWithoutAdminInput, BankDetailUpdateWithoutAdminInput>, BankDetailUncheckedUpdateWithoutAdminInput>
   }
 
   export type ActionLogUpdateManyWithoutAdminNestedInput = {
@@ -44378,6 +46176,16 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAdminInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAdminInput, UserUpdateWithoutAdminInput>, UserUncheckedUpdateWithoutAdminInput>
+  }
+
+  export type BankDetailUncheckedUpdateOneWithoutAdminNestedInput = {
+    create?: XOR<BankDetailCreateWithoutAdminInput, BankDetailUncheckedCreateWithoutAdminInput>
+    connectOrCreate?: BankDetailCreateOrConnectWithoutAdminInput
+    upsert?: BankDetailUpsertWithoutAdminInput
+    disconnect?: BankDetailWhereInput | boolean
+    delete?: BankDetailWhereInput | boolean
+    connect?: BankDetailWhereUniqueInput
+    update?: XOR<XOR<BankDetailUpdateToOneWithWhereWithoutAdminInput, BankDetailUpdateWithoutAdminInput>, BankDetailUncheckedUpdateWithoutAdminInput>
   }
 
   export type ActionLogUncheckedUpdateManyWithoutAdminNestedInput = {
@@ -44500,6 +46308,38 @@ export namespace Prisma {
     update?: OrderUpdateWithWhereUniqueWithoutShippingAddressInput | OrderUpdateWithWhereUniqueWithoutShippingAddressInput[]
     updateMany?: OrderUpdateManyWithWhereWithoutShippingAddressInput | OrderUpdateManyWithWhereWithoutShippingAddressInput[]
     deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type VendorCreateNestedOneWithoutBankDetailInput = {
+    create?: XOR<VendorCreateWithoutBankDetailInput, VendorUncheckedCreateWithoutBankDetailInput>
+    connectOrCreate?: VendorCreateOrConnectWithoutBankDetailInput
+    connect?: VendorWhereUniqueInput
+  }
+
+  export type AdminCreateNestedOneWithoutBankDetailInput = {
+    create?: XOR<AdminCreateWithoutBankDetailInput, AdminUncheckedCreateWithoutBankDetailInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutBankDetailInput
+    connect?: AdminWhereUniqueInput
+  }
+
+  export type VendorUpdateOneWithoutBankDetailNestedInput = {
+    create?: XOR<VendorCreateWithoutBankDetailInput, VendorUncheckedCreateWithoutBankDetailInput>
+    connectOrCreate?: VendorCreateOrConnectWithoutBankDetailInput
+    upsert?: VendorUpsertWithoutBankDetailInput
+    disconnect?: VendorWhereInput | boolean
+    delete?: VendorWhereInput | boolean
+    connect?: VendorWhereUniqueInput
+    update?: XOR<XOR<VendorUpdateToOneWithWhereWithoutBankDetailInput, VendorUpdateWithoutBankDetailInput>, VendorUncheckedUpdateWithoutBankDetailInput>
+  }
+
+  export type AdminUpdateOneWithoutBankDetailNestedInput = {
+    create?: XOR<AdminCreateWithoutBankDetailInput, AdminUncheckedCreateWithoutBankDetailInput>
+    connectOrCreate?: AdminCreateOrConnectWithoutBankDetailInput
+    upsert?: AdminUpsertWithoutBankDetailInput
+    disconnect?: AdminWhereInput | boolean
+    delete?: AdminWhereInput | boolean
+    connect?: AdminWhereUniqueInput
+    update?: XOR<XOR<AdminUpdateToOneWithWhereWithoutBankDetailInput, AdminUpdateWithoutBankDetailInput>, AdminUncheckedUpdateWithoutBankDetailInput>
   }
 
   export type ProductCreateimageUrlsInput = {
@@ -46113,6 +47953,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    bankDetail?: BankDetailCreateNestedOneWithoutAdminInput
     actions?: ActionLogCreateNestedManyWithoutAdminInput
   }
 
@@ -46122,6 +47963,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutAdminInput
     actions?: ActionLogUncheckedCreateNestedManyWithoutAdminInput
   }
 
@@ -46270,6 +48112,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -46287,12 +48130,14 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutUserInput = {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -46310,6 +48155,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutUserInput = {
@@ -46444,6 +48290,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bankDetail?: BankDetailUpdateOneWithoutAdminNestedInput
     actions?: ActionLogUpdateManyWithoutAdminNestedInput
   }
 
@@ -46453,6 +48300,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutAdminNestedInput
     actions?: ActionLogUncheckedUpdateManyWithoutAdminNestedInput
   }
 
@@ -46597,6 +48445,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46614,12 +48463,14 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46637,6 +48488,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type RefundRequestUpsertWithWhereUniqueWithoutUserInput = {
@@ -46857,6 +48709,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     product: ProductCreateNestedOneWithoutListingsInput
     variants?: ProductVariantCreateNestedManyWithoutProductListingInput
     cartItems?: CartItemCreateNestedManyWithoutProductListingInput
@@ -46884,6 +48738,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedCreateNestedManyWithoutProductListingInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductListingInput
   }
@@ -46991,6 +48847,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     order: OrderCreateNestedOneWithoutItemsInput
     product: ProductCreateNestedOneWithoutOrderInput
   }
@@ -47007,6 +48864,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemCreateOrConnectWithoutVendorInput = {
@@ -47081,6 +48939,39 @@ export namespace Prisma {
   export type CartItemCreateManyVendorInputEnvelope = {
     data: CartItemCreateManyVendorInput | CartItemCreateManyVendorInput[]
     skipDuplicates?: boolean
+  }
+
+  export type BankDetailCreateWithoutVendorInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    admin?: AdminCreateNestedOneWithoutBankDetailInput
+  }
+
+  export type BankDetailUncheckedCreateWithoutVendorInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    adminId?: string | null
+  }
+
+  export type BankDetailCreateOrConnectWithoutVendorInput = {
+    where: BankDetailWhereUniqueInput
+    create: XOR<BankDetailCreateWithoutVendorInput, BankDetailUncheckedCreateWithoutVendorInput>
   }
 
   export type UserTokenUpsertWithWhereUniqueWithoutVendorInput = {
@@ -47184,6 +49075,8 @@ export namespace Prisma {
     enclosureMaterial?: StringNullableFilter<"ProductListing"> | string | null
     productCareInstructions?: StringNullableFilter<"ProductListing"> | string | null
     productFeatures?: StringNullableListFilter<"ProductListing">
+    dispatchTimeInDays?: IntNullableFilter<"ProductListing"> | number | null
+    shippingCost?: DecimalFilter<"ProductListing"> | Decimal | DecimalJsLike | number | string
   }
 
   export type UserUpsertWithoutVendorInput = {
@@ -47289,6 +49182,7 @@ export namespace Prisma {
     addedAt?: DateTimeFilter<"OrderItem"> | Date | string
     dispatchStatus?: EnumDispatchStatusFilter<"OrderItem"> | $Enums.DispatchStatus
     dispatchTime?: DateTimeNullableFilter<"OrderItem"> | Date | string | null
+    shippingCost?: DecimalFilter<"OrderItem"> | Decimal | DecimalJsLike | number | string
   }
 
   export type RefundRequestUpsertWithWhereUniqueWithoutVendorInput = {
@@ -47321,6 +49215,78 @@ export namespace Prisma {
   export type CartItemUpdateManyWithWhereWithoutVendorInput = {
     where: CartItemScalarWhereInput
     data: XOR<CartItemUpdateManyMutationInput, CartItemUncheckedUpdateManyWithoutVendorInput>
+  }
+
+  export type BankDetailUpsertWithoutVendorInput = {
+    update: XOR<BankDetailUpdateWithoutVendorInput, BankDetailUncheckedUpdateWithoutVendorInput>
+    create: XOR<BankDetailCreateWithoutVendorInput, BankDetailUncheckedCreateWithoutVendorInput>
+    where?: BankDetailWhereInput
+  }
+
+  export type BankDetailUpdateToOneWithWhereWithoutVendorInput = {
+    where?: BankDetailWhereInput
+    data: XOR<BankDetailUpdateWithoutVendorInput, BankDetailUncheckedUpdateWithoutVendorInput>
+  }
+
+  export type BankDetailUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: AdminUpdateOneWithoutBankDetailNestedInput
+  }
+
+  export type BankDetailUncheckedUpdateWithoutVendorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adminId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BankDetailCreateWithoutAdminInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendor?: VendorCreateNestedOneWithoutBankDetailInput
+  }
+
+  export type BankDetailUncheckedCreateWithoutAdminInput = {
+    id?: string
+    accountHolder: string
+    accountNumber: string
+    ifscCode: string
+    bankName: string
+    branchName?: string | null
+    upiId?: string | null
+    isVerified?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    vendorId?: string | null
+  }
+
+  export type BankDetailCreateOrConnectWithoutAdminInput = {
+    where: BankDetailWhereUniqueInput
+    create: XOR<BankDetailCreateWithoutAdminInput, BankDetailUncheckedCreateWithoutAdminInput>
   }
 
   export type ActionLogCreateWithoutAdminInput = {
@@ -47406,6 +49372,45 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutAdminInput, UserUncheckedCreateWithoutAdminInput>
   }
 
+  export type BankDetailUpsertWithoutAdminInput = {
+    update: XOR<BankDetailUpdateWithoutAdminInput, BankDetailUncheckedUpdateWithoutAdminInput>
+    create: XOR<BankDetailCreateWithoutAdminInput, BankDetailUncheckedCreateWithoutAdminInput>
+    where?: BankDetailWhereInput
+  }
+
+  export type BankDetailUpdateToOneWithWhereWithoutAdminInput = {
+    where?: BankDetailWhereInput
+    data: XOR<BankDetailUpdateWithoutAdminInput, BankDetailUncheckedUpdateWithoutAdminInput>
+  }
+
+  export type BankDetailUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendor?: VendorUpdateOneWithoutBankDetailNestedInput
+  }
+
+  export type BankDetailUncheckedUpdateWithoutAdminInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    accountHolder?: StringFieldUpdateOperationsInput | string
+    accountNumber?: StringFieldUpdateOperationsInput | string
+    ifscCode?: StringFieldUpdateOperationsInput | string
+    bankName?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    upiId?: NullableStringFieldUpdateOperationsInput | string | null
+    isVerified?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    vendorId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type ActionLogUpsertWithWhereUniqueWithoutAdminInput = {
     where: ActionLogWhereUniqueInput
     update: XOR<ActionLogUpdateWithoutAdminInput, ActionLogUncheckedUpdateWithoutAdminInput>
@@ -47427,7 +49432,7 @@ export namespace Prisma {
     OR?: ActionLogScalarWhereInput[]
     NOT?: ActionLogScalarWhereInput | ActionLogScalarWhereInput[]
     id?: StringFilter<"ActionLog"> | string
-    adminId?: StringFilter<"ActionLog"> | string
+    adminId?: UuidFilter<"ActionLog"> | string
     actionType?: EnumModerationActionTypeFilter<"ActionLog"> | $Enums.ModerationActionType
     targetType?: EnumTargetTypeFilter<"ActionLog"> | $Enums.TargetType
     targetId?: StringFilter<"ActionLog"> | string
@@ -47499,6 +49504,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    bankDetail?: BankDetailCreateNestedOneWithoutAdminInput
     user: UserCreateNestedOneWithoutAdminInput
   }
 
@@ -47509,6 +49515,7 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutAdminInput
   }
 
   export type AdminCreateOrConnectWithoutActionsInput = {
@@ -47533,6 +49540,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bankDetail?: BankDetailUpdateOneWithoutAdminNestedInput
     user?: UserUpdateOneRequiredWithoutAdminNestedInput
   }
 
@@ -47543,6 +49551,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutAdminNestedInput
   }
 
   export type UserCreateWithoutAddressesInput = {
@@ -47598,6 +49607,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -47615,6 +49625,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutAddressesInput = {
@@ -47622,6 +49633,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -47638,6 +49650,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutAddressesInput = {
@@ -47759,6 +49772,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47776,6 +49790,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutAddressesInput = {
@@ -47783,6 +49798,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47799,6 +49815,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type OrderUpsertWithWhereUniqueWithoutShippingAddressInput = {
@@ -47815,6 +49832,178 @@ export namespace Prisma {
   export type OrderUpdateManyWithWhereWithoutShippingAddressInput = {
     where: OrderScalarWhereInput
     data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutShippingAddressInput>
+  }
+
+  export type VendorCreateWithoutBankDetailInput = {
+    id?: string
+    name: string
+    email: string
+    password?: string | null
+    profileImage?: string | null
+    businessName: string
+    phone?: string | null
+    status?: $Enums.VendorStatus
+    address?: string | null
+    gstNumber?: string | null
+    kycDocsUrl?: VendorCreatekycDocsUrlInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tokens?: UserTokenCreateNestedManyWithoutVendorInput
+    addresses?: AddressCreateNestedManyWithoutVendorInput
+    invoices?: InvoiceCreateNestedManyWithoutVendorInput
+    productListings?: ProductListingCreateNestedManyWithoutVendorInput
+    user?: UserCreateNestedOneWithoutVendorInput
+    ratings?: RatingCreateNestedManyWithoutVendorInput
+    orderItems?: OrderItemCreateNestedManyWithoutVendorInput
+    refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
+    cartItems?: CartItemCreateNestedManyWithoutVendorInput
+  }
+
+  export type VendorUncheckedCreateWithoutBankDetailInput = {
+    id?: string
+    userId?: string | null
+    name: string
+    email: string
+    password?: string | null
+    profileImage?: string | null
+    businessName: string
+    phone?: string | null
+    status?: $Enums.VendorStatus
+    address?: string | null
+    gstNumber?: string | null
+    kycDocsUrl?: VendorCreatekycDocsUrlInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tokens?: UserTokenUncheckedCreateNestedManyWithoutVendorInput
+    addresses?: AddressUncheckedCreateNestedManyWithoutVendorInput
+    invoices?: InvoiceUncheckedCreateNestedManyWithoutVendorInput
+    productListings?: ProductListingUncheckedCreateNestedManyWithoutVendorInput
+    ratings?: RatingUncheckedCreateNestedManyWithoutVendorInput
+    orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
+    refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
+    cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+  }
+
+  export type VendorCreateOrConnectWithoutBankDetailInput = {
+    where: VendorWhereUniqueInput
+    create: XOR<VendorCreateWithoutBankDetailInput, VendorUncheckedCreateWithoutBankDetailInput>
+  }
+
+  export type AdminCreateWithoutBankDetailInput = {
+    id?: string
+    name: string
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    actions?: ActionLogCreateNestedManyWithoutAdminInput
+    user: UserCreateNestedOneWithoutAdminInput
+  }
+
+  export type AdminUncheckedCreateWithoutBankDetailInput = {
+    id?: string
+    userId: string
+    name: string
+    role?: $Enums.AdminRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    actions?: ActionLogUncheckedCreateNestedManyWithoutAdminInput
+  }
+
+  export type AdminCreateOrConnectWithoutBankDetailInput = {
+    where: AdminWhereUniqueInput
+    create: XOR<AdminCreateWithoutBankDetailInput, AdminUncheckedCreateWithoutBankDetailInput>
+  }
+
+  export type VendorUpsertWithoutBankDetailInput = {
+    update: XOR<VendorUpdateWithoutBankDetailInput, VendorUncheckedUpdateWithoutBankDetailInput>
+    create: XOR<VendorCreateWithoutBankDetailInput, VendorUncheckedCreateWithoutBankDetailInput>
+    where?: VendorWhereInput
+  }
+
+  export type VendorUpdateToOneWithWhereWithoutBankDetailInput = {
+    where?: VendorWhereInput
+    data: XOR<VendorUpdateWithoutBankDetailInput, VendorUncheckedUpdateWithoutBankDetailInput>
+  }
+
+  export type VendorUpdateWithoutBankDetailInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    kycDocsUrl?: VendorUpdatekycDocsUrlInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tokens?: UserTokenUpdateManyWithoutVendorNestedInput
+    addresses?: AddressUpdateManyWithoutVendorNestedInput
+    invoices?: InvoiceUpdateManyWithoutVendorNestedInput
+    productListings?: ProductListingUpdateManyWithoutVendorNestedInput
+    user?: UserUpdateOneWithoutVendorNestedInput
+    ratings?: RatingUpdateManyWithoutVendorNestedInput
+    orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
+    refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
+    cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+  }
+
+  export type VendorUncheckedUpdateWithoutBankDetailInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
+    businessName?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    kycDocsUrl?: VendorUpdatekycDocsUrlInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tokens?: UserTokenUncheckedUpdateManyWithoutVendorNestedInput
+    addresses?: AddressUncheckedUpdateManyWithoutVendorNestedInput
+    invoices?: InvoiceUncheckedUpdateManyWithoutVendorNestedInput
+    productListings?: ProductListingUncheckedUpdateManyWithoutVendorNestedInput
+    ratings?: RatingUncheckedUpdateManyWithoutVendorNestedInput
+    orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
+    refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
+    cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+  }
+
+  export type AdminUpsertWithoutBankDetailInput = {
+    update: XOR<AdminUpdateWithoutBankDetailInput, AdminUncheckedUpdateWithoutBankDetailInput>
+    create: XOR<AdminCreateWithoutBankDetailInput, AdminUncheckedCreateWithoutBankDetailInput>
+    where?: AdminWhereInput
+  }
+
+  export type AdminUpdateToOneWithWhereWithoutBankDetailInput = {
+    where?: AdminWhereInput
+    data: XOR<AdminUpdateWithoutBankDetailInput, AdminUncheckedUpdateWithoutBankDetailInput>
+  }
+
+  export type AdminUpdateWithoutBankDetailInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    actions?: ActionLogUpdateManyWithoutAdminNestedInput
+    user?: UserUpdateOneRequiredWithoutAdminNestedInput
+  }
+
+  export type AdminUncheckedUpdateWithoutBankDetailInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    actions?: ActionLogUncheckedUpdateManyWithoutAdminNestedInput
   }
 
   export type ProductListingCreateWithoutProductInput = {
@@ -47838,6 +50027,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     vendor: VendorCreateNestedOneWithoutProductListingsInput
     variants?: ProductVariantCreateNestedManyWithoutProductListingInput
     cartItems?: CartItemCreateNestedManyWithoutProductListingInput
@@ -47865,6 +50056,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedCreateNestedManyWithoutProductListingInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductListingInput
   }
@@ -47951,6 +50144,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     order: OrderCreateNestedOneWithoutItemsInput
     vendor: VendorCreateNestedOneWithoutOrderItemsInput
   }
@@ -47967,6 +50161,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemCreateOrConnectWithoutProductInput = {
@@ -48047,6 +50242,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -48064,6 +50260,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutProductListingsInput = {
@@ -48071,6 +50268,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -48087,6 +50285,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutProductListingsInput = {
@@ -48206,6 +50405,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48223,6 +50423,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutProductListingsInput = {
@@ -48230,6 +50431,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48246,6 +50448,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type ProductUpsertWithoutListingsInput = {
@@ -48364,6 +50567,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     vendor: VendorCreateNestedOneWithoutProductListingsInput
     product: ProductCreateNestedOneWithoutListingsInput
     cartItems?: CartItemCreateNestedManyWithoutProductListingInput
@@ -48392,6 +50597,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     cartItems?: CartItemUncheckedCreateNestedManyWithoutProductListingInput
   }
 
@@ -48432,6 +50639,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     vendor?: VendorUpdateOneRequiredWithoutProductListingsNestedInput
     product?: ProductUpdateOneRequiredWithoutListingsNestedInput
     cartItems?: CartItemUpdateManyWithoutProductListingNestedInput
@@ -48460,6 +50669,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     cartItems?: CartItemUncheckedUpdateManyWithoutProductListingNestedInput
   }
 
@@ -48514,6 +50725,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -48531,6 +50743,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutRatingsInput = {
@@ -48538,6 +50751,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -48554,6 +50768,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutRatingsInput = {
@@ -48678,6 +50893,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48695,6 +50911,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutRatingsInput = {
@@ -48702,6 +50919,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -48718,6 +50936,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type UserUpsertWithoutRatingsInput = {
@@ -48922,6 +51141,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -48939,6 +51159,7 @@ export namespace Prisma {
     ratings?: RatingCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutOrderItemsInput = {
@@ -48946,6 +51167,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -48962,6 +51184,7 @@ export namespace Prisma {
     ratings?: RatingUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutOrderItemsInput = {
@@ -49076,6 +51299,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49093,6 +51317,7 @@ export namespace Prisma {
     ratings?: RatingUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutOrderItemsInput = {
@@ -49100,6 +51325,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49116,6 +51342,7 @@ export namespace Prisma {
     ratings?: RatingUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type ProductUpsertWithoutOrderInput = {
@@ -49290,6 +51517,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     vendor: VendorCreateNestedOneWithoutOrderItemsInput
     product: ProductCreateNestedOneWithoutOrderInput
   }
@@ -49306,6 +51534,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemCreateOrConnectWithoutOrderInput = {
@@ -49504,6 +51733,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -49521,6 +51751,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutInvoicesInput = {
@@ -49528,6 +51759,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -49544,6 +51776,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutInvoicesInput = {
@@ -49611,6 +51844,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49628,6 +51862,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutInvoicesInput = {
@@ -49635,6 +51870,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49651,6 +51887,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type AnalyticsEventCreateWithoutSessionInput = {
@@ -49819,6 +52056,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -49836,6 +52074,7 @@ export namespace Prisma {
     ratings?: RatingCreateNestedManyWithoutVendorInput
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutCartItemsInput = {
@@ -49843,6 +52082,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -49859,6 +52099,7 @@ export namespace Prisma {
     ratings?: RatingUncheckedCreateNestedManyWithoutVendorInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutCartItemsInput = {
@@ -49934,6 +52175,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     vendor: VendorCreateNestedOneWithoutProductListingsInput
     product: ProductCreateNestedOneWithoutListingsInput
     variants?: ProductVariantCreateNestedManyWithoutProductListingInput
@@ -49962,6 +52205,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedCreateNestedManyWithoutProductListingInput
   }
 
@@ -50040,6 +52285,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50057,6 +52303,7 @@ export namespace Prisma {
     ratings?: RatingUpdateManyWithoutVendorNestedInput
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutCartItemsInput = {
@@ -50064,6 +52311,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50080,6 +52328,7 @@ export namespace Prisma {
     ratings?: RatingUncheckedUpdateManyWithoutVendorNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type ProductUpsertWithoutCartItemsInput = {
@@ -50167,6 +52416,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     vendor?: VendorUpdateOneRequiredWithoutProductListingsNestedInput
     product?: ProductUpdateOneRequiredWithoutListingsNestedInput
     variants?: ProductVariantUpdateManyWithoutProductListingNestedInput
@@ -50195,6 +52446,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedUpdateManyWithoutProductListingNestedInput
   }
 
@@ -50251,6 +52504,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -50268,6 +52522,7 @@ export namespace Prisma {
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutTokensInput = {
@@ -50275,6 +52530,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -50291,6 +52547,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     refundRequests?: RefundRequestUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutTokensInput = {
@@ -50368,6 +52625,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50385,6 +52643,7 @@ export namespace Prisma {
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutTokensInput = {
@@ -50392,6 +52651,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50408,6 +52668,7 @@ export namespace Prisma {
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     refundRequests?: RefundRequestUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type CouponRedemptionCreateWithoutCouponInput = {
@@ -50594,6 +52855,7 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -50611,6 +52873,7 @@ export namespace Prisma {
     ratings?: RatingCreateNestedManyWithoutVendorInput
     orderItems?: OrderItemCreateNestedManyWithoutVendorInput
     cartItems?: CartItemCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailCreateNestedOneWithoutVendorInput
   }
 
   export type VendorUncheckedCreateWithoutRefundRequestsInput = {
@@ -50618,6 +52881,7 @@ export namespace Prisma {
     userId?: string | null
     name: string
     email: string
+    password?: string | null
     profileImage?: string | null
     businessName: string
     phone?: string | null
@@ -50634,6 +52898,7 @@ export namespace Prisma {
     ratings?: RatingUncheckedCreateNestedManyWithoutVendorInput
     orderItems?: OrderItemUncheckedCreateNestedManyWithoutVendorInput
     cartItems?: CartItemUncheckedCreateNestedManyWithoutVendorInput
+    bankDetail?: BankDetailUncheckedCreateNestedOneWithoutVendorInput
   }
 
   export type VendorCreateOrConnectWithoutRefundRequestsInput = {
@@ -50711,6 +52976,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50728,6 +52994,7 @@ export namespace Prisma {
     ratings?: RatingUpdateManyWithoutVendorNestedInput
     orderItems?: OrderItemUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUpdateOneWithoutVendorNestedInput
   }
 
   export type VendorUncheckedUpdateWithoutRefundRequestsInput = {
@@ -50735,6 +53002,7 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50751,6 +53019,7 @@ export namespace Prisma {
     ratings?: RatingUncheckedUpdateManyWithoutVendorNestedInput
     orderItems?: OrderItemUncheckedUpdateManyWithoutVendorNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutVendorNestedInput
+    bankDetail?: BankDetailUncheckedUpdateOneWithoutVendorNestedInput
   }
 
   export type UserTokenCreateManyUserInput = {
@@ -51154,6 +53423,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type RatingCreateManyVendorInput = {
@@ -51180,6 +53451,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type RefundRequestCreateManyVendorInput = {
@@ -51326,6 +53598,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     product?: ProductUpdateOneRequiredWithoutListingsNestedInput
     variants?: ProductVariantUpdateManyWithoutProductListingNestedInput
     cartItems?: CartItemUpdateManyWithoutProductListingNestedInput
@@ -51353,6 +53627,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedUpdateManyWithoutProductListingNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductListingNestedInput
   }
@@ -51379,6 +53655,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type RatingUpdateWithoutVendorInput = {
@@ -51427,6 +53705,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     order?: OrderUpdateOneRequiredWithoutItemsNestedInput
     product?: ProductUpdateOneRequiredWithoutOrderNestedInput
   }
@@ -51443,6 +53722,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUncheckedUpdateManyWithoutVendorInput = {
@@ -51457,6 +53737,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type RefundRequestUpdateWithoutVendorInput = {
@@ -51659,6 +53940,8 @@ export namespace Prisma {
     enclosureMaterial?: string | null
     productCareInstructions?: string | null
     productFeatures?: ProductListingCreateproductFeaturesInput | string[]
+    dispatchTimeInDays?: number | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type RatingCreateManyProductInput = {
@@ -51694,6 +53977,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type ProductListingUpdateWithoutProductInput = {
@@ -51717,6 +54001,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     vendor?: VendorUpdateOneRequiredWithoutProductListingsNestedInput
     variants?: ProductVariantUpdateManyWithoutProductListingNestedInput
     cartItems?: CartItemUpdateManyWithoutProductListingNestedInput
@@ -51744,6 +54030,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     variants?: ProductVariantUncheckedUpdateManyWithoutProductListingNestedInput
     cartItems?: CartItemUncheckedUpdateManyWithoutProductListingNestedInput
   }
@@ -51770,6 +54058,8 @@ export namespace Prisma {
     enclosureMaterial?: NullableStringFieldUpdateOperationsInput | string | null
     productCareInstructions?: NullableStringFieldUpdateOperationsInput | string | null
     productFeatures?: ProductListingUpdateproductFeaturesInput | string[]
+    dispatchTimeInDays?: NullableIntFieldUpdateOperationsInput | number | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type RatingUpdateWithoutProductInput = {
@@ -51845,6 +54135,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     order?: OrderUpdateOneRequiredWithoutItemsNestedInput
     vendor?: VendorUpdateOneRequiredWithoutOrderItemsNestedInput
   }
@@ -51861,6 +54152,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUncheckedUpdateManyWithoutProductInput = {
@@ -51875,6 +54167,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type ProductVariantCreateManyProductListingInput = {
@@ -51949,6 +54242,7 @@ export namespace Prisma {
     addedAt?: Date | string
     dispatchStatus?: $Enums.DispatchStatus
     dispatchTime?: Date | string | null
+    shippingCost?: Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUpdateWithoutOrderInput = {
@@ -51961,6 +54255,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     vendor?: VendorUpdateOneRequiredWithoutOrderItemsNestedInput
     product?: ProductUpdateOneRequiredWithoutOrderNestedInput
   }
@@ -51977,6 +54272,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
@@ -51991,6 +54287,7 @@ export namespace Prisma {
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     dispatchStatus?: EnumDispatchStatusFieldUpdateOperationsInput | $Enums.DispatchStatus
     dispatchTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    shippingCost?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
   }
 
   export type AnalyticsEventCreateManySessionInput = {

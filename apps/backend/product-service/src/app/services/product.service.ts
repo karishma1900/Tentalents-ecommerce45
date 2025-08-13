@@ -35,25 +35,78 @@ export const productService = {
    */
   
   async createProduct(data: any) {
-    try {
-      // Convert price and originalPrice to Prisma.Decimal before destructuring
-      const priceDecimal = new Prisma.Decimal(data.price);
-      const originalPriceDecimal = new Prisma.Decimal(data.originalPrice);
-    
-      const {
+      try {
+    // Convert price, originalPrice, shippingCost to Prisma.Decimal before destructuring
+    const priceDecimal = new Prisma.Decimal(data.price);
+    const originalPriceDecimal = new Prisma.Decimal(data.originalPrice);
+    const shippingCostDecimal = new Prisma.Decimal(data.shippingCost || 0);
+
+    const {
+      title,
+      description,
+      category,
+      subCategory,
+      imageUrls,
+      brand,
+      includedComponents,
+      numberOfItems,
+      enclosureMaterial,
+      productCareInstructions,
+      productFeatures,
+
+      sku,
+      stock,
+      unit,
+      itemWeight,
+      packageLength,
+      packageWidth,
+      packageHeight,
+      deliveryEta,
+      vendorId,
+      variants,
+      dispatchTimeInDays,   // NEW
+    } = data;
+
+    // Basic validation
+    if (
+      !title || !imageUrls?.length || !category || !sku ||
+      !data.price || !data.originalPrice || !stock || !unit || !itemWeight || !vendorId
+    ) {
+      throw new Error('Missing required fields for product creation');
+    }
+
+    // Fetch vendor
+    const vendor = await prisma.vendor.findUnique({ where: { id: vendorId } });
+    if (!vendor) throw new Error('Vendor not found');
+
+    const generatedSlug = await generateUniqueSlug(title);
+
+    // Create Product
+    const product = await prisma.product.create({
+      data: {
         title,
         description,
         category,
         subCategory,
         imageUrls,
+        slug: generatedSlug,
         brand,
-        includedComponents,
+        includedComponents: includedComponents || [],
         numberOfItems,
         enclosureMaterial,
         productCareInstructions,
-        productFeatures,
+        productFeatures: productFeatures || [],
+      },
+    });
 
+    // Create Listing with new fields
+    const listing = await prisma.productListing.create({
+      data: {
+        productId: product.id,
+        vendorId: vendor.id,
         sku,
+        price: priceDecimal,
+        originalPrice: originalPriceDecimal,
         stock,
         unit,
         itemWeight,
@@ -61,92 +114,38 @@ export const productService = {
         packageWidth,
         packageHeight,
         deliveryEta,
-        vendorId, // this is userId for vendor
-        variants,
-      } = data;
+        brand,
+        includedComponents: includedComponents || [],
+        numberOfItems,
+        enclosureMaterial,
+        productCareInstructions,
+        productFeatures: productFeatures || [],
+        dispatchTimeInDays,    // NEW
+        shippingCost: shippingCostDecimal,  // NEW
+      },
+    });
 
-      // Basic validation
-      if (
-        !title || !imageUrls?.length || !category || !sku ||
-        !data.price || !data.originalPrice || !stock || !unit || !itemWeight || !vendorId
-      ) {
-        throw new Error('Missing required fields for product creation');
-      }
-
-      // Fetch Vendor for the seller user
-      const vendor = await prisma.vendor.findUnique({
-        where: { id: vendorId },
+    // Variants...
+    if (Array.isArray(variants) && variants.length > 0) {
+      await prisma.productVariant.createMany({
+        data: variants.map((variant: any) => ({
+          productListingId: listing.id,
+          name: variant.name,
+          value: variant.value,
+        })),
       });
-
-      if (!vendor) {
-        throw new Error('Vendor not found');
-      }
-
-      const generatedSlug = await generateUniqueSlug(title);
-
-      // Create Product
-      const product = await prisma.product.create({
-        data: {
-          title,
-          description,
-          category,
-          subCategory,
-          imageUrls,
-          slug: generatedSlug,
-          brand,
-          includedComponents: includedComponents || [],
-          numberOfItems,
-          enclosureMaterial,
-          productCareInstructions,
-          productFeatures: productFeatures || [],
-        },
-      });
-
-      // Create Listing with vendorId (no sellerId in schema)
-      const listing = await prisma.productListing.create({
-        data: {
-          productId: product.id,
-          vendorId: vendor.id,  // <-- correct relation field
-          sku,
-          price: priceDecimal,  // Store price as Decimal
-          originalPrice: originalPriceDecimal,  // Store original price as Decimal
-          stock,
-          unit,
-          itemWeight,
-          packageLength,
-          packageWidth,
-          packageHeight,
-          deliveryEta,
-          brand,
-          includedComponents: includedComponents || [],
-          numberOfItems,
-          enclosureMaterial,
-          productCareInstructions,
-          productFeatures: productFeatures || [],
-        },
-      });
-
-      // Create variants if any
-      if (Array.isArray(variants) && variants.length > 0) {
-        await prisma.productVariant.createMany({
-          data: variants.map((variant: any) => ({
-            productListingId: listing.id,
-            name: variant.name,
-            value: variant.value,
-          })),
-        });
-      }
-
-      return {
-        success: true,
-        product,
-        listing,
-        variantsAdded: variants?.length || 0,
-      };
-    } catch (error) {
-      console.error('❌ Error in createProduct:', error);
-      throw error;
     }
+
+    return {
+      success: true,
+      product,
+      listing,
+      variantsAdded: variants?.length || 0,
+    };
+  } catch (error) {
+    console.error('❌ Error in createProduct:', error);
+    throw error;
+  }
   },
   
   // Other methods like getAllProducts, getProductById, etc.

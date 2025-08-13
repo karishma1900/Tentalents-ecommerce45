@@ -44,14 +44,15 @@ model PendingUserOtp {
 
 model Vendor {
   id                String           @id @default(uuid()) @map("_id") @db.Uuid
-  userId            String?          @unique @db.Uuid   // optional now, because user may not exist
+  userId            String?          @unique @db.Uuid
   name              String
   email             String           @unique
+  password          String?          // 👈 Add this line
   profileImage      String?
   businessName      String
-  phone String? 
-  tokens UserToken[]
-   addresses      Address[]   // Relation to User's addresses
+  phone             String? 
+  tokens            UserToken[]
+  addresses         Address[]   // Relation to User's addresses
   status            VendorStatus     @default(pending)
   address           String?
   gstNumber         String?
@@ -60,27 +61,34 @@ model Vendor {
   updatedAt         DateTime         @updatedAt
   invoices          Invoice[]
   productListings   ProductListing[]
-  user User? @relation(fields: [userId], references: [id])
+  user              User? @relation(fields: [userId], references: [id])
   ratings           Rating[]    
   orderItems        OrderItem[]    
   refundRequests    RefundRequest[]
   cartItems         CartItem[] 
+  bankDetail        BankDetail?
+
+  @@index([email])
+  @@index([status])
 }
 
+
 model Admin {
-  id        String      @id @default(uuid())
+ 
+  id        String      @id @default(uuid()) @db.Uuid
   userId    String      @unique @db.Uuid
   name      String
   role      AdminRole   @default(ADMIN)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
+  bankDetail BankDetail?
   actions   ActionLog[]
   user      User        @relation(fields: [userId], references: [id])
 }
 
 model ActionLog {
   id         String               @id @default(uuid())
-  adminId    String
+adminId String @db.Uuid
   actionType ModerationActionType
   targetType TargetType
   targetId   String
@@ -120,6 +128,28 @@ model Address {
   @@index([userId])
   @@index([vendorId])
   @@index([addressType])
+}
+model BankDetail {
+  id            String      @id @default(uuid())
+  accountHolder String
+  accountNumber String
+  ifscCode      String
+  bankName      String
+  branchName    String?
+  upiId         String?
+  isVerified    Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  // Relations
+  vendorId      String?     @unique @db.Uuid
+  adminId       String?     @unique @db.Uuid
+
+  vendor        Vendor?     @relation(fields: [vendorId], references: [id])
+  admin         Admin?      @relation(fields: [adminId], references: [id])
+
+  @@index([vendorId])
+  @@index([adminId])
 }
 model Product {
   id                      String    @id @default(uuid())
@@ -176,7 +206,8 @@ model ProductListing {
   enclosureMaterial       String?
   productCareInstructions String?
   productFeatures         String[]             @default([])
-
+dispatchTimeInDays Int?   // NEW: Estimated dispatch time in days
+  shippingCost       Decimal @default(0.0) // NEW: Vendor-defined shipping/handling cost
   @@index([productId])
   @@index([status])
 }
@@ -249,7 +280,8 @@ model OrderItem {
   order            Order         @relation(fields: [orderId], references: [id], onDelete: Cascade)
   vendor           Vendor        @relation(fields: [vendorId], references: [id])
   dispatchStatus   DispatchStatus   @default(not_started)  // Enum is applied here
-  dispatchTime     DateTime?        // Optional time when the order was dispatched
+  dispatchTime     DateTime?
+   shippingCost Decimal @default(0.0)          // Optional time when the order was dispatched
    product          Product  @relation(fields: [productId], references: [id])  // Ensure this relation exists
   @@index([orderId])
   @@index([productId])

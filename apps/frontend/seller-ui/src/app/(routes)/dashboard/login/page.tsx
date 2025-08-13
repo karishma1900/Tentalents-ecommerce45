@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Google from '../../../assets/google.png';
-import './login.css';
+import '../signup/signup.css';
 import { ChevronLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {jwtDecode} from 'jwt-decode';
@@ -28,11 +28,51 @@ const Login = () => {
   } = useForm<FormData>();
 
   // ✅ Check if already logged in
- useEffect(() => {
+
+
+ 
+const onSubmit = async (data: FormData) => {
+  setLoading(true);
+  try {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/login`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(data),
+  
+});
+
+const result = await response.json();
+
+  console.log('Login response:', result);
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error('Incorrect email or password.');
+      } else {
+        throw new Error(result.message || 'Login failed');
+      }
+    }
+
+    const token = result?.token; // ✅ FIXED HERE
+    if (!token || typeof token !== 'string') throw new Error('Token missing in response');
+
+    localStorage.setItem('token', token);
+    toast.success('Login successful!');
+    router.push('/dashboard/myaccount');
+  } catch (err: any) {
+    console.error('Login error:', err);
+    toast.error(err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+   useEffect(() => {
   const token = localStorage.getItem('token');
+  console.log('jwt token',token)
   if (token) {
     try {
       const decoded: any = jwtDecode(token);
+      console.log('jwt token',token)
       const isExpired = decoded.exp * 1000 < Date.now();
       if (!isExpired) {
         router.replace('/myaccount');
@@ -44,43 +84,6 @@ const Login = () => {
     }
   }
 }, [router]);
-
-  const onSubmit = async (data: FormData) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-     if (!response.ok) {
-  if (response.status === 401) {
-    throw new Error('Incorrect email or password.');
-  } else {
-    throw new Error(result.message || 'Login failed');
-  }
-}
-
-      const token = result?.data?.token;
-      if (!token) throw new Error('Token missing in response');
-
-      // ✅ Save token to localStorage
-      localStorage.setItem('token', token);
-      toast.success('Login successful!');
-      router.push('/myaccount');
-    } catch (err: any) {
-      console.error('Login error:', err);
-      toast.error(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleGoogleSignIn = () => {
     console.log('Google sign in');
     // TODO: Implement Google login logic

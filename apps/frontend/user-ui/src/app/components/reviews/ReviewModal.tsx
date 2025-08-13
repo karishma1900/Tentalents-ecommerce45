@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect  } from 'react';
 import Image from 'next/image';
 import axios from 'axios';
 
@@ -27,7 +27,23 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, product }) =
   const [reviewText, setReviewText] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
+const modalRef = useRef<HTMLDivElement>(null);
 
+useEffect(() => {
+    const handleOutsideClick = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+    };
+  }, [isOpen, onClose]);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -108,7 +124,7 @@ const ReviewModal: React.FC<ReviewModalProps> = ({ isOpen, onClose, product }) =
       <Toaster position="top-right" reverseOrder={false} />
 
       <div className="modal-backdrop">
-        <div className="modal">
+        <div className="modal"  ref={modalRef}>
           <div className="modalheader">
             <FaArrowLeft />
             <h2>Review</h2>

@@ -146,6 +146,7 @@ exports.Prisma.VendorScalarFieldEnum = {
   userId: 'userId',
   name: 'name',
   email: 'email',
+  password: 'password',
   profileImage: 'profileImage',
   businessName: 'businessName',
   phone: 'phone',
@@ -197,6 +198,21 @@ exports.Prisma.AddressScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.BankDetailScalarFieldEnum = {
+  id: 'id',
+  accountHolder: 'accountHolder',
+  accountNumber: 'accountNumber',
+  ifscCode: 'ifscCode',
+  bankName: 'bankName',
+  branchName: 'branchName',
+  upiId: 'upiId',
+  isVerified: 'isVerified',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  vendorId: 'vendorId',
+  adminId: 'adminId'
+};
+
 exports.Prisma.ProductScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -237,7 +253,9 @@ exports.Prisma.ProductListingScalarFieldEnum = {
   numberOfItems: 'numberOfItems',
   enclosureMaterial: 'enclosureMaterial',
   productCareInstructions: 'productCareInstructions',
-  productFeatures: 'productFeatures'
+  productFeatures: 'productFeatures',
+  dispatchTimeInDays: 'dispatchTimeInDays',
+  shippingCost: 'shippingCost'
 };
 
 exports.Prisma.ProductVariantScalarFieldEnum = {
@@ -283,7 +301,8 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   status: 'status',
   addedAt: 'addedAt',
   dispatchStatus: 'dispatchStatus',
-  dispatchTime: 'dispatchTime'
+  dispatchTime: 'dispatchTime',
+  shippingCost: 'shippingCost'
 };
 
 exports.Prisma.OrderScalarFieldEnum = {
@@ -634,6 +653,7 @@ exports.Prisma.ModelName = {
   Admin: 'Admin',
   ActionLog: 'ActionLog',
   Address: 'Address',
+  BankDetail: 'BankDetail',
   Product: 'Product',
   ProductListing: 'ProductListing',
   ProductVariant: 'ProductVariant',

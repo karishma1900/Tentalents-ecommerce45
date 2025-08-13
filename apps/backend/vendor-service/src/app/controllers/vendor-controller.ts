@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response,NextFunction } from 'express';
 import { createVendorDtoToPrisma } from '../dto/vendor.dto';
 import {
   PrismaClient,
@@ -13,6 +13,18 @@ import {
 } from '../schemas/vendor.schema';
 import { vendorService } from '../services/vendor-service';
 
+import jwt from 'jsonwebtoken';
+import type { UserRole } from '@shared/types';
+const JWT_SECRET = process.env.JWT_SECRET || 'super_secret';
+
+export interface AuthenticatedRequest extends Request {
+  user?: {
+    userId: string;
+    email: string;
+    role: UserRole;
+    vendorId?: string;
+  };
+}
 import type {
   CreateVendorDto,
   UpdateVendorDto,
@@ -31,6 +43,23 @@ function toPrismaStatus(status: SharedVendorStatus): PrismaVendorStatus {
 /**
  * Step 1: Initiate OTP for vendor registration
  */
+export const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Missing or malformed Authorization header' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as AuthenticatedRequest['user'];
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ error: 'Invalid or expired token' });
+  }
+};
 export const initiateVendorRegistrationOtp = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
@@ -77,14 +106,63 @@ export const completeVendorUserRegistration = async (req: Request, res: Response
       return res.status(400).json({ error: 'Email and password are required' });
     }
 
-    const user = await vendorService.completeVendorUserRegistration(email, password);
-    return res.status(201).json({ user });
+   const result = await vendorService.completeVendorUserRegistration(email, password);
+return res.status(201).json(result);
   } catch (err) {
     logger.error('Error completing vendor user registration', err);
     return res.status(500).json({ error: 'Failed to register vendor user' });
   }
 };
+export const getVendorProfileByVendorId = async (req: Request, res: Response) => {
+  try {
+    const { vendorId } = req.params;
 
+    if (!vendorId) {
+      return res.status(400).json({ error: 'Vendor ID is required' });
+    }
+
+    const vendor = await vendorService.getByVendorId(vendorId);
+
+    return res.status(200).json({ vendor });
+  } catch (err) {
+    logger.error('Error fetching vendor profile by vendor ID', err);
+    return res.status(500).json({ error: 'Failed to fetch vendor profile' });
+  }
+};
+export const updateVendorProfile = async (req: Request, res: Response) => {
+  // cast req to AuthenticatedRequest locally
+  const authReq = req as AuthenticatedRequest;
+
+  try {
+   const vendorId = req.params.vendorId;
+if (!vendorId) {
+  return res.status(400).json({ error: 'Vendor ID is required in the route' });
+}
+    if (!authReq.user?.userId) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const result = UpdateVendorSchema.safeParse(req.body);
+    if (!result.success) {
+      return res.status(400).json({ error: result.error.format() });
+    }
+
+    const dto: UpdateVendorDto = result.data;
+
+    // Remove status field if you don't want it updated here
+    const { status, ...profileFields } = dto;
+
+    const updatedVendor = await prisma.vendor.update({
+      where: { id: vendorId },
+      data: profileFields,
+    });
+
+    return res.status(200).json({ vendor: updatedVendor });
+  } catch (err) {
+    logger.error('Error updating vendor profile', err);
+    return res.status(500).json({ error: 'Failed to update vendor profile' });
+  }
+};
 /**
  * Step 4: Complete vendor profile registration
  */
@@ -110,7 +188,7 @@ export const completeVendorProfileRegistration = async (req: Request, res: Respo
  */
 export const updateVendor = async (req: Request, res: Response) => {
   try {
-    const vendorId = req.params.id;
+   const vendorId = req.params.vendorId;
 
     const result = UpdateVendorSchema.safeParse(req.body);
     if (!result.success) {
@@ -297,5 +375,74 @@ export const convertUserToVendor = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Failed to convert user to vendor' });
   }
 };
+export const loginVendor = async (req: Request, res: Response) => {
+  
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Email and password are required' });
+    }
+
+    const loginResult = await vendorService.loginVendorUser(email, password);
+
+    return res.status(200).json({
+      message: 'Login successful',
+      token: loginResult.token,
+      userId: loginResult.userId,
+      email: loginResult.email,
+      role: loginResult.role,
+    });
+  }catch (err: unknown) {
+  if (err instanceof Error) {
+    logger.error('Vendor login error:', err);
+    return res.status(401).json({ error: err.message || 'Invalid credentials' });
+  } else {
+    logger.error('Vendor login error:', err);
+    return res.status(401).json({ error: 'Invalid credentials' });
+  }
+}
+};
 
 
+export const initiateForgotPasswordOtp = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: 'Email is required' });
+
+    const result = await vendorService.initiateForgotPasswordOtp(email);
+    return res.status(200).json(result);
+  } catch (err) {
+    logger.error('Error initiating forgot password OTP', err);
+    return res.status(500).json({ error: 'Failed to send OTP' });
+  }
+};
+
+// 2. Verify the OTP user submits
+export const verifyForgotPasswordOtp = async (req: Request, res: Response) => {
+  try {
+    const { email, otp } = req.body;
+    if (!email || !otp) return res.status(400).json({ error: 'Email and OTP are required' });
+
+    const result = await vendorService.verifyForgotPasswordOtp(email, otp);
+    return res.status(200).json(result);
+  } catch (err) {
+    logger.error('Error verifying forgot password OTP', err);
+    return res.status(400).json({ error: 'Invalid or expired OTP' });
+  }
+};
+
+// 3. Reset password after OTP verification
+export const resetPasswordWithOtp = async (req: Request, res: Response) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    if (!email || !otp || !newPassword)
+      return res.status(400).json({ error: 'Email, OTP and new password are required' });
+
+    const result = await vendorService.resetPasswordWithOtp(email, otp, newPassword);
+    return res.status(200).json({ message: 'Password reset successful' });
+  } catch (err) {
+    logger.error('Error resetting password', err);
+    return res.status(400).json({ error: 'Failed to reset password' });
+  }
+};

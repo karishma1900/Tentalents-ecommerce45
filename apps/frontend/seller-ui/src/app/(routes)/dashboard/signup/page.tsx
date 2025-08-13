@@ -10,7 +10,8 @@ import { ChevronLeft, Eye, EyeOff } from 'lucide-react';
 import axios from 'axios';
 import './signup.css';
 import toast from 'react-hot-toast';
-import { jwtDecode } from "jwt-decode";
+import  {jwtDecode} from "jwt-decode";
+
 
 const maskEmail = (email: string) => {
   if (!email) return '';
@@ -30,6 +31,12 @@ type FormData = {
   password: string;
   confirmPassword: string;
   name?: string;
+  businessName?: string;
+  phone?: string;
+  address?: string;
+  gstNumber?: string;
+  profileImage?: FileList;
+  kycDocsUrl?: FileList;
 };
 
 const SignUp = () => {
@@ -41,7 +48,7 @@ const SignUp = () => {
   const [otp, setOtp] = useState(Array(6).fill(''));
   const [timer, setTimer] = useState(60);
   const [canResend, setCanResend] = useState(false);
-  const [step, setStep] = useState<'email' | 'otp' | 'password'>('email');
+const [step, setStep] = useState<'email' | 'otp' | 'password'>('email');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -79,33 +86,43 @@ const SignUp = () => {
   // Removed Supabase session check here
 
   const handleSendOtp = async () => {
-    const isValid = await trigger('email');
-    if (!isValid) return;
+    const token = localStorage.getItem('token');
+  const isValid = await trigger('email');
+  if (!isValid) return;
 
-    setLoading(true);
-    try {
-      const { email: enteredEmail } = getValues();
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/initiate-otp`,
-        { email: enteredEmail }
-      );
-      setEmail(enteredEmail);
-      setStep('otp');
-      setCanResend(false);
-      setTimer(60);
-      setOtp(Array(6).fill(''));
-    } catch (err: any) {
-      const errorMessage = err?.response?.data?.message || err?.response?.data?.error;
+  setLoading(true);
+  try {
+    const { email: enteredEmail } = getValues();
+    console.log('Sending OTP to:', enteredEmail);
+    console.log('Using API:', `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/initiate-otp`);
+    console.log('JWT Token:', token);
+ // or wherever you store it
 
-      if (errorMessage === 'Vendor already exists') {
-        toast.error('This email is already registered. Please login or use a different email.');
-      } else {
-        toast.error(errorMessage || 'OTP verification failed. Please try again.');
-      }
-    } finally {
-      setLoading(false);
+await axios.post(
+  `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/initiate-otp`,
+  { email: enteredEmail },
+
+);
+
+    setEmail(enteredEmail);
+    setStep('otp');
+    setCanResend(false);
+    setTimer(60);
+    setOtp(Array(6).fill(''));
+  } catch (err: any) {
+    console.error('OTP send error:', err);
+    const errorMessage = err?.response?.data?.message || err?.response?.data?.error;
+
+    if (errorMessage === 'Vendor already exists') {
+      toast.error('This email is already registered. Please login or use a different email.');
+    } else {
+      toast.error(errorMessage || 'OTP verification failed. Please try again.');
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleVerifyOtp = async () => {
     const otpCode = otp.join('');
@@ -116,13 +133,15 @@ const SignUp = () => {
 
     setLoading(true);
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/verify-otp`,
-        {
-          email,
-          otp: otpCode,
-        }
-      );
+    const token = localStorage.getItem('token'); // fetch token again
+await axios.post(
+  `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/verify-otp`,
+  {
+    email,
+    otp: otpCode,
+  },
+ 
+);
       setStep('password');
     } catch (err: any) {
       toast.error(err?.response?.data?.message || 'Failed to verify OTP. Please try again.');
@@ -134,24 +153,29 @@ const SignUp = () => {
 const onSubmit = async (data: FormData) => {
   setLoading(true);
   try {
+    const token = localStorage.getItem('token');
+    console.log('Using JWT Token:', token);
+
+    // Register password
     await axios.post(
       `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/user`,
       {
         email,
         password: data.password,
-        name: data.name || '',
-      }
+      },
     );
 
-    toast.success('Vendor registered successfully!');
-    // Redirect to vendor profile setup page
-    router.push('/vendor/account');
+    toast.success('Vendor registered successfully!');  // change toast message here
+    router.push('/dashboard/myaccount');  // redirect directly to /myaccount
   } catch (err: any) {
     toast.error(err?.response?.data?.message || 'Registration error. Please try again.');
   } finally {
     setLoading(false);
   }
 };
+
+
+
 
   const handleOtpChange = (index: number, value: string) => {
     if (!/^[0-9]?$/.test(value)) return;
@@ -176,9 +200,17 @@ const onSubmit = async (data: FormData) => {
 
     setLoading(true);
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/initiate-otp`, {
-        email,
-      });
+     const token = localStorage.getItem('token');
+await axios.post(
+  `${process.env.NEXT_PUBLIC_VENDOR_URI}/api/vendor/register/initiate-otp`,
+  { email },
+  {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+);
+
       setCanResend(false);
       setTimer(60);
       setOtp(Array(6).fill(''));
@@ -487,6 +519,8 @@ const onSubmit = async (data: FormData) => {
             </button>
           </form>
         )}
+      
+
       </div>
     </div>
   );

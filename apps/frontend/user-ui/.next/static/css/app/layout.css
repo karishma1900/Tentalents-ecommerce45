@@ -12,6 +12,9 @@
 .relative {
   position: relative;
 }
+.container {
+  width: 100%;
+}
 .mt-\[10px\] {
   margin-top: 10px;
 }

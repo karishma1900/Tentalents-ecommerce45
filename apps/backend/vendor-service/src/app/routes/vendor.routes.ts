@@ -2,7 +2,6 @@ import { Router } from 'express';
 import multer from 'multer';
 
 import {
-
   updateVendor,
   getVendorById,
   getAllVendors,
@@ -16,50 +15,49 @@ import {
   verifyVendorEmailOtp,
   completeVendorUserRegistration,
   completeVendorProfileRegistration,
+ getVendorProfileByVendorId,
+ updateVendorProfile,
+  loginVendor
 } from '../controllers/vendor-controller';
-
 
 import { authMiddleware } from '@shared/auth';
 import { UserRole } from '@shared/types';
 
 const router = Router();
 
-// Multer config: memory storage, file size limit, and basic type filtering
 const upload = multer({
   storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB per file
+  limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
-    const isAccepted =
-      file.mimetype.startsWith('image/') ||
-      file.mimetype.startsWith('application/');
+    const isAccepted = file.mimetype.startsWith('image/') || file.mimetype.startsWith('application/');
     if (!isAccepted) {
       return cb(new Error('Only images or documents are allowed'));
     }
     cb(null, true);
   },
 });
-
-// === Authenticated & Role-Based Vendor Routes ===
-
-// Register a new vendor
-
+router.get('/vendor/profile/:vendorId', authMiddleware(), getVendorProfileByVendorId);
+// === Public registration routes (no auth) ===
 router.post('/register/initiate-otp', initiateVendorRegistrationOtp);
 router.post('/register/verify-otp', verifyVendorEmailOtp);
 router.post('/register/user', completeVendorUserRegistration);
-router.post('/register/profile', authMiddleware([UserRole.SELLER]), completeVendorProfileRegistration);
-// Get all vendors (admin access)
+
+router.post('/login', loginVendor);
+
+// === Protected routes (auth required) ===
+router.post('/register/profile', authMiddleware([UserRole.BUYER, UserRole.SELLER]), completeVendorProfileRegistration);
+
 router.get('/', authMiddleware(UserRole.ADMIN), getAllVendors);
-router.post('/vendor/convert', convertUserToVendor);
-// Get vendor by ID (any authenticated user)
+router.post('/vendor/convert', authMiddleware(), convertUserToVendor);
 router.get('/:id', authMiddleware(), getVendorById);
-
-// Update vendor by ID
-router.put('/:id', authMiddleware(UserRole.SELLER), updateVendor);
-
-// Delete vendor by ID (admin only)
+router.put(
+  '/profile/:vendorId',
+  authMiddleware([UserRole.SELLER]),
+  updateVendorProfile
+);
+// router.put('/:id', authMiddleware(UserRole.SELLER), updateVendor);
 router.delete('/:id', authMiddleware(UserRole.ADMIN), deleteVendor);
 
-// Upload vendor documents (authenticated seller)
 router.post(
   '/:id/documents',
   authMiddleware(UserRole.SELLER),
@@ -67,13 +65,9 @@ router.post(
   uploadVendorDocuments
 );
 
-// Approve vendor (admin only)
 router.patch('/:id/approve', authMiddleware(UserRole.ADMIN), approveVendor);
-
-// Reject vendor (admin only)
 router.patch('/:id/reject', authMiddleware(UserRole.ADMIN), rejectVendor);
 
-// Vendor analytics (admin or seller)
 router.get(
   '/:id/analytics',
   authMiddleware([UserRole.ADMIN, UserRole.SELLER]),

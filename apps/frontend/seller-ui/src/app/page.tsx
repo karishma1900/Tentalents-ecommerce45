@@ -1,9 +1,6 @@
-import React from 'react'
+// app/page.tsx
+import { redirect } from 'next/navigation';
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
+export default function Home() {
+  redirect('/dashboard'); // 🔁 Immediately redirects to /dashboard
 }
-
-export default page

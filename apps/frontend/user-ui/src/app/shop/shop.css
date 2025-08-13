@@ -108,3 +108,23 @@ border-top:1px solid #E0E0E0;
 .clear-all {
     color:var(--primary)
 }
+.dropdown-item .sellername{
+  font-size: 14px;
+}
+.close-filter-btn{
+  background-color: transparent;
+  font-size: 15px;
+  color: var(--grey);
+}
+.active-filter{
+  background-color: var(--lightbackground);
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.active-filters-bar{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap:15px;
+}

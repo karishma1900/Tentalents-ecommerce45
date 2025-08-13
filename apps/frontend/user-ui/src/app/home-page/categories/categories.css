@@ -11,14 +11,17 @@
     justify-content: space-between;
     
 }
+.category-list{
+    padding-left: 0px;
+}
 /* .category-list{
     display:flex;
     align-items: center;
     justify-content: space-between;
   
 } */
-.category-section ul .lists{
-    background:var(--lightbackground);
+.category-section .category-list li button{
+    background:#F3F2FF;
     padding:8px 5px;
     display:flex;
     border-radius: 10px;
@@ -30,3 +33,16 @@
     font-weight: 500;
     font-size: 16px;
 }
+/* .category-linksbutton button{
+        background:#F3F2FF;
+    padding:8px 5px;
+    display:flex;
+    border-radius: 10px;
+    width:100%;
+    align-items: center;
+    justify-content: center;
+    gap:10px; 
+     font-family: 'Radhika Trial', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+} */

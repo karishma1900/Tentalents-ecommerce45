@@ -5,9 +5,12 @@ import { setupSwagger } from '@shared/swagger';
 import { errorHandler, notFoundHandler } from '@shared/error';
 import { loggerMiddleware } from '@shared/logger';
 // import searchRoutes from './app/routes/search.routes'; // Uncomment if routes exist
-
+import searchRoutes from './app/routes/search.routes';
 const app = express();
-
+import cors from 'cors';
+app.use(cors({
+  origin: 'http://localhost:3000', // your frontend origin
+}));
 // 🌐 Global Middleware
 app.use(express.json());
 app.use(loggerMiddleware);
@@ -18,6 +21,7 @@ setupSwagger(app, {
   version: '1.0.0',
   path: '/api/docs/search',
 });
+app.use('/api/search', searchRoutes);
 
 // 🛣️ Service Routes
 // app.use('/api/search', searchRoutes); // Uncomment when you have routes

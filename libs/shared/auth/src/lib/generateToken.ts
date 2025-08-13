@@ -17,31 +17,26 @@ const prisma = new PrismaClient();
 
 async function generateTokenForEmail(email?: string): Promise<string> {
   try {
-    let user = null;
-    let vendor = null;
-
     if (!email) {
-      vendor = await prisma.vendor.findFirst({ orderBy: { createdAt: 'desc' } });
-
-      if (vendor?.userId) {
-        user = await prisma.user.findUnique({ where: { id: vendor.userId } });
-      } else {
-        user = await prisma.user.findFirst({ orderBy: { createdAt: 'desc' } });
-      }
-    } else {
-      user = await prisma.user.findUnique({ where: { email } });
-
-      if (!user) {
-        vendor = await prisma.vendor.findUnique({ where: { email } });
-
-        if (vendor?.userId) {
-          user = await prisma.user.findUnique({ where: { id: vendor.userId } });
-        }
-      }
+      throw new Error('Email must be provided');
     }
 
-    if (!vendor && user?.id) {
-      vendor = await prisma.vendor.findFirst({ where: { userId: user.id } });
+    let vendor = await prisma.vendor.findFirst({ where: { email } });
+    let user = null;
+
+    if (!vendor) {
+      user = await prisma.user.findFirst({ where: { email } });
+      if (!user) {
+        // Optional: Create a dummy user if not found
+        console.log('User not found. Creating dummy user...');
+        user = await prisma.user.create({
+          data: {
+            email,
+            role: ROLES.ADMIN, // or default role
+          },
+        });
+        console.log('Dummy user created:', user.email);
+      }
     }
 
     let payload: AuthPayload;
@@ -58,7 +53,7 @@ async function generateTokenForEmail(email?: string): Promise<string> {
     } else if (user) {
       if (!user.email) throw new Error('User email is null');
 
-      const role = user.role ?? ROLES.BUYER;
+      const role = user.role ?? ROLES.ADMIN;
 
       payload = {
         userId: user.id,
@@ -66,13 +61,11 @@ async function generateTokenForEmail(email?: string): Promise<string> {
         role: role as UserRole,
       };
     } else {
-      throw new Error(`❌ No valid user or vendor data found for ${email}`);
+      throw new Error(`No valid user or vendor found for email: ${email}`);
     }
 
-    // ✅ Now safe to generate token
     const token = signToken(payload, JWT_SECRET);
 
-    // ✅ Store token in UserToken table
     await prisma.userToken.create({
       data: {
         token,
@@ -80,7 +73,6 @@ async function generateTokenForEmail(email?: string): Promise<string> {
         vendorId: payload.vendorId ?? null,
         revoked: false,
         createdAt: new Date(),
-        // expiresAt: null,
       },
     });
 
@@ -99,8 +91,10 @@ async function generateTokenForEmail(email?: string): Promise<string> {
 }
 (async () => {
   try {
-    await generateTokenForEmail(); // or pass an email string
+    const email = 'dummy@example.com';  // or any email string you want to test
+    await generateTokenForEmail(email);
   } catch (err) {
     console.error('❌ Failed to generate token:', err);
   }
 })();
+export { generateTokenForEmail };

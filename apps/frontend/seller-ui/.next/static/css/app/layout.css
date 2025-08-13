@@ -30,9 +30,6 @@
 .h-full {
   height: 100%;
 }
-.min-h-\[85vh\] {
-  min-height: 85vh;
-}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -72,9 +69,6 @@
 .justify-between {
   justify-content: space-between;
 }
-.justify-center {
-  justify-content: center;
-}
 .gap-\[10px\] {
   gap: 10px;
 }
@@ -88,18 +82,11 @@
   border-style: var(--tw-border-style);
   border-width: 1px;
 }
-.border-t {
-  border-top-style: var(--tw-border-style);
-  border-top-width: 1px;
-}
 .bg-\[\#0f3158\] {
   background-color: #0f3158;
 }
 .bg-\[\#EBEBEB\] {
   background-color: #EBEBEB;
-}
-.bg-\[\#f1f1f1\] {
-  background-color: #f1f1f1;
 }
 .p-\[10px\] {
   padding: 10px;
@@ -113,9 +100,6 @@
 .px-\[13px\] {
   padding-inline: 13px;
 }
-.text-center {
-  text-align: center;
-}
 .text-\[15px\] {
   font-size: 15px;
 }
@@ -125,9 +109,6 @@
 .tracking-\[0\.04rem\] {
   --tw-tracking: 0.04rem;
   letter-spacing: 0.04rem;
-}
-.text-\[\#00000099\] {
-  color: #00000099;
 }
 .text-\[var\(--grey\)\] {
   color: var(--grey);
@@ -144,10 +125,6 @@
 .outline {
   outline-style: var(--tw-outline-style);
   outline-width: 1px;
-}
-.outline-0 {
-  outline-style: var(--tw-outline-style);
-  outline-width: 0px;
 }
 .transition {
   transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke, --tw-gradient-from, --tw-gradient-via, --tw-gradient-to, opacity, box-shadow, transform, translate, scale, rotate, filter, -webkit-backdrop-filter, backdrop-filter, display, visibility, content-visibility, overlay, pointer-events;
@@ -315,6 +292,14 @@ input[type="checkbox"]:checked::after {
   border-radius: 10px;
   margin: 10px 0px;
   cursor: pointer;
+}
+input, textarea {
+  background-color: var(--lightbackground);
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  margin: 5px 0px;
+  width: 100%;
 }
 .normal-button {
   font-family: 'Radhika Trial', sans-serif;
