@@ -34,9 +34,12 @@ const includeCartRelations = {
       stock: true,
       sku: true,
       status: true,
+      dispatchTimeInDays: true,  // add this
+      shippingCost: true,        // add this
     },
   },
 };
+
 
 export const cartService = {
   getCart: async (userId: string) => {

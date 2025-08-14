@@ -13,7 +13,7 @@ import './page.css'
 const page = () => {
   return (
     <div className='background-[var(--lightblue2)] p-[10px] rounded-[10px]'>
-      <HeaderBanner  />
+     
 
    <div className="topsection flex justify-between gap-[10px] background-[white] p-[10px] rounded-[10px] mb-[15px]">
   <div className=" producthistorts w-1/3">

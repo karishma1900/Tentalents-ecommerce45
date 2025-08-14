@@ -117,14 +117,16 @@ const total = subtotal > 0 ? subtotal + shippingFee + platformFee : 0;
 
   const vendorId = cartItems.length > 0 ? cartItems[0].vendor.id : '';
 
-  const handlePlaceOrder = async () => {
-  if (!address) {
-    return toast.error('Please select or add a delivery address!');
+const handlePlaceOrder = async (selectedPaymentMode: string, selectedAddress: string | null) => {
+  if (!selectedAddress) {
+    toast.error('Please select or add a delivery address!');
+    return;
   }
-  if (!paymentMode) {
-    return toast.error('Please choose a payment method!');
+  if (!selectedPaymentMode) {
+    toast.error('Please choose a payment method!');
+    return;
   }
-
+  
   const token = localStorage.getItem('token');
   const orderData = {
     items: cartItems.map((item) => ({
@@ -135,8 +137,8 @@ const total = subtotal > 0 ? subtotal + shippingFee + platformFee : 0;
       price: Number((item.productListing?.price ?? 0).toFixed(2)),
     })),
     totalAmount: subtotal,
-    shippingAddressId: address,
-    paymentMode,
+    shippingAddressId: selectedAddress,
+    paymentMode: selectedPaymentMode,
   };
 
   try {
@@ -152,44 +154,20 @@ const total = subtotal > 0 ? subtotal + shippingFee + platformFee : 0;
     if (!res.ok) throw new Error('Failed to place order');
 
     const data = await res.json();
-    console.log('Payment API Response:', data); // Log the payment response for debugging
 
-    // Handle Stripe payment
-     if (paymentMode === 'credit_card' && data?.data?.checkoutUrl) {
-      const checkoutUrl = data.data.checkoutUrl;
-      console.log('Redirecting to Stripe Checkout:', checkoutUrl);
-
-      // Open the checkout URL in a new tab
-      window.open(checkoutUrl, '_blank');
-    } 
-
-//     if (paymentMode === 'credit_card' && data?.data?.orderId) {
-//       const { orderId } = data.data;
-
-//       // Now initiate payment
-//       const paymentResponse = await initiatePayment(orderId, total);
-// console.log('Payment Response:', paymentResponse); // Log full response
-
-// if (paymentResponse?.checkoutUrl) {
-//   console.log('Redirecting to checkout URL:', paymentResponse.checkoutUrl);
-//   window.location.href = paymentResponse.checkoutUrl; // Trigger redirect
-// } else {
-//   toast.error('Error initializing payment!');
-// }
-//     }
-
-    // Handle Cash on Delivery (COD)
-    else if (paymentMode === 'cash_on_delivery') {
+    // Payment redirect logic here
+    if (selectedPaymentMode === 'credit_card' && data?.data?.checkoutUrl) {
+      window.open(data.data.checkoutUrl, '_blank');
+    } else if (selectedPaymentMode === 'cash_on_delivery') {
       toast.success('Order placed successfully!');
-      return;
     } else {
       toast.error('Unexpected payment response!');
     }
   } catch (error) {
-    console.error('Error placing order:', error);
     toast.error('Failed to place order!');
   }
 };
+
 const handlePaymentStatus = async (paymentId: string, signature: string) => {
   try {
     // First, verify payment status by calling the backend endpoint
@@ -222,8 +200,24 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
             vendorId={vendorId}
             setAddress={setAddress}
           />
-          <Payment onPaymentModeSelect={setPaymentMode} total={total}  onConfirmPayment={handlePlaceOrder} />
-        </div>
+          <Payment
+  onPaymentModeSelect={setPaymentMode}
+  total={total}
+  onConfirmPayment={(selectedPaymentMode) => {
+    // Validate address + paymentMode before placing order
+    if (!address) {
+      toast.error('Please select or add a delivery address!');
+      return;
+    }
+    if (!selectedPaymentMode) {
+      toast.error('Please choose a payment method!');
+      return;
+    }
+    setPaymentMode(selectedPaymentMode);
+    handlePlaceOrder(selectedPaymentMode, address);
+  }}
+/>
+</div>
 
         <div className="checkoutright">
           <div className="subtotal-section">
@@ -258,6 +252,7 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
         </div>
       </div>
     </div>
+    
   );
 };
 

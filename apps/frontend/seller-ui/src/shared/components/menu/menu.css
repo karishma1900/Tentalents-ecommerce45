@@ -1,0 +1,27 @@
+.menutop{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     padding:10px 15px;
+     background-color: white;
+}
+.menu-left{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:20px;
+}
+.location{
+    border: 1px solid var(--secondary);
+    padding:15px 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:10px;
+}
+.location h2{
+    font-size: 15px;
+    color:black;
+}

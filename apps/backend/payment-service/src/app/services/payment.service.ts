@@ -132,7 +132,7 @@ export const paymentService = {
   handleStripeWebhook: async (event: Stripe.Event) => {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
-
+logger.info(`[Stripe Webhook] Session metadata: ${JSON.stringify(session.metadata)}`);
     if (!session.metadata) {
       throw new Error('Metadata missing from Stripe session');
     }

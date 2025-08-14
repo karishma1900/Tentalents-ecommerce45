@@ -2,5 +2,7 @@
 import { redirect } from 'next/navigation';
 
 export default function Home() {
-  redirect('/dashboard'); // 🔁 Immediately redirects to /dashboard
+  return <div>
+    page.tsx
+  </div>; // empty page
 }

@@ -470,6 +470,16 @@ exports.Prisma.RefundRequestScalarFieldEnum = {
   resolvedAt: 'resolvedAt'
 };
 
+exports.Prisma.MediaScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  type: 'type',
+  uploadedBy: 'uploadedBy',
+  modelType: 'modelType',
+  modelId: 'modelId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -675,7 +685,8 @@ exports.Prisma.ModelName = {
   CouponRedemption: 'CouponRedemption',
   Recommendation: 'Recommendation',
   PopularProduct: 'PopularProduct',
-  RefundRequest: 'RefundRequest'
+  RefundRequest: 'RefundRequest',
+  Media: 'Media'
 };
 
 /**

@@ -37,7 +37,7 @@ useEffect(() => {
   console.log("Full product object:", product);
   console.log("Listing ID:", product.listingId);
   console.log("Seller ID:", product.sellerId);
-  console.log(" Seller Name:", product.seller?.name);
+console.log(" Vendor Name:", product.vendor?.name);
 }, [product]);
   const [reviews, setReviews] = useState<any[]>([]);
 const { handleAddToCart, loading, error, userId } = useAddToCart();

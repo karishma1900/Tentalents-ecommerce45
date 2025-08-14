@@ -7,7 +7,11 @@ import SideBarWrapper from '../sidebar/sidebar'; // adjust path
 import './headerbanner.css';
 import '../sidebar/sidebar.css'
 
-const HeaderBanner = () => {
+interface HeaderBannerProps {
+  showSidebar?: boolean; // optional, default true
+}
+
+const HeaderBanner: React.FC<HeaderBannerProps> = ({ showSidebar = true }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleSidebar = () => setIsMobileMenuOpen(prev => !prev);
@@ -15,8 +19,13 @@ const HeaderBanner = () => {
 
   return (
     <>
-      {/* Sidebar and toggle control */}
-      <SideBarWrapper isMobileMenuOpen={isMobileMenuOpen} onCloseMobileMenu={closeSidebar} />
+      {/* Conditionally render Sidebar */}
+      {showSidebar && (
+        <SideBarWrapper
+          isMobileMenuOpen={isMobileMenuOpen}
+          onCloseMobileMenu={closeSidebar}
+        />
+      )}
 
       <div className="headerbanner">
         <div className="search-container">
@@ -29,10 +38,12 @@ const HeaderBanner = () => {
         </div>
 
         <div className="rightside">
-          {/* 👇 Hamburger (only visible in mobile via CSS media query) */}
-          <button className="hamburger-icon" onClick={toggleSidebar}>
-            <Menu />
-          </button>
+          {/* Hamburger (only visible in mobile via CSS) */}
+          {showSidebar && (
+            <button className="hamburger-icon" onClick={toggleSidebar}>
+              <Menu />
+            </button>
+          )}
 
           <button className="background-button">
             Bulk Upload <Upload />

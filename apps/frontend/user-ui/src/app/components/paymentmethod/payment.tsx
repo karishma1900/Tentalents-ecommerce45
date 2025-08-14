@@ -17,14 +17,12 @@ import toast from 'react-hot-toast';
 const Payment = ({
   onPaymentModeSelect,
   total,
-   onConfirmPayment
-  
+  onConfirmPayment
 }: {
   onPaymentModeSelect: (paymentMode: string) => void;
   total: number;
-  onConfirmPayment:() => void;  
-  // Add 'total' here to accept it as a prop
-}) => {
+  onConfirmPayment: (selectedPaymentMode: string) => void;  // <--- Accept argument here
+})  => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [selectedPaymentMode, setSelectedPaymentMode] = useState<string>('');
 
@@ -44,9 +42,9 @@ const confirmPaymentSelection = () => {
     toast.error('Please select a payment method first!');
     return;
   }
-  onPaymentModeSelect(selectedPaymentMode); // Pass to parent
-  setIsPaymentOpen(false); 
-    onConfirmPayment();// Close after selection
+  onPaymentModeSelect(selectedPaymentMode); // update parent's state
+  setIsPaymentOpen(false);
+  onConfirmPayment(selectedPaymentMode);  // Just send selected payment mode back
 };
 
   return (

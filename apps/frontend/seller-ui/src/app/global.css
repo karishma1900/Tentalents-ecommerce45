@@ -406,6 +406,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
+  background-color: var(--lightblue2);
  font-family: 'Radhika Trial', sans-serif !important;
 font-weight: 400 !important;
   line-height: inherit;

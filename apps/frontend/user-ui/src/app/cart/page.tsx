@@ -29,6 +29,7 @@ type CartItem = {
     stock?: number;
     sku?: string;
     status?: string;
+     shippingCost?: number;  
   };
 };
 
@@ -173,15 +174,19 @@ async function updateQuantity(listingId: string, currentQty: number, change: num
 
 
   const subtotal = cartItems.reduce((acc, item) => {
-    const price = item.productListing?.price ?? 0;
-    return acc + price * item.quantity;
-  }, 0);
+  const price = item.productListing?.price ?? 0;
+  return acc + price * item.quantity;
+}, 0);
 
 const hasItems = cartItems.length > 0;
-const shippingFee = hasItems ? 54.0 : 0;
+
+const shippingFee = cartItems.reduce((acc, item) => {
+  const shipping = item.productListing?.shippingCost ?? 0;
+  return acc + shipping * item.quantity;
+}, 0);
+
 const platformFee = hasItems ? 4.0 : 0;
 const total = subtotal + shippingFee + platformFee;
-
   return (
     <div className="cartpage">
       <div className="cart-section">

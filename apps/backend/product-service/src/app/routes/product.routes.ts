@@ -13,10 +13,11 @@ import { authMiddleware, requireRole } from '@shared/auth';
 
 const router = Router();
 
-// 🛒 Create product (admin/seller)
+// 🛒 Create product (seller/admin/super_admin)
 router.post(
   '/',
-  authMiddleware(['seller', 'admin', 'super_admin']),
+  authMiddleware(),
+  requireRole('seller', 'admin', 'super_admin'),
   createProduct
 );
 
@@ -24,32 +25,34 @@ router.post(
 router.get('/', getAllProducts);
 router.get('/cards', getProductsForCard);
 
-// 🔍 Get product by ID (public)
+// 🔍 Get product by slug (public)
 router.get('/slug/:slug', getProductBySlug);
+
+// 🔍 Get product by ID (public)
 router.get('/:id', getProductById);
 
-// 📝 Update product (admin/seller)
-router.put (
+// 📝 Update product (seller/admin/super_admin)
+router.put(
   '/:id',
   authMiddleware(),
   requireRole('seller', 'admin', 'super_admin'),
- updateProduct
+  updateProduct
 );
 
-// ❌ Delete product (admin/seller)
+// ❌ Delete product (seller/admin/super_admin)
 router.delete(
   '/:id',
   authMiddleware(),
   requireRole('seller', 'admin', 'super_admin'),
- deleteProduct
+  deleteProduct
 );
 
-// 🖼️ Upload product image to MinIO
+// 🖼️ Upload product image to Cloudinary
 router.post(
   '/:id/image',
   authMiddleware(),
   requireRole('seller', 'admin', 'super_admin'),
- uploadProductImage
+  uploadProductImage
 );
 
 export default router;

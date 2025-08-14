@@ -2,7 +2,7 @@ import { PrismaClient, Prisma } from '../../../../../../generated/prisma';
 import { v4 as uuid } from 'uuid';
 import { minioClient } from '@shared/minio';
 import { MinioBuckets, MinioFolderPaths } from '@shared/middlewares/minio/src/lib/minio-constants';
-
+import {uploadToCloudinary} from '@shared/middlewares/auth/src/lib/cloudinary'
 const prisma = new PrismaClient();
 
 function generateSlugFromTitle(title: string): string {
@@ -33,10 +33,8 @@ export const productService = {
   /**
    * 📦 Create a new product along with listing and optional variants
    */
-  
-  async createProduct(data: any) {
-      try {
-    // Convert price, originalPrice, shippingCost to Prisma.Decimal before destructuring
+async createProduct(data: any) {
+  try {
     const priceDecimal = new Prisma.Decimal(data.price);
     const originalPriceDecimal = new Prisma.Decimal(data.originalPrice);
     const shippingCostDecimal = new Prisma.Decimal(data.shippingCost || 0);
@@ -46,7 +44,7 @@ export const productService = {
       description,
       category,
       subCategory,
-      imageUrls,
+      images, // array of base64 strings or URLs
       brand,
       includedComponents,
       numberOfItems,
@@ -64,31 +62,43 @@ export const productService = {
       deliveryEta,
       vendorId,
       variants,
-      dispatchTimeInDays,   // NEW
+      dispatchTimeInDays,
     } = data;
 
-    // Basic validation
+    console.log('Checking required fields for product creation:', {
+      title,
+      category,
+      sku,
+      price: data.price,
+      originalPrice: data.originalPrice,
+      stock,
+      unit,
+      itemWeight,
+      vendorId,
+      images,
+    });
+
     if (
-      !title || !imageUrls?.length || !category || !sku ||
-      !data.price || !data.originalPrice || !stock || !unit || !itemWeight || !vendorId
+      !title || !category || !sku ||
+      !priceDecimal || !originalPriceDecimal || !stock || !unit ||
+      !itemWeight || !vendorId || !Array.isArray(images) || images.length === 0
     ) {
-      throw new Error('Missing required fields for product creation');
+      throw new Error('Missing required fields for product creation (including images)');
     }
 
-    // Fetch vendor
+    // Check vendor existence
     const vendor = await prisma.vendor.findUnique({ where: { id: vendorId } });
     if (!vendor) throw new Error('Vendor not found');
 
     const generatedSlug = await generateUniqueSlug(title);
 
-    // Create Product
+    // Create product without images first
     const product = await prisma.product.create({
       data: {
         title,
         description,
         category,
         subCategory,
-        imageUrls,
         slug: generatedSlug,
         brand,
         includedComponents: includedComponents || [],
@@ -99,7 +109,44 @@ export const productService = {
       },
     });
 
-    // Create Listing with new fields
+    // Helper: detect if string is base64 (crudely)
+    function isBase64(str: string) {
+      return !/^https?:\/\//.test(str);
+    }
+    function cleanBase64(base64: string): string {
+      return base64.replace(/^data:image\/\w+;base64,/, '');
+    }
+
+    // Process images
+    let uploadedImageUrls: string[] = [];
+
+    uploadedImageUrls = await Promise.all(
+      images.map(async (img: string, i: number) => {
+        if (isBase64(img)) {
+          console.log(`Uploading base64 image ${i + 1}`);
+          const cleaned = cleanBase64(img);
+          const buffer = Buffer.from(cleaned, 'base64');
+          const filename = `product-${product.id}-${uuid()}`;
+          const url = await uploadToCloudinary(buffer, 'product-images', filename);
+          console.log(`Uploaded image ${i + 1}:`, url);
+          return url;
+        } else {
+          // It's a direct URL
+          console.log(`Using provided image URL ${i + 1}:`, img);
+          return img;
+        }
+      })
+    );
+
+    // Save image URLs to product record
+    if (uploadedImageUrls.length > 0) {
+      await prisma.product.update({
+        where: { id: product.id },
+        data: { imageUrls: uploadedImageUrls },
+      });
+    }
+
+    // Create listing
     const listing = await prisma.productListing.create({
       data: {
         productId: product.id,
@@ -120,12 +167,12 @@ export const productService = {
         enclosureMaterial,
         productCareInstructions,
         productFeatures: productFeatures || [],
-        dispatchTimeInDays,    // NEW
-        shippingCost: shippingCostDecimal,  // NEW
+        dispatchTimeInDays,
+        shippingCost: shippingCostDecimal,
       },
     });
 
-    // Variants...
+    // Create variants if any
     if (Array.isArray(variants) && variants.length > 0) {
       await prisma.productVariant.createMany({
         data: variants.map((variant: any) => ({
@@ -141,13 +188,14 @@ export const productService = {
       product,
       listing,
       variantsAdded: variants?.length || 0,
+      uploadedImageUrls,
     };
   } catch (error) {
-    console.error('❌ Error in createProduct:', error);
+    console.error('Error in createProduct:', error);
     throw error;
   }
-  },
-  
+},
+
   // Other methods like getAllProducts, getProductById, etc.
 
 
@@ -257,24 +305,28 @@ export const productService = {
   /**
    * 🖼️ Upload product image to MinIO
    */
-  async uploadProductImage(productId: string, imageBase64: string) {
-    const buffer = Buffer.from(imageBase64, 'base64');
-    const objectName = `${MinioFolderPaths.PRODUCT_IMAGES}${productId}-${uuid()}.png`;
+ async uploadProductImage(productId: string, imageBase64: string) {
+  const buffer = Buffer.from(imageBase64, 'base64');
+  const filename = `product-${productId}-${uuid()}`;
 
-    await minioClient.putObject(
-      MinioBuckets.PRODUCT,
-      objectName,
-      buffer,
-      buffer.length,
-      { 'Content-Type': 'image/png' }
-    );
+  const url = await uploadToCloudinary(buffer, 'product-images', filename);
 
-    return {
-      bucket: MinioBuckets.PRODUCT,
-      key: objectName,
-      url: `${process.env.MINIO_URL}/${MinioBuckets.PRODUCT}/${objectName}`,
-    };
-  },
+  // Optional: Add URL to product.imageUrls[]
+  const updatedProduct = await prisma.product.update({
+    where: { id: productId },
+    data: {
+      imageUrls: {
+        push: url,
+      },
+    },
+  });
+
+  return {
+    url,
+    message: 'Uploaded to Cloudinary successfully',
+    productId: updatedProduct.id,
+  };
+},
 async isUserAuthorizedForProduct(userId: string, productId: string): Promise<boolean> {
   // Find the vendor associated with the user
   const vendor = await prisma.vendor.findUnique({ where: { userId } });

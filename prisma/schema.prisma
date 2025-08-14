@@ -27,6 +27,7 @@ model User {
   searchLogs     SearchLog[]
   vendor         Vendor?
   refundRequests RefundRequest[]
+  mediaUploaded Media[]
    addresses      Address[]   // Relation to User's addresses
 cartItems CartItem[]
   @@index([email])
@@ -675,4 +676,17 @@ enum RefundStatus {
   REJECTED
   REFUNDED
   CANCELLED
+}
+model Media {
+  id         String   @id @default(uuid())
+  url        String
+  type       String   // image, video, pdf, kyc_doc, etc.
+  uploadedBy String?  @db.Uuid
+  modelType  String   // e.g. "product", "vendor", "rating", "invoice"
+  modelId    String   // id of the related record (foreign ID)
+  createdAt  DateTime @default(now())
+
+  uploader   User?    @relation(fields: [uploadedBy], references: [id])
+  
+  @@index([modelType, modelId])
 }

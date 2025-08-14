@@ -2,7 +2,8 @@ import { PrismaClient,PaymentMethod,PaymentStatus } from '../../../../../../gene
 import type { OrderStatus } from '../../../../../../generated/prisma';
 import Stripe from 'stripe';
 import { v4 as uuidv4 } from 'uuid';
-
+import { buildOrderConfirmationEmail } from '../utils/buildOrderConfirmationEmail';
+import { sendEmail } from '@shared/middlewares/email/src/index';
 interface OrderItemInput {
   productId: string;
   vendorId: string;
@@ -149,7 +150,18 @@ export const orderService = {
       })),
     },
   },
-  include: { items: true },
+include: {
+  items: {
+    include: {
+      product: {
+        select: {
+          title: true
+        }
+      }
+    }
+  },
+  shippingAddress: true,
+}
 });
 
         const orderId = order.id; // Now `orderId` is available
@@ -165,6 +177,54 @@ export const orderService = {
     transactionId: '', // empty for now
   },
 });
+// 🔔 Send order confirmation email for COD
+try {
+const buyer = await prisma.user.findUnique({
+  where: { id: buyerId },
+  select: { email: true, name: true },
+});
+if (!order.shippingAddress) {
+  throw new Error('Shipping address is missing from order.');
+}
+
+if (buyer?.email) {
+  const emailHtml = buildOrderConfirmationEmail({
+    buyerName: buyer.name || 'Customer',
+    orderId: order.id,
+    items: order.items.map(item => ({
+      title: item.product?.title || 'Unknown Product',
+      quantity: item.quantity,
+      unitPrice: item.unitPrice.toNumber(), // convert Decimal to number
+    })),
+    totalAmount: order.totalAmount.toNumber(), // also convert Decimal
+    paymentMode: order.paymentMode,
+    shippingAddress: [
+      order.shippingAddress.name,
+      order.shippingAddress.phone,
+      order.shippingAddress.addressLine1,
+      order.shippingAddress.addressLine2,
+      order.shippingAddress.city,
+      order.shippingAddress.state,
+      order.shippingAddress.country,
+      order.shippingAddress.pinCode,
+    ]
+      .filter(Boolean)
+      .join(', '),
+    estimatedDelivery: order.dispatchTime?.toDateString() || 'TBD',
+  });
+
+  await sendEmail({
+    to: buyer.email,
+    subject: `Order Confirmation - #${order.id}`,
+    html: emailHtml,
+  });
+
+  console.log(`✅ Order confirmation email sent to ${buyer.email}`);
+}
+
+} catch (emailError) {
+  console.error('Failed to send order confirmation email:', emailError);
+}
 
 // Then create Stripe session and pass payment.id
 const session = await stripe.checkout.sessions.create({
@@ -235,6 +295,7 @@ const session = await stripe.checkout.sessions.create({
           transactionId: uuidv4(), // Generate a random transaction ID
         },
       });
+        
 
       console.log('Order created for COD:', order);
       return order;
@@ -243,6 +304,7 @@ const session = await stripe.checkout.sessions.create({
       throw error;
     }
   },
+  
   updateDispatchStatus: async (orderId: string, dispatchStatus: 'preparing' | 'failed' | 'not_started' | 'dispatched' | 'in_transit'| 'delivered') => {
   // Update the dispatch status of the order
   return prisma.order.update({
