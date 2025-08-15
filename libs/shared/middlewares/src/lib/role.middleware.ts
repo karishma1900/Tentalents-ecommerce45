@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { AuthPayload } from '@shared/middlewares/auth/src/index';
+import { AuthPayload } from '@shared/auth/src/index';
 
 export const checkRole = (roles: AuthPayload['role'][]) => {
   return (req: Request, res: Response, next: NextFunction) => {
