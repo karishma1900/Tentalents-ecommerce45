@@ -31,7 +31,7 @@ const router = Router();
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
     const isAccepted = file.mimetype.startsWith('image/') || file.mimetype.startsWith('application/');
     if (!isAccepted) {
       return cb(new Error('Only images or documents are allowed'));
