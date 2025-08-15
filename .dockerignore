@@ -32,11 +32,11 @@ __tests__/
 *.md
 
 # Ignore monorepo-specific config files not needed at runtime
-nx.json
+
 workspace.json
 project.json
 tsconfig.json
-tsconfig.base.json
+
 jest.config.js
 babel.config.js
 .eslintrc.js
@@ -49,3 +49,4 @@ docker-compose.yml
 # Ignore all source files – only copy dist/
 apps/**/src
 libs/**/src
+
