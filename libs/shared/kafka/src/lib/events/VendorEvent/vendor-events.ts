@@ -1,4 +1,4 @@
-import { VendorStatus } from '@shared/types/src/index';
+import { VendorStatus } from '@shared/types';
 
 export interface VendorCreatedEvent {
   vendorId: string;
