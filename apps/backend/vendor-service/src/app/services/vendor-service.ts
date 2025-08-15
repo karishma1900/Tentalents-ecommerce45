@@ -1,7 +1,7 @@
 import { VendorStatus as PrismaVendorStatus, PrismaClient, Prisma, UserRole } from '../../../../../../generated/prisma';
 import { produceKafkaEvent } from '@shared/kafka';
-import  { generateTokenForEmail } from '@shared/auth/src/index';
-import {admin} from '@shared/auth/src/lib/firebase-admin';
+import  { generateTokenForEmail } from '@shared/auth/';
+import {admin} from '@shared/auth/';
 import { SERVICE_NAMES } from '@shared/constants';
 import { VendorStatus } from '@shared/types';
 import { KAFKA_TOPICS } from '@shared/kafka';
@@ -10,7 +10,7 @@ import { VendorCreatedEvent, VendorStatusUpdatedEvent } from '@shared/kafka';
 import { logger } from '@shared/logger';
 import { sendEmail } from '@shared/email/src/index';
 const prisma = new PrismaClient();
-import {uploadToCloudinary} from '@shared/auth/src/lib/cloudinary'
+import {uploadToCloudinary} from '@shared/auth/'
 
 export const vendorService = {
 initiateVendorRegistrationOtp: async (email: string) => {
