@@ -1,7 +1,7 @@
 // libs/shared/kafka/src/lib/kafka-admin.ts
 import { Kafka } from 'kafkajs';
 import { getKafkaInstance } from './kafka-client';
-import { logger } from '@shared/logger/';
+import { logger } from '@shared/logger';
 
 export async function createTopicsIfNotExists(topics: string[]) {
   const kafka = getKafkaInstance();
