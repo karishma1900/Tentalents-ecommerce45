@@ -11,8 +11,8 @@ import {
   connectKafkaProducer,
   disconnectKafkaProducer
 } from '@shared/middlewares/kafka/src/index';
-import { getKafkaInstance } from '@shared/middlewares/kafka/src/index';
-import { kafkaConfig } from '@shared/middlewares/kafka/src/index'; // ✅ Import your Kafka config
+import { getKafkaInstance } from '@shared/kafka/src/index';
+import { kafkaConfig } from '@shared/kafka/src/index'; // ✅ Import your Kafka config
 import { connectMinio, disconnectMinio } from '@shared/minio';
 
 // 🌍 Load environment variables from .env file
