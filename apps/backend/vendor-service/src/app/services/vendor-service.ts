@@ -1,16 +1,16 @@
 import { VendorStatus as PrismaVendorStatus, PrismaClient, Prisma, UserRole } from '../../../../../../generated/prisma';
 import { produceKafkaEvent } from '@shared/kafka';
-import  { generateTokenForEmail } from '@shared/auth/';
-import {admin} from '@shared/auth/';
+import  { generateTokenForEmail } from '@shared/auth';
+import {admin} from '@shared/auth';
 import { SERVICE_NAMES } from '@shared/constants';
 import { VendorStatus } from '@shared/types';
 import { KAFKA_TOPICS } from '@shared/kafka';
 import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { VendorCreatedEvent, VendorStatusUpdatedEvent } from '@shared/kafka';
 import { logger } from '@shared/logger';
-import { sendEmail } from '@shared/email/';
+import { sendEmail } from '@shared/email';
 const prisma = new PrismaClient();
-import {uploadToCloudinary} from '@shared/auth/'
+import {uploadToCloudinary} from '@shared/auth'
 
 export const vendorService = {
 initiateVendorRegistrationOtp: async (email: string) => {
