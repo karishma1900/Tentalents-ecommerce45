@@ -1,6 +1,6 @@
 import PDFDocument from 'pdfkit';
 import stream from 'stream';
-import { logger } from '@shared/logger/src/index';
+import { logger } from '@shared/logger/';
 import {
   uploadFileToMinIO,
   MinioFolderPaths,
