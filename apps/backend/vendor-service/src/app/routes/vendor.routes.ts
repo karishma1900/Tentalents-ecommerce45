@@ -1,5 +1,7 @@
-import { Router } from 'express';
+// import { Router } from 'express';
+import { Router, Request as ExpressRequest } from 'express';
 import multer from 'multer';
+import type { FileFilterCallback } from 'multer';
 
 import {
   updateVendor,
@@ -31,14 +33,20 @@ const router = Router();
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
-  fileFilter: (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
-    const isAccepted = file.mimetype.startsWith('image/') || file.mimetype.startsWith('application/');
+  fileFilter: (
+    req: ExpressRequest,
+    file: Express.Multer.File,
+    cb: FileFilterCallback
+  ) => {
+    const isAccepted =
+      file.mimetype.startsWith('image/') || file.mimetype.startsWith('application/');
     if (!isAccepted) {
       return cb(new Error('Only images or documents are allowed'));
     }
     cb(null, true);
   },
 });
+
 router.post('/google', loginOrRegisterWithGoogle);
 router.get('/vendor/profile/:vendorId', authMiddleware(), getVendorProfileByVendorId);
 // === Public registration routes (no auth) ===
