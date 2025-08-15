@@ -6,3 +6,5 @@ export * from './lib/jwt';
 export * from './lib/oauth';
 export * from './lib/types';
 export * from './lib/password';
+export * from './lib/cloudinary';
+export * from './lib/firebase-admin';
