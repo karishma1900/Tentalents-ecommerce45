@@ -1,6 +1,6 @@
 import { Kafka, KafkaConfig, Consumer } from 'kafkajs';
 import { kafkaConfig } from './kafka-config';
-import { logger } from '@shared/middlewares/logger/src/index';
+import { logger } from '@shared/logger/src/index';
 
 let kafka: Kafka | null = null;
 let consumer: Consumer | null = null;
