@@ -1,7 +1,7 @@
 // libs/shared/redis/src/lib/redis-client.ts
 
 import Redis from 'ioredis';
-import { logger } from '@shared/logger
+import { logger } from '@shared/logger';
 
 const redisClient = new Redis({
   sentinels: [
