@@ -8,6 +8,7 @@ import Mainimage from '../../assets/tenanlenst-menu.png';
 import ProfileIcn from '../../assets/profileicon.png';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import Editbutton from '../../assets/editbutton.png'
 
 const AccountPage = () => {
   const [profile, setProfile] = useState<any>(null);
@@ -77,6 +78,99 @@ const AccountPage = () => {
   };
 
   const vendorId = profile?.vendorId || '';
+const handleUpdateProfile = async () => {
+  setUpdatingProfile(true);
+  setError(null);
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/user/profile`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify({
+    name: formData.name,
+    phone: formData.phone,
+    altPhone: formData.altPhone,
+  }),
+});
+
+const contentType = res.headers.get('content-type');
+
+if (!res.ok) {
+  if (contentType && contentType.includes('application/json')) {
+    const errData = await res.json();
+    throw new Error(errData.message || 'Failed to update profile');
+  } else {
+    const text = await res.text();  // get raw response
+    throw new Error(`Failed to update profile: ${text}`);
+  }
+}
+
+let updatedData;
+if (contentType && contentType.includes('application/json')) {
+  updatedData = await res.json();
+} else {
+  const text = await res.text();
+  throw new Error(`Unexpected response format: ${text}`);
+}
+
+setProfile(updatedData.data);
+toast.success('Profile updated successfully!');
+
+  } catch (err: any) {
+    setError(err.message || 'Error updating profile');
+    toast.error(err.message || 'Error updating profile');
+  } finally {
+    setUpdatingProfile(false);
+  }
+};
+
+const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  setUploadingImage(true);
+
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login');
+      return;
+    }
+
+    const formData = new FormData();
+  formData.append('avatar', file);
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/api/user/profile/image`, {
+     method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+
+    if (!res.ok) {
+      const errData = await res.json();
+      throw new Error(errData.message || 'Failed to upload image');
+    }
+
+    const data = await res.json();
+   setProfile((prev: any) => ({ ...prev, profileImage: data.data.profileImage }));
+    toast.success('Profile image updated');
+  } catch (err: any) {
+    console.error(err);
+    toast.error(err.message || 'Error uploading image');
+  } finally {
+    setUploadingImage(false);
+  }
+};
 
   return (
     <div className="accountpage">
@@ -91,13 +185,21 @@ const AccountPage = () => {
             <div className="accountdetailsheader">
               <h2 className="sectiontitle">Personal Details</h2>
               <div className="accountbuttons flex items-center justify-between gap-[10px]">
-              <button
-                className="background-button"
-                onClick={() => {}}
-                disabled={updatingProfile}
-              >
-                {updatingProfile ? 'Updating...' : 'Update Profile'}
-              </button>
+        {/* <input
+  type="file"
+  ref={fileInputRef}
+  accept="image/*"
+  style={{ display: 'none' }}
+  disabled={uploadingImage}
+  onChange={handleImageChange}
+/> */}
+  <button 
+    className="background-button update-btn" 
+    onClick={handleUpdateProfile}
+    disabled={updatingProfile}
+  >
+    {updatingProfile ? 'Updating...' : 'Update Profile'}
+  </button>
               <button className="background-button logout-btn" onClick={handleLogout}>
                 Logout
               </button>
@@ -105,28 +207,34 @@ const AccountPage = () => {
             </div>
 
             <div className="profiledetails">
-              <div
-                className="profiledetailsleft"
-                onClick={() => fileInputRef.current?.click()}
-                style={{ cursor: uploadingImage ? 'wait' : 'pointer' }}
-              >
-                <Image
-                  src={profile?.profileImage || ProfileIcn}
-                  alt="Profile"
-                  width={80}
-                  height={80}
-                  className="profile-img"
-                />
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  accept="image/*"
-                  style={{ display: 'none' }}
-                  disabled={uploadingImage}
-                />
-                <small>{uploadingImage ? 'Uploading...' : 'Click to change'}</small>
-              </div>
+     <div
+  className="profiledetailsleft"
+  onClick={() => !uploadingImage && fileInputRef.current?.click()}
+  style={{ cursor: uploadingImage ? 'wait' : 'pointer' }}
+>
+  <Image
+    src={profile?.profileImage || ProfileIcn}
+    alt="Profile"
+    width={80}
+    height={80}
+    className="profile-img"
+  />
 
+  <input
+    type="file"
+    ref={fileInputRef}
+    accept="image/*"
+    style={{ display: 'none' }}
+    disabled={uploadingImage}
+    onChange={handleImageChange} // important to have this here
+  />
+
+  <div className='editbutton'>
+    <Image src={Editbutton} alt="Edit" style={{ cursor: 'pointer' }} />
+  </div>
+
+  {/* Optional: Show uploading spinner overlay here */}
+</div>
               <div className="profiledetailsright">
                 <div className="first-column">
                   <input

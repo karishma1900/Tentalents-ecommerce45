@@ -135,7 +135,7 @@ const Address = ({ vendorId, setAddress }: AddressProps) => {
               </div>
             ))
           ) : (
-            <p>No addresses available.</p>
+            <p className='address-notfound'>No addresses available.</p>
           )
         )}
       </div>

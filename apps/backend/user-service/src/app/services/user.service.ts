@@ -1,12 +1,13 @@
-import { PrismaClient, UserRole } from '../../../generated/user-service';
+import { PrismaClient, UserRole } from '../../../../../../generated/prisma';
 import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { produceKafkaEvent as publishEvent } from '@shared/kafka';
 import { KAFKA_TOPICS } from '@shared/kafka';
-
+import {admin} from '@shared/middlewares/auth/src/lib/firebase-admin';
 import { sendEmail } from '@shared/middlewares/email/src/index';
 import { logger } from '@shared/logger';
 import { response } from 'express';
 import * as crypto from 'crypto';
+import { uploadToCloudinary } from '@shared/middlewares/auth/src/lib/cloudinary'; 
 const prisma = new PrismaClient();
 
 interface RegisterUserParams {
@@ -221,7 +222,8 @@ const defaultProfileImage = `https://gravatar.com/avatar/${crypto.createHash('md
 
       const user = await prisma.user.findUnique({
         where: { id: userId },
-        select: { id: true, email: true, role: true, name: true, phone: true,profileImage: true,   },
+        select: { id: true, email: true, role: true, name: true, phone: true,profileImage: true, altPhone: true, 
+ },
       });
 
       if (!user) throw new Error(`User with ID ${userId} not found`);
@@ -265,46 +267,96 @@ const defaultProfileImage = `https://gravatar.com/avatar/${crypto.createHash('md
     }
   },
 
- 
-  // Placeholder for Firebase or other OAuth login
-  oauthLogin: async (provider: string, accessToken: string) => {
-    try {
-      // Example: you can extend this method to support Firebase or others
-      logger.info(`[UserService] OAuth login attempt with provider: ${provider}`);
-
-      // TODO: Add logic for Firebase or other OAuth provider to validate token,
-      // get user info, create/find user in DB, and return JWT.
-
-      throw new Error('OAuth login not implemented yet');
-    } catch (err) {
-      logger.error(`[UserService] oauthLogin error:`, err);
-      throw err;
-    }
-  },
- uploadImageAndGetUrl: async (userId: string, file: Express.Multer.File) => {
+oauthLogin: async (provider: string, idToken: string) => {
   try {
-    if (!userId || !file) throw new Error('User ID and file are required');
+    if (provider !== 'google') throw new Error('Unsupported provider');
 
-    // Convert the file to base64 string (you can also use file.buffer directly)
-    const base64Image = file.buffer.toString('base64');
-    const mimeType = file.mimetype;
-    const dataUrl = `data:${mimeType};base64,${base64Image}`;
+    logger.info('[UserService] 🔐 Verifying Firebase ID token...');
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+    const { email, name, picture, uid } = decodedToken;
 
-    // Update the user's profileImage field in the database
-    const updatedUser = await prisma.user.update({
-      where: { id: userId },
-      data: {
-        profileImage: dataUrl, // Assuming `profileImage` is a TEXT column
-      },
-    });
+    if (!email) throw new Error('Email not found in token');
 
-    logger.info(`[UserService] 🖼️ Stored profile image for user ${userId}`);
-    return updatedUser.profileImage; // Return image URL/data if needed
+    logger.info(`[UserService] ✅ Google token verified: ${email}`);
+
+    // Try to find user by firebaseUid first
+let user = await prisma.user.findFirst({ where: { firebaseUid: uid } });
+
+    if (!user) {
+      // If not found by firebaseUid, try finding by email
+      user = await prisma.user.findUnique({ where: { email } });
+    }
+
+    if (!user) {
+      // Create new user if doesn't exist
+      user = await prisma.user.create({
+        data: {
+          email,
+          name: name || '',
+          profileImage: picture || '',
+          role: UserRole.buyer, // default role
+          firebaseUid: uid,
+          // No password needed for OAuth users
+        },
+      });
+
+      logger.info(`[UserService] 🆕 New Google user created: ${email}`);
+
+      // Optionally publish Kafka events on user creation here
+      await publishEvent({
+        topic: KAFKA_TOPICS.USER.CREATED,
+        messages: [{ value: JSON.stringify({ userId: user.id, email: user.email, role: user.role }) }],
+      });
+
+      await publishEvent({
+        topic: KAFKA_TOPICS.EMAIL.USER_CREATED,
+        messages: [{ value: JSON.stringify({ email: user.email }) }],
+      });
+    } else {
+      logger.info(`[UserService] 🔑 Existing user logged in: ${email}`);
+
+      // If user exists but firebaseUid is missing, update it to link accounts
+      if (!user.firebaseUid) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { firebaseUid: uid },
+        });
+      }
+    }
+
+    // Return JWT token
+    return generateJWT({ userId: user.id, email: user.email, role: user.role });
   } catch (err: any) {
-    logger.error('[userService] uploadImageAndGetUrl error:', err.message || err);
+    logger.error('[UserService] ❌ OAuth login error:', err.message || err);
     throw err;
   }
 },
+
+uploadImageAndGetUrl: async (userId: string, file: Express.Multer.File): Promise<string> => {
+  try {
+    if (!userId || !file) throw new Error('User ID and file are required');
+
+    // Upload buffer to Cloudinary
+    const uploadedImageUrl = await uploadToCloudinary(
+      file.buffer,
+      'user_profiles',
+      `user_${userId}`
+    );
+
+    // Update user's profile image URL in DB
+    await prisma.user.update({
+      where: { id: userId },
+      data: { profileImage: uploadedImageUrl },
+    });
+
+    logger.info(`[UserService] ✅ Uploaded and saved Cloudinary image for user ${userId}`);
+    return uploadedImageUrl;
+  } catch (err: any) {
+    logger.error('[UserService] ❌ uploadImageAndGetUrl error:', err.message || err);
+    throw err;
+  }
+},
+
   updateUserProfile: async (
     userId: string,
     updates: { name?: string; phone?: string; altPhone?: string }
@@ -325,6 +377,7 @@ const defaultProfileImage = `https://gravatar.com/avatar/${crypto.createHash('md
           email: true,
           role: true,
           profileImage: true,
+          
         },
       });
 

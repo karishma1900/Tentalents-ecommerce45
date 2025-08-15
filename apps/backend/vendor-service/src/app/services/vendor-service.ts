@@ -1,7 +1,7 @@
 import { VendorStatus as PrismaVendorStatus, PrismaClient, Prisma, UserRole } from '../../../../../../generated/prisma';
 import { produceKafkaEvent } from '@shared/kafka';
 import  { generateTokenForEmail } from '@shared/middlewares/auth/src/index';
-
+import {admin} from '@shared/middlewares/auth/src/lib/firebase-admin';
 import { SERVICE_NAMES } from '@shared/constants';
 import { VendorStatus } from '@shared/types';
 import { KAFKA_TOPICS } from '@shared/kafka';
@@ -10,6 +10,7 @@ import { VendorCreatedEvent, VendorStatusUpdatedEvent } from '@shared/kafka';
 import { logger } from '@shared/logger';
 import { sendEmail } from '@shared/middlewares/email/src/index';
 const prisma = new PrismaClient();
+import {uploadToCloudinary} from '@shared/middlewares/auth/src/lib/cloudinary'
 
 export const vendorService = {
 initiateVendorRegistrationOtp: async (email: string) => {
@@ -420,6 +421,133 @@ updateVendorProfile: async (
   } catch (err) {
     logger.error('[VendorService] updateVendorProfile error:', err);
     throw err;
+  }
+},
+
+loginOrRegisterWithGoogleIdToken: async (idToken: string) => {
+  try {
+    // Verify Firebase ID token
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
+
+    const email = decodedToken.email;
+    if (!email) {
+      throw new Error('Firebase token does not contain an email');
+    }
+
+    // Check if user exists
+    let user = await prisma.user.findUnique({ where: { email } });
+
+    if (!user) {
+      // Create new user with seller role
+      user = await prisma.user.create({
+        data: {
+          email,
+          role: UserRole.seller,
+        },
+      });
+
+      // Create linked vendor profile
+      await prisma.vendor.create({
+        data: {
+          user: { connect: { id: user.id } },
+          email,
+          name: decodedToken.name ?? '',
+          phone: decodedToken.phone_number ?? '',
+          businessName: '',
+          status: PrismaVendorStatus.pending,
+        },
+      });
+
+      logger.info(`[VendorService] New user and vendor created from Google login: ${email}`);
+    }
+
+    // Fetch linked vendor if exists
+    const vendor = await prisma.vendor.findFirst({ where: { userId: user.id } });
+
+    // Prepare JWT payload with user and vendor info
+    const tokenPayload = {
+      userId: user.id,
+      vendorId: vendor?.id,
+      email: user.email,
+      role: user.role,
+    };
+
+    // Generate JWT token
+logger.info(`Token payload: ${JSON.stringify(tokenPayload)}`);
+const token = generateJWT(tokenPayload);
+logger.info(`Generated JWT: ${token}`);
+
+    logger.info(`[VendorService] Google login successful for ${email}`);
+
+return {
+  token,
+  userId: user.id,
+  email: user.email,
+  role: user.role,
+  vendorId: vendor?.id,
+  vendorStatus: vendor?.status,
+};
+
+  } catch (error) {
+    logger.error('[VendorService] loginOrRegisterWithGoogleIdToken error:', error);
+    throw error;
+  }
+},
+uploadVendorProfileImage: async (vendorId: string, file: Express.Multer.File): Promise<string> => {
+  try {
+    if (!vendorId || !file) throw new Error('Vendor ID and file are required');
+
+    logger.info(`[VendorService] Starting upload for vendorId: ${vendorId}`);
+
+    // Upload image buffer to Cloudinary under 'vendor_profiles' folder
+    const uploadedImageUrl = await uploadToCloudinary(
+      file.buffer,
+      'vendor_profiles',
+      `vendor_${vendorId}`
+    );
+
+    logger.info(`[VendorService] Uploaded image to Cloudinary: ${uploadedImageUrl}`);
+
+    // Update vendor's profileImage in DB
+    await prisma.vendor.update({
+      where: { id: vendorId },
+      data: { profileImage: uploadedImageUrl },
+    });
+
+    logger.info(`[VendorService] Updated profileImage in DB for vendor ${vendorId}`);
+
+    return uploadedImageUrl;
+  } catch (err: any) {
+    logger.error('[VendorService] uploadVendorProfileImage error:', err.message || err);
+    throw err;
+  }
+},
+
+uploadVendorKYCDocuments: async (vendorId: string, files: Buffer[], filenames?: string[]) => {
+  try {
+    const uploadPromises = files.map((fileBuffer, index) =>
+      uploadToCloudinary(fileBuffer, 'vendor_kyc_documents', filenames?.[index])
+    );
+
+    const urls = await Promise.all(uploadPromises);
+
+    const vendor = await prisma.vendor.findUnique({ where: { id: vendorId } });
+    if (!vendor) throw new Error('Vendor not found');
+
+    const existingDocs: string[] = vendor.kycDocsUrl ?? [];
+
+    const updatedVendor = await prisma.vendor.update({
+      where: { id: vendorId },
+      data: {
+        kycDocsUrl: [...existingDocs, ...urls],
+      },
+    });
+
+    logger.info(`[VendorService] KYC documents uploaded for vendorId: ${vendorId}`);
+    return updatedVendor;
+  } catch (error) {
+    logger.error('[VendorService] uploadVendorKYCDocuments error:', error);
+    throw error;
   }
 },
 

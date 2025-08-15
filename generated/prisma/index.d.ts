@@ -4291,6 +4291,7 @@ export namespace Prisma {
     profileImage: string | null
     altPhone: string | null
     address: string | null
+    firebaseUid: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -4305,6 +4306,7 @@ export namespace Prisma {
     profileImage: string | null
     altPhone: string | null
     address: string | null
+    firebaseUid: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -4319,6 +4321,7 @@ export namespace Prisma {
     profileImage: number
     altPhone: number
     address: number
+    firebaseUid: number
     _all: number
   }
 
@@ -4335,6 +4338,7 @@ export namespace Prisma {
     profileImage?: true
     altPhone?: true
     address?: true
+    firebaseUid?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -4349,6 +4353,7 @@ export namespace Prisma {
     profileImage?: true
     altPhone?: true
     address?: true
+    firebaseUid?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -4363,6 +4368,7 @@ export namespace Prisma {
     profileImage?: true
     altPhone?: true
     address?: true
+    firebaseUid?: true
     _all?: true
   }
 
@@ -4450,6 +4456,7 @@ export namespace Prisma {
     profileImage: string | null
     altPhone: string | null
     address: string | null
+    firebaseUid: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -4481,6 +4488,7 @@ export namespace Prisma {
     profileImage?: boolean
     altPhone?: boolean
     address?: boolean
+    firebaseUid?: boolean
     admin?: boolean | User$adminArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
     orders?: boolean | User$ordersArgs<ExtArgs>
@@ -4506,6 +4514,7 @@ export namespace Prisma {
     profileImage?: boolean
     altPhone?: boolean
     address?: boolean
+    firebaseUid?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4520,6 +4529,7 @@ export namespace Prisma {
     profileImage?: boolean
     altPhone?: boolean
     address?: boolean
+    firebaseUid?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -4534,9 +4544,10 @@ export namespace Prisma {
     profileImage?: boolean
     altPhone?: boolean
     address?: boolean
+    firebaseUid?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "phone" | "createdAt" | "updatedAt" | "profileImage" | "altPhone" | "address", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "phone" | "createdAt" | "updatedAt" | "profileImage" | "altPhone" | "address" | "firebaseUid", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     admin?: boolean | User$adminArgs<ExtArgs>
     tokens?: boolean | User$tokensArgs<ExtArgs>
@@ -4579,6 +4590,7 @@ export namespace Prisma {
       profileImage: string | null
       altPhone: string | null
       address: string | null
+      firebaseUid: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -5023,6 +5035,7 @@ export namespace Prisma {
     readonly profileImage: FieldRef<"User", 'String'>
     readonly altPhone: FieldRef<"User", 'String'>
     readonly address: FieldRef<"User", 'String'>
+    readonly firebaseUid: FieldRef<"User", 'String'>
   }
     
 
@@ -6660,6 +6673,7 @@ export namespace Prisma {
     profileImage: string | null
     businessName: string | null
     phone: string | null
+    firebaseUid: string | null
     status: $Enums.VendorStatus | null
     address: string | null
     gstNumber: string | null
@@ -6676,6 +6690,7 @@ export namespace Prisma {
     profileImage: string | null
     businessName: string | null
     phone: string | null
+    firebaseUid: string | null
     status: $Enums.VendorStatus | null
     address: string | null
     gstNumber: string | null
@@ -6692,6 +6707,7 @@ export namespace Prisma {
     profileImage: number
     businessName: number
     phone: number
+    firebaseUid: number
     status: number
     address: number
     gstNumber: number
@@ -6711,6 +6727,7 @@ export namespace Prisma {
     profileImage?: true
     businessName?: true
     phone?: true
+    firebaseUid?: true
     status?: true
     address?: true
     gstNumber?: true
@@ -6727,6 +6744,7 @@ export namespace Prisma {
     profileImage?: true
     businessName?: true
     phone?: true
+    firebaseUid?: true
     status?: true
     address?: true
     gstNumber?: true
@@ -6743,6 +6761,7 @@ export namespace Prisma {
     profileImage?: true
     businessName?: true
     phone?: true
+    firebaseUid?: true
     status?: true
     address?: true
     gstNumber?: true
@@ -6833,6 +6852,7 @@ export namespace Prisma {
     profileImage: string | null
     businessName: string
     phone: string | null
+    firebaseUid: string | null
     status: $Enums.VendorStatus
     address: string | null
     gstNumber: string | null
@@ -6867,6 +6887,7 @@ export namespace Prisma {
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
+    firebaseUid?: boolean
     status?: boolean
     address?: boolean
     gstNumber?: boolean
@@ -6895,6 +6916,7 @@ export namespace Prisma {
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
+    firebaseUid?: boolean
     status?: boolean
     address?: boolean
     gstNumber?: boolean
@@ -6913,6 +6935,7 @@ export namespace Prisma {
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
+    firebaseUid?: boolean
     status?: boolean
     address?: boolean
     gstNumber?: boolean
@@ -6931,6 +6954,7 @@ export namespace Prisma {
     profileImage?: boolean
     businessName?: boolean
     phone?: boolean
+    firebaseUid?: boolean
     status?: boolean
     address?: boolean
     gstNumber?: boolean
@@ -6939,7 +6963,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "email" | "password" | "profileImage" | "businessName" | "phone" | "status" | "address" | "gstNumber" | "kycDocsUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
+  export type VendorOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "email" | "password" | "profileImage" | "businessName" | "phone" | "firebaseUid" | "status" | "address" | "gstNumber" | "kycDocsUrl" | "createdAt" | "updatedAt", ExtArgs["result"]["vendor"]>
   export type VendorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tokens?: boolean | Vendor$tokensArgs<ExtArgs>
     addresses?: boolean | Vendor$addressesArgs<ExtArgs>
@@ -6983,6 +7007,7 @@ export namespace Prisma {
       profileImage: string | null
       businessName: string
       phone: string | null
+      firebaseUid: string | null
       status: $Enums.VendorStatus
       address: string | null
       gstNumber: string | null
@@ -7430,6 +7455,7 @@ export namespace Prisma {
     readonly profileImage: FieldRef<"Vendor", 'String'>
     readonly businessName: FieldRef<"Vendor", 'String'>
     readonly phone: FieldRef<"Vendor", 'String'>
+    readonly firebaseUid: FieldRef<"Vendor", 'String'>
     readonly status: FieldRef<"Vendor", 'VendorStatus'>
     readonly address: FieldRef<"Vendor", 'String'>
     readonly gstNumber: FieldRef<"Vendor", 'String'>
@@ -8091,6 +8117,7 @@ export namespace Prisma {
   }
 
   export type AdminMinAggregateOutputType = {
+    firebaseUid: string | null
     id: string | null
     userId: string | null
     name: string | null
@@ -8100,6 +8127,7 @@ export namespace Prisma {
   }
 
   export type AdminMaxAggregateOutputType = {
+    firebaseUid: string | null
     id: string | null
     userId: string | null
     name: string | null
@@ -8109,6 +8137,7 @@ export namespace Prisma {
   }
 
   export type AdminCountAggregateOutputType = {
+    firebaseUid: number
     id: number
     userId: number
     name: number
@@ -8120,6 +8149,7 @@ export namespace Prisma {
 
 
   export type AdminMinAggregateInputType = {
+    firebaseUid?: true
     id?: true
     userId?: true
     name?: true
@@ -8129,6 +8159,7 @@ export namespace Prisma {
   }
 
   export type AdminMaxAggregateInputType = {
+    firebaseUid?: true
     id?: true
     userId?: true
     name?: true
@@ -8138,6 +8169,7 @@ export namespace Prisma {
   }
 
   export type AdminCountAggregateInputType = {
+    firebaseUid?: true
     id?: true
     userId?: true
     name?: true
@@ -8220,6 +8252,7 @@ export namespace Prisma {
   }
 
   export type AdminGroupByOutputType = {
+    firebaseUid: string | null
     id: string
     userId: string
     name: string
@@ -8246,6 +8279,7 @@ export namespace Prisma {
 
 
   export type AdminSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    firebaseUid?: boolean
     id?: boolean
     userId?: boolean
     name?: boolean
@@ -8259,6 +8293,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    firebaseUid?: boolean
     id?: boolean
     userId?: boolean
     name?: boolean
@@ -8269,6 +8304,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    firebaseUid?: boolean
     id?: boolean
     userId?: boolean
     name?: boolean
@@ -8279,6 +8315,7 @@ export namespace Prisma {
   }, ExtArgs["result"]["admin"]>
 
   export type AdminSelectScalar = {
+    firebaseUid?: boolean
     id?: boolean
     userId?: boolean
     name?: boolean
@@ -8287,7 +8324,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "name" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
+  export type AdminOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"firebaseUid" | "id" | "userId" | "name" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["admin"]>
   export type AdminInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bankDetail?: boolean | Admin$bankDetailArgs<ExtArgs>
     actions?: boolean | Admin$actionsArgs<ExtArgs>
@@ -8309,6 +8346,7 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
+      firebaseUid: string | null
       id: string
       userId: string
       name: string
@@ -8398,8 +8436,8 @@ export namespace Prisma {
      * // Get first 10 Admins
      * const admins = await prisma.admin.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const adminWithIdOnly = await prisma.admin.findMany({ select: { id: true } })
+     * // Only select the `firebaseUid`
+     * const adminWithFirebaseUidOnly = await prisma.admin.findMany({ select: { firebaseUid: true } })
      * 
      */
     findMany<T extends AdminFindManyArgs>(args?: SelectSubset<T, AdminFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -8443,9 +8481,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Admins and only return the `id`
-     * const adminWithIdOnly = await prisma.admin.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Admins and only return the `firebaseUid`
+     * const adminWithFirebaseUidOnly = await prisma.admin.createManyAndReturn({
+     *   select: { firebaseUid: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -8534,9 +8572,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Admins and only return the `id`
-     * const adminWithIdOnly = await prisma.admin.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Admins and only return the `firebaseUid`
+     * const adminWithFirebaseUidOnly = await prisma.admin.updateManyAndReturn({
+     *   select: { firebaseUid: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8741,6 +8779,7 @@ export namespace Prisma {
    * Fields of the Admin model
    */
   interface AdminFieldRefs {
+    readonly firebaseUid: FieldRef<"Admin", 'String'>
     readonly id: FieldRef<"Admin", 'String'>
     readonly userId: FieldRef<"Admin", 'String'>
     readonly name: FieldRef<"Admin", 'String'>
@@ -38706,7 +38745,8 @@ export namespace Prisma {
     updatedAt: 'updatedAt',
     profileImage: 'profileImage',
     altPhone: 'altPhone',
-    address: 'address'
+    address: 'address',
+    firebaseUid: 'firebaseUid'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -38731,6 +38771,7 @@ export namespace Prisma {
     profileImage: 'profileImage',
     businessName: 'businessName',
     phone: 'phone',
+    firebaseUid: 'firebaseUid',
     status: 'status',
     address: 'address',
     gstNumber: 'gstNumber',
@@ -38743,6 +38784,7 @@ export namespace Prisma {
 
 
   export const AdminScalarFieldEnum: {
+    firebaseUid: 'firebaseUid',
     id: 'id',
     userId: 'userId',
     name: 'name',
@@ -39580,6 +39622,7 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"User"> | string | null
     altPhone?: StringNullableFilter<"User"> | string | null
     address?: StringNullableFilter<"User"> | string | null
+    firebaseUid?: StringNullableFilter<"User"> | string | null
     admin?: XOR<AdminNullableScalarRelationFilter, AdminWhereInput> | null
     tokens?: UserTokenListRelationFilter
     orders?: OrderListRelationFilter
@@ -39604,6 +39647,7 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     altPhone?: SortOrderInput | SortOrder
     address?: SortOrderInput | SortOrder
+    firebaseUid?: SortOrderInput | SortOrder
     admin?: AdminOrderByWithRelationInput
     tokens?: UserTokenOrderByRelationAggregateInput
     orders?: OrderOrderByRelationAggregateInput
@@ -39619,6 +39663,7 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    firebaseUid?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -39641,7 +39686,7 @@ export namespace Prisma {
     mediaUploaded?: MediaListRelationFilter
     addresses?: AddressListRelationFilter
     cartItems?: CartItemListRelationFilter
-  }, "id" | "email">
+  }, "id" | "email" | "firebaseUid">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -39655,6 +39700,7 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     altPhone?: SortOrderInput | SortOrder
     address?: SortOrderInput | SortOrder
+    firebaseUid?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -39675,6 +39721,7 @@ export namespace Prisma {
     profileImage?: StringNullableWithAggregatesFilter<"User"> | string | null
     altPhone?: StringNullableWithAggregatesFilter<"User"> | string | null
     address?: StringNullableWithAggregatesFilter<"User"> | string | null
+    firebaseUid?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type PendingUserOtpWhereInput = {
@@ -39736,6 +39783,7 @@ export namespace Prisma {
     profileImage?: StringNullableFilter<"Vendor"> | string | null
     businessName?: StringFilter<"Vendor"> | string
     phone?: StringNullableFilter<"Vendor"> | string | null
+    firebaseUid?: StringNullableFilter<"Vendor"> | string | null
     status?: EnumVendorStatusFilter<"Vendor"> | $Enums.VendorStatus
     address?: StringNullableFilter<"Vendor"> | string | null
     gstNumber?: StringNullableFilter<"Vendor"> | string | null
@@ -39763,6 +39811,7 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     businessName?: SortOrder
     phone?: SortOrderInput | SortOrder
+    firebaseUid?: SortOrderInput | SortOrder
     status?: SortOrder
     address?: SortOrderInput | SortOrder
     gstNumber?: SortOrderInput | SortOrder
@@ -39785,6 +39834,7 @@ export namespace Prisma {
     id?: string
     userId?: string
     email?: string
+    firebaseUid?: string
     AND?: VendorWhereInput | VendorWhereInput[]
     OR?: VendorWhereInput[]
     NOT?: VendorWhereInput | VendorWhereInput[]
@@ -39809,7 +39859,7 @@ export namespace Prisma {
     refundRequests?: RefundRequestListRelationFilter
     cartItems?: CartItemListRelationFilter
     bankDetail?: XOR<BankDetailNullableScalarRelationFilter, BankDetailWhereInput> | null
-  }, "id" | "userId" | "email">
+  }, "id" | "userId" | "email" | "firebaseUid">
 
   export type VendorOrderByWithAggregationInput = {
     id?: SortOrder
@@ -39820,6 +39870,7 @@ export namespace Prisma {
     profileImage?: SortOrderInput | SortOrder
     businessName?: SortOrder
     phone?: SortOrderInput | SortOrder
+    firebaseUid?: SortOrderInput | SortOrder
     status?: SortOrder
     address?: SortOrderInput | SortOrder
     gstNumber?: SortOrderInput | SortOrder
@@ -39843,6 +39894,7 @@ export namespace Prisma {
     profileImage?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
     businessName?: StringWithAggregatesFilter<"Vendor"> | string
     phone?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
+    firebaseUid?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
     status?: EnumVendorStatusWithAggregatesFilter<"Vendor"> | $Enums.VendorStatus
     address?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
     gstNumber?: StringNullableWithAggregatesFilter<"Vendor"> | string | null
@@ -39855,6 +39907,7 @@ export namespace Prisma {
     AND?: AdminWhereInput | AdminWhereInput[]
     OR?: AdminWhereInput[]
     NOT?: AdminWhereInput | AdminWhereInput[]
+    firebaseUid?: StringNullableFilter<"Admin"> | string | null
     id?: UuidFilter<"Admin"> | string
     userId?: UuidFilter<"Admin"> | string
     name?: StringFilter<"Admin"> | string
@@ -39867,6 +39920,7 @@ export namespace Prisma {
   }
 
   export type AdminOrderByWithRelationInput = {
+    firebaseUid?: SortOrderInput | SortOrder
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
@@ -39879,6 +39933,7 @@ export namespace Prisma {
   }
 
   export type AdminWhereUniqueInput = Prisma.AtLeast<{
+    firebaseUid?: string
     id?: string
     userId?: string
     AND?: AdminWhereInput | AdminWhereInput[]
@@ -39891,9 +39946,10 @@ export namespace Prisma {
     bankDetail?: XOR<BankDetailNullableScalarRelationFilter, BankDetailWhereInput> | null
     actions?: ActionLogListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id" | "userId">
+  }, "id" | "firebaseUid" | "userId">
 
   export type AdminOrderByWithAggregationInput = {
+    firebaseUid?: SortOrderInput | SortOrder
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
@@ -39909,6 +39965,7 @@ export namespace Prisma {
     AND?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
     OR?: AdminScalarWhereWithAggregatesInput[]
     NOT?: AdminScalarWhereWithAggregatesInput | AdminScalarWhereWithAggregatesInput[]
+    firebaseUid?: StringNullableWithAggregatesFilter<"Admin"> | string | null
     id?: UuidWithAggregatesFilter<"Admin"> | string
     userId?: UuidWithAggregatesFilter<"Admin"> | string
     name?: StringWithAggregatesFilter<"Admin"> | string
@@ -41960,6 +42017,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -41984,6 +42042,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -42008,6 +42067,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -42032,6 +42092,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -42056,6 +42117,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -42070,6 +42132,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -42084,6 +42147,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PendingUserOtpCreateInput = {
@@ -42143,6 +42207,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -42170,6 +42235,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -42195,6 +42261,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42222,6 +42289,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42248,6 +42316,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -42264,6 +42333,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42281,6 +42351,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42290,6 +42361,7 @@ export namespace Prisma {
   }
 
   export type AdminCreateInput = {
+    firebaseUid?: string | null
     id?: string
     name: string
     role?: $Enums.AdminRole
@@ -42301,6 +42373,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedCreateInput = {
+    firebaseUid?: string | null
     id?: string
     userId: string
     name: string
@@ -42312,6 +42385,7 @@ export namespace Prisma {
   }
 
   export type AdminUpdateInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
@@ -42323,6 +42397,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -42334,6 +42409,7 @@ export namespace Prisma {
   }
 
   export type AdminCreateManyInput = {
+    firebaseUid?: string | null
     id?: string
     userId: string
     name: string
@@ -42343,6 +42419,7 @@ export namespace Prisma {
   }
 
   export type AdminUpdateManyMutationInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
@@ -42351,6 +42428,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateManyInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -44731,6 +44809,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     altPhone?: SortOrder
     address?: SortOrder
+    firebaseUid?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -44745,6 +44824,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     altPhone?: SortOrder
     address?: SortOrder
+    firebaseUid?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -44759,6 +44839,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     altPhone?: SortOrder
     address?: SortOrder
+    firebaseUid?: SortOrder
   }
 
   export type UuidWithAggregatesFilter<$PrismaModel = never> = {
@@ -44933,6 +45014,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     businessName?: SortOrder
     phone?: SortOrder
+    firebaseUid?: SortOrder
     status?: SortOrder
     address?: SortOrder
     gstNumber?: SortOrder
@@ -44950,6 +45032,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     businessName?: SortOrder
     phone?: SortOrder
+    firebaseUid?: SortOrder
     status?: SortOrder
     address?: SortOrder
     gstNumber?: SortOrder
@@ -44966,6 +45049,7 @@ export namespace Prisma {
     profileImage?: SortOrder
     businessName?: SortOrder
     phone?: SortOrder
+    firebaseUid?: SortOrder
     status?: SortOrder
     address?: SortOrder
     gstNumber?: SortOrder
@@ -45021,6 +45105,7 @@ export namespace Prisma {
   }
 
   export type AdminCountOrderByAggregateInput = {
+    firebaseUid?: SortOrder
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
@@ -45030,6 +45115,7 @@ export namespace Prisma {
   }
 
   export type AdminMaxOrderByAggregateInput = {
+    firebaseUid?: SortOrder
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
@@ -45039,6 +45125,7 @@ export namespace Prisma {
   }
 
   export type AdminMinOrderByAggregateInput = {
+    firebaseUid?: SortOrder
     id?: SortOrder
     userId?: SortOrder
     name?: SortOrder
@@ -49431,6 +49518,7 @@ export namespace Prisma {
   }
 
   export type AdminCreateWithoutUserInput = {
+    firebaseUid?: string | null
     id?: string
     name: string
     role?: $Enums.AdminRole
@@ -49441,6 +49529,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedCreateWithoutUserInput = {
+    firebaseUid?: string | null
     id?: string
     name: string
     role?: $Enums.AdminRole
@@ -49599,6 +49688,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -49624,6 +49714,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -49796,6 +49887,7 @@ export namespace Prisma {
   }
 
   export type AdminUpdateWithoutUserInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
@@ -49806,6 +49898,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateWithoutUserInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
@@ -49960,6 +50053,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -49985,6 +50079,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50306,6 +50401,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -50329,6 +50425,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -50644,6 +50741,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -50667,6 +50765,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -50879,6 +50978,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
     ratings?: RatingCreateNestedManyWithoutUserInput
@@ -50902,6 +51002,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
     ratings?: RatingUncheckedCreateNestedManyWithoutUserInput
@@ -51012,6 +51113,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
     ratings?: RatingUpdateManyWithoutUserNestedInput
@@ -51035,6 +51137,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
     ratings?: RatingUncheckedUpdateManyWithoutUserNestedInput
@@ -51047,6 +51150,7 @@ export namespace Prisma {
   }
 
   export type AdminCreateWithoutActionsInput = {
+    firebaseUid?: string | null
     id?: string
     name: string
     role?: $Enums.AdminRole
@@ -51057,6 +51161,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedCreateWithoutActionsInput = {
+    firebaseUid?: string | null
     id?: string
     userId: string
     name: string
@@ -51083,6 +51188,7 @@ export namespace Prisma {
   }
 
   export type AdminUpdateWithoutActionsInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
@@ -51093,6 +51199,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateWithoutActionsInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -51114,6 +51221,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -51137,6 +51245,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -51161,6 +51270,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -51187,6 +51297,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -51275,6 +51386,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -51298,6 +51410,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -51328,6 +51441,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51354,6 +51468,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51394,6 +51509,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -51420,6 +51536,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -51442,6 +51559,7 @@ export namespace Prisma {
   }
 
   export type AdminCreateWithoutBankDetailInput = {
+    firebaseUid?: string | null
     id?: string
     name: string
     role?: $Enums.AdminRole
@@ -51452,6 +51570,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedCreateWithoutBankDetailInput = {
+    firebaseUid?: string | null
     id?: string
     userId: string
     name: string
@@ -51485,6 +51604,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51511,6 +51631,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51539,6 +51660,7 @@ export namespace Prisma {
   }
 
   export type AdminUpdateWithoutBankDetailInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
@@ -51549,6 +51671,7 @@ export namespace Prisma {
   }
 
   export type AdminUncheckedUpdateWithoutBankDetailInput = {
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -51798,6 +51921,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -51824,6 +51948,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -51961,6 +52086,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51987,6 +52113,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52281,6 +52408,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -52307,6 +52435,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -52340,6 +52469,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -52363,6 +52493,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -52451,6 +52582,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52477,6 +52609,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52516,6 +52649,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -52539,6 +52673,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -52562,6 +52697,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -52585,6 +52721,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -52624,6 +52761,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -52647,6 +52785,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -52705,6 +52844,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -52731,6 +52871,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -52863,6 +53004,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52889,6 +53031,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53030,6 +53173,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     ratings?: RatingCreateNestedManyWithoutUserInput
@@ -53053,6 +53197,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     ratings?: RatingUncheckedCreateNestedManyWithoutUserInput
@@ -53204,6 +53349,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     ratings?: RatingUpdateManyWithoutUserNestedInput
@@ -53227,6 +53373,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     ratings?: RatingUncheckedUpdateManyWithoutUserNestedInput
@@ -53301,6 +53448,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -53327,6 +53475,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -53412,6 +53561,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53438,6 +53588,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53579,6 +53730,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -53602,6 +53754,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -53626,6 +53779,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -53652,6 +53806,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -53804,6 +53959,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -53827,6 +53983,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -53857,6 +54014,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53883,6 +54041,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54031,6 +54190,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
     ratings?: RatingCreateNestedManyWithoutUserInput
@@ -54054,6 +54214,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
     ratings?: RatingUncheckedCreateNestedManyWithoutUserInput
@@ -54078,6 +54239,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -54104,6 +54266,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -54148,6 +54311,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
     ratings?: RatingUpdateManyWithoutUserNestedInput
@@ -54171,6 +54335,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
     ratings?: RatingUncheckedUpdateManyWithoutUserNestedInput
@@ -54201,6 +54366,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54227,6 +54393,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54386,6 +54553,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -54409,6 +54577,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -54433,6 +54602,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -54459,6 +54629,7 @@ export namespace Prisma {
     profileImage?: string | null
     businessName: string
     phone?: string | null
+    firebaseUid?: string | null
     status?: $Enums.VendorStatus
     address?: string | null
     gstNumber?: string | null
@@ -54503,6 +54674,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -54526,6 +54698,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput
@@ -54556,6 +54729,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54582,6 +54756,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     businessName?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumVendorStatusFieldUpdateOperationsInput | $Enums.VendorStatus
     address?: NullableStringFieldUpdateOperationsInput | string | null
     gstNumber?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54610,6 +54785,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminCreateNestedOneWithoutUserInput
     tokens?: UserTokenCreateNestedManyWithoutUserInput
     orders?: OrderCreateNestedManyWithoutBuyerInput
@@ -54633,6 +54809,7 @@ export namespace Prisma {
     profileImage?: string | null
     altPhone?: string | null
     address?: string | null
+    firebaseUid?: string | null
     admin?: AdminUncheckedCreateNestedOneWithoutUserInput
     tokens?: UserTokenUncheckedCreateNestedManyWithoutUserInput
     orders?: OrderUncheckedCreateNestedManyWithoutBuyerInput
@@ -54672,6 +54849,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUpdateManyWithoutUserNestedInput
     orders?: OrderUpdateManyWithoutBuyerNestedInput
@@ -54695,6 +54873,7 @@ export namespace Prisma {
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     altPhone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
+    firebaseUid?: NullableStringFieldUpdateOperationsInput | string | null
     admin?: AdminUncheckedUpdateOneWithoutUserNestedInput
     tokens?: UserTokenUncheckedUpdateManyWithoutUserNestedInput
     orders?: OrderUncheckedUpdateManyWithoutBuyerNestedInput

@@ -2,6 +2,7 @@
 const nextConfig = {
   images: {
     domains: [
+       'lh3.googleusercontent.com',
       'www.cotstyle.com',
       'www.lapcare.com',
       'm.media-amazon.com',
@@ -19,6 +20,7 @@ const nextConfig = {
         'www.oem-india.com',
         'cdn01.pharmeasy.in',
         'media.istockphoto.com',
+        'res.cloudinary.com',
         'localhost'   // <-- Add this line
     ],
   },

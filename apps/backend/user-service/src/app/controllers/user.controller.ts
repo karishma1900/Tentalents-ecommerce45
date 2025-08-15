@@ -156,3 +156,19 @@ export const updateProfile = async (req: Request, res: Response, next: NextFunct
     next(err);
   }
 };
+export const googleLogin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { provider, idToken } = req.body;
+
+    if (!provider || !idToken) {
+      return res.status(400).json({ error: 'Provider and idToken are required' });
+    }
+
+    const token = await userService.oauthLogin(provider, idToken);
+
+    return sendSuccess(res, 'Google login successful', { token });
+  } catch (err) {
+    console.error('[googleLogin error]', err); // Add this log if missing
+    next(err);
+  }
+};

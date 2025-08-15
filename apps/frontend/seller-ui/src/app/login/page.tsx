@@ -6,12 +6,15 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Google from '../../assets/google.jpg';
+import axios from 'axios';
 import '../signup/signup.css';
 import { ChevronLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {jwtDecode} from 'jwt-decode';
 import HeaderBanner from '../../shared/components/header/headerbanner';
 import Menu from '../../shared/components/menu/menu';
+import { auth, provider } from '../../utils/firebase'; // adjust path accordingly
+import { signInWithPopup } from "firebase/auth";
 type FormData = {
   email: string;
   password: string;
@@ -77,7 +80,7 @@ const result = await response.json();
       console.log('jwt token',token)
       const isExpired = decoded.exp * 1000 < Date.now();
       if (!isExpired) {
-        router.replace('/myaccount');
+       router.push('/dashboard/myaccount');
       } else {
         localStorage.removeItem('token'); // remove expired token
       }
@@ -86,10 +89,80 @@ const result = await response.json();
     }
   }
 }, [router]);
-  const handleGoogleSignIn = () => {
-    console.log('Google sign in');
-    // TODO: Implement Google login logic
+useEffect(() => {
+  // Load Google Identity Services SDK
+  const script = document.createElement('script');
+  script.src = 'https://accounts.google.com/gsi/client';
+  script.async = true;
+  script.defer = true;
+  document.body.appendChild(script);
+
+  script.onload = () => {
+      console.log('Google Client ID:', process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
+    // Initialize Google client
+    window.google.accounts.id.initialize({
+      
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      callback: handleGoogleCallback,
+    });
+
+    // Render Google Sign-in button
+    window.google.accounts.id.renderButton(
+      document.getElementById('googleSignInDiv')!,
+      { theme: 'outline', size: 'large' } // customization
+    );
   };
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+const handleGoogleCallback = async (response: any) => {
+  try {
+    setLoading(true);
+
+    // Log the Google token for debugging
+    console.log('Google ID Token:', response.credential);
+const res = await axios.post(`${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API}`, {
+  provider: 'google',
+  idToken: response.credential,
+});
+
+const token = res.data?.token;  // Adjust based on your backend response shape
+if (!token) throw new Error('Token missing in response');
+localStorage.setItem('token', token);
+toast.success('Logged in successfully!');
+router.push('/myaccount');
+  } catch (error: any) {
+    console.error('Google login failed:', error?.response?.data || error.message);
+    toast.error(error?.response?.data?.message || 'Google login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
+const handleFirebaseGoogleSignIn = async () => {
+  try {
+    setLoading(true);
+    const result = await signInWithPopup(auth, provider);
+    const firebaseIdToken = await result.user.getIdToken();
+
+   const res = await axios.post(`${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API}`, {
+  provider: 'google',
+  idToken: firebaseIdToken,
+});
+
+const token = res.data?.token;
+if (!token) throw new Error('Token missing in response');
+localStorage.setItem('token', token);
+toast.success('Logged in successfully!');
+router.push('/dashboard/myaccount');
+  } catch (error) {
+    console.error(error);
+    toast.error('Google login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div>
@@ -105,10 +178,10 @@ const result = await response.json();
         </div>
 
         <div className="login-box">
-          <button className="google-button" onClick={handleGoogleSignIn}>
-            <Image src={Google} alt="Google" width={20} height={20} />
-            Continue With Google
-          </button>
+             <button className="google-button" onClick={handleFirebaseGoogleSignIn} disabled={loading}>
+  <Image src={Google} alt="Google Logo" width={20} height={20} />
+  Continue With Google
+</button>
 
           <div className="divider" />
 

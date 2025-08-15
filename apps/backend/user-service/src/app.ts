@@ -12,10 +12,13 @@ import userRoutes from './app/routes/user.routes';
 const app = express();
 
 // 🛡️ Global Middlewares
-app.use(cors()); // Enable CORS
+// app.use(cors()); // Enable CORS
 app.use(helmet()); // Set security-related headers
 app.use(express.json()); // Parse JSON request bodies
-
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true, // if using cookies/session
+}));
 // 📚 Swagger API Documentation
 setupSwagger(app, {
   title: 'User Service',

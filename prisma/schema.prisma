@@ -22,6 +22,7 @@ model User {
   address String? 
   admin          Admin?
   tokens UserToken[]
+   firebaseUid String?  @unique 
   orders         Order[]
   ratings        Rating[]
   searchLogs     SearchLog[]
@@ -53,6 +54,7 @@ model Vendor {
   businessName      String
   phone             String? 
   tokens            UserToken[]
+   firebaseUid String?  @unique 
   addresses         Address[]   // Relation to User's addresses
   status            VendorStatus     @default(pending)
   address           String?
@@ -75,7 +77,7 @@ model Vendor {
 
 
 model Admin {
- 
+  firebaseUid String?  @unique 
   id        String      @id @default(uuid()) @db.Uuid
   userId    String      @unique @db.Uuid
   name      String

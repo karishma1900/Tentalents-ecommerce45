@@ -3,7 +3,7 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { jwtDecode } from 'jwt-decode';
 import './account.css'
-
+import toast from 'react-hot-toast';
 type Vendor = {
   id: string;
   userId: string;
@@ -105,11 +105,7 @@ console.log('🔑 JWT Token:', token);
   }, [vendorId, token]);
 
   // Logout handler
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    console.log('👋 Logged out');
-    router.push('/login');
-  };
+ 
 
   // The rest of your component continues...
 const handleSave = async (e: FormEvent) => {
@@ -165,41 +161,60 @@ const handleSave = async (e: FormEvent) => {
     setVendor({ ...vendor, [name]: value });
   };
   // Upload Profile Image handler
-  const handleProfileImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files || e.target.files.length === 0 || !vendor) return;
-    const file = e.target.files[0];
+const handleProfileImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+  if (!e.target.files || e.target.files.length === 0 || !vendor) return;
+  const file = e.target.files[0];
 
-    const formData = new FormData();
-    formData.append('profileImage', file);
+  const toBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
 
-    try {
-      setUploadingProfile(true);
-      setError(null);
+  try {
+    setUploadingProfile(true);
+    setError(null);
 
-      const response = await fetch(`http://localhost:3010/api/vendor/${vendorId}/upload-profile-image`, {
-        method: 'POST',
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-        body: formData,
-      });
+    const base64Image = await toBase64(file);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to upload profile image');
-      }
+    const payload = { image: base64Image };
 
-      const data = await response.json();
-      // Update profile image URL in vendor state
-      setVendor({ ...vendor, profileImage: data.profileImageUrl });
-      alert('Profile image uploaded successfully!');
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setUploadingProfile(false);
+   const formData = new FormData();
+formData.append('file', file);
+
+const response = await fetch(`http://localhost:3010/api/vendor/profile-image/${vendorId}`, {
+  method: 'POST',
+  headers: {
+    Authorization: token ? `Bearer ${token}` : '',
+    // DO NOT set 'Content-Type': multipart/form-data headers must be set automatically by the browser!
+  },
+  body: formData,
+});
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to upload profile image');
     }
-  };
 
+    const data = await response.json();
+    setVendor({ ...vendor, profileImage: data.imageUrl });
+    alert('Profile image uploaded successfully!');
+  } catch (err: any) {
+    setError(err.message);
+    console.error('Upload error:', err.message);
+  } finally {
+    setUploadingProfile(false);
+  }
+};
+
+
+  const handleLogout = () => {
+  localStorage.removeItem('token'); // Clear token
+  toast.success('Logged out successfully'); // Show correct logout message
+  router.push('/login'); // Redirect to login page
+};
   // Upload KYC documents handler (multiple files)
   const handleKycUpload = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0 || !vendor) return;
@@ -212,13 +227,13 @@ const handleSave = async (e: FormEvent) => {
       setUploadingKyc(true);
       setError(null);
 
-      const response = await fetch(`http://localhost:3010/api/vendor/${vendorId}/upload-kyc-docs`, {
-        method: 'POST',
-        headers: {
-          Authorization: token ? `Bearer ${token}` : '',
-        },
-        body: formData,
-      });
+      const response = await fetch(`http://localhost:3010/api/vendor/kyc-docs/${vendorId}`, {
+  method: 'POST',
+  headers: {
+    Authorization: token ? `Bearer ${token}` : '',
+  },
+  body: formData,
+});
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -240,43 +255,86 @@ const handleSave = async (e: FormEvent) => {
   if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
   if (!vendor) return <p>No vendor data found.</p>;
 
+
+
   return (
     <div className='account-page'>
-      <h2>Vendor Profile</h2>
+      <div className="headertop">
+ <div className="headingarea">
+<h2>My Account</h2>
+      <p className='my-account'>Vendor Account</p>
+      </div>
+      <div className="headerright">
+ <button type="submit" disabled={saving} className='background-button'>
+          {saving ? 'Saving...' : 'Save Changes'}
+        </button>
+      <button type="button" className='bordered-button' onClick={handleLogout}>
+  Logout
+</button>
+      </div>
+      </div>
+     
+      
+{/* Profile Image Upload */}
+<div style={{ marginBottom: '1rem' }}>
+  {vendor.profileImage ? (
+    <img
+      src={vendor.profileImage}
+      alt="Profile"
+      style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '8px' }}
+    />
+  ) : (
+    <div
+      style={{
+        width: '150px',
+        height: '150px',
+        backgroundColor: '#ccc',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: '8px',
+        color: '#666',
+      }}
+    >
+      No Profile Image
+    </div>
+  )}
+  <input
+    type="file"
+    accept="image/*"
+    onChange={handleProfileImageUpload}
+    disabled={uploadingProfile}
+    style={{ marginTop: '8px' }}
+  />
+  {uploadingProfile && <p>Uploading profile image...</p>}
+</div>
+
+{/* KYC Documents Upload */}
+<div style={{ marginBottom: '1rem' }}>
+  <h4>KYC Documents:</h4>
+  {vendor.kycDocsUrl.length > 0 ? (
+    vendor.kycDocsUrl.map((docUrl, idx) => (
+      <div key={idx}>
+        <a href={docUrl} target="_blank" rel="noopener noreferrer">
+          Document {idx + 1}
+        </a>
+      </div>
+    ))
+  ) : (
+    <p>No KYC documents uploaded</p>
+  )}
+  <input
+    type="file"
+    multiple
+    accept="application/pdf,image/*"
+    onChange={handleKycUpload}
+    disabled={uploadingKyc}
+  />
+  {uploadingKyc && <p>Uploading KYC documents...</p>}
+</div>
 
       {/* Profile Image */}
-      <div style={{ marginBottom: '1rem' }}>
-        {vendor.profileImage ? (
-          <img
-            src={vendor.profileImage}
-            alt="Profile"
-            style={{ width: '150px', height: '150px', objectFit: 'cover', borderRadius: '8px' }}
-          />
-        ) : (
-          <div
-            style={{
-              width: '150px',
-              height: '150px',
-              backgroundColor: '#ccc',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: '8px',
-              color: '#666',
-            }}
-          >
-            No Profile Image
-          </div>
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleProfileImageUpload}
-          disabled={uploadingProfile}
-          style={{ marginTop: '8px' }}
-        />
-        {uploadingProfile && <p>Uploading profile image...</p>}
-      </div>
+    
 
       {/* KYC Documents */}
      
@@ -286,8 +344,7 @@ const handleSave = async (e: FormEvent) => {
         <div className='first-column'>
 
        
-        <label>
-          Name:
+        
           <input
             type="text"
             name="name"
@@ -296,10 +353,9 @@ const handleSave = async (e: FormEvent) => {
             placeholder="Enter your name"
             className='full-width-input'
           />
-        </label>
+    
 
-        <label>
-          Email: (read-only)
+      
           <input
             type="email"
             name="email"
@@ -307,11 +363,10 @@ const handleSave = async (e: FormEvent) => {
             readOnly
           
           />
-        </label>
+     
          </div>
  <div className='first-column'>
-        <label>
-          Business Name:
+       
           <input
             type="text"
             name="businessName"
@@ -320,10 +375,9 @@ const handleSave = async (e: FormEvent) => {
             placeholder="Enter business name"
            
           />
-        </label>
+    
 
-        <label>
-          Phone:
+       
           <input
             type="tel"
             name="phone"
@@ -332,12 +386,11 @@ const handleSave = async (e: FormEvent) => {
             placeholder="Enter phone number"
           
           />
-        </label>
+  
         </div>
          <div className='first-column'>
 
-        <label>
-          Address:
+      
           <textarea
             name="address"
             value={vendor.address || ''}
@@ -345,10 +398,8 @@ const handleSave = async (e: FormEvent) => {
             placeholder="Enter address"
           
           />
-        </label>
-
-        <label>
-          GST Number:
+    
+        
           <input
             type="text"
             name="gstNumber"
@@ -357,41 +408,11 @@ const handleSave = async (e: FormEvent) => {
             placeholder="Enter GST number"
             
           />
-        </label>
+   
         </div>
 
-        <div style={{ marginBottom: '1rem' }}>
-        <h4>KYC Documents:</h4>
-        {vendor.kycDocsUrl.length > 0 ? (
-          vendor.kycDocsUrl.map((docUrl, idx) => (
-            <div key={idx}>
-              <a href={docUrl} target="_blank" rel="noopener noreferrer">
-                Document {idx + 1}
-              </a>
-            </div>
-          ))
-        ) : (
-          <p>No KYC documents uploaded</p>
-        )}
-        <input
-          type="file"
-          multiple
-          accept="application/pdf,image/*"
-          onChange={handleKycUpload}
-          disabled={uploadingKyc}
-         
-        />
-        {uploadingKyc && <p>Uploading KYC documents...</p>}
-      </div>
-        <button type="submit" disabled={saving} style={{ marginTop: '12px', padding: '8px 16px' }}>
-          {saving ? 'Saving...' : 'Save Changes'}
-        </button>
-         <button
-        onClick={handleLogout}
-      
-      >
-        Logout
-      </button>
+ 
+       
       </form>
     </div>
   );

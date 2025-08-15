@@ -11,7 +11,9 @@ import axios from 'axios';
 import '../login/login.css';
 import toast from 'react-hot-toast';
 import { jwtDecode } from "jwt-decode";
-
+// import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, provider } from '../../../services/firebase'; // adjust path accordingly
+import { signInWithPopup } from "firebase/auth";
 const maskEmail = (email: string) => {
   if (!email) return '';
   const [user, domain] = email.split('@');
@@ -31,8 +33,14 @@ type FormData = {
   confirmPassword: string;
   name?: string;
 };
-
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 const SignUp = () => {
+//   const auth = getAuth();
+// const provider = new GoogleAuthProvider();
   const [passwordVisible, setPasswordVisible] = useState({
     password: false,
     confirmPassword: false,
@@ -199,10 +207,78 @@ const onSubmit = async (data: FormData) => {
     }));
   };
 
-  const handleGoogleSignIn = async () => {
-    // If you want to keep Google sign-in, you need to handle it differently or remove this as well
-    toast.error('Google sign-in is currently disabled.');
+  useEffect(() => {
+  // Load Google Identity Services SDK
+  const script = document.createElement('script');
+  script.src = 'https://accounts.google.com/gsi/client';
+  script.async = true;
+  script.defer = true;
+  document.body.appendChild(script);
+
+  script.onload = () => {
+      console.log('Google Client ID:', process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
+    // Initialize Google client
+    window.google.accounts.id.initialize({
+      
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      callback: handleGoogleCallback,
+    });
+
+    // Render Google Sign-in button
+    window.google.accounts.id.renderButton(
+      document.getElementById('googleSignInDiv')!,
+      { theme: 'outline', size: 'large' } // customization
+    );
   };
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+const handleGoogleCallback = async (response: any) => {
+  try {
+    setLoading(true);
+
+    // Log the Google token for debugging
+    console.log('Google ID Token:', response.credential);
+
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API}`,
+      {
+        provider: 'google',
+        idToken: response.credential,
+      }
+    );
+
+    toast.success('Logged in successfully!');
+    router.push('/myaccount');
+  } catch (error: any) {
+    console.error('Google login failed:', error?.response?.data || error.message);
+    toast.error(error?.response?.data?.message || 'Google login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
+const handleFirebaseGoogleSignIn = async () => {
+  try {
+    setLoading(true);
+    const result = await signInWithPopup(auth, provider);
+    const firebaseIdToken = await result.user.getIdToken();
+
+    await axios.post(`${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API}`, {
+      provider: 'google',
+      idToken: firebaseIdToken,
+    });
+
+    toast.success('Logged in successfully!');
+    router.push('/dashboard');
+  } catch (error) {
+    console.error(error);
+    toast.error('Google login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
@@ -227,10 +303,14 @@ const onSubmit = async (data: FormData) => {
 
         {step === 'email' && (
           <>
-            <button className="google-button" onClick={handleGoogleSignIn} disabled={loading}>
+         <button className="google-button" onClick={handleFirebaseGoogleSignIn} disabled={loading}>
+  <Image src={Google} alt="Google Logo" width={20} height={20} />
+  Continue With Google
+</button>
+            {/* <button className="google-button" onClick={handleGoogleSignIn} disabled={loading}>
               <Image src={Google} alt="Google Logo" width={20} height={20} />
               Continue With Google
-            </button>
+            </button> */}
 
             <div className="divider" />
 

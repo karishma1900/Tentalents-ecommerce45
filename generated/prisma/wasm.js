@@ -131,7 +131,8 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt',
   profileImage: 'profileImage',
   altPhone: 'altPhone',
-  address: 'address'
+  address: 'address',
+  firebaseUid: 'firebaseUid'
 };
 
 exports.Prisma.PendingUserOtpScalarFieldEnum = {
@@ -150,6 +151,7 @@ exports.Prisma.VendorScalarFieldEnum = {
   profileImage: 'profileImage',
   businessName: 'businessName',
   phone: 'phone',
+  firebaseUid: 'firebaseUid',
   status: 'status',
   address: 'address',
   gstNumber: 'gstNumber',
@@ -159,6 +161,7 @@ exports.Prisma.VendorScalarFieldEnum = {
 };
 
 exports.Prisma.AdminScalarFieldEnum = {
+  firebaseUid: 'firebaseUid',
   id: 'id',
   userId: 'userId',
   name: 'name',

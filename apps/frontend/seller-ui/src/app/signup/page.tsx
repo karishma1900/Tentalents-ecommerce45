@@ -12,7 +12,8 @@ import './signup.css';
 import toast from 'react-hot-toast';
 import  {jwtDecode} from "jwt-decode";
 import Menu from '../../shared/components/menu/menu';
-
+import { auth, provider } from '../../utils/firebase'; // adjust path accordingly
+import { signInWithPopup } from "firebase/auth";
 
 const maskEmail = (email: string) => {
   if (!email) return '';
@@ -26,7 +27,11 @@ const maskEmail = (email: string) => {
 
   return `${maskedUser}@${domain}`;
 };
-
+declare global {
+  interface Window {
+    google: any;
+  }
+}
 type FormData = {
   email: string;
   password: string;
@@ -176,7 +181,78 @@ const onSubmit = async (data: FormData) => {
 };
 
 
+  useEffect(() => {
+  // Load Google Identity Services SDK
+  const script = document.createElement('script');
+  script.src = 'https://accounts.google.com/gsi/client';
+  script.async = true;
+  script.defer = true;
+  document.body.appendChild(script);
 
+  script.onload = () => {
+      console.log('Google Client ID:', process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
+    // Initialize Google client
+    window.google.accounts.id.initialize({
+      
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      callback: handleGoogleCallback,
+    });
+
+    // Render Google Sign-in button
+    window.google.accounts.id.renderButton(
+      document.getElementById('googleSignInDiv')!,
+      { theme: 'outline', size: 'large' } // customization
+    );
+  };
+
+  return () => {
+    document.body.removeChild(script);
+  };
+}, []);
+const handleGoogleCallback = async (response: any) => {
+  try {
+    setLoading(true);
+
+    // Log the Google token for debugging
+    console.log('Google ID Token:', response.credential);
+
+    const res = await axios.post(
+      `${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API}`,
+      {
+        provider: 'google',
+        idToken: response.credential,
+      }
+    );
+
+    toast.success('Logged in successfully!');
+    router.push('/dashboard/myaccount');
+  } catch (error: any) {
+    console.error('Google login failed:', error?.response?.data || error.message);
+    toast.error(error?.response?.data?.message || 'Google login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
+const handleFirebaseGoogleSignIn = async () => {
+  try {
+    setLoading(true);
+    const result = await signInWithPopup(auth, provider);
+    const firebaseIdToken = await result.user.getIdToken();
+
+    await axios.post(`${process.env.NEXT_PUBLIC_GOOGLE_LOGIN_API}`, {
+      provider: 'google',
+      idToken: firebaseIdToken,
+    });
+
+    toast.success('Logged in successfully!');
+    router.push('/dashboard/myaccount');
+  } catch (error) {
+    console.error(error);
+    toast.error('Google login failed.');
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleOtpChange = (index: number, value: string) => {
     if (!/^[0-9]?$/.test(value)) return;
@@ -259,10 +335,10 @@ await axios.post(
 
         {step === 'email' && (
           <>
-            <button className="google-button" onClick={handleGoogleSignIn} disabled={loading}>
-              <Image src={Google} alt="Google Logo" width={20} height={20} />
-              Continue With Google
-            </button>
+           <button className="google-button" onClick={handleFirebaseGoogleSignIn} disabled={loading}>
+  <Image src={Google} alt="Google Logo" width={20} height={20} />
+  Continue With Google
+</button>
 
             <div className="divider" />
 

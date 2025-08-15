@@ -446,3 +446,77 @@ export const resetPasswordWithOtp = async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Failed to reset password' });
   }
 };
+export const loginOrRegisterWithGoogle = async (req: Request, res: Response) => {
+  try {
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return res.status(400).json({ error: 'Google ID token is required' });
+    }
+
+    // Call your service method to login or register with Google token
+    const loginResult = await vendorService.loginOrRegisterWithGoogleIdToken(idToken);
+
+    return res.status(200).json({
+      message: 'Login/Register successful',
+      token: loginResult.token,  // <-- token is here
+      userId: loginResult.userId,
+      email: loginResult.email,
+      role: loginResult.role,
+      vendorId: loginResult.vendorId,
+      vendorStatus: loginResult.vendorStatus,
+    });
+  } catch (err) {
+    logger.error('Google login/register error:', err);
+    return res.status(401).json({ error: err instanceof Error ? err.message : 'Google login failed' });
+  }
+};
+
+export const uploadVendorProfileImageController = async (req: Request, res: Response) => {
+  console.log('BODY:', req.body);
+  try {
+    const vendorId = req.params.vendorId;
+    const { file } = req.body; // expecting base64 string here
+
+    if (!file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    // Convert base64 string to buffer
+    const base64Data = file.replace(/^data:image\/\w+;base64,/, '');
+    const imageBuffer = Buffer.from(base64Data, 'base64');
+
+    const imageUrl = await vendorService.uploadVendorProfileImage(vendorId, {
+      buffer: imageBuffer,
+      mimetype: 'image/png', // or detect from string
+      originalname: `profile_${vendorId}.png`,
+    } as Express.Multer.File);
+console.log('BODY:', req.body); // or
+console.log('Base64 Data:', file); 
+    res.status(200).json({ imageUrl });
+  } catch (err: any) {
+    logger.error('Failed to upload profile image:', err);
+    res.status(500).json({ error: err.message || 'Failed to upload profile image' });
+  }
+};
+
+
+export const uploadVendorKYCDocumentsController = async (req: Request, res: Response) => {
+  try {
+    const vendorId = req.params.vendorId;
+    const files = req.files as Express.Multer.File[]; // Expect multiple files
+
+    if (!files || files.length === 0) {
+      return res.status(400).json({ error: 'No files uploaded' });
+    }
+
+    const buffers = files.map(file => file.buffer);
+    const filenames = files.map(file => file.originalname);
+
+    const updatedVendor = await vendorService.uploadVendorKYCDocuments(vendorId, buffers, filenames);
+    res.status(200).json({ kycDocsUrl: updatedVendor.kycDocsUrl });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Failed to upload KYC documents' });
+  }
+};
+

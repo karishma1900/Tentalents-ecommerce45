@@ -4,12 +4,12 @@ import {
   verifyOtp,
   completeOtpRegistration,
   loginUser,
-  
+  googleLogin,
   resendOtp
 } from '../controllers/user.controller';
 
 const router = Router();
-
+router.post('/google-login', googleLogin);
 // Public routes — no authentication required
 router.post('/register/otp/initiate', initiateOtp);
 router.post('/register/otp/verify', verifyOtp);

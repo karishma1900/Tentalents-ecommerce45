@@ -16,7 +16,10 @@ import {
   completeVendorUserRegistration,
   completeVendorProfileRegistration,
  getVendorProfileByVendorId,
+  loginOrRegisterWithGoogle,
  updateVendorProfile,
+   uploadVendorProfileImageController,
+   uploadVendorKYCDocumentsController,
   loginVendor
 } from '../controllers/vendor-controller';
 
@@ -36,6 +39,7 @@ const upload = multer({
     cb(null, true);
   },
 });
+router.post('/google', loginOrRegisterWithGoogle);
 router.get('/vendor/profile/:vendorId', authMiddleware(), getVendorProfileByVendorId);
 // === Public registration routes (no auth) ===
 router.post('/register/initiate-otp', initiateVendorRegistrationOtp);
@@ -73,5 +77,17 @@ router.get(
   authMiddleware([UserRole.ADMIN, UserRole.SELLER]),
   getVendorAnalytics
 );
-
+router.post(
+  '/profile-image/:vendorId',
+  authMiddleware(UserRole.SELLER),
+  upload.single('profileImage'), // Add this middleware
+  uploadVendorProfileImageController
+);
+// Route expects 'files' for KYC docs multiple files
+router.post(
+  '/kyc-docs/:vendorId',
+  authMiddleware(UserRole.SELLER),
+  upload.array('files'),
+  uploadVendorKYCDocumentsController
+);
 export default router;

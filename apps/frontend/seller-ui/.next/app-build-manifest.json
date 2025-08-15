@@ -6,23 +6,22 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/(routes)/dashboard/layout": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/(routes)/dashboard/layout.css",
-      "static/chunks/app/(routes)/dashboard/layout.js"
-    ],
-    "/(routes)/dashboard/createproduct/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/(routes)/dashboard/createproduct/page.css",
-      "static/chunks/app/(routes)/dashboard/createproduct/page.js"
+      "static/chunks/app/page.js"
     ],
     "/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/login/page.css",
       "static/chunks/app/login/page.js"
+    ],
+    "/(routes)/dashboard/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/(routes)/dashboard/layout.css",
+      "static/chunks/app/(routes)/dashboard/layout.js"
     ],
     "/(routes)/dashboard/myaccount/page": [
       "static/chunks/webpack.js",

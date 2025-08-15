@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getProfile, updateRole,updateProfileImage,updateProfile } from '../controllers/user.controller';
+import { getProfile, updateRole,updateProfileImage,updateProfile ,googleLogin} from '../controllers/user.controller';
 import { authMiddleware, requireRole } from '@shared/auth';
 import multer from 'multer';
 const router = Router();
@@ -7,6 +7,7 @@ const router = Router();
 // Middleware to authenticate JWT
 const authenticateJWT = authMiddleware();
 const upload = multer({ storage: multer.memoryStorage() }); 
+
 // GET /api/users/profile — Accessible to any authenticated user
 router.get('/profile', authenticateJWT, getProfile);
 router.patch('/profile', authenticateJWT, updateProfile);
