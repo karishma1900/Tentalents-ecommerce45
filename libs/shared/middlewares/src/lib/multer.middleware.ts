@@ -1,4 +1,4 @@
-import multer from 'multer';
+import multer, { File } from 'multer';
 import type { Request } from 'express';
 import type { FileFilterCallback } from 'multer';
 
@@ -11,7 +11,7 @@ const ALLOWED_MIME_TYPES = ['image/', 'application/'];
 // Typed file filter function
 const fileFilter = (
   req: Request,
-  file: Express.Multer.File,
+  file: File,  // <-- Use multer's File type directly here
   cb: FileFilterCallback
 ): void => {
   const isAllowed = ALLOWED_MIME_TYPES.some((type) =>
