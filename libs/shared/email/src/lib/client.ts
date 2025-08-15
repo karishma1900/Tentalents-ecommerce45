@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { EmailPayload } from './types';
-import { env } from '@shared/config/src/index';
+import { env } from '@shared/config/';
 
 const transporter = nodemailer.createTransport({
   host: env.SMTP_HOST, // SendGrid SMTP: smtp.sendgrid.net
