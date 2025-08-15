@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import { logger } from '@shared/middlewares/logger/src/index';
+import { logger } from '@shared/logger/src/index';
 
 export const redisClient: ReturnType<typeof createClient> = createClient({
   socket: {
@@ -9,7 +9,7 @@ export const redisClient: ReturnType<typeof createClient> = createClient({
   password: process.env.REDIS_PASSWORD || undefined,
 });
 
-redisClient.on('error', (err) => logger.error('❌ Redis Error:', err));
+redisClient.on('error', (err: Error) => logger.error('❌ Redis Error:', err));
 
 export async function connectRedis(): Promise<void> {
   if (redisClient.isOpen) {
