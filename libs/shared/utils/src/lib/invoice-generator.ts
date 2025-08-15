@@ -6,7 +6,7 @@ import {
   MinioFolderPaths,
   MinioBuckets,
   generateFilename,
-} from '@shared/middlewares/minio/src/index';
+} from '@shared/minio/src/index';
 
 export async function generateInvoiceAndUpload(
   orderId: string
