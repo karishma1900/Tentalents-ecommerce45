@@ -47,6 +47,6 @@ babel.config.js
 docker-compose.yml
 
 # Ignore all source files – only copy dist/
-apps/**/src
-libs/**/src
+
+
 
