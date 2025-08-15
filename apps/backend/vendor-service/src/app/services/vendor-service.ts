@@ -8,7 +8,7 @@ import { KAFKA_TOPICS } from '@shared/kafka';
 import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { VendorCreatedEvent, VendorStatusUpdatedEvent } from '@shared/kafka';
 import { logger } from '@shared/logger';
-import { sendEmail } from '@shared/email/src/index';
+import { sendEmail } from '@shared/email/';
 const prisma = new PrismaClient();
 import {uploadToCloudinary} from '@shared/auth/'
 
