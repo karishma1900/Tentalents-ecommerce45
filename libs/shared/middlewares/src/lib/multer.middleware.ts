@@ -1,6 +1,6 @@
-import multer, { File } from 'multer';
 import type { Request } from 'express';
 import type { FileFilterCallback } from 'multer';
+import type { Multer } from 'multer';
 
 // Use in-memory storage (you can replace this with disk or custom storage later)
 const storage = multer.memoryStorage();
