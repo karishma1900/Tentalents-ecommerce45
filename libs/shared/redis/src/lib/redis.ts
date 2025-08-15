@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import { logger } from '@shared/logger/src/index';
+import { logger } from '@shared/logger/';
 
 export const redisClient: ReturnType<typeof createClient> = createClient({
   socket: {
