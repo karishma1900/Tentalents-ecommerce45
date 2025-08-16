@@ -77,7 +77,7 @@ console.log('🔑 JWT Token:', token);
 
         console.log(`📦 Fetching vendor details for ID: ${vendorId}`);
 
-        const response = await fetch(`http://localhost:3010/api/vendor/${vendorId}`, {
+        const response = await fetch(`https://tentalents-ecommerce45.onrender.com/api/vendor/${vendorId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ const handleSave = async (e: FormEvent) => {
   console.log('📤 Sending PUT request with payload:', payload);
 
   try {
-    const response = await fetch(`http://localhost:3010/api/vendor/profile/${vendorId}`, {
+    const response = await fetch(`https://tentalents-ecommerce45.onrender.com/api/vendor/profile/${vendorId}`, {
       method: 'PUT',
       headers: {
         Authorization: token ? `Bearer ${token}` : '',
