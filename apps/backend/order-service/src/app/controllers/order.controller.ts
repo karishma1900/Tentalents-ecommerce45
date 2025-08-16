@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { orderService } from '../services/order.service';
 import { produceKafkaEvent } from '@shared/kafka';
-import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
-import type { AuthPayload } from '@shared/middlewares/auth/src/lib/types';
+import { sendSuccess } from '@shared/utils';
+import type { AuthPayload } from '@shared/auth';
 import { addressService } from '../services/order.service';
 interface AuthedRequest extends Request {
   user?: AuthPayload;
