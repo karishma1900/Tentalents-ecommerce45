@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma } from '../../../../../../generated/prisma';
+import { PrismaClient, Prisma } from '@prisma/client';
 import { v4 as uuid } from 'uuid';
 import { minioClient } from '@shared/minio';
 import { MinioBuckets, MinioFolderPaths } from '@shared/minio';
