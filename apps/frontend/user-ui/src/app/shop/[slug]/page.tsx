@@ -2,9 +2,8 @@ import { getProductBySlug } from '../../../services/productService';
 import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
 interface PageProps {
-  params: {
-    slug: string;
-  };
+  params: { slug: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {
@@ -86,6 +85,7 @@ vendor: listing?.vendor?.user
   return <ProductDetailClient product={product} />;
 
 }
+
 
 
 
