@@ -27,7 +27,8 @@ ARG SERVICE_NAME
 ENV NODE_ENV=production
 
 # Copy only the service's pruned package.json
-COPY --from=builder /app/dist/apps/${SERVICE_NAME}/package.json ./package.json
+COPY --from=builder /app/dist/apps/backend/${SERVICE_NAME}/package.json ./package.json
+COPY --from=builder /app/dist/apps/backend/${SERVICE_NAME}/ ./
 
 # Install only production dependencies
 RUN npm install --omit=dev
