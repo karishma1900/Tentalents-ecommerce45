@@ -42,29 +42,37 @@ async function start() {
   try {
     logger.info('🚀 Starting Rating Service...');
 
+    // Step 1: Connect Redis
     await connectRedis();
     logger.info('✅ Redis connected');
 
+    // Step 2: Connect PostgreSQL
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
 
+    // Step 3: Ensure Kafka topics exist before connecting producer/consumer
     await createTopicsIfNotExists(kafkaConfig.topics);
     logger.info('✅ Kafka topics created or verified');
 
+    // Step 4: Connect Kafka Producer
     await connectKafkaProducer();
     logger.info('✅ Kafka producer connected');
 
+    // Step 5: Connect Kafka Consumer
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer connected');
 
+    // Step 6: Start HTTP Server
     server = app.listen(PORT, () => {
       logger.info(`🌟 Rating Service running at http://localhost:${PORT}`);
     });
+
   } catch (error) {
     logger.error('❌ Error during startup:', error);
     await shutdown(1);
   }
 }
+
 
 async function shutdown(exitCode = 0) {
   logger.info('🛑 Shutting down Rating Service...');
