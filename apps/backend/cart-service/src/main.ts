@@ -13,8 +13,8 @@ import { config } from '@shared/config';
 import { SERVICE_PORTS, SERVICE_NAMES } from '@shared/constants';
 
 // 🎛️ Service-specific configuration
-const SERVICE_NAME = SERVICE_NAMES.CART;
-const PORT = SERVICE_PORTS[SERVICE_NAME];
+// const SERVICE_NAME = SERVICE_NAMES.CART;
+const PORT = parseInt(process.env.PORT || '3020', 10);
 
 const prisma = new PrismaClient();
 
@@ -46,22 +46,26 @@ let server: ReturnType<typeof app.listen> | null = null;
 async function start() {
   try {
     logger.info(`🧠 Starting ${SERVICE_NAME}...`);
-
+  logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
     // 🔐 Ensure critical env vars are present
     if (!config.JWT_SECRET) {
       throw new Error('Missing required JWT_SECRET in environment');
     }
 
-    await connectRedis();
-    await connectKafkaProducer();
-    await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
+   await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
 
-    server = app.listen(PORT, () => {
-      logger.info(`🚀 ${SERVICE_NAME} running at http://localhost:${PORT}`);
-      logger.info(
-        `🩺 Healthcheck available at http://localhost:${PORT}/healthz`
-      );
-    });
+    // Step 4: Connect Kafka Producer
+    await connectKafkaProducer();
+    logger.info('✅ Kafka producer connected');
+
+    // Step 5: Connect Kafka Consumer
+    await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
+    logger.info('✅ Kafka consumer connected');
+   
   } catch (err) {
     logger.error(`❌ ${SERVICE_NAME} startup failed`, err);
     await shutdown();
