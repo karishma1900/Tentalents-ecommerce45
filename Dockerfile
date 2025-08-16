@@ -37,8 +37,11 @@ RUN npm install --omit=dev
 # Copy the compiled output
 COPY --from=builder /app/dist/apps/backend/$SERVICE_NAME/ ./
 
-# Copy Prisma schema if required
+# Copy Prisma schema
 COPY --from=builder /app/prisma ./prisma
+
+# ✅ Run prisma generate inside container for correct binary
+RUN npx prisma generate
 
 # Expose port
 EXPOSE 3000
