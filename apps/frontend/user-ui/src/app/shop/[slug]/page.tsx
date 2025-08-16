@@ -13,7 +13,6 @@ export default async function ProductDetailPage({
   params: { slug: string };
 }) {
   const { slug } = params;
-  // const { slug } = props.params;
 
   let productRaw = null;
 
@@ -91,4 +90,5 @@ vendor: listing?.vendor?.user
   return <ProductDetailClient product={product} />;
 
 }
+
 
