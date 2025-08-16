@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 export default async function ProductDetailPage(props: PageProps) {
-  const { slug } = await props.params;
+  const { slug } = props.params;
 
   let productRaw = null;
 
@@ -84,4 +84,5 @@ vendor: listing?.vendor?.user
 
 
   return <ProductDetailClient product={product} />;
+
 }
