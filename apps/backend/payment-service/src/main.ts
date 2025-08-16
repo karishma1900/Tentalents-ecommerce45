@@ -78,9 +78,7 @@ async function start() {
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer subscribed');
 
-    server = app.listen(PORT, () => {
-      logger.info(`💳 Payment Service running at http://localhost:${PORT}`);
-    });
+   
   } catch (err) {
     logger.error('❌ Error during startup:', err);
     await shutdown(1);
