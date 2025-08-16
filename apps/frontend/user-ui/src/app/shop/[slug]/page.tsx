@@ -8,11 +8,14 @@ import { type PageProps } from 'next';
 //   };
 // }
 
-export default async function ProductDetailPage({ params }: PageProps) {
+export default async function ProductDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
 
-  let productRaw = null;
-
+  const productRaw = await getProductBySlug(slug);
   try {
     productRaw = await getProductBySlug(slug);
   } catch (error) {
@@ -86,5 +89,6 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
