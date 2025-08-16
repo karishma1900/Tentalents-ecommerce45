@@ -8,6 +8,7 @@ import {
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
 } from '@shared/kafka';
+import { createTopicsIfNotExists } from '@shared/kafka';
 import { logger } from '@shared/logger';
 import { config } from '@shared/config';
 import { SERVICE_PORTS, SERVICE_NAMES } from '@shared/constants';
