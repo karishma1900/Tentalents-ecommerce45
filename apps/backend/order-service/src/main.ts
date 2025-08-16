@@ -4,7 +4,7 @@ import app from './app';
 import { PrismaClient } from '@prisma/client';
 import { logger } from '@shared/logger';
 import { connectRedis, redisClient } from '@shared/redis';
-import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+import { createTopicsIfNotExists } from '@shared/kafka';
 import {
   connectKafkaConsumer,
   disconnectKafkaConsumer,
