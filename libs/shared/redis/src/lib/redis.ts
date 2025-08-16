@@ -1,12 +1,8 @@
 import { createClient } from 'redis';
 import { logger } from '@shared/logger';
 
-export const redisClient: ReturnType<typeof createClient> = createClient({
-  socket: {
-    host: process.env.REDIS_HOST || 'localhost',
-    port: Number(process.env.REDIS_PORT) || 6379,
-  },
-  password: process.env.REDIS_PASSWORD || undefined,
+export const redisClient = createClient({
+  url: process.env.REDIS_URL || 'redis://localhost:6379',
 });
 
 redisClient.on('error', (err: Error) => logger.error('❌ Redis Error:', err));
