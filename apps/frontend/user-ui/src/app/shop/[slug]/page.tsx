@@ -1,17 +1,14 @@
 import { getProductBySlug } from '../../../services/productService';
 import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
- import { Metadata } from 'next';
-
-
 interface PageProps {
-  params: { slug: string };
+  params: {
+    slug: string;
+  };
 }
 
-export default async function ProductDetailPage({ params }: PageProps) {
-  
-  const { slug } = params;
-  // const { slug } =  props.params;
+export default async function ProductDetailPage(props: PageProps) {
+  const { slug } = await props.params;
 
   let productRaw = null;
 
@@ -88,8 +85,3 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
-
-
-
-
-
