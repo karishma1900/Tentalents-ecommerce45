@@ -41,7 +41,7 @@ COPY --from=builder /app/dist/apps/backend/$SERVICE_NAME/ ./
 COPY --from=builder /app/prisma ./prisma
 
 # ✅ Run prisma generate inside container for correct binary
-RUN npx prisma generate
+RUN npx prisma generate && ls -la node_modules/.prisma/client
 
 # Expose port
 EXPOSE 3000
