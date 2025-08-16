@@ -3,6 +3,7 @@ import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
 import { redisClient, connectRedis } from '@shared/redis';
+
 import {
   connectKafkaProducer,
   disconnectKafkaProducer,
@@ -11,7 +12,7 @@ import {
   KafkaConsumerConfig,
 } from '@shared/kafka';
 import { logger } from '@shared/logger';
-import { createTopicsIfNotExists } from '@shared/kafka';
+import { createTopicsIfNotExists } from '@shared/kafka
 // 🛠️ Load .env config
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
@@ -44,30 +45,37 @@ async function start() {
   try {
     logger.info('🚀 Starting Product Service...');
 
+    // Connect Redis
     await connectRedis();
     logger.info('✅ Redis connected');
 
+    // Connect Prisma (PostgreSQL)
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
 
- // <<< Add topic creation here before producer/consumer connects
+    // Create Kafka topics BEFORE connecting Kafka clients
     await createTopicsIfNotExists(kafkaConfig.topics);
     logger.info('✅ Kafka topics created or verified');
 
+    // Connect Kafka Producer
     await connectKafkaProducer();
     logger.info('✅ Kafka producer connected');
 
+    // Connect Kafka Consumer
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer connected');
 
+    // Start HTTP Server
     server = app.listen(PORT, () => {
       logger.info(`📦 Product Service running at http://localhost:${PORT}`);
     });
+
   } catch (err) {
     logger.error('❌ Startup error in Product Service:', err);
     await shutdown(1);
   }
 }
+
 
 // 🛑 Graceful Shutdown
 async function shutdown(exitCode = 0) {
