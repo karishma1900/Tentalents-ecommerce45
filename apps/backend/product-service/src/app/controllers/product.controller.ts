@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { productService } from '../services/product.service';
 import { sendSuccess } from '@shared/utils';
 import { produceKafkaEvent } from '@shared/kafka';
-import { PrismaClient } from '../../../../../../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 /**
  * Helper to get userId or send 401 if missing
  */const prisma = new PrismaClient();
