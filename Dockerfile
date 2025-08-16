@@ -1,50 +1,48 @@
-# Stage 1
+# ---------- Stage 1: Builder ----------
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Accept service name as a build argument with default fallback
 ARG SERVICE_NAME
 ENV SERVICE_NAME=${SERVICE_NAME}
 
-# Copy package files and configs for better caching
+# Install deps
 COPY package.json package-lock.json ./
 COPY tsconfig.base.json nx.json ./
-
-# Install dependencies for the monorepo
 RUN npm install
 
-# Copy the full monorepo
+# Copy entire monorepo
 COPY . .
 
-# Build the specific service using ENV variable
+# ✅ Generate Prisma Client for correct platform
+RUN npx prisma generate --schema=./prisma/schema.prisma --binary-target=linux-musl-openssl-3.0.x
+
+# Build the specific service
 RUN npx nx build $SERVICE_NAME --configuration=production
 
-# Stage 2
+# ---------- Stage 2: Runtime ----------
 FROM node:20-alpine
 WORKDIR /app
 
-# Accept build arg again and set env for runtime
 ARG SERVICE_NAME
 ENV SERVICE_NAME=${SERVICE_NAME}
 ENV NODE_ENV=production
 
-# Copy only the service's pruned package.json
+# Copy runtime package.json for that service
 COPY --from=builder /app/dist/apps/backend/$SERVICE_NAME/package.json ./package.json
 
-# Install only production dependencies
+# Install only prod deps
 RUN npm install --omit=dev
 
-# Copy the compiled output
+# Copy built code and Prisma schema
 COPY --from=builder /app/dist/apps/backend/$SERVICE_NAME/ ./
-
-# Copy Prisma schema
 COPY --from=builder /app/prisma ./prisma
 
-# ✅ Run prisma generate inside container for correct binary
-RUN npx prisma generate && ls -la node_modules/.prisma/client
+# ✅ Copy precompiled Prisma Client
+COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 
-# Expose port
+# Optional: Check client exists
+RUN ls -la node_modules/.prisma/client
+
 EXPOSE 3000
-
-# Start the service
 CMD ["node", "main.cjs"]
