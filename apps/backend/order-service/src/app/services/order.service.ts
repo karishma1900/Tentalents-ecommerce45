@@ -1,5 +1,5 @@
-import { PrismaClient,PaymentMethod,PaymentStatus } from '../../../../../../generated/prisma';
-import type { OrderStatus } from '../../../../../../generated/prisma';
+import { PrismaClient,PaymentMethod,PaymentStatus } from '@prisma/client';
+import type { OrderStatus } from '@prisma/client';
 import Stripe from 'stripe';
 import { v4 as uuidv4 } from 'uuid';
 import { buildOrderConfirmationEmail } from '../utils/buildOrderConfirmationEmail';
