@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import couponRoutes from '../src/app/routes/coupon.routes';
-import { setupSwagger } from '@shared/middlewares/swagger/src/index';
-import { errorHandler } from '@shared/middlewares/error/src/index';
+import { setupSwagger } from '@shared/swagger';
+import { errorHandler } from '@shared/error';
 
 const app = express();
 
