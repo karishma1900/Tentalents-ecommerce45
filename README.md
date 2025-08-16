@@ -16,19 +16,19 @@
 To run the dev server for your app, use:
 
 ```sh
-npx nx serve auth-service
+npx nx serve user-service
 ```
 
 To create a production bundle:
 
 ```sh
-npx nx build auth-service
+npx nx build user-service
 ```
 
 To see all available targets to run for a project, run:
 
 ```sh
-npx nx show project auth-service
+npx nx show project user-service
 ```
 
 These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
