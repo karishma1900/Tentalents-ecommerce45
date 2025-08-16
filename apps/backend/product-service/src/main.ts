@@ -16,7 +16,7 @@ import { createTopicsIfNotExists } from '@shared/kafka';
 // 🛠️ Load .env config
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const PORT = process.env.PORT || 3003;
+const PORT = parseInt(process.env.PORT || '3003', 10);
 const prisma = new PrismaClient();
 
 // 🎯 Kafka Consumer Configuration
@@ -44,7 +44,10 @@ let server: ReturnType<typeof app.listen> | null = null;
 async function start() {
   try {
     logger.info('🚀 Starting Product Service...');
-
+ logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
     // Connect Redis
     await connectRedis();
     logger.info('✅ Redis connected');
@@ -65,10 +68,7 @@ async function start() {
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer connected');
 
-    // Start HTTP Server
-    server = app.listen(PORT, () => {
-      logger.info(`📦 Product Service running at http://localhost:${PORT}`);
-    });
+   
 
   } catch (err) {
     logger.error('❌ Startup error in Product Service:', err);
