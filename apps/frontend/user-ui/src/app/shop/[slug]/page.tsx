@@ -3,10 +3,12 @@ import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
  
 
-type Props = {
+interface ProductDetailPageProps {
   params: { slug: string };
-};
-export default async function ProductDetailPage({ params }: Props) {
+}
+
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
+  
   const { slug } = params;
   // const { slug } =  props.params;
 
@@ -85,6 +87,7 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
