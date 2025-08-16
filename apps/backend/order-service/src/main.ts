@@ -15,7 +15,7 @@ import {
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // 🛠️ Setup
-const PORT = process.env.PORT || 3002;
+const PORT = parseInt(process.env.PORT || '3002', 10);
 const prisma = new PrismaClient();
 
 // 🔌 Kafka Config
@@ -51,6 +51,10 @@ let server: ReturnType<typeof app.listen> | null = null;
 async function start() {
   try {
     logger.info('🚀 Starting Order Service...');
+    logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
 
     await connectRedis();
     logger.info('✅ Redis connected');
@@ -58,12 +62,18 @@ async function start() {
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
 
+   await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
+    // Step 4: Connect Kafka Producer
+    await connectKafkaProducer();
+    logger.info('✅ Kafka producer connected');
+
+    // Step 5: Connect Kafka Consumer
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer connected');
 
-    server = app.listen(PORT, () => {
-      logger.info(`🛒 Order Service running at http://localhost:${PORT}`);
-    });
+    
   } catch (err) {
     logger.error('❌ Failed to start Order Service:', err);
     await shutdown(1);
