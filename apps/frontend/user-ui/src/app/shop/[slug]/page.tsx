@@ -1,12 +1,11 @@
+"use client";
 import { getProductBySlug } from '../../../services/productService';
 import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
-interface PageProps {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-}
 
-export default async function ProductDetailPage({ params }: PageProps) {
+import { use } from "react";
+export default function ProductDetailClient({ productPromise }: { productPromise: Promise<Product> }) {
+  const product = use(productPromise);
   const { slug } = params;
 
   let productRaw = null;
@@ -85,6 +84,7 @@ vendor: listing?.vendor?.user
   return <ProductDetailClient product={product} />;
 
 }
+
 
 
 
