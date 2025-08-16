@@ -1,7 +1,7 @@
 import { getProductBySlug } from '../../../services/productService';
 import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
-import { type PageProps } from 'next';
+
 // interface PageProps {
 //   params: {
 //     slug: string;
@@ -89,6 +89,7 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
