@@ -3,8 +3,10 @@ import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
  
 
-
-export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+type Props = {
+  params: { slug: string };
+};
+export default async function ProductDetailPage({ params }: Props) {
   const { slug } = params;
   // const { slug } =  props.params;
 
@@ -83,5 +85,6 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
