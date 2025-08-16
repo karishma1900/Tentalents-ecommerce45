@@ -1,7 +1,7 @@
 // Generates Prisma client for Node.js/TypeScript
 generator client {
-  provider = "prisma-client-js"
-   output   = "../generated/email-service"
+  provider      = "prisma-client-js"
+  binaryTargets = ["linux-musl-openssl-3.0.x","native" ]
 }
 
 // PostgreSQL datasource for isolated email-service DB

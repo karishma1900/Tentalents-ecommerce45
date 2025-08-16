@@ -1,7 +1,8 @@
 generator client {
-  provider = "prisma-client-js"
-   output   = "../generated/recommendation-service"
+  provider      = "prisma-client-js"
+  binaryTargets = ["linux-musl-openssl-3.0.x","native" ]
 }
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
