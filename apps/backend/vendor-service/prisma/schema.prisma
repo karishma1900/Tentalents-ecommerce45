@@ -1,8 +1,5 @@
 // === PRISMA GENERATOR ===
-generator client {
-  provider = "prisma-client-js"
-  output   = "../generated/vendor-service"
-}
+generator client { provider = "prisma-client-js" binaryTargets = ["native", "linux-musl-openssl-3.0.x"] }
 
 // === DATABASE SOURCE ===
 // === DATABASE SOURCE ===
