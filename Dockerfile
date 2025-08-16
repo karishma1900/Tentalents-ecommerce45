@@ -44,4 +44,4 @@ COPY --from=builder /app/prisma ./prisma
 EXPOSE 3000
 
 # Start the service
-CMD ["node", "main.js"]
+CMD ["node", "main.cjs"]
