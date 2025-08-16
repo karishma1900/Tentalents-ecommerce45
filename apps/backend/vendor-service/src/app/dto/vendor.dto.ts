@@ -1,5 +1,5 @@
 import { VendorStatus as SharedVendorStatus } from '@shared/types';
-import { Prisma, VendorStatus as PrismaVendorStatus } from '../../../../../../generated/prisma';
+import { Prisma, VendorStatus as PrismaVendorStatus } from '@prisma/client';
 
 export interface CreateVendorDto {
   businessName: string;  // rename from storeName
