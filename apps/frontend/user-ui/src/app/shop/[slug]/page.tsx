@@ -11,7 +11,7 @@ export default function ProductDetailClient({ productPromise }: { productPromise
   let productRaw = null;
 
   try {
-    productRaw = await getProductBySlug(slug);
+    productRaw =  getProductBySlug(slug);
   } catch (error) {
     console.error('Failed to fetch product details:', error);
   }
@@ -84,6 +84,7 @@ vendor: listing?.vendor?.user
   return <ProductDetailClient product={product} />;
 
 }
+
 
 
 
