@@ -41,7 +41,9 @@ async function start() {
       connectRedis(),
       connectMinio(),
     ]);
-
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
     // Start server
 logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
 server = app.listen(PORT, '0.0.0.0', () => {
