@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { cartService } from '../services/cart.service';
-import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
-import type { AuthPayload } from '@shared/middlewares/auth/src/index';
+import { sendSuccess } from '@shared/utils';
+import type { AuthPayload } from '@shared/auth';
 import { logger } from '@shared/logger';
 interface AuthedRequest extends Request {
   user?: AuthPayload;
