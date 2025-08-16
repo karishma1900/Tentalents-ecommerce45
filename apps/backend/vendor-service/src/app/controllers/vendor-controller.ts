@@ -3,7 +3,7 @@ import { createVendorDtoToPrisma } from '../dto/vendor.dto';
 import {
   PrismaClient,
   VendorStatus as PrismaVendorStatus,
-} from '../../../../../../generated/prisma';
+} from '@prisma/client';
 import { logger } from '@shared/logger';
 import { uploadFileToMinIO } from '@shared/minio';
 import {
