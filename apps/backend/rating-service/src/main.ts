@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
-import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+import { createTopicsIfNotExists } from '@shared/kafka';
 import { PrismaClient } from '../generated/rating-service';
 import { redisClient, connectRedis } from '@shared/redis';
 import {
