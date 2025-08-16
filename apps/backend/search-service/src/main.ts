@@ -49,11 +49,15 @@ async function start() {
   try {
     
     logger.info('🚀 Starting Search Service...');
-  logger.info('🚀 Starting Product Service...');
+
  logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
     server = app.listen(PORT, '0.0.0.0', () => {
       logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
-    await connectRedis();
+    });
+   
+      
+      
+      await connectRedis();
     logger.info('✅ Redis connected');
 
     await prisma.$connect();
