@@ -3,7 +3,7 @@ import type { OrderStatus } from '../../../../../../generated/prisma';
 import Stripe from 'stripe';
 import { v4 as uuidv4 } from 'uuid';
 import { buildOrderConfirmationEmail } from '../utils/buildOrderConfirmationEmail';
-import { sendEmail } from '@shared/middlewares/email/src/index';
+import { sendEmail } from '@shared/email';
 interface OrderItemInput {
   productId: string;
   vendorId: string;
