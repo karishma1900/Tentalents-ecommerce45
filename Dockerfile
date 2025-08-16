@@ -30,6 +30,7 @@ ENV NODE_ENV=production
 COPY --from=builder /app/dist/apps/backend/${SERVICE_NAME}/package.json ./package.json
 
 
+
 # Install only production dependencies
 RUN npm install --omit=dev
 
