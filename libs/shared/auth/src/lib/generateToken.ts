@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import path from 'path';
-import { PrismaClient } from '../../../../../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 import { AuthPayload, ROLES, UserRole } from '@shared/auth';
 import { signToken } from '@shared/auth';
 
