@@ -1,17 +1,19 @@
-"use client";
 import { getProductBySlug } from '../../../services/productService';
 import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
+interface PageProps {
+  params: {
+    slug: string;
+  };
+}
 
-import { use } from "react";
-export default function ProductDetailClient({ productPromise }: { productPromise: Promise<Product> }) {
-  const product = use(productPromise);
-  const { slug } = params;
+export default async function ProductDetailPage(props: PageProps) {
+  const { slug } = await props.params;
 
   let productRaw = null;
 
   try {
-    productRaw =  getProductBySlug(slug);
+    productRaw = await getProductBySlug(slug);
   } catch (error) {
     console.error('Failed to fetch product details:', error);
   }
@@ -82,11 +84,4 @@ vendor: listing?.vendor?.user
 
 
   return <ProductDetailClient product={product} />;
-
 }
-
-
-
-
-
-
