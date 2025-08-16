@@ -1,6 +1,10 @@
+import dotenv from 'dotenv';
+import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
-import { redisClient, connectRedis } from '@shared/redis';
+import { logger } from '@shared/logger';
+import { connectRedis, redisClient } from '@shared/redis';
+import { createTopicsIfNotExists } from '@shared/kafka';
 import {
   connectKafkaProducer,
   disconnectKafkaProducer,
@@ -8,110 +12,104 @@ import {
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
 } from '@shared/kafka';
-import { createTopicsIfNotExists } from '@shared/kafka';
-import { logger } from '@shared/logger';
-import { config } from '@shared/config';
-import { SERVICE_PORTS, SERVICE_NAMES } from '@shared/constants';
 
-// 🎛️ Service-specific configuration
-// const SERVICE_NAME = SERVICE_NAMES.CART;
+// 🔧 Load environment variables
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+// 🛠️ Setup
 const PORT = parseInt(process.env.PORT || '3020', 10);
-
 const prisma = new PrismaClient();
 
-// 🎯 Kafka consumer config (cart-service is producer-only for now)
+// 🔌 Kafka Config (Cart Service is mostly a producer but we leave config in place)
 const kafkaConfig: KafkaConsumerConfig = {
-  groupId: SERVICE_NAME,
-  topics: [], // No subscribed topics currently
+  groupId: 'cart-service',
+  topics: [], // No consumer topics for now (producer-only mode)
 };
 
-// 📨 Kafka message handler stub
-const onMessage = async (_topic: string, _payload: unknown): Promise<void> => {
-  logger.warn(`⚠️ No Kafka consumer logic implemented in ${SERVICE_NAME}`);
-};
+// 📩 Kafka Message Handler
+async function kafkaMessageHandler(message: string): Promise<void> {
+  if (!kafkaConfig.topics.length) return; // 🧠 Skip if no topics
 
-const kafkaMessageHandler = async (rawMessage: string): Promise<void> => {
-  if (!kafkaConfig.topics.length) return; // 🧠 Skip handler in producer-only mode
-
+  logger.info(`[Kafka] 📨 Received message: ${message}`);
   try {
-    const { topic, payload } = JSON.parse(rawMessage);
-    await onMessage(topic, payload);
+    const parsed = JSON.parse(message);
+    // TODO: Implement event handling when consumer topics are added
   } catch (err) {
-    logger.error('❌ Failed to handle Kafka message', err);
-  }
-};
-
-// 🚀 Bootstrapping the service
-let server: ReturnType<typeof app.listen> | null = null;
-
-async function start() {
-  try {
-    logger.info(`🧠 Starting ${SERVICE_NAME}...`);
-  logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
-    server = app.listen(PORT, '0.0.0.0', () => {
-      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
-    });
-    // 🔐 Ensure critical env vars are present
-    if (!config.JWT_SECRET) {
-      throw new Error('Missing required JWT_SECRET in environment');
-    }
-
-   await createTopicsIfNotExists(kafkaConfig.topics);
-    logger.info('✅ Kafka topics created or verified');
-
-    // Step 4: Connect Kafka Producer
-    await connectKafkaProducer();
-    logger.info('✅ Kafka producer connected');
-
-    // Step 5: Connect Kafka Consumer
-    await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
-    logger.info('✅ Kafka consumer connected');
-   
-  } catch (err) {
-    logger.error(`❌ ${SERVICE_NAME} startup failed`, err);
-    await shutdown();
-    process.exit(1);
+    logger.error('❌ Failed to handle Kafka message:', err);
   }
 }
 
-// 🧹 Graceful shutdown logic
-async function shutdown() {
-  logger.info(`🛑 Shutting down ${SERVICE_NAME}...`);
+// 🌐 HTTP server reference
+let server: ReturnType<typeof app.listen> | null = null;
+
+// 🚀 Start service
+async function start() {
+  try {
+    logger.info('🚀 Starting Cart Service...');
+    logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
+
+    // Redis
+    await connectRedis();
+    logger.info('✅ Redis connected');
+
+    // PostgreSQL
+    await prisma.$connect();
+    logger.info('✅ PostgreSQL connected');
+
+    // Kafka Topics
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
+    // Kafka Producer
+    await connectKafkaProducer();
+    logger.info('✅ Kafka producer connected');
+
+    // Kafka Consumer (if topics exist)
+    if (kafkaConfig.topics.length) {
+      await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
+      logger.info('✅ Kafka consumer connected');
+    }
+  } catch (err) {
+    logger.error('❌ Failed to start Cart Service:', err);
+    await shutdown(1);
+  }
+}
+
+// 🧹 Graceful Shutdown
+async function shutdown(exitCode = 0) {
+  logger.info('🛑 Shutting down Cart Service...');
 
   try {
     await prisma.$disconnect();
 
-    if ('status' in redisClient && redisClient.isOpen) {
+    if (redisClient.isOpen) {
       await redisClient.quit();
+      logger.info('✅ Redis disconnected');
     }
 
     await disconnectKafkaProducer();
     await disconnectKafkaConsumer();
 
     if (server) {
-      await new Promise((resolve, reject) => {
-        server!.close((err) => {
-          if (err) {
-            logger.error('❌ Error closing HTTP server', err);
-            reject(err);
-          } else {
-            logger.info('✅ HTTP server closed');
-            resolve(true);
-          }
-        });
+      server.close(() => {
+        logger.info('✅ HTTP server closed');
+        process.exit(exitCode);
       });
+    } else {
+      process.exit(exitCode);
     }
-
-    process.exit(0);
   } catch (err) {
-    logger.error('❌ Error during shutdown', err);
+    logger.error('❌ Error during shutdown:', err);
     process.exit(1);
   }
 }
 
-// 📦 Hook into OS-level process signals
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+// 🪦 Handle process signals
+process.on('SIGINT', () => shutdown(0));
+process.on('SIGTERM', () => shutdown(0));
 
-// 🟢 Start the service
+// 🔥 Start app
 start();
