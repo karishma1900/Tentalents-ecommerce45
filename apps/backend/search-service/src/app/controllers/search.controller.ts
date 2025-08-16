@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { searchService } from '../services/search.service';
-import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
+import { sendSuccess } from '@shared/utils';
 
 export const searchProducts = async (
   req: Request,
