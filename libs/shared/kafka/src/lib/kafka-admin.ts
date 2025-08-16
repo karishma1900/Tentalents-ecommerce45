@@ -1,7 +1,6 @@
-// libs/shared/kafka/src/lib/kafka-admin.ts
 import { Kafka } from 'kafkajs';
 import { getKafkaInstance } from './kafka-client';
-import { logger } from '@shared/logger';
+import { logger } from '@shared/middlewares/logger/src/index';
 
 export async function createTopicsIfNotExists(topics: string[]) {
   const kafka = getKafkaInstance();
@@ -23,8 +22,9 @@ export async function createTopicsIfNotExists(topics: string[]) {
       topics: topicsToCreate.map(topic => ({
         topic,
         numPartitions: 1, // adjust as needed
-        replicationFactor: 1, // adjust based on your Kafka cluster
+        // replicationFactor: 1,  // optional: omit for Redpanda Serverless
       })),
+      waitForLeaders: true,  // wait for leaders to be elected before proceeding
     });
 
     logger.info(`[Kafka Admin] Created topics: ${topicsToCreate.join(', ')}`);
