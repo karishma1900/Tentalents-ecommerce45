@@ -16,7 +16,7 @@ import { logger } from '@shared/logger';
 // 🧪 Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const PORT = Number(process.env.PORT) || 3005;
+const PORT = parseInt(process.env.PORT || '3005', 10);
 const prisma = new PrismaClient();
 
 // 🧵 Kafka consumer config
@@ -57,6 +57,10 @@ let server: ReturnType<typeof app.listen> | null = null;
 async function start() {
   try {
     logger.info('🚀 Starting Payment Service...');
+     logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
 
     await connectRedis();
     logger.info('✅ Redis connected');
