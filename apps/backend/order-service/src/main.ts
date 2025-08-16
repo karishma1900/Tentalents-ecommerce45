@@ -9,6 +9,7 @@ import {
   connectKafkaConsumer,
   disconnectKafkaConsumer,
   KafkaConsumerConfig,
+   connectKafkaProducer,
 } from '@shared/kafka';
 
 // 🔧 Load environment variables
