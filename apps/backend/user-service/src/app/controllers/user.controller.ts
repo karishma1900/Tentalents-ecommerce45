@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import { userService } from '../services/user.service';
 import { produceKafkaEvent } from '@shared/kafka';
-import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
-import { KAFKA_TOPICS } from '@shared/middlewares/kafka/src/index';
+import { sendSuccess } from '@shared/utils';
+import { KAFKA_TOPICS } from '@shared/kafka';
 import { PrismaClient,UserRole } from '../../../generated/user-service';
 
 
