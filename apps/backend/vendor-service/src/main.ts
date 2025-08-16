@@ -34,6 +34,10 @@ async function start() {
       'order.created',
       // add your actual topics here
     ]);
+    logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
 
     // Connect external dependencies AFTER topics are created
     await Promise.all([
@@ -45,10 +49,7 @@ app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
     // Start server
-logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
-    server = app.listen(PORT, '0.0.0.0', () => {
-      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
-    });
+
     // Graceful shutdown
     const shutdown = async () => {
       logger.info('🛑 Gracefully shutting down Vendor Service...');
