@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
-
+import { createTopicsIfNotExists } from '@shared/kafka';
 import { PrismaClient } from '@prisma/client';
 import { connectRedis, redisClient } from '@shared/redis';
 import {
@@ -16,7 +16,7 @@ import { logger } from '@shared/logger';
 // 🔧 Load env variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const PORT = process.env.PORT || 3006;
+const PORT = parseInt(process.env.PORT || '3006', 10);
 const prisma = new PrismaClient();
 
 // 🧠 Kafka Config
@@ -47,23 +47,31 @@ let server: ReturnType<typeof app.listen> | null = null;
 // 🚀 Boot Service
 async function start() {
   try {
+    
     logger.info('🚀 Starting Search Service...');
-
+  logger.info('🚀 Starting Product Service...');
+ logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
     await connectRedis();
     logger.info('✅ Redis connected');
 
     await prisma.$connect();
     logger.info('✅ PostgreSQL connected');
 
+     // Create Kafka topics BEFORE connecting Kafka clients
+    await createTopicsIfNotExists(kafkaConfig.topics);
+    logger.info('✅ Kafka topics created or verified');
+
+    // Connect Kafka Producer
     await connectKafkaProducer();
-    logger.info('✅ Kafka Producer connected');
+    logger.info('✅ Kafka producer connected');
 
+    // Connect Kafka Consumer
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
-    logger.info('✅ Kafka Consumer subscribed');
+    logger.info('✅ Kafka consumer connected');
 
-    server = app.listen(PORT, () => {
-      logger.info(`🔎 Search Service running at http://localhost:${PORT}`);
-    });
+   
   } catch (err) {
     logger.error('❌ Startup error in Search Service:', err);
     await shutdown();
