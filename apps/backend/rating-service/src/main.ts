@@ -16,7 +16,7 @@ import { KAFKA_TOPICS } from '@shared/constants';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const PORT = process.env.PORT || 3007;
+const PORT = parseInt(process.env.PORT || '3007', 10);
 const prisma = new PrismaClient();
 
 const kafkaConfig: KafkaConsumerConfig = {
@@ -39,8 +39,14 @@ const kafkaMessageHandler = async (message: string): Promise<void> => {
 let server: ReturnType<typeof app.listen> | null = null;
 
 async function start() {
+  
   try {
     logger.info('🚀 Starting Rating Service...');
+    logger.info('🚀 Starting Product Service...');
+ logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
 
     // Step 1: Connect Redis
     await connectRedis();
@@ -62,10 +68,7 @@ async function start() {
     await connectKafkaConsumer(kafkaConfig, kafkaMessageHandler);
     logger.info('✅ Kafka consumer connected');
 
-    // Step 6: Start HTTP Server
-    server = app.listen(PORT, () => {
-      logger.info(`🌟 Rating Service running at http://localhost:${PORT}`);
-    });
+  
 
   } catch (error) {
     logger.error('❌ Error during startup:', error);
