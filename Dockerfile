@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # ✅ Generate Prisma Client for correct platform
-RUN npx prisma generate --schema=./prisma/schema.prisma --binary-target=linux-musl-openssl-3.0.x
+RUN npx prisma generate --schema=./prisma/schema.prisma
 
 # Build the specific service
 RUN npx nx build $SERVICE_NAME --configuration=production
