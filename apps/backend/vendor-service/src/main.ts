@@ -18,7 +18,7 @@ import { connectMinio, disconnectMinio } from '@shared/minio';
 // 🌍 Load environment variables from .env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const PORT = process.env.PORT || 3010;
+const PORT = parseInt(process.env.PORT || '3010', 10);
 
 async function start() {
   let server: Server | undefined;
@@ -46,10 +46,9 @@ app.get('/health', (req, res) => {
 });
     // Start server
 logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
-server = app.listen(PORT, '0.0.0.0', () => {
-  logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
-});
-
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
     // Graceful shutdown
     const shutdown = async () => {
       logger.info('🛑 Gracefully shutting down Vendor Service...');
