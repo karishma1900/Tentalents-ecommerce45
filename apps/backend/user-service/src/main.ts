@@ -3,7 +3,7 @@ import path from 'path';
 import app from './app';
 import { createTopicsIfNotExists } from '@shared/kafka';
 
-import { PrismaClient } from '../generated/user-service';
+import { PrismaClient } from '@prisma/client';
 import { connectRedis, redisClient } from '@shared/redis';
 import {
   connectKafkaProducer,
@@ -17,7 +17,7 @@ import { logger } from '@shared/logger';
 // 🔧 Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const PORT = process.env.PORT || 3018;
+const PORT = parseInt(process.env.PORT || '3018', 10);
 const prisma = new PrismaClient();
 
 // 🧭 Kafka Consumer Configuration
@@ -47,7 +47,10 @@ let server: ReturnType<typeof app.listen> | null = null;
 async function start() {
   try {
     logger.info('🔧 Initializing User Service...');
-
+logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+    server = app.listen(PORT, '0.0.0.0', () => {
+      logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+    });
     // Redis
     await connectRedis();
     logger.info('✅ Redis connected');
@@ -67,10 +70,7 @@ async function start() {
     logger.info('✅ PostgreSQL connected');
 
     // Express server
-    server = app.listen(PORT, () => {
-      logger.info(`🚀 User Service running at http://localhost:${PORT}`);
-      logger.info(`📚 Swagger Docs available at /api/docs/user`);
-    });
+    
   } catch (err) {
     logger.error('❌ Failed to start User Service:', err);
     await shutdown();
