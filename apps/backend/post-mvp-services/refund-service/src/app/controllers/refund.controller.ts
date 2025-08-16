@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { refundService } from '../services/refund.service';
-import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
+import { sendSuccess } from '@shared/utils';
 
 export const requestRefund = async (
   req: Request,
