@@ -1,5 +1,5 @@
 // ✅ Load environment variables from shared env loader
-import '@shared/middlewares/config/src/lib/env';
+import '@shared/config';
 import net from 'net';
 
 import app from './app';
