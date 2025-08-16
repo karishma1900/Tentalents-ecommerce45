@@ -1,4 +1,4 @@
-import { VendorStatus as PrismaVendorStatus, PrismaClient, Prisma, UserRole } from '../../../../../../generated/prisma';
+import { VendorStatus as PrismaVendorStatus, PrismaClient, Prisma, UserRole } from '@prisma/client';
 import { produceKafkaEvent } from '@shared/kafka';
 import  { generateTokenForEmail } from '@shared/auth';
 import {admin} from '@shared/auth';
