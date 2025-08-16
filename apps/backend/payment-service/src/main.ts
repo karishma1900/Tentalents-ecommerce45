@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
-import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+import { createTopicsIfNotExists } from '@shared/kafka';
 import { redisClient, connectRedis } from '@shared/redis';
 import {
   connectKafkaProducer,
