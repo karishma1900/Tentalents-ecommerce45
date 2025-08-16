@@ -4,7 +4,7 @@ import cors from 'cors';
 import { KafkaMessage, EachMessagePayload } from 'kafkajs';
 
 // 🧱 Shared Libraries
-import '@shared/middlewares/config/src/lib/env';
+import '@shared/config';
 import { env } from '@shared/config';
 import { logger } from '@shared/logger';
 import { connectRedis, redisClient } from '@shared/redis';
