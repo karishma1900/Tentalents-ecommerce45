@@ -3,7 +3,7 @@ import path from 'path';
 import app from './app';
 import { PrismaClient } from '@prisma/client';
 import { connectRedis, redisClient } from '@shared/redis';
-import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+import { createTopicsIfNotExists } from '@shared/kafka';
 
 import {
   connectKafkaProducer,
