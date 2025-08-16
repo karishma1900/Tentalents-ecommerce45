@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ratingService } from '../services/rating.service';
-import { sendSuccess } from '@shared/middlewares/utils/src/lib/response';
+import { sendSuccess } from '@shared/utils';
 
 export const createRating = async (
   req: Request,
