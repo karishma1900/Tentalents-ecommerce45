@@ -1,8 +1,8 @@
 import { PrismaClient, Prisma } from '../../../../../../generated/prisma';
 import { v4 as uuid } from 'uuid';
 import { minioClient } from '@shared/minio';
-import { MinioBuckets, MinioFolderPaths } from '@shared/middlewares/minio/src/lib/minio-constants';
-import {uploadToCloudinary} from '@shared/middlewares/auth/src/lib/cloudinary'
+import { MinioBuckets, MinioFolderPaths } from '@shared/minio';
+import {uploadToCloudinary} from '@shared/auth'
 const prisma = new PrismaClient();
 
 function generateSlugFromTitle(title: string): string {
