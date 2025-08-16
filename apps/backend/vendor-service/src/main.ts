@@ -43,10 +43,10 @@ async function start() {
     ]);
 
     // Start server
-    server = app.listen(PORT, () => {
-      logger.info(`🚀 Vendor Service is running at http://localhost:${PORT}`);
-      logger.info(`📚 Swagger docs available at http://localhost:${PORT}/api/docs/vendor`);
-    });
+logger.info(`Starting server on port ${PORT} and binding to 0.0.0.0`);
+server = app.listen(PORT, '0.0.0.0', () => {
+  logger.info(`Server is listening on http://0.0.0.0:${PORT}`);
+});
 
     // Graceful shutdown
     const shutdown = async () => {
