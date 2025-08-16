@@ -11,7 +11,7 @@ import {
   KafkaConsumerConfig,
 } from '@shared/kafka';
 import { logger } from '@shared/logger';
-import { createTopicsIfNotExists } from '@shared/middlewares/kafka/src/lib/kafka-admin';
+import { createTopicsIfNotExists } from '@shared/kafka';
 // 🛠️ Load .env config
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
