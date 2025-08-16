@@ -2,12 +2,12 @@ import { PrismaClient, UserRole } from '../../../../../../generated/prisma';
 import { hashPassword, comparePassword, generateJWT } from '@shared/auth';
 import { produceKafkaEvent as publishEvent } from '@shared/kafka';
 import { KAFKA_TOPICS } from '@shared/kafka';
-import {admin} from '@shared/middlewares/auth/src/lib/firebase-admin';
-import { sendEmail } from '@shared/middlewares/email/src/index';
+import {admin} from '@shared/auth';
+import { sendEmail } from '@shared/email';
 import { logger } from '@shared/logger';
 import { response } from 'express';
 import * as crypto from 'crypto';
-import { uploadToCloudinary } from '@shared/middlewares/auth/src/lib/cloudinary'; 
+import { uploadToCloudinary } from '@shared/auth'; 
 const prisma = new PrismaClient();
 
 interface RegisterUserParams {
