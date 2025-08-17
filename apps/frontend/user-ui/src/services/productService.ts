@@ -14,7 +14,7 @@ type GetAddressesResponse = {
   data: Address[];
 };
 export const getAllProducts = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_FETCH_LINK}/products`);
+  const res = await fetch(`https://product-service-ydpt.onrender.com/products`);
   if (!res.ok) {
     throw new Error(`HTTP error! status: ${res.status}`);
   }
@@ -23,7 +23,7 @@ export const getAllProducts = async () => {
 };
 
 export const getProductBySlug = async (slug: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_FETCH_LINK}/products/slug/${encodeURIComponent(slug)}`);
+  const res = await fetch(`https://product-service-ydpt.onrender.com/products/slug/${encodeURIComponent(slug)}`);
 
   if (!res.ok) {
     console.error(`Failed to fetch product by slug: ${slug}, status: ${res.status}`);
@@ -35,7 +35,7 @@ export const getProductBySlug = async (slug: string) => {
   return json?.data; // assuming your backend wraps response as { data: ... }
 };
 export const getRatingsByProductId = async (productId: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_RATING_API_LINK}/ratings/product/${encodeURIComponent(productId)}`);
+  const res = await fetch(`https://product-service-ydpt.onrender.com/ratings/product/${encodeURIComponent(productId)}`);
 
   if (!res.ok) {
     console.error(`Failed to fetch ratings for productId: ${productId}, status: ${res.status}`);
