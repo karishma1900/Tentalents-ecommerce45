@@ -13,10 +13,24 @@ import {
   KafkaConsumerConfig,
 } from '@shared/kafka';
 import { logger } from '@shared/logger';
-
+import cors from 'cors';
 // 🔧 Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://tentalents-ecommerce45.vercel.app',
+];
 
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // if you're using cookies or authorization headers
+}));
 const PORT = parseInt(process.env.PORT || '3018', 10);
 const prisma = new PrismaClient();
 
