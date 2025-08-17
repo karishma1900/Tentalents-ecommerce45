@@ -9,8 +9,9 @@ import { Metadata } from 'next'; // Import Metadata if needed
 //   };
 // }
 
-export default async function ProductDetailPage({params}: {params: Promise<{ id: string }>}) {
-  const { slug } = await params; // Destructure params directly
+export default async function ProductDetailPage({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+// Destructure params directly
 
   let productRaw = null;
 
@@ -74,4 +75,5 @@ export default async function ProductDetailPage({params}: {params: Promise<{ id:
 
   return <ProductDetailClient product={product} />;
 }
+
 
