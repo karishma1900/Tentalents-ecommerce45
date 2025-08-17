@@ -7,11 +7,12 @@ import Ramesh from "../../../assets/ramesh.png";
 //     slug: string;
 //   };
 // }
-type PageProps = {
-  params: { slug: string }; // ✅ Correct shape
-};
-export default async function ProductDetailPage({ params }: PageProps) {
-  const { slug } = params;
+// type PageProps = {
+//   params: { slug: string }; 
+// };
+type tParams = Promise<{ slug:string[]}>;
+export default async function ProductDetailPage(props:{params: tParams}) {
+  const { slug } =await props.params;
 
 
  let productRaw = null;
@@ -89,6 +90,7 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
