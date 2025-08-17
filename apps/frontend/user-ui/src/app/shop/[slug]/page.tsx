@@ -3,14 +3,14 @@ import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
 import { Metadata } from 'next'; // Import Metadata if needed
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
+// interface PageProps {
+//   params: {
+//     slug: string;
+//   };
+// }
 
-export default async function ProductDetailPage({ params }: PageProps) {
-  const { slug } = params; // Destructure params directly
+export default async function ProductDetailPage({params}: {params: Promise<{ id: string }>}) {
+  const { slug } = await params; // Destructure params directly
 
   let productRaw = null;
 
@@ -74,3 +74,4 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
   return <ProductDetailClient product={product} />;
 }
+
