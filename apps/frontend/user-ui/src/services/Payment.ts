@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PAYMENT_API_BASE = process.env.NEXT_PUBLIC_PAYMENT_API_LINK ?? 'https://payment-service-3yph.onrender.com/api/payment';
+const PAYMENT_API_BASE = process.env.NEXT_PUBLIC_PAYMENT_API_LINK ?? 'https://product-service-w4gu.onrender.com/api/payment';
 
 // Function to initiate payment
 export const initiatePayment = async (orderId: string, amount: number) => {
