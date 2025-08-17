@@ -94,7 +94,7 @@ const SignUp = () => {
     try {
       const { email: enteredEmail } = getValues();
       await axios.post(
-        `https://user-service-tdup.onrender.com/api/auth/register/otp/initiate`,
+        `https://user-service-4i53.onrender.com/api/auth/register/otp/initiate`,
         { email: enteredEmail }
       );
       setEmail(enteredEmail);
@@ -125,7 +125,7 @@ const SignUp = () => {
     setLoading(true);
     try {
       await axios.post(
-        `https://user-service-tdup.onrender.com/api/auth/register/otp/verify`,
+        `https://user-service-4i53.onrender.com/api/auth/register/otp/verify`,
         {
           email,
           otp: otpCode,
@@ -143,7 +143,7 @@ const onSubmit = async (data: FormData) => {
   setLoading(true);
   try {
     await axios.post(
-      `https://user-service-tdup.onrender.com/api/auth/register/otp/complete`,
+      `https://user-service-4i53.onrender.com/api/auth/register/otp/complete`,
       {
         email,
         password: data.password,
@@ -187,7 +187,7 @@ const onSubmit = async (data: FormData) => {
 
     setLoading(true);
     try {
-      await axios.post(`https://user-service-tdup.onrender.com/api/auth/register/otp/initiate`, {
+      await axios.post(`https://user-service-4i53.onrender.com/api/auth/register/otp/initiate`, {
         email,
       });
       setCanResend(false);
@@ -265,7 +265,7 @@ const handleFirebaseGoogleSignIn = async () => {
     const result = await signInWithPopup(auth, provider);
     const firebaseIdToken = await result.user.getIdToken();
 
-    await axios.post(`https://user-service-tdup.onrender.com/api/auth/google-login`, {
+    await axios.post(`https://user-service-4i53.onrender.com/api/auth/google-login`, {
       provider: 'google',
       idToken: firebaseIdToken,
     });
@@ -576,4 +576,5 @@ const handleFirebaseGoogleSignIn = async () => {
 };
 
 export default SignUp;
+
 
