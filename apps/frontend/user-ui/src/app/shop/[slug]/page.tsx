@@ -10,9 +10,9 @@ import Ramesh from "../../../assets/ramesh.png";
 // type PageProps = {
 //   params: { slug: string }; 
 // };
-type tParams = Promise<{ slug:string[]}>;
+type tParams = { slug: string };
 export default async function ProductDetailPage(props:{params: tParams}) {
-  const { slug } =await props.params;
+  const { slug } = props.params;
 
 
  let productRaw = null;
@@ -90,6 +90,7 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
