@@ -1,6 +1,7 @@
 import { getProductBySlug } from '../../../services/productService';
 import ProductDetailClient from './ProductDetailPage';
 import Ramesh from "../../../assets/ramesh.png";
+import { Metadata } from 'next'; // Import Metadata if needed
 
 interface PageProps {
   params: {
@@ -8,8 +9,8 @@ interface PageProps {
   };
 }
 
-export default async function ProductDetailPage(props: PageProps) {
-  const { slug } = props.params; // Corrected line
+export default async function ProductDetailPage({ params }: PageProps) {
+  const { slug } = params; // Destructure params directly
 
   let productRaw = null;
 
