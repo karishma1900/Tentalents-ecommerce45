@@ -12,7 +12,7 @@ type PageProps = {
   // params: { slug: string }; 
 };
 // type tParams = { slug: string };
-export default async function ProductDetailPage({ params }: PageProps}) {
+export default async function ProductDetailPage({ params }: PageProps) {
   // const { slug } = props.params;
   const slug = (await params).slug;
 
@@ -91,6 +91,7 @@ vendor: listing?.vendor?.user
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
