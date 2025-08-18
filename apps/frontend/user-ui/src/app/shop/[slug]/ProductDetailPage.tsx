@@ -43,26 +43,26 @@ console.log(" Vendor Name:", product.vendor?.name);
 const { handleAddToCart, loading, error, userId } = useAddToCart();
 
 const onAddToCartClick = async () => {
-  try {
-    console.log("Product received in ProductDetailClient:", product);
-    console.log("Full product object:", JSON.stringify(product, null, 2));
-    console.log("Listing ID:", product.listingId);
-    console.log("Seller ID:", product.sellerId);
-    console.log("Vendor Name:", product.vendor?.name);
+  if (!userId) {
+    toast.error(' Please log in to add items to your cart.');
+    router.push('/login');
+    return;
+  }
 
+  try {
     await handleAddToCart(
       {
         productId: product.id,
         listingId: product.listingId,
-        sellerId: product.sellerId,   // ✅ now always defined
+        sellerId: product.vendor?.id,
       },
       quantity
     );
-
-    alert("Product added to cart successfully!");
-  } catch (error) {
-    console.error("Add to cart failed:", error);
-    alert("Failed to add product to cart. Please try again.");
+    
+    toast.success('✅ Added to cart!');
+  } catch (e) {
+      console.error('Add to cart failed:', e);
+    toast.error(' Failed to add to cart.');
   }
 };
 
@@ -71,7 +71,7 @@ const fetchRatings = async () => {
     const token = localStorage.getItem('token');
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_RATING_API_LINK}/api/rating/product/${product.id}`,
+      `https://rating-service-ny6q.onrender.com/api/rating/product/${product.id}`,
       { headers }
     );
 
