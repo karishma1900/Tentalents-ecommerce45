@@ -83,7 +83,7 @@ const [dateFilter, setDateFilter] = useState('all');
       }
 
       try {
-        const res = await fetch(`https://order-service-vck8.onrender.com/api/orders`, {
+        const res = await fetch(`https://order-service-ouw8.onrender.com/api/orders`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -298,4 +298,5 @@ const filteredOrders = filterOrdersByDate(orders, dateFilter);
 };
 
 export default Page;
+
 
