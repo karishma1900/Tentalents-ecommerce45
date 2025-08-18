@@ -57,7 +57,7 @@ const Cart = () => {
         return;
       }
 
-      const res = await fetch(`${CART_API_BASE_URL}/api/cart`, {
+      const res = await fetch(`https://cart-service-9kox.onrender.com/api/cart`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -332,6 +332,7 @@ const total = subtotal + shippingFee + platformFee;
 };
 
 export default Cart;
+
 
 
 
