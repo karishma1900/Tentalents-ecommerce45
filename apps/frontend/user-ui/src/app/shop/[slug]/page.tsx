@@ -89,8 +89,10 @@ try {
 
 
 
+
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
