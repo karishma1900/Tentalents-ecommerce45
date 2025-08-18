@@ -59,7 +59,7 @@ const Page = () => {
         return;
       }
 
-      const res = await fetch(`${NEXT_PUBLIC_CART_API_LINK}/api/cart`, {
+      const res = await fetch(`https://cart-service-9kox.onrender.com/api/cart`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
@@ -257,6 +257,7 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
 };
 
 export default Page;
+
 
 
 
