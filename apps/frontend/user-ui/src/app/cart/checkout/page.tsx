@@ -44,7 +44,7 @@ const Page = () => {
       const [orderId, setOrderId] = useState<string | null>(null);
 
   const NEXT_PUBLIC_ORDER_API_LINK = 'https://order-service-vck8.onrender.com';
-  const NEXT_PUBLIC_CART_API_LINK = 'https://cart-service-z6ft.onrender.com';
+  const NEXT_PUBLIC_CART_API_LINK = 'https://cart-service-9kox.onrender.com';
 
   useEffect(() => {
     fetchCart();
@@ -257,5 +257,6 @@ const handlePaymentStatus = async (paymentId: string, signature: string) => {
 };
 
 export default Page;
+
 
 
