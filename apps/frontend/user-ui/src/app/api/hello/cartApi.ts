@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = process.env.NEXT_PUBLIC_CART_API_LINK; // e.g. 'https://api.example.com'
+const API_BASE = `https://cart-service-9kox.onrender.com`; // e.g. 'https://api.example.com'
 const PRODUCT_API = `https://product-service-w4gu.onrender.com`;
 
 interface ProductDetails {
