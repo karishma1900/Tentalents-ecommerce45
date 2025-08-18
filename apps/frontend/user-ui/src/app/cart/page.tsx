@@ -38,7 +38,7 @@ type ApiCartResponse = {
 };
 
 const Cart = () => {
-  const CART_API_BASE_URL = 'https://cart-service-9kox.onrender.com';
+  const CART_API_BASE_URL = process.env.NEXT_PUBLIC_CART_API_LINK ?? 'https://cart-service-9kox.onrender.com';
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -332,7 +332,3 @@ const total = subtotal + shippingFee + platformFee;
 };
 
 export default Cart;
-
-
-
-
