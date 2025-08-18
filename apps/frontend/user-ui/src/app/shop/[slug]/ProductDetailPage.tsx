@@ -71,7 +71,7 @@ const fetchRatings = async () => {
     const token = localStorage.getItem('token');
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const response = await axios.get(
-      `https://rating-service-ny6q.onrender.com/api/rating/product/${product.id}`,
+      `${process.env.NEXT_PUBLIC_RATING_API_LINK}/api/rating/product/${product.id}`,
       { headers }
     );
 
