@@ -49,15 +49,17 @@ try {
   deliveryDate: listing?.deliveryEta ?? 'N/A',
   deliveryLocation: 'India',
 
-  // ✅ New fields
+  // ✅ Add sellerId here
+  sellerId: listing?.vendor?.id ?? null,
+
   brand: listing?.brand ?? productRaw.brand ?? '',
   includedComponents: listing?.includedComponents ?? productRaw.includedComponents ?? [],
   numberOfItems: listing?.numberOfItems ?? productRaw.numberOfItems ?? null,
   enclosureMaterial: listing?.enclosureMaterial ?? productRaw.enclosureMaterial ?? '',
   productCareInstructions: listing?.productCareInstructions ?? productRaw.productCareInstructions ?? '',
   productFeatures: listing?.productFeatures ?? productRaw.productFeatures ?? [],
- listingId: listing?.id ?? null,
- vendorId: listing?.vendor?.id ?? null,
+  listingId: listing?.id ?? null,
+  vendorId: listing?.vendor?.id ?? null,
   rating:
     productRaw.ratings && productRaw.ratings.length > 0
       ? (
@@ -68,29 +70,28 @@ try {
         ).toFixed(1)
       : 0,
   reviewCount: productRaw.ratings?.length ?? 0,
-  reviews: [], // Optional
+  reviews: [],
   purchaseCount: 25,
 
-
-
-vendor: listing?.vendor?.user
-  ? {
-       id: listing.vendor.id,
-      name: listing.vendor.businessName || listing.vendor.user?.name || 'Unnamed Vendor',
-       image: listing.vendor.profileImage || listing.vendor.user?.profileImage || Ramesh,
-     productCount: listing.vendor.productListings?.length || 0,
-    }
-  : {
-      name: 'Demo Seller',
-      image: Ramesh,
-      productCount: 50,
-    },
-
+  vendor: listing?.vendor?.user
+    ? {
+        id: listing.vendor.id,
+        name: listing.vendor.businessName || listing.vendor.user?.name || 'Unnamed Vendor',
+        image: listing.vendor.profileImage || listing.vendor.user?.profileImage || Ramesh,
+        productCount: listing.vendor.productListings?.length || 0,
+      }
+    : {
+        name: 'Demo Seller',
+        image: Ramesh,
+        productCount: 50,
+      },
 };
+
 
 
   return <ProductDetailClient product={product} />;
 }
+
 
 
 
