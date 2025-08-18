@@ -43,26 +43,26 @@ console.log(" Vendor Name:", product.vendor?.name);
 const { handleAddToCart, loading, error, userId } = useAddToCart();
 
 const onAddToCartClick = async () => {
-  if (!userId) {
-    toast.error(' Please log in to add items to your cart.');
-    router.push('/login');
-    return;
-  }
-
   try {
+    console.log("Product received in ProductDetailClient:", product);
+    console.log("Full product object:", JSON.stringify(product, null, 2));
+    console.log("Listing ID:", product.listingId);
+    console.log("Seller ID:", product.sellerId);
+    console.log("Vendor Name:", product.vendor?.name);
+
     await handleAddToCart(
       {
         productId: product.id,
         listingId: product.listingId,
-      sellerId: product.vendor?.id,
+        sellerId: product.sellerId,   // ✅ now always defined
       },
       quantity
     );
-    
-    toast.success('✅ Added to cart!');
-  } catch (e) {
-      console.error('Add to cart failed:', e);
-    toast.error(' Failed to add to cart.');
+
+    alert("Product added to cart successfully!");
+  } catch (error) {
+    console.error("Add to cart failed:", error);
+    alert("Failed to add product to cart. Please try again.");
   }
 };
 
