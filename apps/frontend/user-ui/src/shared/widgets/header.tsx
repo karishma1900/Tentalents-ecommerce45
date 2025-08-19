@@ -58,7 +58,7 @@ const router = useRouter();
 
     setIsLoading(true);
     try {
-      const res = await fetch(`http://localhost:3006/api/search?${params.toString()}`);
+      const res = await fetch(`https://search-service-mo6h.onrender.com/api/search?${params.toString()}`);
       const data = await res.json();
 
       if (data.status === 'success') {
@@ -265,3 +265,4 @@ const router = useRouter();
 };
 
 export default Header;
+
