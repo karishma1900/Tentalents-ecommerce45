@@ -35,7 +35,7 @@ export const getProductBySlug = async (slug: string) => {
   return json?.data; // assuming your backend wraps response as { data: ... }
 };
 export const getRatingsByProductId = async (productId: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_RATING_API_LINK}/ratings/product/${encodeURIComponent(productId)}`);
+  const res = await fetch(`https://rating-service-ny6q.onrender.com/ratings/product/${encodeURIComponent(productId)}`);
 
   if (!res.ok) {
     console.error(`Failed to fetch ratings for productId: ${productId}, status: ${res.status}`);
@@ -74,7 +74,7 @@ export const getAllAddresses = async (): Promise<Address[]> => {
 
 // Add a new address
 export const addAddress = async (newAddress: Address): Promise<Address> => {
-  const res = await fetch(`https://order-service-vck8.onrender.com/api/orders/addresses`, {
+  const res = await fetch(`https://order-service-ouw8.onrender.com/api/orders/addresses`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(newAddress),
@@ -91,7 +91,7 @@ export const addAddress = async (newAddress: Address): Promise<Address> => {
 
 // Edit an existing address
 export const editAddress = async (addressId: string, updatedAddress: Address): Promise<Address> => {
-  const res = await fetch(`https://order-service-vck8.onrender.com/api/orders/addresses/${addressId}`, {
+  const res = await fetch(`https://order-service-ouw8.onrender.com/api/orders/addresses/${addressId}`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
     body: JSON.stringify(updatedAddress),
@@ -108,7 +108,7 @@ export const editAddress = async (addressId: string, updatedAddress: Address): P
 
 // Delete an address
 export const deleteAddress = async (addressId: string): Promise<void> => {
-  const res = await fetch(`https://order-service-vck8.onrender.com/api/orders/addresses/${addressId}`, {
+  const res = await fetch(`https://order-service-ouw8.onrender.com/api/orders/addresses/${addressId}`, {
     method: 'DELETE',
     headers: getAuthHeaders(),
   });
@@ -121,3 +121,4 @@ export const deleteAddress = async (addressId: string): Promise<void> => {
   // No need to return anything if it's just a delete operation
   await res.json(); // We assume we don't need to handle the response here
 };
+
