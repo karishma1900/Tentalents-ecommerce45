@@ -58,7 +58,7 @@ const getAuthHeaders = () => {
 
 // Fetch all addresses for the logged-in user
 export const getAllAddresses = async (): Promise<Address[]> => {
-  const res = await fetch(`https://order-service-vck8.onrender.com/api/orders/addresses`, {
+  const res = await fetch(`https://order-service-ouw8.onrender.com/api/orders/addresses`, {
     method: 'GET',
     headers: getAuthHeaders(),
   });
@@ -121,4 +121,5 @@ export const deleteAddress = async (addressId: string): Promise<void> => {
   // No need to return anything if it's just a delete operation
   await res.json(); // We assume we don't need to handle the response here
 };
+
 
