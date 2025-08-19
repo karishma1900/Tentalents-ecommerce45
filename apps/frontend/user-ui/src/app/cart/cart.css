@@ -1,0 +1,229 @@
+.cart-section{
+    display:flex;
+    align-items:flex-start;
+    justify-content: space-between;
+    gap:30px;
+    margin-bottom: 10px;;
+}
+.productcart{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    /* display:flex;
+    align-items: center;
+    justify-content: space-between; */
+    gap:10px;
+    margin:15px 0px;
+}
+.saveforlater{
+    border:1px solid #797979;
+    border-radius:20px;
+    padding:5px 10px;
+    color:var(--grey);
+    font-size: 13px;;
+    background-color: transparent;
+}
+.saveforlater button{
+    background-color: transparent;
+    color:#797979;
+
+}
+.detailcart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  
+}
+.adtocart-wrapper2 {
+   
+    border:none;
+}
+
+.adtocart-wrapper2 .counter, .adtocart-wrapper2 .counter input{
+    background-color: white;
+}
+.icon-button{
+    background-color: transparent;
+}
+.adtocart-wrapper2 .counter {
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  align-items: center;     /* centers vertically */
+  padding: 0px;
+}
+
+.adtocart-wrapper2 .counter input {
+  width: 70px !important;
+  color: var(--secondary);
+  font-size: 17px;
+  font-weight: 500;
+  text-align: center;
+            /* set a height */
+        /* match line-height to height */
+  box-sizing: border-box;  /* include padding/border in height */
+   /* optional: visible border */
+  border-radius: 4px;      /* optional: rounded corners */
+}
+.cartcontentarea{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    width:100%;
+}
+.cartsection-right{
+    width:30%;
+}
+.cartsection-left{
+    background: var(--lightbackground);
+    padding:20px;
+    border-radius: 10px;;
+    margin-bottom:20px ;
+    width: 70%;;
+}
+.subtotal{
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    font-size: 20px;
+    padding:10px 0px;
+    border-bottom:1px solid var(--bordergrey);
+
+}
+.price-main{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap:30px;
+}
+.subtotal h2{
+    font-size:20px;
+    color:var(--lightgrey);
+
+}
+
+.checkoutbutton{
+    width:100%;
+    margin:10px 0px;
+}
+.applysection form{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.productcart-image{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap:10px;
+}
+.couponbutton{
+    padding:10px 20px;
+}
+.cartprice{
+    font-size: 24px;;
+}
+.subtotal-section{
+    background-color: var(--lightbackground);
+    border-radius: 10px;
+    padding:15px;
+    margin: 20px 0px;;
+  
+}
+.productcart .product-image{
+    position: inherit;
+}
+.total
+{
+    border-bottom: 0px;;
+}
+.total h2{
+ color: black;
+}
+.cartproduct-image{
+    background-color: white;
+    padding: 10px ;
+    border-radius: 10px;;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+.cartcontentarea .product-title{
+    margin:0px  !important;
+
+}
+.shopping-carticon{
+    width:80px;
+    height: 80px;
+    color: var(--grey);
+}
+.empty-cart {
+  max-width: 50%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers children horizontally */
+  justify-content: center; /* centers children vertically */
+  text-align: center;
+  min-height: 300px; /* or 100vh for full screen */
+}
+.empty-cart p{
+    font-size: 20px;
+      font-family: 'Radhika Trial', sans-serif;
+    font-weight: 400;
+    color: var(--grey);
+    padding:10px 0px;
+}
+@media(max-width:780px){
+    .productcart{
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+    }
+    .cartsection-left{
+width: 100%;
+    }
+    .cartsection-right{
+  width: 100%;
+    }
+    .cart-section{
+        display: flex;
+        flex-direction: column;
+    }
+    /* .productcart{
+        display: flex;
+        flex-direction: column;
+    } */
+  .detailcart{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* grid-template-columns: 1fr; */
+  gap:10px;
+  }
+   .cartsection-left{
+    padding:10px;
+   }
+   .price-main{
+    display: flex;
+    flex-wrap: wrap;
+   }
+   .cartcontentarea{
+    gap:5px;
+    width: 100%;
+   }
+   .cartprice{
+    font-size: 17px;
+   }
+   .adtocart-wrapper2 .counter{
+    width: 100%;
+    /* max-width: 50%; */
+   }
+   .image-wrapper2{
+    width:180px !important;
+    height: 130px !important;
+
+   }
+   .productcart{
+    display: flex;
+    justify-content: space-between;
+   }
+}
