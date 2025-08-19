@@ -101,7 +101,7 @@ const AddAddress = ({ isOpen, onClose, vendorId, addressToEdit, onAdd }: AddAddr
     };
 
     try {
-      const response = await fetch(`https://order-service-ouw8.onrender.com/api/orders/addresses`, {
+      const response = await fetch(`${API_BASE_URL}/api/orders/addresses`, {
         method: addressToEdit ? 'PUT' : 'POST', // PUT if editing, POST if adding
         headers: {
           'Content-Type': 'application/json',
@@ -250,5 +250,3 @@ const AddAddress = ({ isOpen, onClose, vendorId, addressToEdit, onAdd }: AddAddr
 };
 
 export default AddAddress;
-
-
