@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API_BASE = process.env.NEXT_PUBLIC_CART_API_LINK; // e.g. 'https://api.example.com'
-const PRODUCT_API = `https://product-service-w4gu.onrender.com`;
+const PRODUCT_API = `https://product-service-ydpt.onrender.com`;
 
 interface ProductDetails {
   productId: string;
@@ -85,3 +85,4 @@ export const checkoutCart = async (userId: string) => {
   const response = await axios.post(`https://cart-service-9kox.onrender.com/cart/${userId}/checkout`);
   return response.data;
 };
+
